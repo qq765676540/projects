@@ -7,6 +7,7 @@ define(["./../data"], function() {
             meaArr.push({
                 name: layout.qHyperCube.qMeasureInfo[index].qFallbackTitle,
                 type: "bar",
+                barGap: "0.3",
                 data: getData(layout.qHyperCube.qDataPages[0].qMatrix, index+1, "mea")
             });
                           

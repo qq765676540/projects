@@ -5,7 +5,7 @@ define([], function() {
       maxMeasures: 5
     },
     refDefs: {
-      measureJs: ["qAttributeExpressions.0.qExpression"],
+      measureJs: ["qAttributeExpressions.0.qExpression","qAttributeExpressions.1.qExpression"],
       generalJs: ["EchartsOptions.charType", "EchartsOptions.bar.mode"]
     },
     eChartsDefs: {

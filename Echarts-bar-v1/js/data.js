@@ -9,7 +9,8 @@ function getData(model, index, type) {
       dataArr.push({
         value: val[index].qNum,
         itemStyle: {
-          color: val[index].qAttrExps.qValues[0].qText
+          color: val[index].qAttrExps.qValues[0].qText,
+          opacity: val[index].qAttrExps.qValues[1].qText
         }
       });
     });
