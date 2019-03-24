@@ -1,4 +1,4 @@
-define(["./../data"], function() {
+define(["./../tools/data"], function() {
     return function(layout) {
 
       return {

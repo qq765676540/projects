@@ -1,9 +1,3 @@
 Echarts-bar-v1.qext;
 Echarts-bar-v1.js;
-js/config.js;
-lib/echarts.min.js;
-js/data.js;
-js/properties.js;
-js/settings/dimension.js;
-js/settings/measure.js;
-js/settings/general.js
+js/config.js

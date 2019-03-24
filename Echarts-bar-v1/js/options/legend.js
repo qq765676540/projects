@@ -1,4 +1,4 @@
-define([], function() {
+define(["./../config"], function(config) {
   return function(layout) {
     var legendArr = [];
 
@@ -11,6 +11,10 @@ define([], function() {
     }
 
     return {
+      show: eval("layout."+config.refDefs.generalJs[6].ref),
+      orient: eval("layout."+config.refDefs.generalJs[3].ref),
+      top: eval("layout."+config.refDefs.generalJs[4].ref),
+      left: eval("layout."+config.refDefs.generalJs[5].ref),
       data: legendArr
     };
 

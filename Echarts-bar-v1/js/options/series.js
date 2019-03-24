@@ -1,4 +1,4 @@
-define(["./../data"], function() {
+define(["./../config","./../tools/data"], function(config) {
     return function(layout){
 
         var meaArr=[];
@@ -7,7 +7,7 @@ define(["./../data"], function() {
             meaArr.push({
                 name: layout.qHyperCube.qMeasureInfo[index].qFallbackTitle,
                 type: "bar",
-                barGap: "0.3",
+                barGap: eval("layout."+config.refDefs.generalJs[7].ref),
                 data: getData(layout.qHyperCube.qDataPages[0].qMatrix, index+1, "mea")
             });
                           

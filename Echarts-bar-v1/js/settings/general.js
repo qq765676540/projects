@@ -1,4 +1,10 @@
-define(["./../config"], function(config) {
+define([
+  "./../config",
+  "./../extends/extIDa",
+  "./../extends/extIDb",
+  "./../extends/extIDc",
+  "./../extends/extIDd"
+], function(config, extIDa, extIDb, extIDc, extIDd) {
   return {
     uses: "settings",
     items: {
@@ -7,46 +13,10 @@ define(["./../config"], function(config) {
         label: "General",
         items: {}
       },
-      extIDa: {
-        type: "items",
-        label: "演示",
-        items: {
-          IDaA: {
-            type: "string",
-            component: "dropdown",
-            label: "图表类型",
-            defaultValue: "bar",
-            options: [
-              {
-                value: "bar",
-                label: "Bar Chart"
-              },
-              {
-                value: "pie",
-                label: "Pie Chart"
-              }
-            ],
-            ref: config.refDefs.generalJs[0]
-          },
-          IDaB: {
-            type: "string",
-            component: "radiobuttons",
-            label: "柱形方向",
-            ref: config.refDefs.generalJs[1],
-            options: [
-              {
-                value: "v",
-                label: "垂直"
-              },
-              {
-                value: "h",
-                label: "水平"
-              }
-            ],
-            defaultValue: "v"
-          }
-        }
-      }
+      extIDa: extIDa,
+      extIDb: extIDb,
+      extIDc: extIDc,
+      extIDd: extIDd
     }
   };
 });

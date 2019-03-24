@@ -1,4 +1,4 @@
-define([], function() {
+define(["./../config"], function(config) {
   return function(layout) {
     return {
       type: "value",
@@ -6,13 +6,13 @@ define([], function() {
         show: false
       },
       axisLine: {
-        show: false
+        show: true
       },
       axisTick: {
-        show: false
+        show: true
       },
       splitLine: {
-        show: false
+        show: eval("layout."+config.refDefs.generalJs[2].ref)
       }
     };
   };
