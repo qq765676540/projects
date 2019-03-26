@@ -3,13 +3,13 @@ define(["./../config"], function(config) {
     return {
       type: "value",
       axisLabel: {
-        show: false
-      },
-      axisLine: {
-        show: true
+        show: eval("layout."+config.refDefs.generalJs[8].ref)
       },
       axisTick: {
-        show: true
+        show: eval("layout."+config.refDefs.generalJs[9].ref)
+      },
+      axisLine: {
+        show: eval("layout."+config.refDefs.generalJs[10].ref)
       },
       splitLine: {
         show: eval("layout."+config.refDefs.generalJs[2].ref)

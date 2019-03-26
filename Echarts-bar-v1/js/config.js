@@ -12,13 +12,26 @@ define([], function() {
       ],
       generalJs: [
         {"index":0,"comments":"图表类型","ref":"EchartsOptions.charType"},
-        {"index":1,"comments":"柱形图方式","ref":"EchartsOptions.bar.mode"},
-        {"index":2,"comments":"网格线","ref":"EchartsOptions.bar.splitLine"},
-        {"index":3,"comments":"图例方向","ref":"EchartsOptions.barLegend.orient"},
-        {"index":4,"comments":"图例上下","ref":"EchartsOptions.barLegend.top"},
-        {"index":5,"comments":"图例左右","ref":"EchartsOptions.barLegend.left"},
-        {"index":6,"comments":"图例显示","ref":"EchartsOptions.bar.legend"},
-        {"index":7,"comments":"柱形间隔设置","ref":"EchartsOptions.bar.bargap"}
+        {"index":1,"comments":"柱形图方式","ref":"EchartsOptionsBar.mode"},
+        {"index":2,"comments":"网格线","ref":"EchartsOptionsBar.splitLine"},
+        {"index":3,"comments":"图例方向","ref":"EchartsOptionsBar.legend.orient"},
+        {"index":4,"comments":"图例上下","ref":"EchartsOptionsBar.legend.top"},
+        {"index":5,"comments":"图例左右","ref":"EchartsOptionsBar.legend.left"},
+        {"index":6,"comments":"图例显示","ref":"EchartsOptionsBar.legend.show"},
+        {"index":7,"comments":"柱形间隔设置","ref":"EchartsOptionsBar.series.bargap"},
+        {"index":8,"comments":"Y柱形间隔设置","ref":"EchartsOptionsBar.yAxis.Label"},
+        {"index":9,"comments":"Y柱形间隔设置","ref":"EchartsOptionsBar.yAxis.Tick"},
+        {"index":10,"comments":"Y柱形间隔设置","ref":"EchartsOptionsBar.yAxis.Line"},
+        {"index":11,"comments":"X柱形间隔设置","ref":"EchartsOptionsBar.xAxis.Label"},
+        {"index":12,"comments":"X柱形间隔设置","ref":"EchartsOptionsBar.xAxis.Tick"},
+        {"index":13,"comments":"X柱形间隔设置","ref":"EchartsOptionsBar.xAxis.Line"},
+        {"index":14,"comments":"提示框","ref":"EchartsOptionsBar.tooltip.axisPointer"},
+        {"index":15,"comments":"值标签显示","ref":"EchartsOptionsBar.series.label.show"},
+        {"index":16,"comments":"值标签位置","ref":"EchartsOptionsBar.series.label.position"},
+        {"index":17,"comments":"值标签旋转","ref":"EchartsOptionsBar.series.label.rotate"},
+        {"index":18,"comments":"值标签颜色","ref":"EchartsOptionsBar.series.label.color"},
+        {"index":19,"comments":"值标签颜色","ref":"EchartsOptionsBar.series.label.fontSize"},
+        {"index":19,"comments":"值标签颜色","ref":"EchartsOptionsBar.series.label.formatter"}
       ]
     },
     eChartsDefs: {
