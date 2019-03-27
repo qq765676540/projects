@@ -37,14 +37,6 @@ define([
   runMain.paint = function($element, layout) {
     var view = this;
 
-    new LayUI(layui, layout, view);
-
-    layui
-      .config({
-        base: "../resources/../extensions/qs-echarts-extension-v1/js/tools/"
-      })
-      .use("RegLayui");
-
     $element.html(""); //清空
 
     $element.append('<div id="' + layout.qInfo.qId + '"></div>'); //绑定qId
@@ -60,7 +52,13 @@ define([
 
     myChart.setOption(optionFun(layout));
 
-    myChart.resize(); //*
+    myChart.on("click", function(params) {
+      LayUI(layui, layout, view, "PageSet");
+    });
+
+    myChart.resize();
+
+    LayUI(layui, layout, view, "NaN");
 
     return qlik.Promise.resolve();
   };

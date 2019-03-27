@@ -3,8 +3,9 @@ define([
   "./../extends/extIDa",
   "./../extends/extIDb",
   "./../extends/extIDc",
-  "./../extends/extIDd"
-], function(config, extIDa, extIDb, extIDc, extIDd) {
+  "./../extends/extIDd",
+  "./../extends/extIDe"
+], function(config, extIDa, extIDb, extIDc, extIDd, extIDe) {
   return {
     uses: "settings",
     items: {
@@ -16,7 +17,8 @@ define([
       extIDa: extIDa,
       extIDb: extIDb,
       extIDc: extIDc,
-      extIDd: extIDd
+      extIDd: extIDd,
+      extIDe: extIDe
     }
   };
 });

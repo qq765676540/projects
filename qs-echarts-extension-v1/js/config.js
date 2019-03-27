@@ -11,7 +11,7 @@ define([], function() {
         {"index":1,"comments":"柱形透明度","ref":"qAttributeExpressions.1.qExpression"}
       ],
       generalJs: [
-        {"index":0,"comments":"图表类型","ref":"EchartsOptions.charType"},
+        {"index":0,"comments":"eCharts全局配置","ref":"EchartsOptions.editPage"},
         {"index":1,"comments":"柱形图方式","ref":"EchartsOptionsBar.mode"},
         {"index":2,"comments":"网格线","ref":"EchartsOptionsBar.splitLine"},
         {"index":3,"comments":"图例方向","ref":"EchartsOptionsBar.legend.orient"},
