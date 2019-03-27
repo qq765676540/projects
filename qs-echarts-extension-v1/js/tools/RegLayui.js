@@ -24,7 +24,6 @@ define(["./../config"], function(config) {
             var body = layer.getChildFrame("body", index);
             //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
             var iframeWin = window[layero.find("iframe")[0]["name"]];
-            //iframeWin.abc();
             console.log(body.html());
             //得到iframe页的body内容
             body.find("#btnIDa").val("Hi，我是从父页来的");
