@@ -3,34 +3,96 @@
 <script src="./lib/echarts.min.js"></script>
 <script src="./lib/echarts-gl.min.js"></script>
 <script src="./js/examples/bar3D.js"></script>
+<script src="./js/examples/temp.js"></script>
 
-<ul class="layui-nav" lay-filter="">
-  <li class="layui-nav-item"><a href="">最新活动</a></li>
-  <li class="layui-nav-item layui-this"><a href="">产品</a></li>
-  <li class="layui-nav-item"><a href="">大数据</a></li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">解决方案</a>
-    <dl class="layui-nav-child">
-      <dd><a href="">移动模块</a></dd>
-      <dd><a href="">后台模版</a></dd>
-      <dd><a href="">电商平台</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item"><a href="">社区</a></li>
-</ul>
-<input type="text" id="btnIDa" value="按钮" />
-<div id="container" style="height: 450px;width: 850px"></div>
+<div class="layui-row">
+  <div class="layui-col-md12" id="headc">
+    <div class="layui-header layui-bg-black">
+      <div class="layui-col-md3">
+        <div style="position:relative;left: 10px;top: 10px;">
+          <i
+            class="layui-icon layui-icon-console"
+            style="font-size: 25px; color:rgb(243, 235, 235)"
+          >
+            eCharts Editor</i
+          >
+        </div>
+      </div>
+      <div class="layui-col-md3"></div>
+      <div class="layui-col-md6">
+        <div style="float:right;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-row layui-bg-red" style="height:1px"></div>
+<div class="layui-row layui-bg-gray" style="height:90%">
+  <div class="layui-col-md2" id="leftc" style="height: 100%;background:#393D49">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test" style="width: 180px">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">折线图</a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">Basic Line Chart</a></dd>
+          <dd><a href="javascript:;">Basic Area Chart</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">柱状图</a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">Bar Label Rotation</a></dd>
+          <dd><a href="javascript:;">堆叠条形图</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">饼图</a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">Customized Pie</a></dd>
+          <dd><a href="javascript:;">Doughnut Chart</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">散点图</a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">Bubble Chart</a></dd>
+          <dd><a href="javascript:;">Effect Scatter Chart</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  <div class="layui-col-md10" id="rightc">
+    <div id="container" style="height: 100%"></div>
+  </div>
+</div>
+
 <script>
   layui.use(["layer", "form", "element"], function() {
     var layer = layui.layer,
       form = layui.form;
     element = layui.element;
   });
-
+  function runChart(str) {
+    var i = str.split("_")[2];
+    
+    myChart.setOption(getTempOption(i).option, true);
+    myChart.resize();
+  }
   var dom = document.getElementById("container");
   var myChart = echarts.init(dom);
-  
-  if (option && typeof option === "object") {
-    myChart.setOption(option, true);
-  }
+  var option = {
+    xAxis: {
+      type: "category",
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    },
+    yAxis: {
+      type: "value"
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: "line"
+      }
+    ]
+  };
+
+  myChart.setOption(option, true);
 </script>

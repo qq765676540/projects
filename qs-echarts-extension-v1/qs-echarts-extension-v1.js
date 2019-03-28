@@ -53,12 +53,12 @@ define([
     myChart.setOption(optionFun(layout));
 
     myChart.on("click", function(params) {
-      LayUI(layui, layout, view, "PageSet");
+      LayUI(layui, layout, view, "examples");
     });
 
     myChart.resize();
 
-    LayUI(layui, layout, view, "NaN");
+    LayUI(layui, layout, view, "echartsConfig");
 
     return qlik.Promise.resolve();
   };
