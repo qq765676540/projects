@@ -8,20 +8,27 @@ define(["./../config"], function(config) {
           type: 2,
           title: "",
           area: ["1100px", "650px"],
-          //btn: ["确定"],
+          //btn: ["提交","关闭"],
           content: [
             "../resources/../extensions/qs-echarts-extension-v1/examples.html",//examples.html",
             "no"
-          ],
-          success: function(layero, index){
-            var body = layer.getChildFrame("body", index);
+          ]//,
+          // success: function(layero, index){
+          //   var body = layer.getChildFrame("body", index);
 
-            $.each(body.find("dl").find("a"),function(i,v){
-              body.find("dl").find("a").eq(i).attr("id",layout.qInfo.qId+"_menu_"+i);
-            });
+          //   $.each(body.find("dl").find("a"),function(i,v){
+          //     body.find("dl").find("a").eq(i).attr("id",layout.qInfo.qId+"_menu_"+i);
+          //   });
             
-            body.find("dl").find("a").attr("onClick","runChart(this.id)");
-          }
+          //   body.find("dl").find("a").attr("onClick","runChart(this.id)");
+          //   layero.find("a").eq(2).css({color:"#fff",background:"#393D49"});
+            
+          // },
+          // btn1: function(index, layero){
+          //   //do some
+          //   var iframeWin = window[layero.find("iframe")[0]["name"]];
+          //   iframeWin.reSetChart(layout);
+          // }
         });
       }
       if (pageGet === "echartsConfig") {
@@ -34,7 +41,7 @@ define(["./../config"], function(config) {
             type: 2,
             title: " ",
             area: ["1100px", "600px"],
-            btn: ["确定"],
+            btn: ["提交","关闭"],
             content: [
               "../resources/../extensions/qs-echarts-extension-v1/qs-echarts-extension-v1.html",
               "no"
@@ -51,20 +58,13 @@ define(["./../config"], function(config) {
               });
               
               body.find("dl").find("a").attr("onClick","runChart(this.id)");
+              layero.find("a").eq(2).css({color:"#fff",background:"#393D49"});
             },
-            yes: function(index, layero) {
-              //如果设定了yes回调，需进行手工关闭
-              //do something
-              layer.close(index);
-            }//,
-            // cancel: function(index, layero) {
-            //   if (confirm("确定要关闭么")) {
-            //     //只有当点击confirm框的确定时，该层才会关闭
-            //     //do something
-            //     layer.close(index);
-            //   }
-            //   return false;
-            // }
+            btn1: function(index, layero){
+              //do some
+              var iframeWin = window[layero.find("iframe")[0]["name"]];
+              iframeWin.reSetChart(layout);
+            }
           });
         }
       }

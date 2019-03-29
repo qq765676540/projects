@@ -76,23 +76,15 @@
     myChart.setOption(getTempOption(i).option, true);
     myChart.resize();
   }
+
+  function reSetChart(layout){
+    myChart.setOption(getTempOption(3).option, true);
+    myChart.resize();
+  }
+
   var dom = document.getElementById("container");
   var myChart = echarts.init(dom);
-  var option = {
-    xAxis: {
-      type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    },
-    yAxis: {
-      type: "value"
-    },
-    series: [
-      {
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: "line"
-      }
-    ]
-  };
+  var option = getTempOption(6).option;
 
   myChart.setOption(option, true);
 </script>

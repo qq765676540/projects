@@ -46,7 +46,7 @@ define([
       width: $element.width() + "px"
     }); //高宽自适应
 
-    console.log(layout);
+    // console.log(layout);
 
     var myChart = echarts.init(document.getElementById(layout.qInfo.qId));
 
