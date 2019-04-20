@@ -3,7 +3,16 @@
         <table class="table" :id="id+'_table'">
             <thead>
                 <tr>
-                    <th style="text-align:center;background:#efefef" v-for="(v,i) in title" :key="i">{{v}}</th>
+                    <th :style="th" v-for="(v,i) in title" :key="i" @click="onClick(i+1)">
+                        <div class="tableTh flex flex-align-center">
+                            <div class="flex-2" v-if="i+1===orderCol"></div>
+                            <div class="flex-5">{{v}}</div>
+                            <div
+                                :class="[orderClassLoad==='Desc'?'ascOrder':'descOrder','flex-1']"
+                                v-if="i+1===orderCol"
+                            ></div>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -16,11 +25,14 @@
 </template>
 <script>
 import "../../assets/js/jquery.tablesort.min.js";
+
 export default {
     props: {
         id: {
             type: String,
-            default: Math.random().toFixed(8)
+            default: function() {
+                return $.getRandomString(7);
+            }
         },
         data: {
             type: Array,
@@ -53,6 +65,26 @@ export default {
         maxH: {
             type: String,
             default: "200px"
+        },
+        thBgColor: {
+            type: String,
+            default: "#fff"
+        },
+        orderCol: {
+            type: Number,
+            default: 4
+        },
+        orderType: {
+            type: String,
+            default: "Desc"
+        },
+        thFontSize: {
+            type: String,
+            default: "12px"
+        },
+        thFontColor: {
+            type: String,
+            default: "#343021"
         }
     },
     data() {
@@ -61,23 +93,37 @@ export default {
                 "min-height": this.minH,
                 "max-height": this.maxH,
                 "overflow-y": "scroll"
-            }
+            },
+            th: {
+                "text-align": "center",
+                background: this.thBgColor,
+                "font-size": this.thFontSize,
+                color: this.thFontColor
+            },
+            orderClassLoad: this.orderType
         };
     },
     mounted() {
-        $("#"+this.id+"_table")
-            .tablesort("4|Desc")
+        var _self = this;
+        $("#" + this.id + "_table")
+            .tablesort(this.orderCol + "|" + this.orderType)
             .data("tablesort");
-        $("#"+this.id+"_table thead th")
-            .eq(4 - 1)
+
+        $("#" + this.id + "_table thead th")
+            .eq(this.orderCol - 1)
             .attr("class", "number");
-        $("#"+this.id+"_table thead th.number").data("sortBy", function(th, td, sorter) {
+
+        $("#" + this.id + "_table thead th.number").data("sortBy", function(
+            th,
+            td,
+            sorter
+        ) {
             return parseInt(td.text(), 10);
         });
 
-        $("#"+this.id+"_table thead th.number").click();
+        $("#" + this.id + "_table thead th.number").click();
 
-        $("#"+this.id).scroll(function() {
+        $("#" + this.id).scroll(function() {
             if (
                 $(this)
                     .attr("style")
@@ -92,11 +138,35 @@ export default {
                     );
             }
         });
-
-        $.info($.getRandomString(5));
-    }
+    },
+    methods: {
+        onClick(n) {
+            if (n === this.orderCol) {
+                this.orderClassLoad =
+                    this.orderClassLoad === "Desc" ? "Asc" : "Desc";
+            }
+        }
+    },
+    computed: {}
 };
 </script>
 <style scoped>
+.tableTh {
+    max-height: 30px;
+}
+.ascOrder {
+    background-image: url("../../assets/image/asc.png");
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.descOrder {
+    background-image: url("../../assets/image/desc.png");
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
 </style>
 

@@ -13,7 +13,7 @@
             <span class="sub-title-name">拜访未覆盖客户名单</span>
         </div>
         <div class="content-box flex-11">
-            <my-table id="table1"></my-table>
+            <my-table :orderCol="4" orderType="Asc"></my-table>
         </div>
     </div>
     <div class="uncovered-customer-detail flex-1">
