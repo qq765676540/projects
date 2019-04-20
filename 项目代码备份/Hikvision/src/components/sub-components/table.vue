@@ -5,8 +5,8 @@
                 <tr>
                     <th :style="th" v-for="(v,i) in title" :key="i" @click="onClick(i+1)">
                         <div class="tableTh flex flex-align-center">
-                            <div class="flex-2" v-if="i+1===orderCol"></div>
-                            <div class="flex-5">{{v}}</div>
+                            <div class="flex-1" v-if="i+1===orderCol"></div>
+                            <div class="flex-7">{{v}}</div>
                             <div
                                 :class="[orderClassLoad==='Desc'?'ascOrder':'descOrder','flex-1']"
                                 v-if="i+1===orderCol"
@@ -41,14 +41,8 @@ export default {
                     ["NaN", "NaN", "NaN", 20],
                     ["NaN", "NaN", "NaN", 25],
                     ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30],
-                    ["NaN", "NaN", "NaN", 30]
+                    ["NaN", "NaN", "NaN", 19.1],
+                    ["NaN", "NaN", "NaN", 20]
                 ];
             }
         },
@@ -89,17 +83,6 @@ export default {
     },
     data() {
         return {
-            style: {
-                "min-height": this.minH,
-                "max-height": this.maxH,
-                "overflow-y": "scroll"
-            },
-            th: {
-                "text-align": "center",
-                background: this.thBgColor,
-                "font-size": this.thFontSize,
-                color: this.thFontColor
-            },
             orderClassLoad: this.orderType
         };
     },
@@ -147,7 +130,23 @@ export default {
             }
         }
     },
-    computed: {}
+    computed: {
+        style: function() {
+            return {
+                "min-height": this.minH,
+                "max-height": this.maxH,
+                "overflow-y": "scroll"
+            };
+        },
+        th: function() {
+            return {
+                "text-align": "center",
+                background: this.thBgColor,
+                "font-size": this.thFontSize,
+                color: this.thFontColor
+            };
+        }
+    }
 };
 </script>
 <style scoped>
