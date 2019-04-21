@@ -18,8 +18,46 @@
                             title="客户覆盖"
                         ></my-progress>
                     </div>
-                    <div style="min-height:50px">1</div>
-                    <div style="min-height:50px">1</div>
+                    <div style="min-height:50px">
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#448dff"
+                                title="战略客户"
+                                data="8/17"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#741ce9"
+                                title="潜力客户"
+                                data="7/12"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                    </div>
+                    <div style="min-height:50px">
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#59d4ff"
+                                title="核心客户"
+                                data="7/13"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#e33d88"
+                                title="重要客户"
+                                data="5/12"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                    </div>
                     <div style="min-height:60px">
                         <my-progress
                             :data="progressData2"
@@ -31,8 +69,46 @@
                             title="用户覆盖"
                         ></my-progress>
                     </div>
-                    <div style="min-height:50px">1</div>
-                    <div style="min-height:50px">1</div>
+                    <div style="min-height:50px">
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#448dff"
+                                title="战略客户"
+                                data="8/17"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#741ce9"
+                                title="潜力客户"
+                                data="7/12"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                    </div>
+                    <div style="min-height:50px">
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#59d4ff"
+                                title="核心客户"
+                                data="7/13"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 text-center">
+                            <my-horkpi
+                                iconSize="10px"
+                                iconBgColor="#e33d88"
+                                title="重要客户"
+                                data="5/12"
+                                iconImgShow="true"
+                            ></my-horkpi>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="covered-customer-detail border-bottom" v-show="true">
@@ -56,7 +132,7 @@
                     <my-table :orderCol="4" orderType="Desc" :data="data1"></my-table>
                 </div>
             </div>
-            <div class="uncovered-customer-detail border-bottom" v-show="false">
+            <div class="uncovered-customer-detail border-bottom" v-show="true">
                 <div class="sub-title">
                     <div class="sub-title col-xs-6 col-sm-6 padding-empty">
                         <div class="pub-icon covered-customer-detail-icon"></div>
@@ -85,6 +161,7 @@
 import table from "./sub-components/table";
 import progress from "./sub-components/progress";
 import actionsheet from "./sub-components/actionsheet";
+import horkpi from "./sub-components/horizontal-kpi";
 import { PullRefresh } from "vant";
 export default {
     name: "visit-warning",
@@ -92,7 +169,8 @@ export default {
         [PullRefresh.name]: PullRefresh,
         MyTable: table,
         MyProgress: progress,
-        MyActionsheet: actionsheet
+        MyActionsheet: actionsheet,
+        MyHorkpi: horkpi
     },
     data() {
         return {
@@ -112,19 +190,25 @@ export default {
                 ["NaN", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", 10.5]
             ],
-            tableTitle2: ["用户名称","子行业", "负责销售", "客户类型", "本年BP(万)"],
+            tableTitle2: [
+                "用户名称",
+                "子行业",
+                "负责销售",
+                "客户类型",
+                "本年BP(万)"
+            ],
             data2: [
-                ["NaN","NaN", "NaN", "NaN", 20],
-                ["NaN","NaN", "NaN", "NaN", 25],
-                ["NaN","NaN", "NaN", "NaN", 30],
-                ["NaN","NaN", "NaN", "NaN", 19.1],
-                ["NaN","NaN", "NaN", "NaN", 20],
-                ["NaN","NaN", "NaN", "NaN", 25],
-                ["NaN","NaN", "NaN", "NaN", 30],
-                ["NaN","NaN", "NaN", "NaN", 19.1],
-                ["NaN","NaN", "NaN", "NaN", 20],
-                ["NaN","NaN", "NaN", "NaN", 25],
-                ["NaN","NaN", "NaN", "NaN", 10.5]
+                ["NaN", "NaN", "NaN", "NaN", 20],
+                ["NaN", "NaN", "NaN", "NaN", 25],
+                ["NaN", "NaN", "NaN", "NaN", 30],
+                ["NaN", "NaN", "NaN", "NaN", 19.1],
+                ["NaN", "NaN", "NaN", "NaN", 20],
+                ["NaN", "NaN", "NaN", "NaN", 25],
+                ["NaN", "NaN", "NaN", "NaN", 30],
+                ["NaN", "NaN", "NaN", "NaN", 19.1],
+                ["NaN", "NaN", "NaN", "NaN", 20],
+                ["NaN", "NaN", "NaN", "NaN", 25],
+                ["NaN", "NaN", "NaN", "NaN", 10.5]
             ]
         };
     },

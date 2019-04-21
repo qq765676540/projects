@@ -24,7 +24,9 @@ export default {
     props: {
         id: {
             type: String,
-            default: Math.random().toFixed(8)
+            default: function() {
+                return $.getRandomString(7);
+            }
         },
         data: {
             type: Array,
