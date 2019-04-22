@@ -6,7 +6,7 @@
         id="vist-warning"
     >
         <div class="vist-warning flex flex-column" id="vist-warning-box">
-            <div class="customer-distribution border-bottom" v-show="true" >
+            <div class="customer-distribution border-bottom" v-show="true">
                 <div class="sub-title">
                     <div class="pub-icon customer-distribution-icon"></div>
                     <span class="sub-title-name">客用户拜访覆盖</span>
@@ -116,24 +116,25 @@
                     </div>
                 </div>
             </div>
-            <div class="covered-customer-detail border-bottom" v-show="true" >
+            <div class="covered-customer-detail border-bottom" v-show="true">
                 <div class="sub-title">
                     <div class="sub-title col-xs-6 col-sm-6 padding-empty">
                         <div class="pub-icon covered-customer-detail-icon"></div>
                         <span class="sub-title-name">拜访未覆盖客户名单</span>
                     </div>
-                    <div class="col-xs-6 col-sm-6 text-right">
-                        <div>
-                            <my-actionsheet
-                                defSelected="其他"
-                                :data="['战略','其他','测试']"
-                                :myStyle="{background: '#efefef',width: '70px'}"
-                                @setScroll="setScrollStyle"
-                            ></my-actionsheet>
-                        </div>
+                    <div
+                        class="col-xs-6 col-sm-6 text-right padding-empty"
+                        style="margin:10px 15px 0px 0px"
+                    >
+                        <my-actionsheet
+                            defSelected="其他"
+                            :data="['战略','其他','测试']"
+                            :myStyle="{background: '#efefef',width: '70px'}"
+                            @setScroll="setScrollStyle"
+                        ></my-actionsheet>
                     </div>
                 </div>
-                <div style="margin:5px 15px 5px 15px;min-height:200px">
+                <div style="margin:15px 15px 20px 15px;min-height:200px">
                     <my-table orderBy="4|desc" :scrollY="163" :data="data1"></my-table>
                 </div>
             </div>
@@ -143,18 +144,19 @@
                         <div class="pub-icon covered-customer-detail-icon"></div>
                         <span class="sub-title-name">拜访未覆盖客户名单</span>
                     </div>
-                    <div class="col-xs-6 col-sm-6 text-right">
-                        <div>
-                            <my-actionsheet
-                                defSelected="其他"
-                                :data="['战略','其他','测试','战略','其他','测试','战略','其他','测试','其他','测试','战略','其他','测试','战略','其他','测试']"
-                                :myStyle="{background: '#efefef',width: '70px'}"
-                                @setScroll="setScrollStyle"
-                            ></my-actionsheet>
-                        </div>
+                    <div
+                        class="col-xs-6 col-sm-6 padding-empty text-right"
+                        style="margin:10px 15px 0px 0px"
+                    >
+                        <my-actionsheet
+                            defSelected="其他"
+                            :data="['战略','其他','测试','战略','其他','测试','战略','其他','测试','其他','测试','战略','其他','测试','战略','其他','测试']"
+                            :myStyle="{background: '#efefef',width: '70px'}"
+                            @setScroll="setScrollStyle"
+                        ></my-actionsheet>
                     </div>
                 </div>
-                <div style="margin:5px 15px 5px 15px;min-height:200px">
+                <div style="margin:15px 15px 20px 15px;min-height:200px">
                     <my-table orderBy="5|desc" :scrollY="163" :data="data2" :title="tableTitle2"></my-table>
                 </div>
             </div>
@@ -187,15 +189,15 @@ export default {
             ash1: "0px",
             ash2: "0px",
             data1: [
-                ["NaN1", "NaN", "NaN", 20],
-                ["NaN2", "NaN", "NaN", 25],
+                ["NaN1", "NaN1", "NaN", 20],
+                ["NaN2", "NaN", "NaN2", 25],
                 ["NaN3", "NaN", "NaN", 30],
-                ["NaN4", "NaN", "NaN", 19.1],
-                ["NaN", "NaN", "NaN", 20],
-                ["NaN", "NaN", "NaN", 25],
+                ["NaN4", "NaN5", "NaN4", 19.1],
+                ["NaN1", "NaN", "NaN", 20],
+                ["NaN7", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", 30],
-                ["NaN", "NaN", "NaN", 19.1],
-                ["NaN", "NaN", "NaN", 20],
+                ["NaN10", "NaN", "NaN", 19.1],
+                ["NaN", "NaN7", "NaN", 20],
                 ["NaN", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", 10.5]
             ],
@@ -207,12 +209,12 @@ export default {
                 "本年BP(万)"
             ],
             data2: [
-                ["NaN", "NaN", "NaN", "NaN", 20],
-                ["NaN", "NaN", "NaN", "NaN", 25],
-                ["NaN", "NaN", "NaN", "NaN", 30],
-                ["NaN", "NaN", "NaN", "NaN", 19.1],
-                ["NaN", "NaN", "NaN", "NaN", 20],
-                ["NaN", "NaN", "NaN", "NaN", 25],
+                ["NaN1", "NaN", "NaN1", "NaN2", 20],
+                ["NaN", "NaN2", "NaN3", "NaN", 25],
+                ["NaN3", "NaN", "NaN", "NaN", 30],
+                ["NaN", "NaN4", "NaN", "NaN", 19.1],
+                ["NaN5", "NaN", "NaN5", "NaN", 20],
+                ["NaN", "NaN", "NaN", "NaN4", 25],
                 ["NaN", "NaN", "NaN", "NaN", 30],
                 ["NaN", "NaN", "NaN", "NaN", 19.1],
                 ["NaN", "NaN", "NaN", "NaN", 20],
