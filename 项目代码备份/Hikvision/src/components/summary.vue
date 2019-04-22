@@ -169,13 +169,7 @@ export default {
   },
   mounted() {
     this.calcWidth();
-    window.addEventListener(
-      "resize",
-      () => {
-        this.calcWidth();
-      },
-      false
-    );
+    window.addEventListener("resize",this.calcWidth,false);
   },
   methods: {
     calcWidth() {
@@ -216,15 +210,22 @@ export default {
         });
       }, 500);
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize",this.calcWidth,false);
   }
 };
 </script>
 
 <style scoped>
+.van-pull-refresh {
+overflow-y: scroll !important;
+}
+
 .summary {
   width: 100%;
-  /* height: calc(100% - 5px); */
-  overflow-y: scroll;
+  /* height: calc(100% - 125px); */
+  overflow-y: scroll !important;
 }
 
 .summary .sales-plan {
@@ -325,4 +326,5 @@ export default {
 .summary .col-3 {
   height: auto;
 }
+
 </style>

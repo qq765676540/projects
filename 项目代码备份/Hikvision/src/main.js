@@ -7,8 +7,7 @@ import 'lib-flexible/flexible.js'
 import "./assets/js/jquery.extends.js"
 
 import VueI18n from 'vue-i18n'
-import messages from './assets/lang/index'
-
+import messages from './assets/lang/index';
 Vue.use(VueI18n);
 const i18n = new VueI18n({
   locale: 'zhCHS', 
@@ -20,6 +19,7 @@ Vue.prototype.$Local = Locals
 
 import Vuetree from 'vue-simple-tree'
 Vue.use(Vuetree)
+
 
 Vue.config.productionTip = false
 

@@ -1,7 +1,12 @@
 <template>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <div class="vist-warning flex flex-column">
-            <div class="customer-distribution border-bottom" v-show="true">
+    <van-pull-refresh
+        v-model="isLoading"
+        @refresh="onRefresh"
+        :style="{overflow: scroll}"
+        id="vist-warning"
+    >
+        <div class="vist-warning flex flex-column" id="vist-warning-box">
+            <div class="customer-distribution border-bottom" v-show="true" >
                 <div class="sub-title">
                     <div class="pub-icon customer-distribution-icon"></div>
                     <span class="sub-title-name">客用户拜访覆盖</span>
@@ -25,7 +30,7 @@
                                 iconBgColor="#448dff"
                                 title="战略客户"
                                 data="8/17"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -34,7 +39,7 @@
                                 iconBgColor="#741ce9"
                                 title="潜力客户"
                                 data="7/12"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -45,7 +50,7 @@
                                 iconBgColor="#59d4ff"
                                 title="核心客户"
                                 data="7/13"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -54,11 +59,11 @@
                                 iconBgColor="#e33d88"
                                 title="重要客户"
                                 data="5/12"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                     </div>
-                    <div style="min-height:60px">
+                    <div style="min-height:60px;margin:0px 0px 15px 0px">
                         <my-progress
                             :data="progressData2"
                             barBgcolor_i="linear-gradient(to right,#c03288, #6a08e4)"
@@ -76,7 +81,7 @@
                                 iconBgColor="#448dff"
                                 title="战略客户"
                                 data="8/17"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -85,7 +90,7 @@
                                 iconBgColor="#741ce9"
                                 title="潜力客户"
                                 data="7/12"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -96,7 +101,7 @@
                                 iconBgColor="#59d4ff"
                                 title="核心客户"
                                 data="7/13"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -105,31 +110,31 @@
                                 iconBgColor="#e33d88"
                                 title="重要客户"
                                 data="5/12"
-                                iconImgShow="true"
+                                :iconImgShow="true"
                             ></my-horkpi>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="covered-customer-detail border-bottom" v-show="true">
+            <div class="covered-customer-detail border-bottom" v-show="true" >
                 <div class="sub-title">
                     <div class="sub-title col-xs-6 col-sm-6 padding-empty">
                         <div class="pub-icon covered-customer-detail-icon"></div>
                         <span class="sub-title-name">拜访未覆盖客户名单</span>
                     </div>
-                    <!-- <div class="col-xs-3 col-sm-3 padding-empty"></div> -->
                     <div class="col-xs-6 col-sm-6 text-right">
                         <div>
                             <my-actionsheet
                                 defSelected="其他"
                                 :data="['战略','其他','测试']"
                                 :myStyle="{background: '#efefef',width: '70px'}"
+                                @setScroll="setScrollStyle"
                             ></my-actionsheet>
                         </div>
                     </div>
                 </div>
                 <div style="margin:5px 15px 5px 15px;min-height:200px">
-                    <my-table :orderCol="4" orderType="Desc" :data="data1"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="data1"></my-table>
                 </div>
             </div>
             <div class="uncovered-customer-detail border-bottom" v-show="true">
@@ -138,19 +143,19 @@
                         <div class="pub-icon covered-customer-detail-icon"></div>
                         <span class="sub-title-name">拜访未覆盖客户名单</span>
                     </div>
-                    <!-- <div class="col-xs-3 col-sm-3 padding-empty"></div> -->
                     <div class="col-xs-6 col-sm-6 text-right">
                         <div>
                             <my-actionsheet
                                 defSelected="其他"
-                                :data="['战略','其他','测试']"
+                                :data="['战略','其他','测试','战略','其他','测试','战略','其他','测试','其他','测试','战略','其他','测试','战略','其他','测试']"
                                 :myStyle="{background: '#efefef',width: '70px'}"
+                                @setScroll="setScrollStyle"
                             ></my-actionsheet>
                         </div>
                     </div>
                 </div>
                 <div style="margin:5px 15px 5px 15px;min-height:200px">
-                    <my-table :orderCol="5" orderType="Desc" :data="data2" :title="tableTitle2"></my-table>
+                    <my-table orderBy="5|desc" :scrollY="163" :data="data2" :title="tableTitle2"></my-table>
                 </div>
             </div>
         </div>
@@ -158,10 +163,10 @@
 </template>
 
 <script>
-import table from "./sub-components/table";
-import progress from "./sub-components/progress";
-import actionsheet from "./sub-components/actionsheet";
-import horkpi from "./sub-components/horizontal-kpi";
+import table from "./common/datatables";
+import progress from "./common/progress";
+import actionsheet from "./common/actionsheet";
+import horkpi from "./common/horizontal-kpi";
 import { PullRefresh } from "vant";
 export default {
     name: "visit-warning",
@@ -177,11 +182,15 @@ export default {
             isLoading: false,
             progressData1: 0,
             progressData2: 0,
+            asshow1: false,
+            asshow2: false,
+            ash1: "0px",
+            ash2: "0px",
             data1: [
-                ["NaN", "NaN", "NaN", 20],
-                ["NaN", "NaN", "NaN", 25],
-                ["NaN", "NaN", "NaN", 30],
-                ["NaN", "NaN", "NaN", 19.1],
+                ["NaN1", "NaN", "NaN", 20],
+                ["NaN2", "NaN", "NaN", 25],
+                ["NaN3", "NaN", "NaN", 30],
+                ["NaN4", "NaN", "NaN", 19.1],
                 ["NaN", "NaN", "NaN", 20],
                 ["NaN", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", 30],
@@ -209,10 +218,12 @@ export default {
                 ["NaN", "NaN", "NaN", "NaN", 20],
                 ["NaN", "NaN", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", "NaN", 10.5]
-            ]
+            ],
+            scroll: "scroll !important"
         };
     },
     mounted() {
+        var self = this;
         this.progressData1 = 70;
         this.progressData2 = 20;
     },
@@ -227,8 +238,12 @@ export default {
                     }
                 });
             }, 500);
+        },
+        setScrollStyle(style) {
+            this.scroll = style;
         }
-    }
+    },
+    computed: {}
 };
 </script>
 
@@ -236,10 +251,13 @@ export default {
 .padding-empty {
     padding: 0px;
 }
+.van-pull-refresh {
+    overflow-y: scroll !important;
+}
 .vist-warning {
     width: 100%;
     /* height: calc(100% - 5px); */
-    overflow-y: scroll;
+    overflow-y: scroll !important;
 }
 .pub-icon {
     margin-left: 10px;

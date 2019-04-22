@@ -59,7 +59,11 @@ let baseSerie = {
 let lineOption = {
     legend: {
         data: [],
-        show: false
+        show: false,
+        left: 'right',
+        icon : 'rect',
+        itemHeight :2,
+        top: 0
     },
     grid: {
         left: 50,

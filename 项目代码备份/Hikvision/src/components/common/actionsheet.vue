@@ -1,19 +1,31 @@
 <template>
     <div class="myselectlist" :id="id">
-        <button class="btn btn-default btn-xs" type="button" :style="myStyle" @click="show=true">
+        <button class="btn btn-default btn-xs" type="button" :style="myStyle" @click="clickBtn">
             {{selected}}
             <span class="caret" style="float: right;margin-top:8px"></span>
         </button>
-        
-        <van-actionsheet v-model="show" :title="selTitle" style="height:600px">
-            <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" style="text-align: center">
-                <van-cell v-for="(item,index) in data" :key="index" :title="item" @click="onSelect(index)"/>
+
+        <van-actionsheet v-model="show" :title="selTitle" :style="actionStyle">
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="onLoad"
+                style="text-align: center"
+            >
+                <van-cell
+                    v-for="(item,index) in data"
+                    :key="index"
+                    :title="item"
+                    @click="onSelect(index)"
+                />
             </van-list>
         </van-actionsheet>
     </div>
 </template>
 <script>
 import { Actionsheet, Icon, List, Cell } from "vant";
+import { truncate } from "fs";
 export default {
     components: {
         [Actionsheet.name]: Actionsheet,
@@ -30,7 +42,9 @@ export default {
         },
         data: {
             type: Array,
-            default: ["NaN"]
+            default() {
+                return ["NaN"];
+            }
         },
         selTitle: {
             default: "请选择:"
@@ -40,25 +54,35 @@ export default {
         },
         myStyle: {
             type: Object,
-            default: {
-                background: "#efefef"
+            default() {
+                return { background: "#efefef" };
             }
+        },
+        asshow: {
+            default: false
         }
     },
     data() {
         return {
-            show: false,
+            show: this.asshow,
             selected:
                 this.defSelected === "NaN" ? this.data[0] : this.defSelected,
             list: [],
             loading: false,
-            finished: false
+            finished: false,
+            actionStyle: {
+                height: "400px"
+            }
         };
     },
     methods: {
+        onCancel() {
+            this.show = false;
+        },
         onSelect(i) {
             this.show = false;
             this.selected = this.data[i];
+            this.$emit("setScroll", "scroll !important");
         },
         onLoad() {
             // 异步更新数据
@@ -74,8 +98,28 @@ export default {
                     this.finished = true;
                 }
             }, 500);
+        },
+        clickBtn() {
+            var scrollHeight =
+                $("#vist-warning").height() -
+                $("#vist-warning").scrollTop() +
+                "px";
+            this.actionStyle = {
+                height: scrollHeight
+            };
+            this.$emit("setScroll", "hidden !important");
+            this.show = true;
+            this.$nextTick(() => {
+                $(".van-overlay").click(() => {
+                    this.$emit("setScroll", "scroll !important");
+                });
+            });
+        },
+        setScrollStyle() {
+            this.$emit("setScroll", "scroll !important");
         }
-    }
+    },
+    computed: {}
 };
 </script>
 <style scoped>

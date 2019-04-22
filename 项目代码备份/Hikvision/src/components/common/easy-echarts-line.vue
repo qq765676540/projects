@@ -37,13 +37,7 @@ export default {
     // this.echartsIns.setOption(this.option);
     this.setOption(this.option);
     window.addEventListener(
-      "resize",
-      () => {
-        setTimeout(() => {
-          console.log("2019-04-19 11:52:20->大门日志记录:", this.echartsIns);
-          this.echartsIns.resize();
-        }, 300);
-      },
+      "resize",this.resizeEcharts,
       false
     );
   },
@@ -61,7 +55,6 @@ export default {
   },
   methods: {
     setOption(_option) {
-      
       if (this.data) {
         let _data = Object.assign([], this.data);
         let legend = [];
@@ -70,7 +63,7 @@ export default {
         _data.yData.forEach(item => {
           legend.push(item.name);
           var _serie = toolsBean.deepClone(baseSerie);
-          // _serie.name = item.name;
+          _serie.name = item.name;
           _serie.data = item.value;
           _serie.lineStyle.color.colorStops = colorStops[i];
           i++
@@ -83,22 +76,29 @@ export default {
         _option.legend.data = legend;
         _option.series = series;
         _option.xAxis.data = _data.xData;
-        console.log(
-          "2019-04-19 12:35:33->大门日志记录:",
-          _option.series[0].type
-        );
         this.echartsIns.setOption(_option);
       }
     },
     isDiff(nData, oData) {
       return JSON.stringify(nData) != JSON.stringify(oData);
+    },
+    resizeEcharts(){
+        setTimeout(() => {
+          if(this.echartsIns){
+            this.echartsIns.resize();
+          }
+        }, 300);
     }
   },
-  beforeDestroy() {
+  destroyed() {
     this.echartsIns.clear();
     this.echartsIns.dispose();
     this.option = null;
     this.echartsIns = null;
+    window.removeEventListener(
+      "resize",this.resizeEcharts,
+      false
+    );
   }
 };
 </script>

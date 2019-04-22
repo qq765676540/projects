@@ -1,31 +1,38 @@
 <template>
-<div class="selector flex flex-column flex-1">
-    <div class="selector-time flex flex-column flex-1">
-        <span class="title flex-1">时间范围</span>
-        <ul class="selections flex-3">
-                <li v-for="(key, value) in timeItems" :key="value"  class="time-item" :class="{active: key}" @click="selectTime(value)">
+<transition v-show="show" enter-active-class="animated faster fadeInUp" leave-active-class="animated faster fadeOutDown">
+    <div class="selector flex flex-column flex-1">
+        <div class="selector-time flex flex-column flex-1">
+            <span class="title flex-1">时间范围</span>
+            <ul class="selections flex-3">
+                <li v-for="(key, value) in timeItems" :key="value" class="time-item" :class="{active: key}" @click="selectTime(value)">
                     {{value}}
                 </li>
-        </ul>
-    </div> 
-    <div class="selector-org-tree flex flex-column flex-3">
-        <span class="title flex-1">时间范围</span>
-        <vue-tree :tree-data="treeData" v-model="checkedOrgIds" :options="options" class="org-tree flex-9" />
+            </ul>
+        </div>
+        <div class="selector-org-tree flex flex-column flex-3">
+            <span class="title flex-1">时间范围</span>
+            <vue-tree :tree-data="treeData" v-model="ids" :options="options" class="org-tree flex-9" />
+        </div>
+        <div class="selector-btn">
+            <!-- <div class="selector-btn-cancle inactive" @click="cancle">取消</div> -->
+            <div class="selector-btn-confirm active" @click="confirm">确认</div>
+        </div>
     </div>
-    <div class="selector-btn">
-        <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
-        <div class="selector-btn-confirm active" @click="confirm">确认</div>
-    </div>
-</div>
+</transition>
 </template>
 
 <script>
 import treeData from '../data/tree'
+// import vueTree from '../common/tree/vue-tree'
+
+import Tools from '../../tools/tools';
+var tool = new Tools();
 
 export default {
+    props: ['selectedTime', 'selectedOrg', 'show'],
     data() {
         return {
-            selectedTIme: '本周',
+            time: '',
             timeItems: {
                 本周: true,
                 本月: false,
@@ -36,25 +43,31 @@ export default {
                 上季: false,
                 上年: false
             },
-            checkedOrgIds: [],
+            ids: [],
             options: {},
             treeData: treeData
         }
     },
+    created() {
+        this.time = this.selectedTime;
+        this.ids = tool.deepClone(this.selectedOrg);
+    },
     methods: {
         selectTime(name) {
-            for(var key in this.timeItems) {
+            for (var key in this.timeItems) {
                 this.timeItems[key] = false;
             }
             this.timeItems[name] = true;
-            this.selectedTIme = name;
+            this.time = name;
         },
         cancle() {
             this.$emit('cancle');
         },
         confirm() {
-            this.$emit('confirm', {time: this.selectedTIme, org: this.checkedOrgIds});
-            // console.log('checkedIds', this.checkedOrgIds)
+            this.$emit('confirm', {
+                time: this.time,
+                org: this.ids
+            });
         }
     }
 }
@@ -69,10 +82,10 @@ export default {
     height: calc(100% - 120px);
     width: 100%;
     position: absolute;
-    top: 120px;
+    top: 124px;
     left: 0;
-    border-radius: 10px;
     padding: 0 10px 0 10px;
+    z-index: 100;
 }
 
 .selector .title {
@@ -90,7 +103,7 @@ export default {
 }
 
 .selector .time-item {
-    border-radius: 20px; 
+    border-radius: 20px;
     border: 1px solid grey;
     margin-left: 10px;
     margin-right: 10px;
@@ -150,8 +163,10 @@ export default {
     height: 30px;
     line-height: 30px;
     width: 70px;
-    left: calc(50%);
-    border-radius: 0 20px 20px 0;
+    /* left: calc(50%); */
+    /* border-radius: 0 20px 20px 0; */
+    left: calc(50% - 35px);
+    border-radius: 20px;
 }
 
 .selector .selector-btn-cancle.active,
@@ -166,7 +181,8 @@ export default {
     color: black;
 }
 
-.vue-tree-list .item-checkbox, .vue-tree-list .item-label {
+.vue-tree-list .item-checkbox,
+.vue-tree-list .item-label {
     font-size: 14px !important;
 }
 

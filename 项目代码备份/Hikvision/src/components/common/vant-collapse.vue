@@ -1,7 +1,7 @@
 <template>
 <div :id="id">
     <div :id="id" class="vant-collapse">
-          <van-collapse v-model="activeName" accordion>
+          <van-collapse v-model="activeName" accordion >
             <van-collapse-item v-for="(item,key) in data" 
             :title="item.title" 
             :key="key" 
@@ -109,12 +109,8 @@ export default {
   margin-top: 10px;
 }
 
-.title-value{
-  font-size: 20px;
-  margin-right: 10px;
-}
 
-.context-li{
-  min-height: 30px;
+.vant-collapse >>> .van-cell__title{
+  margin-left: -20px;
 }
 </style>

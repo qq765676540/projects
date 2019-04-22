@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <!-- <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text="" left-arrow @click-left="onClickLeft"/> -->
+    <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text="" left-arrow @click-left="onClickLeft" :sticky="true"/>
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :swipeable="true" :sticky="true" :animated="true">
         <van-tab :title="$t('message.home') "></van-tab>
         <van-tab :title="$t('message.income')"></van-tab>
@@ -11,7 +11,7 @@
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
         <i class="selection-btn flex-1" @click="showSelector"></i>
         <van-switch v-model="selectorFlag" active-color="#07c160" inactive-color="#f44" size="15px" class="selector-switch" />
-        <selector v-show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect"></selector>
+        <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
         <div class="selected-bar flex flex-row flex-5">
             <ul class="selected-dim-date flex flex-row flex-2">
                 <li class="name">时间:</li>
@@ -19,11 +19,10 @@
             </ul>
             <ul class="selected-dim-org flex flex-row flex-5">
                 <li class="name">组织:</li>
-                <li class="values flex-3" v-text="selectedOrg"></li>
+                <li class="values flex-3" v-text="selectedOrg.toString()"></li>
             </ul>
         </div>
     </div>
-    <!-- <van-switch v-model="lang" active-color="#07c160" inactive-color="#f44" size="15px" class="lang-switch"/> -->
     <router-view class="view" />
 </div>
 </template>
@@ -40,6 +39,9 @@ import selector from './components/sub-components/selector'
 // import Cube from './tools/cube';
 // var cube = new Cube();
 
+import Tools from './tools/tools';
+var tool = new Tools();
+
 export default {
     name: 'App',
     components: {
@@ -51,7 +53,7 @@ export default {
     },
     data() {
         return {
-            active: 1,
+            active: 0,
             lang: true,
             selBarFlag: true,
             pageMap: {
@@ -63,7 +65,7 @@ export default {
             },
             selectorFlag: false,
             selectedTime: '本周',
-            selectedOrg: ''
+            selectedOrg: ['行业:电信', '零售:大型超市']
         }
     },
     mounted() {
@@ -71,7 +73,7 @@ export default {
          * qApp: sense app 对象
          * this: vue 对象
          * rankByCustomer: 对象config中KPI公式
-         * page2: store中参数名称
+         * customerData: store中参数名称
          */
         // cube.getData(qApp, this, 'rankByCustomer', 'customerData');
     },
@@ -82,15 +84,15 @@ export default {
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
-        cancleSelect() {
+        cancleSelect(data) {
             this.selectorFlag = false;
         },
         confirmSelect(data) {
-            console.log('data: ', data);
+            console.log('confirm data: ', data);
             this.selectorFlag = false;
             this.selectedTime = data.time;
-            this.selectedOrg = data.org.toString();
-
+            this.selectedOrg = data.org;
+            $(".selected-dim-org > .values").css({maxWidth: $(".selected-dim-org").width()-40});
         }
     },
     watch: {
@@ -113,6 +115,7 @@ export default {
 
 <style>
 @import "./assets/css/common.css";
+@import "./assets/css/animate.css";
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -125,6 +128,7 @@ body,
 #app {
   height: 100%;
   width: 100%;
+  overflow: hidden !important;
 }
 
 .lang-switch {
@@ -240,8 +244,8 @@ body,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    min-width: calc(100% - 180px);
-    max-width: calc(100% - 180px);
+    /* min-width: calc(100% - 180px);
+    max-width: calc(100% - 180px); */
 }
 
 .selector-switch {
