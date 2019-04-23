@@ -7,7 +7,7 @@
 <script>
 import accounting from "accounting";
 import echarts from "echarts";
-import { lineOption, baseSerie,colorStops } from "../eOption/line-option.js";
+import { lineOption, baseSerie, colorStops } from "../eOption/line-option.js";
 import Tools from "../../tools/tools";
 var toolsBean = new Tools();
 
@@ -36,10 +36,7 @@ export default {
     this.echartsIns = echarts.init(document.getElementById(this.id));
     // this.echartsIns.setOption(this.option);
     this.setOption(this.option);
-    window.addEventListener(
-      "resize",this.resizeEcharts,
-      false
-    );
+    window.addEventListener("resize", this.resizeEcharts, false);
   },
   watch: {
     data: {
@@ -65,8 +62,9 @@ export default {
           var _serie = toolsBean.deepClone(baseSerie);
           _serie.name = item.name;
           _serie.data = item.value;
+          _serie.silent = true;
           _serie.lineStyle.color.colorStops = colorStops[i];
-          i++
+          i++;
           i = i > 1 ? 0 : i;
           series.push(_serie);
         });
@@ -82,12 +80,12 @@ export default {
     isDiff(nData, oData) {
       return JSON.stringify(nData) != JSON.stringify(oData);
     },
-    resizeEcharts(){
-        setTimeout(() => {
-          if(this.echartsIns){
-            this.echartsIns.resize();
-          }
-        }, 300);
+    resizeEcharts() {
+      setTimeout(() => {
+        if (this.echartsIns) {
+          this.echartsIns.resize();
+        }
+      }, 300);
     }
   },
   destroyed() {
@@ -95,10 +93,7 @@ export default {
     this.echartsIns.dispose();
     this.option = null;
     this.echartsIns = null;
-    window.removeEventListener(
-      "resize",this.resizeEcharts,
-      false
-    );
+    window.removeEventListener("resize", this.resizeEcharts, false);
   }
 };
 </script>

@@ -40,7 +40,8 @@ module.exports = {
           autoprefixer(),
           pxtorem({
             rootValue: 40,
-            propList: ['*']
+            propList: ['*'],
+            selectorBlackList:['van-circle__layer']
           })
         ]
       }

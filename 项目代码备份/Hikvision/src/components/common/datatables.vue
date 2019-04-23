@@ -71,10 +71,13 @@ export default {
             searching: false,
             info: false
         });
-        table
-            .column(this.orderBy.split("|")[0] - 1 + ":visible")
+        table.column(this.orderBy.split("|")[0] - 1 + ":visible")
             .order(this.orderBy.split("|")[1])
             .draw();
+        
+        $('.dataTables_wrapper.no-footer .dataTables_scrollBody').css({
+            border: 'none'
+        });
     },
     methods: {},
     computed: {},
@@ -86,9 +89,10 @@ export default {
 <style scoped>
 @import "../../assets/css/jquery.dataTables.min.css";
 @import "../../assets/css/fixedHeader.dataTables.min.css";
-/* table.dataTable thead th, table.dataTable thead td {
+table.dataTable thead th,
+table.dataTable thead td {
     border-bottom: 1px solid #b3adad;
-} */
+}
 
 </style>
 

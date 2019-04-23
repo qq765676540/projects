@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import summary from '@/components/summary';
-import planExecution from '@/components/plan-execution';
-import visitWarning from '@/components/visit-warning';
-import visitCustomer from '@/components/visit-customer';
 import refresh from '@/components/refresh';
-import customerDistribution from '@/components/customer-distribution';
 
 Vue.use(Router)
 
@@ -20,28 +15,28 @@ export default new Router({
     {
       path: '/summary',
       name: 'summary',
-      component: summary
+      component: resolve => require(['../components/summary'], resolve)
     }, {
       path: '/plan-execution',
       name: 'plan-execution',
-      component: planExecution,
+      component: resolve => require(['../components/plan-execution'], resolve)
     }, {
       path: '/visit-warning',
       name: 'visit-warning',
-      component: visitWarning
+      component: resolve => require(['../components/visit-warning'], resolve)
     }, {
       path: '/visit-customer',
       name: 'visit-customer',
-      component: visitCustomer
+      component: resolve => require(['../components/visit-customer'], resolve)
     }, {
       path: '/customer-distribution',
       name: 'customer-distribution',
-      component: customerDistribution
+      component: resolve => require(['../components/customer-distribution'], resolve)
     },
     {
       path: '/refresh',
       name: 'refresh',
-      component: refresh
+      component: resolve => require(['../components/refresh'], resolve)
     }
   ]
 })

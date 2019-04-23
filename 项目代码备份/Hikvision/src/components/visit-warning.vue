@@ -2,7 +2,7 @@
     <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh"
-        :style="{overflow: scroll}"
+        :style="{'overflow-y': scroll}"
         id="vist-warning"
     >
         <div class="vist-warning flex flex-column" id="vist-warning-box">
@@ -156,7 +156,7 @@
                         ></my-actionsheet>
                     </div>
                 </div>
-                <div style="margin:15px 15px 20px 15px;min-height:200px">
+                <div style="margin:15px 15px 50px 15px;min-height:200px">
                     <my-table orderBy="5|desc" :scrollY="163" :data="data2" :title="tableTitle2"></my-table>
                 </div>
             </div>
@@ -225,11 +225,14 @@ export default {
         };
     },
     mounted() {
-        var self = this;
+        this.$parent.active = this.findKey(this.$parent.pageMap, this.$route.name);
         this.progressData1 = 70;
         this.progressData2 = 20;
     },
     methods: {
+        findKey(obj, value, compare = (a, b) => a === b) {
+        return Object.keys(obj).find(k => compare(obj[k], value));
+        },
         onRefresh() {
             setTimeout(() => {
                 this.isLoading = false;
@@ -255,6 +258,7 @@ export default {
 }
 .van-pull-refresh {
     overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 .vist-warning {
     width: 100%;

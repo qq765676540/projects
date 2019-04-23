@@ -78,7 +78,7 @@
                     <span class="sub-title-name">组织架构</span>
                 </div>
                 <div class="content-box">
-                    <vant-collapse :id="'collapse-1'"></vant-collapse>
+                    <vant-collapse :id="'collapse-1'" :data="collapseData" :isDefaultTitle="true"></vant-collapse>
                 </div>
             </div>
             <div class="vist-num-trend border-bottom flex flex-column">
@@ -164,12 +164,57 @@ export default {
           value: "831200"
         }
       ],
-      isLoading: false
+      isLoading:false,
+      collapseData:[{
+          name:'一级组织架构',
+          data:"指标1 指标2 指标3",
+          subData:[{
+            subTitle:"二级组织架构",
+            context:"指标1 指标2 "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1 指标2 "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1      指标2      "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1      指标2      "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1      指标2      "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1      指标2      "
+          }]
+        },{
+          name:'二级组织架构',
+          data:"指标1 指标2 ",
+          subData:[{
+            subTitle:"二级组织架构",
+            context:"指标1 指标2 "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1 指标2 "
+          },{
+            subTitle:"二级组织架构",
+            context:"指标1 指标2 "
+          }]
+        },{
+          name:'三级组织架构',
+          data:"指标1 指标2 ",
+          subData:[{
+            subTitle:"二级组织架构"
+          }]
+        }]
     };
+  },
+  beforeCreate() {
   },
   mounted() {
     this.calcWidth();
     window.addEventListener("resize",this.calcWidth,false);
+    this.$parent.active = this.findKey(this.$parent.pageMap,this.$route.name);
   },
   methods: {
     calcWidth() {
@@ -199,6 +244,9 @@ export default {
         });
       }
     },
+    findKey(obj, value, compare = (a, b) => a === b) {
+        return Object.keys(obj).find(k => compare(obj[k], value))
+    },
     onRefresh() {
       setTimeout(() => {
         this.isLoading = false;
@@ -208,20 +256,16 @@ export default {
             t: Date.now()
           }
         });
-      }, 500);
+      }, 300);
     }
   },
   beforeDestroy() {
-    window.removeEventListener("resize",this.calcWidth,false);
+    // window.removeEventListener("resize",this.calcWidth,false);
   }
 };
 </script>
 
 <style scoped>
-.van-pull-refresh {
-overflow-y: scroll !important;
-}
-
 .summary {
   width: 100%;
   /* height: calc(100% - 125px); */
@@ -233,10 +277,6 @@ overflow-y: scroll !important;
   /* max-height: 1500px; */
 }
 
-.summary .border-bottom {
-  border-bottom: 5px solid #e6e9f0;
-  /* box-shadow: 2px 2px 3px 1px #888888; */
-}
 
 .summary .org-structure {
   min-height: 270px;
@@ -297,14 +337,6 @@ overflow-y: scroll !important;
 .summary .col-2-kpi-row {
   min-width: 150px;
   max-width: 260px;
-}
-
-.summary .pub-icon {
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
 .summary .sales-icon {

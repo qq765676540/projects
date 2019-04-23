@@ -68,7 +68,7 @@ let lineOption = {
     grid: {
         left: 50,
         top: 30,
-        bottom: 50,
+        bottom: 40,
         right: 10
     },
     xAxis: {

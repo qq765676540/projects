@@ -5,13 +5,13 @@
             <span class="caret" style="float: right;margin-top:8px"></span>
         </button>
 
-        <van-actionsheet v-model="show" :title="selTitle" :style="actionStyle">
+        <van-actionsheet v-model="show" :title="selTitle">
             <van-list
                 v-model="loading"
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="onLoad"
-                style="text-align: center"
+                style="text-align: center;height:400px"
             >
                 <van-cell
                     v-for="(item,index) in data"
@@ -71,7 +71,7 @@ export default {
             loading: false,
             finished: false,
             actionStyle: {
-                height: "400px"
+                height: "500px"
             }
         };
     },

@@ -78,7 +78,9 @@ export default {
 
 <style scoped>
 .vant-pie >>> .van-circle__layer {
-  transform-origin: 50% !important;
+  /* transform-origin: 50% !important;    */
+   /* transform-origin: 0px 0px !important; */
+
 }
 
 .vant-pie {
