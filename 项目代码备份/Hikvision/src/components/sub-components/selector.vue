@@ -1,38 +1,50 @@
 <template>
-<transition v-show="show" enter-active-class="animated faster fadeInUp" leave-active-class="animated faster fadeOutDown">
-    <div class="selector flex flex-column flex-1">
-        <div class="selector-time flex flex-column flex-1">
-            <span class="title flex-1">时间范围</span>
-            <ul class="selections flex-3">
-                <li v-for="(key, value) in timeItems" :key="value" class="time-item" :class="{active: key}" @click="selectTime(value)">
-                    {{value}}
-                </li>
-            </ul>
+    <transition
+        v-show="show"
+        enter-active-class="animated faster fadeInUp"
+        leave-active-class="animated faster fadeOutDown"
+    >
+        <div class="selector flex flex-column flex-1">
+            <div class="selector-time flex flex-column flex-1">
+                <span class="title flex-1">时间范围</span>
+                <ul class="selections flex-3">
+                    <li
+                        v-for="(value, key) in timeItems"
+                        :key="key"
+                        class="time-item"
+                        :class="{active: value}"
+                        @click="selectTime(key)"
+                    >{{key}}</li>
+                </ul>
+            </div>
+            <div class="selector-org-tree flex flex-column flex-3">
+                <span class="title flex-1">组织架构</span>
+                <vue-tree
+                    :tree-data="treeData"
+                    v-model="ids"
+                    :options="options"
+                    class="org-tree flex-9"
+                />
+            </div>
+            <div class="selector-btn">
+                <!-- <div class="selector-btn-cancle inactive" @click="cancle">取消</div> -->
+                <div class="selector-btn-confirm active" @click="confirm">确定</div>
+            </div>
         </div>
-        <div class="selector-org-tree flex flex-column flex-3">
-            <span class="title flex-1">时间范围</span>
-            <vue-tree :tree-data="treeData" v-model="ids" :options="options" class="org-tree flex-9" />
-        </div>
-        <div class="selector-btn">
-            <!-- <div class="selector-btn-cancle inactive" @click="cancle">取消</div> -->
-            <div class="selector-btn-confirm active" @click="confirm">确认</div>
-        </div>
-    </div>
-</transition>
+    </transition>
 </template>
 
 <script>
-import treeData from '../data/tree'
-// import vueTree from '../common/tree/vue-tree'
+import treeData from "../data/tree";
 
-import Tools from '../../tools/tools';
+import Tools from "../../tools/tools";
 var tool = new Tools();
 
 export default {
-    props: ['selectedTime', 'selectedOrg', 'show'],
+    props: ["selectedTime", "selectedOrg", "show", "treeDataSet"],
     data() {
         return {
-            time: '',
+            time: "",
             timeItems: {
                 本周: true,
                 本月: false,
@@ -44,13 +56,24 @@ export default {
                 上年: false
             },
             ids: [],
-            options: {},
+            options: {
+                idsWithParent: false,
+                depthOpen: 0,
+                openIcon: 'fa fa-angle-right',
+                closeIcon: 'fa fa-angle-down'
+            },
             treeData: treeData
         }
     },
     created() {
         this.time = this.selectedTime;
         this.ids = tool.deepClone(this.selectedOrg);
+    },
+    computed: {
+        
+    },
+    watch: {
+        
     },
     methods: {
         selectTime(name) {
@@ -61,21 +84,21 @@ export default {
             this.time = name;
         },
         cancle() {
-            this.$emit('cancle');
+            this.$emit("cancle");
         },
         confirm() {
-            this.$emit('confirm', {
+            this.$emit("confirm", {
                 time: this.time,
                 org: this.ids
             });
         }
     }
-}
+};
 </script>
 
 <style>
-@import url('../../assets/css/font-awesome.min.css');
-@import url('../../assets/css/bootstrap.min.css');
+@import url("../../assets/css/font-awesome.min.css");
+@import url("../../assets/css/bootstrap.min.css");
 
 .selector {
     background-color: white;
@@ -104,7 +127,7 @@ export default {
 
 .selector .time-item {
     border-radius: 20px;
-    border: 1px solid grey;
+    border: 0.025rem solid rgba(128, 128, 128, 0.5);
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 11px;
@@ -116,7 +139,7 @@ export default {
 }
 
 .selector .time-item.active {
-    background-color: #039CE3;
+    background-color: #039ce3;
     color: white;
     border: none;
 }
@@ -127,8 +150,10 @@ export default {
 }
 
 .selector .selector-org-tree {
-    max-width: calc(100% - 180px);
-    min-width: calc(100% - 180px);
+    max-height: calc(100% - 165px);
+    min-height: calc(100% - 165px);
+    border-bottom: 1px solid rgba(139, 139, 143, 0.2);
+    padding-bottom: 6px;
 }
 
 .selector .vue-tree-list {
@@ -163,15 +188,13 @@ export default {
     height: 30px;
     line-height: 30px;
     width: 70px;
-    /* left: calc(50%); */
-    /* border-radius: 0 20px 20px 0; */
     left: calc(50% - 35px);
     border-radius: 20px;
 }
 
 .selector .selector-btn-cancle.active,
 .selector .selector-btn-confirm.active {
-    background-color: #039CE3;
+    background-color: #039ce3;
     color: white;
 }
 
@@ -184,10 +207,11 @@ export default {
 .vue-tree-list .item-checkbox,
 .vue-tree-list .item-label {
     font-size: 14px !important;
+    color: rgb(90, 92, 90);
 }
 
 .vue-tree-list .item-wrapper,
-.vue-tree-list .item-wrapper>span {
+.vue-tree-list .item-wrapper > span {
     display: flex;
     align-items: center;
 }
@@ -199,12 +223,32 @@ export default {
 }
 
 .vue-tree-list .fa-angle-right:before {
-    font-size: 16px;
-    content: "\f054";
+    font-size: 26px;
+    color: #949191;
 }
 
 .vue-tree-list .fa-angle-down:before {
-    font-size: 16px;
-    content: "\f078";
+    font-size: 26px;
+    color: #949191;
+}
+
+.vue-tree-list .fa-square-o:before,
+.vue-tree-list .fa-check-square-o:before,
+.vue-tree-list .fa-minus-square-o:before {
+    color: #949191;
+    font-size: 20px;
+}
+
+.vue-tree-list .fa-check-square-o:before {
+    color: #03a9f4;
+}
+
+.vue-tree-list .item-label {
+    text-indent: 5px;
+}
+
+.vue-tree-list .item-label.item-bold {
+    font-weight: 500;
+    color: black;
 }
 </style>

@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      activeName: 0,
+      activeName: -1111,
       wholeContext: [],
       titleValue: `
         <div class="flex flex-row">
@@ -104,7 +104,9 @@ export default {
       }
     });
     $(".title-name-icon").each((index, ele) => {
-      $(ele).css({ backgroundColor: this.getRandomColor() });
+      // $(ele).css({ backgroundColor: this.getRandomColor() });
+      $(ele).css({ backgroundColor: 'rgb(96, 203, 193)' });
+      
     });
   },
   methods: {
@@ -119,7 +121,6 @@ export default {
       if (event.target.innerText.indexOf("...") > -1) {
         this.$parent.$parent.$parent.popShow = true;
         this.$parent.$parent.$parent.popContext = this.wholeContext[index];
-        console.log("2019-04-22 16:48:31->大门日志记录:", index);
       }
     }
   },

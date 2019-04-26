@@ -2,7 +2,7 @@
     <div class="flex flex-column">
         <div class="flex flex-1">
             <div class="flex flex-1 flex-justify-left flex-align-center">{{title}}</div>
-            <div class="flex-3"></div>
+            <div class="flex-1"></div>
             <div class="flex flex-1 flex-justify-right flex-align-center" :style="fontStyle">{{data+'%'}}</div>
         </div>
         <div class="flex-1">

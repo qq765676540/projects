@@ -7,7 +7,12 @@ import * as mutations from './mutations'
 Vue.use(Vuex)
 
 var state = {
-  customerData: {}
+  summaryCircle:[],
+  summaryEasyKPI:[],
+  summaryLineA:[],
+  summaryLineB:[],
+  planExecutionLine:[],
+  visitWarningKPI:[]
 }
 
 const store = new Vuex.Store({

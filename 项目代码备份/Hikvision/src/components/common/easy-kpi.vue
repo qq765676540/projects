@@ -1,7 +1,7 @@
 <template>
 <div :id="id" class="easy-kpi flex flex-1">
     <div class="flex flex-1 flex-align-center">
-        <div class="flex" :style="{'color':data.color,'font-size':data.size}">{{kpiValue}}</div>
+        <div class="flex" :style="{'color':kpiStyle.color,'font-size':kpiStyle.size}">{{kpiValue}}</div>
     </div>
 </div>
 </template>
@@ -19,12 +19,14 @@ export default {
       default: Math.random().toFixed(8)
     },
     data: {
+      default: 10000
+    },
+    kpiStyle: {
       type: Object,
       default() {
         return {
           color: "#333333",
-          size: "60px",
-          value: "93200"
+          size: "60px"
         };
       }
     }
@@ -38,7 +40,7 @@ export default {
   },
   computed: {
     kpiValue(){
-      return accounting.formatNumber(this.data.value);
+      return accounting.formatNumber(this.data);
     }
   },
 };

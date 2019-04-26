@@ -1,17 +1,17 @@
 <template>
 <div id="app">
-    <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text="" left-arrow @click-left="onClickLeft" :sticky="true"/>
-    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :swipeable="true" :sticky="true" >
-        <van-tab :title="$t('message.home')"></van-tab>
-        <van-tab :title="$t('message.income')"></van-tab>
-        <van-tab :title="$t('message.margin')"></van-tab>
-        <van-tab :title="$t('message.cost')"></van-tab>
-        <van-tab :title="$t('message.grossMargin')"></van-tab>
+    <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text="" left-arrow @click-left="onClickLeft" :sticky="true" />
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true">
+        <van-tab title="总体情况"><router-view v-if="active==0" class="view-container" /></van-tab>
+        <van-tab title="计划执行"><router-view v-if="active==1" class="view-container no-padding" /></van-tab>
+        <van-tab title="拜访预警"><router-view v-if="active==2" class="view-container" /></van-tab>
+        <van-tab title="拜访对象"><router-view v-if="active==3" class="view-container" /></van-tab>
+        <van-tab title="拜访构成"><router-view v-if="active==4" class="view-container" /></van-tab>
     </van-tabs>
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
-        <i class="selection-btn flex-1" @click="showSelector"></i>
-        <van-switch v-model="selectorFlag" active-color="#07c160" inactive-color="#f44" size="15px" class="selector-switch" />
-        <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+        <div class="selector-switch-box relative">
+            <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo" ></vue-switch>
+        </div>
         <div class="selected-bar flex flex-row flex-5">
             <ul class="selected-dim-date flex flex-row flex-2">
                 <li class="name">时间:</li>
@@ -23,327 +23,379 @@
             </ul>
         </div>
     </div>
-    <van-popup v-model="popShow" >{{popContext}}</van-popup>
-    <!-- <transition :name="transitionName"> -->
-      <!-- <keep-alive> -->
-      <router-view class="view transitionBody" />
-      <!-- </keep-alive> -->
-    <!-- </transition> -->
-    <!-- <v-touch v-on:swipeleft="touchMethod()" v-on:swiperight="touchMethod()" tag="div"> -->
-      <!-- <keep-alive>
-        <router-view class="view"></router-view>
-      </keep-alive> -->
-    <!-- </v-touch> -->
-  </div>
+    <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+    <van-popup v-model="popShow">{{popContext}}</van-popup>
+    <waterMark userName="王永刚"></waterMark>
+</div>
 </template>
 
 <script>
-import { NavBar, Tab, Tabs, Switch, Popup } from "vant";
+import {
+    NavBar,
+    Tab,
+    Switch,
+    Popup
+} from "vant";
 import animate from "animate.css";
 
-import selector from "./components/sub-components/selector";
-// import Cube from './tools/cube';
-// var cube = new Cube();
+import Tabs from './components/common/vant-tabs/index';
+
+import vueSwitch from './components/common/vue-switch'
+import selector from './components/sub-components/selector';
+import waterMark from './components/common/water-mark'
 
 import Tools from "./tools/tools";
 var tool = new Tools();
 
+import Cube from "./tools/cube";
+var cube = new Cube();
+
 export default {
-  name: "App",
-  components: {
-    [NavBar.name]: NavBar,
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
-    [Switch.name]: Switch,
-    selector,
-    [Popup.name]: Popup
-  },
-  data() {
-    return {
-      transitionName: "",
-      active: 0,
-      lang: true,
-      selBarFlag: true,
-      pageMap: {
-        0: "summary",
-        1: "plan-execution",
-        2: "visit-warning",
-        3: "visit-customer",
-        4: "customer-distribution"
-      },
-      selectorFlag: false,
-      selectedTime: "本周",
-      selectedOrg: ["行业:电信", "零售:大型超市"],
-      popShow: false,
-      popContext: ""
-    };
-  },
-  mounted() {
-    /**
-     * qApp: sense app 对象
-     * this: vue 对象
-     * rankByCustomer: 对象config中KPI公式
-     * customerData: store中参数名称
-     */
-    // cube.getData(qApp, this, 'rankByCustomer', 'customerData');
-    this.touchMethod();
-  },
-  methods: {
-    onClickLeft() {
-      console.log("onClickLeft");
+    name: "App",
+    components: {
+        [NavBar.name]: NavBar,
+        [Tab.name]: Tab,
+        [Tabs.name]: Tabs,
+        [Switch.name]: Switch,
+        selector,
+        [Popup.name]: Popup,
+        waterMark,
+        vueSwitch
     },
-    showSelector() {
-      this.selectorFlag = this.selectorFlag ? false : true;
+    data() {
+        return {
+            active: 0,
+            lang: false,
+            selBarFlag: true,
+            pageMap: {
+                0: "summary",
+                1: "plan-execution",
+                2: "visit-warning",
+                3: "visit-customer",
+                4: "customer-distribution"
+            },
+            selectorFlag: false,
+            selectedTime: "本周",
+            selectedOrg: [],
+            popShow: false,
+            popContext: "",
+            switchStyle: {width:54, height:24, bgColor: 'rgba(199, 199, 199, 0.68)', circleColor: 'red'},
+            switchIsOpen: false
+        };
     },
-    cancleSelect(data) {
-      this.selectorFlag = false;
-    },
-    confirmSelect(data) {
-      this.selectorFlag = false;
-      this.selectedTime = data.time;
-      this.selectedOrg = data.org;
-      $(".selected-dim-org > .values").css({
-        maxWidth: $(".selected-dim-org").width() - 40
-      });
-    },
-    touchMethod() {
-      let _this = this;
-      $("body").on("touchstart", function(e) {
-          if (!_this.selectorFlag) {
-            e.preventDefault();
-            var touch = e.originalEvent,
-              startX = touch.changedTouches[0].pageX,
-              startY = touch.changedTouches[0].pageY;
-            $(this).on("touchmove", function(q) {
-              q.preventDefault();
-              touch = q.originalEvent.touches[0] || q.originalEvent.changedTouches[0];
-              let activeIndex = _this.findKey(_this.pageMap, _this.$route.name);
-              if (touch.pageX - startX > 150) {
-                //向右
-                if (activeIndex < 1) {
-                  activeIndex = 4;
-                } else {
-                  activeIndex--;
-                }
-                _this.transitionName = "transitionRight";
-                _this.active = activeIndex;
-                _this.$router.push(_this.pageMap[activeIndex]);
-                $(this).off("touchmove");
-              } else if (touch.pageX - startX < -150) {
-                //向左
-                if (activeIndex > 3) {
-                  activeIndex = 0;
-                } else {
-                  activeIndex++;
-                }
-                _this.transitionName = "transitionLeft";
-                _this.active = activeIndex;
-                _this.$router.push(_this.pageMap[activeIndex]);
-                $(this).off("touchmove");
-              }
-            });
-          }
-        })
-        .on("touchend", function() {
-          $(this).off("touchmove");
+    beforeCreate() {
+        parent.qApp.field('DimensionName').clear();
+        parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
+            this.cubeInit();
         });
     },
-    findKey(obj, value, compare = (a, b) => a === b) {
-      return Object.keys(obj).find(k => compare(obj[k], value));
-    }
-  },
-  watch: {
-    active(pIndex) {
-      this.$router.push(this.pageMap[pIndex]);
-      this.selBarFlag = pIndex == 1 ? false : true;
+	mounted(){
+	},
+    methods: {
+        resultTreeData(data) {
+            if (data.dataName === "orgDataL1") {
+                $.each(data.data, (i, v) => {
+                    var level = {};
+                    level.id = v[0].qText;
+                    level.idName = v[0].qText;
+                    level.title = v[0].qText;
+                    level.parentid = "";
+                    this.tree.push(level);
+                });
+            } else {
+                $.each(data.data, (i, v)=> {
+                    var level = {};
+                    level.id = v[1].qText;
+                    level.idName = v[0].qText + ":" + v[1].qText;
+                    level.title = v[1].qText;
+                    level.parentid = v[0].qText;
+                    this.tree.push(level);
+                });
+            }
+        },
+        onClickLeft() {
+            // console.log("onClick");
+        },
+        showSelector() {
+            this.selectorFlag = this.selectorFlag ? false : true;
+        },
+        cancleSelect(data) {
+            this.selectorFlag = false;
+        },
+        confirmSelect(data) {
+            parent.qApp.field('DimensionName').clear();
+            parent.qApp.field('DimensionName').selectValues([{qText: data.time}], true, true);
+            this.selectorFlag = false;
+            this.selectedTime = data.time;
+            this.selectedOrg = data.org;
+            console.log('seleted: ', data.time, data.org);
+
+            $(".selected-dim-org > .values").css({
+                maxWidth: $(".selected-dim-org").width() - 40
+            });
+            this.switchIsOpen = false;
+        },
+        switchTo() {
+            this.selectorFlag = !this.selectorFlag;
+            this.switchIsOpen = true;
+
+        },
+		cubeInit(time,org) {
+            //总体情况 - 销售日志 - 环形进图条
+            cube.getData(
+                parent.qApp,
+                this,
+                "summaryCircle",
+                0,
+                "summaryCircle"
+            );
+
+            //总体情况 - 销售日志 - 环形进图条 - 联动KPI
+            cube.getData(
+                parent.qApp,
+                this,
+                "summaryEasyKPI",
+                0,
+                "summaryEasyKPI"
+            );
+
+            // 总体情况 - 拜访次数周趋势
+            cube.getData(
+                parent.qApp,
+                this,
+                "summaryLineA",
+                0,
+                "summaryLineA"
+            );
+
+            //总体情况 - 拜访次数周趋势
+            cube.getData(
+                parent.qApp,
+                this,
+                "summaryLineB",
+                0,
+                "summaryLineB"
+            );
+
+            //执行计划 - 近五周
+            cube.getData(
+                parent.qApp,
+                this,
+                "planExecutionLine",
+                0,
+                "planExecutionLine"
+            );
+
+            //拜访预警 - KPI
+            cube.getData(
+                parent.qApp,
+                this,
+                "visitWarningKPI",
+                0,
+                "visitWarningKPI"
+            );
+
+        },
     },
-    lang(lang) {
-      if (!lang) {
-        this.$i18n.locale = "zhCHS";
-        this.$Local("zhCHS");
-      } else {
-        this.$i18n.locale = "en";
-        this.$Local("en");
-      }
+    watch: {
+        active(pIndex) {
+            this.$router.push(this.pageMap[pIndex]);
+            this.selBarFlag = pIndex == 1 ? false : true;
+        }
     }
-  }
 };
 </script>
 
 <style>
 @import "./assets/css/common.css";
+@import "./components/common/vant-tabs/index.css";
 
-* {
+/* * {
   touch-action: none;
-}
+} */
 .van-pull-refresh {
-  overflow-y: scroll !important;
+    overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #2c3e50;
 }
 
 html,
 body,
-#app {
-  height: 100%;
-  width: 100%;
-  overflow: hidden !important;
+#app,
+.nav-tabs {
+    height: 100%;
+    width: 100%;
+    overflow: hidden !important;
+}
+
+.van-tabs__content,
+.van-tab__pane {
+    height: 100%;
 }
 
 .lang-switch {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
 }
 
-.view {
-  height: calc(100% - 120px);
+.view-container {
+    padding-top: 40px;
+    height: calc(100% - 20px);
+    max-height: calc(100% -20px);
+}
+
+.view-container.no-padding {
+    padding-top: 0 !important;
 }
 
 .nav-bar-top {
-  height: 40px;
-  line-height: 40px;
-  background-color: #1d71f0;
+    height: 40px;
+    line-height: 40px;
+    background: url("./assets/image/top-tab-bg.png") center no-repeat;
+    background-size: 100%;
 }
 
 .van-nav-bar__title {
-  color: white;
-  font-size: 18px;
+    color: white;
+    font-size: 18px;
 }
 
 .van-nav-bar .van-icon {
-  color: white;
+    color: white;
 }
 
 .van-nav-bar__arrow {
-  font-size: 32px;
+    font-size: 32px;
 }
 
 .van-tabs__nav,
 .van-tab {
-  height: 40px;
-  line-height: 40px;
+    height: 40px;
+    line-height: 40px;
 }
 
 .van-tabs__nav .van-ellipsis {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .selection-tool {
-  height: 40px;
-  width: 100vw;
-  background-color: #eeeff3;
-  padding-left: 6px;
+    position: absolute;
+    top: 84px;
+    height: 36px;
+    line: 36px;
+    width: 100vw;
+    background-color: #eeeff3;
+    padding-left: 6px;
 }
 
 .sub-title {
-  font-family: "PingFangSC-Medium";
-  color: black;
-  font-size: 16px;
-  align-items: flex-end;
-  display: flex;
-  justify-content: flex-start;
-  text-indent: 4px;
-  min-height: 30px;
-  line-height: 20px;
+    font-family: "PingFangSC-Medium";
+    color: black;
+    font-size: 16px;
+    -webkit-box-align: end;
+    text-indent: 4px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 3px;
+    display: flex;
 }
 
 .sub-title-icon {
-  width: 4px;
-  height: 15px;
-  margin-left: 10px;
-  background-color: #1d71f0;
-  border-radius: 1px;
-  margin-top: 2px;
+    width: 20px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
 }
 
 .sub-title-unit {
-  color: #b4b6b7;
-  font-size: 12px;
-  text-align: left;
-  display: flex;
-}
-
-.selection-btn {
-  background: url("./assets/image/tools-and-utensils.png") center no-repeat;
-  background-size: contain;
-  min-width: 18px;
-  max-width: 18px;
+    color: #b4b6b7;
+    font-size: 12px;
+    text-align: left;
 }
 
 .selected-bar {
-  align-items: center;
+    align-items: center;
 }
 
 .selected-bar .name {
-  text-indent: 8px;
+    text-indent: 8px;
 }
 
 .selected-bar .values {
-  text-indent: 4px;
+    text-indent: 4px;
+}
+
+.selector-switch-box {
+    width: 60px;
+    height: 40px;
 }
 
 .selected-dim-date {
-  min-width: 70px;
-  min-width: 70px;
-  padding-top: 2px;
+    min-width: 70px;
+    min-width: 70px;
+    padding-top: 2px;
 }
 
-.selected-dim-date > .values {
-  display: flex;
-  justify-content: flex-start;
+.selected-dim-date>.values {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .selected-dim-org {
-  padding-top: 4px;
+    padding-top: 4px;
 }
 
-.selected-dim-org > .values {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  /* min-width: calc(100% - 180px);
-    max-width: calc(100% - 180px); */
+.selected-dim-org>.values {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
 }
 
 .selector-switch {
-  min-width: 30px;
-  max-width: 30px;
-  margin-top: 10px;
-  margin-left: 4px;
+    position: absolute;
+    top: 6px;
+    left: 4px;
 }
 
 .border-bottom {
-  border-bottom: 5px solid #e6e9f0;
+    border-bottom: 5px solid #e6e9f0;
 }
 
-.pub-icon {
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+.sales-icon {
+  background-image: url("./assets/image/log.png");
 }
 
-.transitionBody {
-  transition: all 0.1s linear; /*定义动画的时间和过渡效果*/
-}
-.transitionLeft-enter,
-.transitionRight-leave-active {
-  -webkit-transform: translate(100%, 0);
-  transform: translate(100%, 0);
-  /*当左滑进入右滑进入过渡动画*/
+.org-structure-icon {
+  background-image: url("./assets/image/org-structure.png");
+  background-position: 0 3px;
+  margin-top: 1px
 }
 
-.transitionRight-enter,
-.transitionLeft-leave-active {
-  -webkit-transform: translate(-100%, 0);
-  transform: translate(-100%, 0);
-  /*当左滑进入右滑进入过渡动画*/
+.trend-icon {
+  background-image: url("./assets/image/trend.png");
 }
+
+.plan-icon {
+  background-image: url("./assets/image/notes.png");
+  background-position: 0 3px;
+  margin-top: 1px
+}
+
+.pie-icon {
+  background-image: url("./assets/image/pie.png");
+  background-position: 0 4px;
+  margin-top: 1px
+}
+
 </style>

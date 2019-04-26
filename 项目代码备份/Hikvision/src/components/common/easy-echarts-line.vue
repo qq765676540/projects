@@ -58,12 +58,17 @@ export default {
         let series = [];
         let i = 0;
         _data.yData.forEach(item => {
-          legend.push(item.name);
+          legend.push({
+            name: item.name,
+            icon: colorStops[i].icon
+            });
+          // legend.push(item.name);
           var _serie = toolsBean.deepClone(baseSerie);
           _serie.name = item.name;
           _serie.data = item.value;
           _serie.silent = true;
-          _serie.lineStyle.color.colorStops = colorStops[i];
+          _serie.lineStyle.color.colorStops = colorStops[i].color;
+          _serie.areaStyle.color.colorStops = colorStops[i].color;
           i++;
           i = i > 1 ? 0 : i;
           series.push(_serie);

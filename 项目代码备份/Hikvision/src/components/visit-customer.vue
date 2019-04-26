@@ -1,19 +1,19 @@
 <template>
   <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
     <div class="vist-customer flex flex-column">
-        <div class="partner-distribution flex-1">
-            <div class="sub-title flex-1">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">合作伙伴拜访分类数据占比</span>
+        <div class="partner-distribution border-bottom flex flex-1 flex-column">
+            <div class="sub-title">
+                <div class="sub-title-icon pie-icon"></div>
+                <span class="sub-title-name">合作伙伴拜访情况</span>
             </div>
-            <div class="content-box flex-10"></div>
+            <pie-table class="vist-pie-table flex" :id="'e-pietable-1'" :scrollY="163" :pieConfig="pieConfig" :pieData="eData4" :tableData="table.tableData" :title="table.tableTitle"></pie-table>
         </div>
-        <div class="industry-distribution flex-1">
+        <div class="industry-distribution border-bottom flex-1">
             <div class="sub-title flex-1">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">各行业拜访最终用户数量占比</span>
+                <div class="sub-title-icon pie-icon"></div>
+                <span class="sub-title-name">用户拜访情况</span>
             </div>
-            <div class="content-box flex-11"></div>
+            <pie-table class="vist-pie-table flex" :id="'e-pietable-2'" :scrollY="163" :pieConfig="pieConfig" :pieData="eData4" :tableData="table.tableData" :title="table.tableTitle"></pie-table>
         </div>
     </div>
   </van-pull-refresh>
@@ -21,23 +21,54 @@
 
 <script>
 import { PullRefresh } from "vant";
+import ePie from "./common/echarts-pie";
+import { eData1, eData2, eData4 } from "./data/echarts-pie-data.js";
+import pieTable from "./common/pie-datatables";
+
 export default {
   name: "overview",
   components: {
-    [PullRefresh.name]: PullRefresh
+    [PullRefresh.name]: PullRefresh,
+    ePie,
+    pieTable
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      eData1,
+      eData2,
+      eData4,
+      pieConfig: {
+        pieConfig1: {
+          title: "拜访用户数",
+          imgUrl: require("@/assets/image/pie-customer.png"),
+          size: "45px",
+          labelShow: false,
+          radius: ["60%", "85%"]
+        },
+        pieConfig2: {
+          title: "拜访次数占比",
+          imgUrl: require("@/assets/image/pie-customer-percent.png"),
+          size: "75px",
+          labelShow: false,
+          radius: ["60%", "85%"]
+        }
+      },
+      table: {
+        tableTitle: ["客户分级", "拜访客户数", "拜访次数"],
+        tableData: [
+          { color: "#448DFF", value: ["客户名称1", "45%", "45"] },
+          { color: "#59D4FF", value: ["客户名称2", "35%", "22"] },
+          { color: "#751DE2", value: ["客户名称3", "25%", "43"] },
+          { color: "#BB2B79", value: ["客户名称4", "15%", "12"] },
+          { color: "#DB479B", value: ["客户名称5", "45%", "3"] }
+        ]
+      }
     };
   },
   mounted() {
-    this.$parent.active = this.findKey(this.$parent.pageMap, this.$route.name);
   },
   methods: {
-    findKey(obj, value, compare = (a, b) => a === b) {
-      return Object.keys(obj).find(k => compare(obj[k], value));
-    },
     onRefresh() {
       setTimeout(() => {
         this.isLoading = false;
@@ -61,12 +92,23 @@ export default {
 }
 
 .vist-customer .partner-distribution {
-  min-height: 320px;
-  background-color: rgba(138, 214, 214, 0.616);
+  min-height: 350px;
+}
+
+.vist-customer .partner-distribution-icon {
+  background-image: url("../assets/image/vist-customer-icon.png");
 }
 
 .vist-customer .industry-distribution {
-  min-height: 320px;
-  background-color: rgba(127, 255, 212, 0.555);
+  min-height: 350px;
+}
+
+.vist-customer-middle {
+  min-height: 200px;
+}
+
+.vist-customer-bottom {
+  min-height: 200px;
+  margin: 0 10px 10px 10px;
 }
 </style>

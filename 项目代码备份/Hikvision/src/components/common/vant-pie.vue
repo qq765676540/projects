@@ -7,7 +7,7 @@
             :size="data.size"
             :speed="100"
             :text="text"
-            :color="data.rate > 100 ? '#FF7D22' : '#0F8EE9'"
+            :color="data.rate < 50 ? '#FF7D22' : '#0F8EE9'"
             :layer-color="'#E9EFF4'"
             :stroke-width="60"
             />
@@ -31,10 +31,7 @@ export default {
     data: {
       type: Object,
       default() {
-        return {
-          rate: 30,
-          size: "30px"
-        };
+        return []
       }
     },
     pdSize:{
@@ -77,12 +74,6 @@ export default {
 </script>
 
 <style scoped>
-.vant-pie >>> .van-circle__layer {
-  /* transform-origin: 50% !important;    */
-   /* transform-origin: 0px 0px !important; */
-
-}
-
 .vant-pie {
   font-size: 12px;
 }

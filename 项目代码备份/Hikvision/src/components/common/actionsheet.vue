@@ -5,13 +5,13 @@
             <span class="caret" style="float: right;margin-top:8px"></span>
         </button>
 
-        <van-actionsheet v-model="show" :title="selTitle">
+        <van-actionsheet v-model="show" :title="selTitle" :style="actionStyle">
             <van-list
                 v-model="loading"
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="onLoad"
-                style="text-align: center;height:400px"
+                style="text-align: center;"
             >
                 <van-cell
                     v-for="(item,index) in data"
@@ -71,7 +71,7 @@ export default {
             loading: false,
             finished: false,
             actionStyle: {
-                height: "500px"
+                height: "600px"
             }
         };
     },
@@ -102,7 +102,7 @@ export default {
         clickBtn() {
             var scrollHeight =
                 $("#vist-warning").height() -
-                $("#vist-warning").scrollTop() +
+                $("#vist-warning").scrollTop() + 100 +
                 "px";
             this.actionStyle = {
                 height: scrollHeight
@@ -113,10 +113,11 @@ export default {
                 $(".van-overlay").click(() => {
                     this.$emit("setScroll", "scroll !important");
                 });
+                $(".van-icon-close").click(() => {
+                    this.$emit("setScroll", "scroll !important");
+                });
             });
-        },
-        setScrollStyle() {
-            this.$emit("setScroll", "scroll !important");
+            
         }
     },
     computed: {}

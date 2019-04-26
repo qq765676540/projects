@@ -1,47 +1,79 @@
-let colorStops = [
-    [
-        {
-            offset: 0,
-            color: "#675FEA" // 0% 处的颜色
-        },
-        {
-            offset: 0.25,
-            color: "#5A88F6" // 0% 处的颜色
-        },
-        {
-            offset: 0.75,
-            color: "#44AAE9" // 0% 处的颜色
-        },
-        {
-            offset: 1,
-            color: "#49C3E0" // 100% 处的颜色
-        }
-    ],
-    [
-        {
-            offset: 0,
-            color: "#EC4B8F" // 0% 处的颜色
-        },
-        {
-            offset: 0.25,
-            color: "#C741A8" // 0% 处的颜色
-        },
-        {
-            offset: 0.75,
-            color: "#A13FBB" // 0% 处的颜色
-        },
-        {
-            offset: 1,
-            color: "#8433D5" // 100% 处的颜色
-        }
-    ]
+let colorStops = [{
+    icon: 'image://' + require('@/assets/image/rect-blue.png'),
+    color:
+        [
+            {
+                offset: 0,
+                color: "#675FEA" // 0% 处的颜色
+            },
+            {
+                offset: 0.25,
+                color: "#5A88F6" // 0% 处的颜色
+            },
+            {
+                offset: 0.75,
+                color: "#44AAE9" // 0% 处的颜色
+            },
+            {
+                offset: 1,
+                color: "#49C3E0" // 100% 处的颜色
+            }
+        ],
+}, {
+    icon: 'image://' + require('@/assets/image/rect-red.png'),
+    color:
+        [
+            {
+                offset: 0,
+                color: "#EC4B8F" // 0% 处的颜色
+            },
+            {
+                offset: 0.25,
+                color: "#C741A8" // 0% 处的颜色
+            },
+            {
+                offset: 0.75,
+                color: "#A13FBB" // 0% 处的颜色
+            },
+            {
+                offset: 1,
+                color: "#8433D5" // 100% 处的颜色
+            }
+        ]
+}
 ];
 
 let baseSerie = {
     data: [],
     type: 'line',
     smooth: true,
-    symbol: 'none',
+    symbol: 'circle',
+    showSymbol: .1,
+    // showSymbol: false,
+    markPoint: {
+        label: {
+            fontSize: 8,
+            color: 'white'
+        },
+        symbolSize: 30,
+        symbol: 'pin',
+        data: [{
+            type: 'min'
+        }, {
+            type: 'max'
+        }],
+        itemStyle: {
+            color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: colorStops[0].color,
+                global: false // 缺省为 false
+            }
+        }
+    },
     lineStyle: {
         color: {
             type: 'linear',
@@ -49,29 +81,53 @@ let baseSerie = {
             y: 0,
             x2: 0,
             y2: 1,
-            colorStops: colorStops[0],
+            colorStops: colorStops[0].color,
             global: false // 缺省为 false
-        }
+        },
+        opacity: .7
     },
-    animationDuration: 1500,
+    areaStyle: {
+        color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: colorStops[0].color,
+            global: false // 缺省为 false
+        },
+        opacity: .2
+    },
+    itemStyle: {
+        show: false,
+        opacity: 0
+    },
+    label: {
+        // show:true,
+        color: 'blue',
+        opacity: 1
+    },
+    animationDuration: 1000,
 };
 
 let lineOption = {
     legend: {
         data: [],
         show: false,
-        left: 'right',
-        icon : 'rect',
-        itemHeight :2,
+        left: 'center',
+        // icon:'rect',
+        itemHeight: 2,
+        // itemWidth: 22,
         top: 0
     },
     grid: {
-        left: 50,
+        left: 20,
         top: 30,
         bottom: 40,
-        right: 10
+        right: -10
     },
     xAxis: {
+        // offset:-20,
         type: 'category',
         data: [],
         axisTick: {
@@ -89,10 +145,14 @@ let lineOption = {
         formatter: "{c}%"
     },
     yAxis: {
+        axisLabel: {
+            showMaxLabel: true
+        },
+        offset: -20,
         type: 'value',
         splitNumber: 3,
         axisLabel: {
-            formatter: '{value}%'
+            formatter: '{value}'
         },
         axisTick: {
             show: false
@@ -112,4 +172,4 @@ let lineOption = {
 
 
 
-export { lineOption, baseSerie,colorStops };
+export { lineOption, baseSerie, colorStops };

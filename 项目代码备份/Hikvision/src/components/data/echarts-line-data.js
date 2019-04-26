@@ -2,7 +2,7 @@ let eLineData1 ={
     config:{
         legend: false
     },
-    xData:['1周', '2周', '3周', '4周', '5周'],
+    xData:['本周', '上周', '-2周', '-3周', '-4周'],
     yData:[{
         name:'客户数量',
         value:[10, 40, 70, 30, 50]
@@ -13,7 +13,7 @@ let eLineData2 ={
     config:{
         legend: true
     },
-    xData:['1周', '2周', '3周', '4周', '5周'],
+    xData:['本周', '上周', '-2周', '-3周', '-4周'],
     yData:[{
         name:'客户数量',
         value:[10, 40, 70, 30, 50]
