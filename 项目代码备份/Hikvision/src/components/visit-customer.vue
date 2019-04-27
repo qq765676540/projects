@@ -4,14 +4,14 @@
         <div class="partner-distribution border-bottom flex flex-1 flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon pie-icon"></div>
-                <span class="sub-title-name">合作伙伴拜访情况</span>
+                <span class="sub-title-name">分级合作伙伴拜访情况</span>
             </div>
             <pie-table class="vist-pie-table flex" :id="'e-pietable-1'" :scrollY="163" :pieConfig="pieConfig" :pieData="eData4" :tableData="table.tableData" :title="table.tableTitle"></pie-table>
         </div>
         <div class="industry-distribution border-bottom flex-1">
             <div class="sub-title flex-1">
                 <div class="sub-title-icon pie-icon"></div>
-                <span class="sub-title-name">用户拜访情况</span>
+                <span class="sub-title-name">锁定用户拜访情况</span>
             </div>
             <pie-table class="vist-pie-table flex" :id="'e-pietable-2'" :scrollY="163" :pieConfig="pieConfig" :pieData="eData4" :tableData="table.tableData" :title="table.tableTitle"></pie-table>
         </div>

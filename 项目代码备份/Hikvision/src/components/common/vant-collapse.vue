@@ -27,12 +27,6 @@
                   <div class="flex flex-1">
                   {{val.context}}
                   </div>
-                  <div class="flex flex-1">
-                  {{val.context}}
-                  </div>
-                  <div class="flex flex-1">
-                  {{val.context}}
-                  </div>
                 </li>
               </ul>
             </div>
@@ -141,13 +135,14 @@ export default {
 
 .vant-collapse .collapse-title-data {
   white-space: nowrap;
-  margin-right: 20px;
 }
 
 .vant-collapse .title-name-icon {
   border-radius: 50%;
   width: 12px;
   height: 12px;
+  min-width: 12px;
+  min-height: 12px;
 }
 
 .vant-collapse .collapse-title-top {

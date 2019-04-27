@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" v-if="!destroyed">
+    <div :id="id">
         <table class="display" style="width:100%" :id="id+'_table'">
             <thead v-show="isShowTitle" class="table-title-row">
                 <tr>
@@ -11,11 +11,11 @@
                 <tr v-for="i in data.length" :key="i">
                     <td v-for="(item,index) in (data[i-1].value?data[i-1].value:data[i-1])" :key="index">
                         <div v-if="index < 1" class="first-td flex flex-align-center">
-                            <div class="col-xs-2 col-sm-2">
-                                <div v-if="data[i-1].color" class="title-name-icon" :style="{'background':data[i-1].color}">
+                            <div v-if="data[i-1].color" class="col-xs-2 col-sm-2">
+                                <div class="title-name-icon" :style="{'background':data[i-1].color}">
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6" :style="'white-space: nowrap;text-align: left;'">
+                            <div class="col-xs-6 col-sm-6" style="white-space: nowrap;">
                                 {{item}}
                             </div>
                         </div>
@@ -104,7 +104,7 @@ export default {
   methods: {},
   computed: {},
   destroyed() {
-    this.destroyed = true;
+    // this.destroyed = true;
   }
 };
 </script>
@@ -146,9 +146,9 @@ table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
   border-radius: 50%;
 }
 
-.first-td{
+/* .first-td{
   margin-left: 20px;
-}
+} */
 
 
 .table-title-row {

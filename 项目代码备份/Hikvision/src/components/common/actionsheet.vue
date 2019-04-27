@@ -82,7 +82,7 @@ export default {
         onSelect(i) {
             this.show = false;
             this.selected = this.data[i];
-            this.$emit("setScroll", "scroll !important");
+            this.$emit("setScroll", "scroll !important",this.selected);
         },
         onLoad() {
             // 异步更新数据

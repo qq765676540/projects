@@ -42,9 +42,10 @@ export default {
     data: {
       handler(nVal, oVal) {
         if (this.isDiff(nVal, oVal)) {
+          this.data = nVal;
           this.echartsIns.dispose();
           this.echartsIns = echarts.init(document.getElementById(this.id));
-          this.echartsIns.setOption();
+          this.setOption(this.option);
         }
       },
       deep: true

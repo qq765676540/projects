@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="flex flex-1 flex-justify-center flex-align-center">
+        <div class="flex flex-justify-center flex-align-center" style="max-width:10px">
             <div class="flex flex-justify-center flex-align-center" :style="iconStyle">
                 <img
                     src="../../assets/image/customer.png"
@@ -10,8 +10,8 @@
                 >
             </div>
         </div>
-        <div class="flex flex-3 flex-justify-left flex-align-center" style="margin-left:5px">{{title}}</div>
-        <div class="flex flex-6 flex-justify-center flex-align-center" :style="fontStyle">{{data}}</div>
+        <div class="flex flex-justify-left flex-align-center" style="margin-left:5px">{{title}}</div>
+        <div class="flex flex-justify-center flex-align-center" :style="fontStyle">{{data}}</div>
     </div>
 </template>
 <script>
@@ -61,7 +61,8 @@ export default {
         fontStyle: function() {
             return {
                 'font-size': this.fontSize,
-                color: this.fontColor
+                color: this.fontColor,
+                'margin-left': '10px'
             };
         }
     }

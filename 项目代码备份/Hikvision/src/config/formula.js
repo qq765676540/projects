@@ -40,6 +40,14 @@ var formula = {
             `=count({<[RZTX/JH]={'J'},Is_Excute={'Y'},DimensionName=>}PlanID)/count({<[RZTX/JH]={'J'},DimensionName=>}PlanID)*100`
         ]
     },
+    planExecutionCollapseA: {
+        qDimensions: ["=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,PUDescribe)","TaskType","=if(Is_Excute='N' and [RZTX/JH]='J' ,PlanActive)","=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,CALDAY)"],
+        qMeasures: ["=sum({<DimensionName=>}1)"]
+    },
+    planExecutionCollapseB: {
+        qDimensions: ["=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PUDescribe)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',TaskType)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',CALDAY)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PlanActive)"],
+        qMeasures: ["=sum({<DimensionName=>}1)"]
+    },
     visitWarningKPI: {
         qDimensions: [],
         qMeasures: [
@@ -54,6 +62,30 @@ var formula = {
             `=count({<[RZTX/JH]={'T'},LogMode={'拜访'},UserCategory={"市场锁定"},IsPartnerOrUser={'N','Z'}>} Partner_EndUser)&'/' & count({<UserCategory={"市场锁定"},IsPartnerOrUser={'N','Z'}>} Partner_EndUser)`,
             `=count({<[RZTX/JH]={'T'},LogMode={'拜访'},UserCategory={"重要锁定"},IsPartnerOrUser={'N','Z'}>} Partner_EndUser)&'/' & count({<UserCategory={"重要锁定"},IsPartnerOrUser={'N','Z'}>} Partner_EndUser)`
         ]
+    },
+    visitWarningTableA: {
+        qDimensions: ["PartnerCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , DomainName )","SOADAccount"],
+        qMeasures: [
+            `=sum({<Year={$(vYear)}>}SalesTarget)`
+        ]
+    },
+    visitWarningTableB: {
+        qDimensions: ["UserCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , DomainName)","SOADAccount"],
+        qMeasures: [
+            `=sum({<Year={$(vYear)}>}SalesTarget)`
+        ]
+    },
+    planExecution1:{
+        qDimensions: ["=WeekName"],
+        qMeasures: [
+            "count({<[RZTX/JH]={'J'},Is_Excute={'Y'},DimensionName=>}PlanID)/count({<[RZTX/JH]={'J'},DimensionName=>}PlanID)"
+        ]
+
+    },
+    organization:{
+        qDimensions: ["DeptName_Lv1","DeptName_Lv2","DeptName_Lv3","DeptName_Lv4","DeptName_Lv5"],
+        qMeasures: ['1']
+
     }
 }
 

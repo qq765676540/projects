@@ -31,6 +31,7 @@
                                 title="战略"
                                 :data="KPI[2]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -40,6 +41,7 @@
                                 title="潜力"
                                 :data="KPI[4]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -51,6 +53,7 @@
                                 title="核心"
                                 :data="KPI[3]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -60,6 +63,7 @@
                                 title="重要"
                                 :data="KPI[5]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -82,6 +86,7 @@
                                 title="战略"
                                 :data="KPI[6]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -91,6 +96,7 @@
                                 title="潜力"
                                 :data="KPI[8]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -102,6 +108,7 @@
                                 title="核心"
                                 :data="KPI[7]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -111,6 +118,7 @@
                                 title="重要"
                                 :data="KPI[9]"
                                 :iconImgShow="false"
+                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -127,37 +135,37 @@
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="其他"
-                            :data="['战略','其他','测试']"
+                            defSelected="战略"
+                            :data="['战略','核心','潜力','重要']"
                             :myStyle="{background: '#efefef',width: '70px'}"
-                            @setScroll="setScrollStyle"
+                            @setScroll="setScrollStyleA"
                         ></my-actionsheet>
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="data1"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['名称', '负责销售', '类型', '本年自有BP(万)']" v-if="tableADataSet"></my-table>
                 </div>
             </div>
             <div class="uncovered-customer-detail border-bottom" v-show="true">
                 <div class="sub-title">
                     <div class="sub-title col-xs-6 col-sm-6 padding-empty">
                         <div class="sub-title-icon plan-icon"></div>
-                        <span class="sub-title-name">拜访未覆盖客户名单</span>
+                        <span class="sub-title-name">拜访未覆盖用户名单</span>
                     </div>
                     <div
                         class="col-xs-6 col-sm-6 padding-empty text-right"
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="其他"
-                            :data="['战略','其他','测试','战略','其他','测试','战略','其他','测试','其他','测试','战略','其他','测试','战略','其他','测试']"
+                            defSelected="战略"
+                            :data="['战略','核心','市场','重要']"
                             :myStyle="{background: '#efefef',width: '70px'}"
-                            @setScroll="setScrollStyle"
+                            @setScroll="setScrollStyleB"
                         ></my-actionsheet>
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="5|desc" :scrollY="163" :data="data2" :title="tableTitle2"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['名称', '负责销售', '类型', '本年自有BP(万)']" v-if="tableBDataSet"></my-table>
                 </div>
             </div>
         </div>
@@ -221,13 +229,79 @@ export default {
                 ["NaN", "NaN", "NaN", "NaN", 25],
                 ["NaN", "NaN", "NaN", "NaN", 10.5]
             ],
-            scroll: "scroll !important"
+            scroll: "scroll !important",
+            Aselected: "战略",
+            Bselected: "战略"
         };
     },
     mounted() {
         this.setKpi();     
     },
     computed: {
+        tableADataSet(){
+            if(this.$store.state.visitWarningTableA.length>0){
+                let a = this.$store.state.visitWarningTableA;
+                let b = {
+                    战略:[],
+                    核心:[],
+                    潜力:[],
+                    重要:[]
+                };
+                $.each(a,(i,v)=>{
+                    if(v[0].qText==='战略客户'){
+                        let d1 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['战略'].push(d1);
+                    };
+                    if(v[0].qText==='核心客户'){
+                        let d2 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['核心'].push(d2);
+                    };
+                    if(v[0].qText==='潜力客户'){
+                        let d3 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['潜力'].push(d3);
+                    };
+                    if(v[0].qText==='重要客户'){
+                        let d4 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['重要'].push(d4);
+                    };   
+                });
+                console.log('visitWarningTableA',b[this.Aselected]);
+                return b[this.Aselected];
+            }
+            return false;
+        },
+        tableBDataSet(){
+            if(this.$store.state.visitWarningTableB.length>0){
+                let a = this.$store.state.visitWarningTableB;
+                let b = {
+                    战略:[],
+                    核心:[],
+                    市场:[],
+                    重要:[]
+                };
+                $.each(a,(i,v)=>{
+                    if(v[0].qText==='战略锁定'){
+                        let d1 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['战略'].push(d1);
+                    };
+                    if(v[0].qText==='核心锁定'){
+                        let d2 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['核心'].push(d2);
+                    };
+                    if(v[0].qText==='市场锁定'){
+                        let d3 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['市场'].push(d3);
+                    };
+                    if(v[0].qText==='重要锁定'){
+                        let d4 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        b['重要'].push(d4);
+                    };   
+                });
+                console.log('visitWarningTableB',b[this.Bselected]);
+                return b[this.Bselected];
+            }
+            return false;
+        },
         KPI(){
             if(this.$store.state.visitWarningKPI.length>0){
                 let a = this.$store.state.visitWarningKPI[0];
@@ -243,7 +317,7 @@ export default {
                 console.log('visitWarningKPI',b);
                 return b;
             }
-            return [];
+            return false;
         },
         pullstyle(){
             return {
@@ -272,8 +346,13 @@ export default {
                 });
             }, 500);
         },
-        setScrollStyle(style) {
+        setScrollStyleA(style,selected) {
             this.scroll = style;
+            this.Aselected = selected;
+        },
+        setScrollStyleB(style,selected) {
+            this.scroll = style;
+            this.Bselected = selected;
         }
     }
 };

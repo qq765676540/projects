@@ -1,48 +1,83 @@
 <template>
-<div id="app">
-    <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text="" left-arrow @click-left="onClickLeft" :sticky="true" />
-    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true">
-        <van-tab title="总体情况"><router-view v-if="active==0" class="view-container" /></van-tab>
-        <van-tab title="计划执行"><router-view v-if="active==1" class="view-container no-padding" /></van-tab>
-        <van-tab title="拜访预警"><router-view v-if="active==2" class="view-container" /></van-tab>
-        <van-tab title="拜访对象"><router-view v-if="active==3" class="view-container" /></van-tab>
-        <van-tab title="拜访构成"><router-view v-if="active==4" class="view-container" /></van-tab>
-    </van-tabs>
-    <div v-show="selBarFlag" class="selection-tool flex flex-row">
-        <div class="selector-switch-box relative">
-            <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo" ></vue-switch>
+    <div id="app">
+        <van-nav-bar
+            class="nav-bar-top"
+            title="工作计划与日志看板"
+            left-text
+            left-arrow
+            @click-left="onClickLeft"
+            :sticky="true"
+        />
+        <van-tabs
+            v-model="active"
+            class="nav-tabs"
+            :color="'#29A6FF'"
+            :swipe-threshold="5"
+            title-active-color="#0066FF"
+            title-inactive-color="black"
+            :animated="true"
+            :swipeable="true"
+            :sticky="true"
+        >
+            <van-tab title="总体情况">
+                <router-view v-if="active==0" class="view-container"/>
+            </van-tab>
+            <van-tab title="计划执行">
+                <router-view v-if="active==1" class="view-container no-padding"/>
+            </van-tab>
+            <van-tab title="拜访预警">
+                <router-view v-if="active==2" class="view-container"/>
+            </van-tab>
+            <van-tab title="拜访对象">
+                <router-view v-if="active==3" class="view-container"/>
+            </van-tab>
+            <van-tab title="拜访构成">
+                <router-view v-if="active==4" class="view-container"/>
+            </van-tab>
+        </van-tabs>
+        <div v-show="selBarFlag" class="selection-tool flex flex-row">
+            <div class="selector-switch-box relative">
+                <vue-switch
+                    id="switch-1"
+                    class="selector-switch"
+                    :open="switchIsOpen"
+                    :switch-style="switchStyle"
+                    @switch-to="switchTo"
+                ></vue-switch>
+            </div>
+            <div class="selected-bar flex flex-row flex-5">
+                <ul class="selected-dim-date flex flex-row flex-2">
+                    <li class="name">时间:</li>
+                    <li class="values flex-1" v-text="selectedTime"></li>
+                </ul>
+                <ul class="selected-dim-org flex flex-row flex-5">
+                    <li class="name">组织:</li>
+                    <li class="values flex-3" v-text="selectedOrg.toString()"></li>
+                </ul>
+            </div>
         </div>
-        <div class="selected-bar flex flex-row flex-5">
-            <ul class="selected-dim-date flex flex-row flex-2">
-                <li class="name">时间:</li>
-                <li class="values flex-1" v-text="selectedTime"></li>
-            </ul>
-            <ul class="selected-dim-org flex flex-row flex-5">
-                <li class="name">组织:</li>
-                <li class="values flex-3" v-text="selectedOrg.toString()"></li>
-            </ul>
-        </div>
+        <selector
+            v-show="selectorFlag"
+            :show="selectorFlag"
+            @cancle="cancleSelect"
+            @confirm="confirmSelect"
+            :selectedTime="selectedTime"
+            :selectedOrg="selectedOrg"
+        ></selector>
+        <van-popup v-model="popShow">{{popContext}}</van-popup>
+        <waterMark userName="王永刚"></waterMark>
     </div>
-    <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
-    <van-popup v-model="popShow">{{popContext}}</van-popup>
-    <waterMark userName="王永刚"></waterMark>
-</div>
 </template>
 
 <script>
-import {
-    NavBar,
-    Tab,
-    Switch,
-    Popup
-} from "vant";
+import { NavBar, Tab, Switch, Popup } from "vant";
 import animate from "animate.css";
 
-import Tabs from './components/common/vant-tabs/index';
+import Tabs from "./components/common/vant-tabs/index";
 
-import vueSwitch from './components/common/vue-switch'
-import selector from './components/sub-components/selector';
-import waterMark from './components/common/water-mark'
+import vueSwitch from "./components/common/vue-switch";
+import selector from "./components/sub-components/selector";
+import waterMark from "./components/common/water-mark";
 
 import Tools from "./tools/tools";
 var tool = new Tools();
@@ -79,43 +114,32 @@ export default {
             selectedOrg: [],
             popShow: false,
             popContext: "",
-            switchStyle: {width:54, height:24, bgColor: 'rgba(199, 199, 199, 0.68)', circleColor: 'red'},
+            switchStyle: {
+                width: 54,
+                height: 24,
+                bgColor: "rgba(199, 199, 199, 0.68)",
+                circleColor: "red"
+            },
             switchIsOpen: false
         };
     },
     beforeCreate() {
-        parent.qApp.field('DimensionName').clear();
-        parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
-            this.cubeInit();
-        });
+        if (parent.qApp) {
+            parent.qApp.field("DimensionName").clear();
+            parent.qApp
+                .field("DimensionName")
+                .selectValues([{ qText: "本周" }], true, false)
+                .then(() => {
+                    this.cubeInit();
+                });
+        }
     },
-	mounted(){
-	},
+    mounted() {
+
+    },
     methods: {
-        resultTreeData(data) {
-            if (data.dataName === "orgDataL1") {
-                $.each(data.data, (i, v) => {
-                    var level = {};
-                    level.id = v[0].qText;
-                    level.idName = v[0].qText;
-                    level.title = v[0].qText;
-                    level.parentid = "";
-                    this.tree.push(level);
-                });
-            } else {
-                $.each(data.data, (i, v)=> {
-                    var level = {};
-                    level.id = v[1].qText;
-                    level.idName = v[0].qText + ":" + v[1].qText;
-                    level.title = v[1].qText;
-                    level.parentid = v[0].qText;
-                    this.tree.push(level);
-                });
-            }
-        },
-        onClickLeft() {
-            // console.log("onClick");
-        },
+        resultTreeData(data) {},
+        onClickLeft() {},
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
@@ -123,12 +147,12 @@ export default {
             this.selectorFlag = false;
         },
         confirmSelect(data) {
-            parent.qApp.field('DimensionName').clear();
-            parent.qApp.field('DimensionName').selectValues([{qText: data.time}], true, true);
+            parent.qApp.field("DimensionName").clear();
+            parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, true);
             this.selectorFlag = false;
             this.selectedTime = data.time;
             this.selectedOrg = data.org;
-            console.log('seleted: ', data.time, data.org);
+            console.log("seleted: ", data.time, data.org);
 
             $(".selected-dim-org > .values").css({
                 maxWidth: $(".selected-dim-org").width() - 40
@@ -138,69 +162,37 @@ export default {
         switchTo() {
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
-
         },
-		cubeInit(time,org) {
+        cubeInit(time, org) {
             //总体情况 - 销售日志 - 环形进图条
-            cube.getData(
-                parent.qApp,
-                this,
-                "summaryCircle",
-                0,
-                "summaryCircle"
-            );
-
+            cube.getData(parent.qApp,this,"summaryCircle",0,"summaryCircle");
             //总体情况 - 销售日志 - 环形进图条 - 联动KPI
-            cube.getData(
-                parent.qApp,
-                this,
-                "summaryEasyKPI",
-                0,
-                "summaryEasyKPI"
-            );
-
+            cube.getData(parent.qApp,this,"summaryEasyKPI",0,"summaryEasyKPI");
             // 总体情况 - 拜访次数周趋势
-            cube.getData(
-                parent.qApp,
-                this,
-                "summaryLineA",
-                0,
-                "summaryLineA"
-            );
-
+            cube.getData(parent.qApp, this, "summaryLineA", 0, "summaryLineA");
             //总体情况 - 拜访次数周趋势
-            cube.getData(
-                parent.qApp,
-                this,
-                "summaryLineB",
-                0,
-                "summaryLineB"
-            );
+            cube.getData(parent.qApp, this, "summaryLineB", 0, "summaryLineB");
 
             //执行计划 - 近五周
-            cube.getData(
-                parent.qApp,
-                this,
-                "planExecutionLine",
-                0,
-                "planExecutionLine"
-            );
+            cube.getData(parent.qApp,this,"planExecutionLine",0,"planExecutionLine");
+            //执行计划 - Collapse
+            cube.getData(parent.qApp,this,"planExecutionCollapseA",0,"planExecutionCollapseA");
+            cube.getData(parent.qApp,this,"planExecutionCollapseB",0,"planExecutionCollapseB");
 
             //拜访预警 - KPI
-            cube.getData(
-                parent.qApp,
-                this,
-                "visitWarningKPI",
-                0,
-                "visitWarningKPI"
-            );
-
-        },
+            cube.getData(parent.qApp,this,"visitWarningKPI",0,"visitWarningKPI");
+            //拜访预警 - TableA & B
+            cube.getData(parent.qApp,this,"visitWarningTableA",3,"visitWarningTableA");
+            cube.getData(parent.qApp,this,"visitWarningTableB",3,"visitWarningTableB");
+        }
     },
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
             this.selBarFlag = pIndex == 1 ? false : true;
+        },
+        selectedTime(nVal){
+            this.$store.dispatch('updateData', {dataName: 'selectedTime',data: nVal});
         }
     }
 };
@@ -215,7 +207,7 @@ export default {
 } */
 .van-pull-refresh {
     overflow-y: scroll !important;
-  overflow-x: hidden !important;
+    overflow-x: hidden !important;
 }
 
 #app {
@@ -346,7 +338,7 @@ body,
     padding-top: 2px;
 }
 
-.selected-dim-date>.values {
+.selected-dim-date > .values {
     display: flex;
     justify-content: flex-start;
 }
@@ -355,7 +347,7 @@ body,
     padding-top: 4px;
 }
 
-.selected-dim-org>.values {
+.selected-dim-org > .values {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -373,29 +365,28 @@ body,
 }
 
 .sales-icon {
-  background-image: url("./assets/image/log.png");
+    background-image: url("./assets/image/log.png");
 }
 
 .org-structure-icon {
-  background-image: url("./assets/image/org-structure.png");
-  background-position: 0 3px;
-  margin-top: 1px
+    background-image: url("./assets/image/org-structure.png");
+    background-position: 0 3px;
+    margin-top: 1px;
 }
 
 .trend-icon {
-  background-image: url("./assets/image/trend.png");
+    background-image: url("./assets/image/trend.png");
 }
 
 .plan-icon {
-  background-image: url("./assets/image/notes.png");
-  background-position: 0 3px;
-  margin-top: 1px
+    background-image: url("./assets/image/notes.png");
+    background-position: 0 3px;
+    margin-top: 1px;
 }
 
 .pie-icon {
-  background-image: url("./assets/image/pie.png");
-  background-position: 0 4px;
-  margin-top: 1px
+    background-image: url("./assets/image/pie.png");
+    background-position: 0 4px;
+    margin-top: 1px;
 }
-
 </style>

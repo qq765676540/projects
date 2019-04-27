@@ -12,7 +12,11 @@ var state = {
   summaryLineA:[],
   summaryLineB:[],
   planExecutionLine:[],
-  visitWarningKPI:[]
+  planExecutionCollapseA: [],
+  planExecutionCollapseB: [],
+  visitWarningKPI:[],
+  visitWarningTableA: [],
+  visitWarningTableB: []
 }
 
 const store = new Vuex.Store({

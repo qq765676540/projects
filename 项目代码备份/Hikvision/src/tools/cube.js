@@ -52,7 +52,7 @@ class Cube {
                 qInitialDataFetch: [{
                     qTop: 0,
                     qLeft: 0,
-                    qHeight: 1000,
+                    qHeight: 20,
                     qWidth: 10
                 }]
             };
@@ -61,12 +61,11 @@ class Cube {
             params.qMeasures = this._initParam(qMeasures, "measure");
             params.qInterColumnSortOrder = [orderColunm];
            
-            console.log('维度对象：',params.qDimensions);
-            console.log('指标对象：',params.qMeasures);
+            // console.log(dataName+'维度对象：',params.qDimensions);
+            // console.log(dataName+'指标对象：',params.qMeasures);
             qApp.createCube(params, function (reply) {
                 var rows = reply.qHyperCube.qDataPages[0].qMatrix;
-                // var grandTotal = reply.qHyperCube.qGrandTotalRow;
-
+                
                 let tmp = {
                     dataName: dataName,
                     data: rows
@@ -74,7 +73,8 @@ class Cube {
                 
                 vApp.$store.dispatch('updateData', tmp);
                 // (callback && typeof (callback) === "function") && callback(tmp);
-                console.log(tmp.dataName+'数据',rows);
+
+                // console.log(tmp.dataName+'数据',rows);
             })
             
         }

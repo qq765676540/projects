@@ -1,7 +1,7 @@
 <template>
 <div :id="id" class="easy-kpi flex flex-1">
     <div class="flex flex-1 flex-align-center">
-        <div class="flex" :style="{'color':kpiStyle.color,'font-size':kpiStyle.size}">{{kpiValue}}</div>
+        <div class="flex" :style="{'color':'black','font-size':data.size}">{{kpiValue}}</div>
     </div>
 </div>
 </template>

@@ -17,8 +17,9 @@
                 <div class="content-box flex-11">
                     <vant-collapse
                         :id="'plan-collapse-1'"
-                        :data="planData1"
+                        :data="CollapseADataSet"
                         :isDefaultTitle="false"
+                        v-if="CollapseADataSet"
                     ></vant-collapse>
                 </div>
             </div>
@@ -30,8 +31,9 @@
                 <div class="content-box flex-11">
                     <vant-collapse
                         :id="'plan-collapse-2'"
-                        :data="planData2"
+                        :data="CollapseBDataSet"
                         :isDefaultTitle="false"
+                        v-if="CollapseBDataSet"
                     ></vant-collapse>
                 </div>
             </div>
@@ -45,6 +47,7 @@ import easyLine from "./common/easy-echarts-line";
 import vantCollapse from "./common/vant-collapse";
 import { eLineData1, eLineData2 } from "./data/echarts-line-data";
 import { planData1, planData2 } from "./data/collapseData.js";
+
 
 export default {
     name: "overview",
@@ -67,6 +70,7 @@ export default {
     },
     mounted() {
         $(".view").css({ height: "calc(100% - 80px)" });
+        
     },
     computed: {
         ElineDataCSet() {
@@ -94,6 +98,62 @@ export default {
                 return opt;
             }
             return {};
+        },
+        CollapseADataSet() {
+            if (this.$store.state.planExecutionCollapseA.length > 0) {
+                let a = this.$store.state.planExecutionCollapseA;
+                let b = [];
+                $.each(a, (i, v) => {
+                    let c = {};
+                    c.name = v[0].qText;
+                    c.type = v[1].qText;
+                    c.title = v[0].qText;
+                    c.data =
+                        v[3].qText.substr(0, 4) +
+                        "/" +
+                        v[3].qText.substr(4, 2) +
+                        "/" +
+                        v[3].qText.substr(7, 2);
+                    c.subData = [
+                        {
+                            subTitle: v[0].qText,
+                            context: v[2].qText
+                        }
+                    ];
+                    b.push(c);
+                });
+                console.log("planExecutionCollapseA", b);
+                return b;
+            }
+            return false;
+        },
+        CollapseBDataSet() {
+            if (this.$store.state.planExecutionCollapseB.length > 0) {
+                let a = this.$store.state.planExecutionCollapseB;
+                let b = [];
+                $.each(a, (i, v) => {
+                    let c = {};
+                    c.name = v[0].qText;
+                    c.type = v[1].qText;
+                    c.title = v[0].qText;
+                    c.data =
+                        v[3].qText.substr(0, 4) +
+                        "/" +
+                        v[3].qText.substr(4, 2) +
+                        "/" +
+                        v[3].qText.substr(7, 2);
+                    c.subData = [
+                        {
+                            subTitle: v[0].qText,
+                            context: v[2].qText
+                        }
+                    ];
+                    b.push(c);
+                });
+                console.log("planExecutionCollapseB", b);
+                return b;
+            }
+            return false;
         }
     },
     methods: {

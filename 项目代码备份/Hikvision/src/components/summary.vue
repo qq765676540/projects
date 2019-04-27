@@ -9,16 +9,16 @@
                 <div class="content-box flex flex-10 flex-column">
                     <div class="flex flex-3 col-2-pie">
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-1'" :data="pieData[0]" v-if="pieDataSet.length"></vant-pie>
+                            <vant-pie :id="'pie-1'" :data="pieData[0]" v-if="pieDataSet"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-2'" :data="pieData[1]" v-if="pieDataSet.length"></vant-pie>
+                            <vant-pie :id="'pie-2'" :data="pieData[1]" v-if="pieDataSet"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-3'" :data="pieData[2]" v-if="pieDataSet.length"></vant-pie>
+                            <vant-pie :id="'pie-3'" :data="pieData[2]" v-if="pieDataSet"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-4'" :data="pieData[3]" v-if="pieDataSet.length"></vant-pie>
+                            <vant-pie :id="'pie-4'" :data="pieData[3]" v-if="pieDataSet"></vant-pie>
                         </div>
                     </div>
                     <div class="flex flex-1 flex-row">
@@ -51,7 +51,7 @@
                             >有效拜访率</button>
                         </div>
                     </div>
-                    <div class="col-2-kpi">
+                    <div class="col-2-kpi flex flex-justify-center flex-align-center">
                         <div class="flex flex-1 flex-row flex-justify-center">
                             <div class="col-xs-6 col-sm-6 text-center">
                                 <my-horkpi
@@ -61,7 +61,7 @@
                                     :data="kpiDataSet[0]"
                                     fontColor="#5181FF"
                                     :iconImgShow="false"
-                                    v-if="kpiDataSet.length"
+                                    v-if="kpiDataSet"
                                 ></my-horkpi>
                             </div>
                             <div class="col-xs-6 col-sm-6 text-center">
@@ -72,7 +72,7 @@
                                     :data="kpiDataSet[1]"
                                     fontColor="#6FCEFF"
                                     :iconImgShow="false"
-                                    v-if="kpiDataSet.length"
+                                    v-if="kpiDataSet"
                                 ></my-horkpi>
                             </div>
                         </div>
@@ -82,10 +82,24 @@
             <div class="org-structure border-bottom flex flex-column">
                 <div class="sub-title">
                     <div class="sub-title-icon org-structure-icon"></div>
-                    <span class="sub-title-name">组织架构</span>
+                    <span class="flex flex-1 sub-title-name flex-justify-left">组织架构</span>
+                    <div class="flex flex-1 flex-justify-center col-2-right-title">
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
+                            <span>拜访数</span>
+                        </div>
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[1]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
+                            <span>有效拜访率</span>
+                        </div>
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[2]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[2]}"></div>
+                            <span>计划执行率</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-box">
-                    <vant-collapse :id="'collapse-1'" :data="collapseData" :isDefaultTitle="true" ></vant-collapse>
+                    <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="collapseData" :isDefaultTitle="true"></vant-collapse>
                 </div>
             </div>
             <div class="vist-num-trend border-bottom flex flex-column">
@@ -111,10 +125,11 @@
 <script>
 import { Button, PullRefresh } from "vant";
 import vantPie from "./common/vant-pie";
-import vantCollapse from "./common/vant-collapse";
+import vantCollapse from "./common/org-vant-collapse";
 import easyKpi from "./common/easy-kpi";
 import easyLine from "./common/easy-echarts-line";
 import { eLineData1, eLineData2 } from "./data/echarts-line-data";
+import { orgData } from "./data/collapseData.js";
 import { constants } from "crypto";
 import horkpi from "./common/horizontal-kpi";
 
@@ -135,11 +150,12 @@ export default {
             list: [],
             eLineData1,
             eLineData2,
+            col2LegendColor:["#6b6b6b", "#0f8ee9", "#FF6D00"],
             kpiName: [
-                ["分子", "分母"],
-                ["分子", "分母"],
-                ["分子", "分母"],
-                ["分子", "分母"]
+                ["填写计划销售人数", "总销售人数"],
+                ["填写工作记录人数", "总销售人数"],
+                ["已执行工作计划数", "工作计划数"],
+                ["有效拜访次数", "拜访次数"]
             ],
             pieData: [
                 {
@@ -162,65 +178,7 @@ export default {
             btActive: ["active", "", "", ""],
             btActiveNum: 0,
             isLoading: false,
-            collapseData: [
-                {
-                    name: "一级组织架构",
-                    data: "指标1 指标2 指标3",
-                    subData: [
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1 指标2 "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1 指标2 "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1      指标2      "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1      指标2      "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1      指标2      "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1      指标2      "
-                        }
-                    ]
-                },
-                {
-                    name: "二级组织架构",
-                    data: "指标1 指标2 ",
-                    subData: [
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1 指标2 "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1 指标2 "
-                        },
-                        {
-                            subTitle: "二级组织架构",
-                            context: "指标1 指标2 "
-                        }
-                    ]
-                },
-                {
-                    name: "三级组织架构",
-                    data: "指标1 指标2 ",
-                    subData: [
-                        {
-                            subTitle: "二级组织架构"
-                        }
-                    ]
-                }
-            ]
+            collapseData: orgData
         };
     },
     mounted() {
@@ -251,7 +209,7 @@ export default {
                 this.calcWidth(arr);
                 return arr;
             }
-            return [];
+            return false;
         },
         kpiDataSet() {
             if (this.$store.state.summaryEasyKPI.length > 0) {
@@ -265,7 +223,7 @@ export default {
                 console.log("kpiDataSet", a[this.btActiveNum]);
                 return a[this.btActiveNum];
             }
-            return [];
+            return false;
         },
         ElineDataASet() {
             if (this.$store.state.summaryLineA.length > 0) {
@@ -291,7 +249,7 @@ export default {
                 console.log('ElineDataASet',opt);
                 return opt;
             }
-            return {};
+            return false;
         },
         ElineDataBSet() {
             if (this.$store.state.summaryLineB.length > 0) {
@@ -323,7 +281,7 @@ export default {
                 console.log('ElineDataBSet',opt);
                 return opt;
             }
-            return {};
+            return false;
         }
     },
     watch: {},
@@ -371,6 +329,8 @@ export default {
     },
     beforeDestroy() {
         // window.removeEventListener("resize", this.calcWidth, false);
+    },
+    destroyed() {
     }
 };
 </script>
@@ -421,7 +381,7 @@ export default {
 
 .summary .col-2-kpi {
     /* font-size: 13px; */
-    min-height: 35px;
+    min-height: 50px;
 }
 
 .summary .col-2-kpi-icon {
@@ -438,7 +398,30 @@ export default {
     max-width: 260px;
 }
 
+.summary .col-2-right-title{
+    font-size: 10px;
+    white-space: nowrap;
+    margin-right: 14px;
+    max-width: 400px;
+    font-weight: bold;
+}
+
+.summary .col-2-right-bg{
+    width: 10px;
+    height: 4px;
+    border-radius: 3px;
+    margin-left: 6px;
+}
+
 .summary .col-3 {
     height: auto;
+}
+
+.subtitle-name-icon {
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  min-height: 6px;
 }
 </style>
