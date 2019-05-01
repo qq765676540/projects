@@ -85,7 +85,7 @@ export default {
             this.$emit("setScroll", "scroll !important",this.selected);
         },
         onLoad() {
-            // 异步更新数据
+            // 异步更新数据 
             setTimeout(() => {
                 for (let i = 0; i < 10; i++) {
                     this.list.push(this.list.length + 1);
@@ -102,7 +102,7 @@ export default {
         clickBtn() {
             var scrollHeight =
                 $("#vist-warning").height() -
-                $("#vist-warning").scrollTop() + 100 +
+                $("#vist-warning").scrollTop() + 20 +
                 "px";
             this.actionStyle = {
                 height: scrollHeight
@@ -111,10 +111,10 @@ export default {
             this.show = true;
             this.$nextTick(() => {
                 $(".van-overlay").click(() => {
-                    this.$emit("setScroll", "scroll !important");
+                    this.$emit("setScroll", "scroll !important",this.selected);
                 });
                 $(".van-icon-close").click(() => {
-                    this.$emit("setScroll", "scroll !important");
+                    this.$emit("setScroll", "scroll !important",this.selected);
                 });
             });
             

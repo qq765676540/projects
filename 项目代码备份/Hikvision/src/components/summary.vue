@@ -53,10 +53,10 @@
                     </div>
                     <div class="col-2-kpi flex flex-justify-center flex-align-center">
                         <div class="flex flex-1 flex-row flex-justify-center">
-                            <div class="col-xs-6 col-sm-6 text-center">
+                            <div class="col-xs-7 col-sm-7 text-center">
                                 <my-horkpi
-                                    iconSize="10px"
-                                    iconBgColor="#5181FF"
+                                    iconSize="8px"
+                                    iconBgColor="#e6e6e6"
                                     :title="kpiName[btActiveNum][0]"
                                     :data="kpiDataSet[0]"
                                     fontColor="#5181FF"
@@ -64,10 +64,10 @@
                                     v-if="kpiDataSet"
                                 ></my-horkpi>
                             </div>
-                            <div class="col-xs-6 col-sm-6 text-center">
+                            <div class="col-xs-5 col-sm-5 text-center">
                                 <my-horkpi
-                                    iconSize="10px"
-                                    iconBgColor="#6FCEFF"
+                                    iconSize="8px"
+                                    iconBgColor="#e6e6e6"
                                     :title="kpiName[btActiveNum][1]"
                                     :data="kpiDataSet[1]"
                                     fontColor="#6FCEFF"
@@ -84,13 +84,13 @@
                     <div class="sub-title-icon org-structure-icon"></div>
                     <span class="flex flex-1 sub-title-name flex-justify-left">组织架构</span>
                     <div class="flex flex-1 flex-justify-center col-2-right-title">
-                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
-                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
-                            <span>拜访数</span>
-                        </div>
                         <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[1]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
                             <span>有效拜访率</span>
+                        </div>
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
+                            <span>拜访数</span>
                         </div>
                         <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[2]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[2]}"></div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="content-box">
-                    <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="collapseData" :isDefaultTitle="true"></vant-collapse>
+                    <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-if="orgListDataSet"></vant-collapse>
                 </div>
             </div>
             <div class="vist-num-trend border-bottom flex flex-column">
@@ -280,6 +280,54 @@ export default {
                 };
                 console.log('ElineDataBSet',opt);
                 return opt;
+            }
+            return false;
+        },
+        orgListDataSet() {
+            if(this.$store.state.summaryOrgList.length>0){
+                let a = this.$store.state.summaryOrgList;
+                let b = [];
+                $.each(a,(i,v)=>{
+                    let tmp = {};
+                    if(v[0].qText!='-'){
+                        tmp.name = v[0].qText;
+                        tmp.title = v[0].qText;
+                        tmp.data = [Math.round(v[5].qNum*100)+'%',Math.round(v[6].qNum),Math.round(v[7].qNum*100)+'%'];
+                        tmp.subData_subTitle = v[1].qText;
+                        tmp.subData_data = [Math.round(v[2].qNum*100)+'%',Math.round(v[3].qNum),Math.round(v[4].qNum*100)+'%'];
+                        b.push(tmp);
+                    }    
+                });
+                let c = '';
+                let d = [];
+                
+                b.filter((v)=>{
+                    let tmp = {};
+                    if(c!=v.name) {
+                        tmp.name = v.name;
+                        tmp.title = v.title;
+                        tmp.data = v.data;
+                        c = v.name;
+                        d.push(tmp);
+                    }
+                });
+
+                d.filter((vo)=>{
+                    let e = [];
+                    b.filter((vi)=>{
+                        let f = {};
+                        if(vi.name === vo.name && vi.subData_subTitle!='-'){
+                            f.subTitle = vi.subData_subTitle;
+                            f.data = vi.subData_data
+                            e.push(f);
+                        }
+                    });
+                    vo.subData = e.sort((first,next)=>{
+                        return first.data.split('%')[0]-next.data.split('%')[0]
+                    });
+                });
+                console.log("orgListDataSet",d);
+                return d;
             }
             return false;
         }

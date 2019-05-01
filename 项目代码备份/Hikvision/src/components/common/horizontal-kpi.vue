@@ -10,7 +10,7 @@
                 >
             </div>
         </div>
-        <div class="flex flex-justify-left flex-align-center" style="margin-left:5px">{{title}}</div>
+        <div class="flex flex-justify-left flex-align-center" style="margin-left:5px;white-space: nowrap;">{{title}}</div>
         <div class="flex flex-justify-center flex-align-center" :style="fontStyle">{{data}}</div>
     </div>
 </template>

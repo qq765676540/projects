@@ -176,6 +176,8 @@ export default {
 .plan-execution {
     width: 100%;
     height: calc(100% - 40px);
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 
 .plan-execution .sub-title-unit {
@@ -191,6 +193,13 @@ export default {
 
 .plan-execution .curr-week-unexecution {
     min-height: 320px;
+
+}
+
+.plan-execution .curr-week-unexecution .content-box,
+.plan-execution .last-week-unexecution .content-box  {
+    max-height: 8rem;
+    overflow-y: auto;
 }
 
 .plan-execution .last-week-unexecution {

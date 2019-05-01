@@ -124,18 +124,42 @@ export default {
         };
     },
     beforeCreate() {
-        if (parent.qApp) {
-            parent.qApp.field("DimensionName").clear();
-            parent.qApp
-                .field("DimensionName")
-                .selectValues([{ qText: "本周" }], true, false)
-                .then(() => {
+        if(parent.qApp){
+
+            /**
+             * 测试当前用户登录
+             */
+            // parent.qApp.field('OADAccount').clear();
+            // parent.qApp.field('OADAccount').selectValues([{qText:'LIRUI5'}], true, true).then(()=>{
+            //     this.initOrganization();
+            // });
+
+            /**
+             * 测试层级 增加默认第一层层级
+             * DeptName_Lv1:上海分公司
+             */
+            // parent.qApp.field('DeptName_Lv1').clear();
+            // parent.qApp.field('DeptName_Lv1').selectValues([{qText:'上海分公司'}], true, true).then(()=>{
+            //     this.initOrganization();
+            // });
+            
+            
+            parent.qApp.field('DimensionName').clear();
+            parent.qApp.field('OADAccount').clear();
+            
+            parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{ 
+                parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{ 
                     this.cubeInit();
+                    this.initOrganization(); 
                 });
+            });
         }
     },
+    created() {
+        
+    },
     mounted() {
-
+        // this.cubeInit();
     },
     methods: {
         resultTreeData(data) {},
@@ -152,7 +176,7 @@ export default {
             this.selectorFlag = false;
             this.selectedTime = data.time;
             this.selectedOrg = data.org;
-            console.log("seleted: ", data.time, data.org);
+            console.log("confirmSelect: ", data.time, data.org);
 
             $(".selected-dim-org > .values").css({
                 maxWidth: $(".selected-dim-org").width() - 40
@@ -163,27 +187,44 @@ export default {
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
         },
-        cubeInit(time, org) {
+        cubeInit() {
             //总体情况 - 销售日志 - 环形进图条
-            cube.getData(parent.qApp,this,"summaryCircle",0,"summaryCircle");
+            cube.getData(parent.qApp,this,"summaryCircle",-1,0,"summaryCircle");
             //总体情况 - 销售日志 - 环形进图条 - 联动KPI
-            cube.getData(parent.qApp,this,"summaryEasyKPI",0,"summaryEasyKPI");
+            cube.getData(parent.qApp,this,"summaryEasyKPI",-1,0,"summaryEasyKPI");
             // 总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, "summaryLineA", 0, "summaryLineA");
+            cube.getData(parent.qApp, this, "summaryLineA",-1,0, "summaryLineA");
             //总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, "summaryLineB", 0, "summaryLineB");
+            cube.getData(parent.qApp, this, "summaryLineB",-1,0, "summaryLineB");
+            cube.getData(parent.qApp, this, "summaryOrgList",1,5, "summaryOrgList",false);
 
             //执行计划 - 近五周
-            cube.getData(parent.qApp,this,"planExecutionLine",0,"planExecutionLine");
+            cube.getData(parent.qApp,this,"planExecutionLine",-1,0,"planExecutionLine");
             //执行计划 - Collapse
-            cube.getData(parent.qApp,this,"planExecutionCollapseA",0,"planExecutionCollapseA");
-            cube.getData(parent.qApp,this,"planExecutionCollapseB",0,"planExecutionCollapseB");
+            cube.getData(parent.qApp,this,"planExecutionCollapseA",-1,0,"planExecutionCollapseA");
+            cube.getData(parent.qApp,this,"planExecutionCollapseB",-1,0,"planExecutionCollapseB");
 
             //拜访预警 - KPI
-            cube.getData(parent.qApp,this,"visitWarningKPI",0,"visitWarningKPI");
+            cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
+
+        },
+        initOrganization(){
+            
+            cube.getData(parent.qApp,this,"currentLevel",-1,0,"currentLevel");
+
+            //app.vue  组织架构
+            cube.getData(parent.qApp,this,"organization",-1,0,"organization",false);
+            cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
             //拜访预警 - TableA & B
-            cube.getData(parent.qApp,this,"visitWarningTableA",3,"visitWarningTableA");
-            cube.getData(parent.qApp,this,"visitWarningTableB",3,"visitWarningTableB");
+            cube.getData(parent.qApp,this,"visitWarningTableA",-1,3,"visitWarningTableA");
+            cube.getData(parent.qApp,this,"visitWarningTableB",-1,3,"visitWarningTableB");
+
+            //拜访对象
+            cube.getData(parent.qApp, this, "visitCustomerA",-1,1, "visitCustomerA");
+            cube.getData(parent.qApp, this, "visitCustomerB",-1,1, "visitCustomerB");
+
+            //拜访构成
+            cube.getData(parent.qApp, this, "customerDistribution",-1,1, "customerDistribution");
         }
     },
     watch: {

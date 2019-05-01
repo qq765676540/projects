@@ -3,23 +3,23 @@
         <table class="display" style="width:100%" :id="id+'_table'">
             <thead v-show="isShowTitle" class="table-title-row">
                 <tr>
-                    <th v-for="(v,i) in title" :key="i">{{v}}</th>
+                    <th v-for="(v,i) in title" :key="i" class="text-left">{{v}}</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr v-for="i in data.length" :key="i">
-                    <td v-for="(item,index) in (data[i-1].value?data[i-1].value:data[i-1])" :key="index">
+                    <td v-for="(item,index) in (data[i-1].value?data[i-1].value:data[i-1])" :key="index" :style="{'text-align':index>1?'center':'left'}">
                         <div v-if="index < 1" class="first-td flex flex-align-center">
                             <div v-if="data[i-1].color" class="col-xs-2 col-sm-2">
                                 <div class="title-name-icon" :style="{'background':data[i-1].color}">
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6" style="white-space: nowrap;">
+                            <div class="col-xs-6 col-sm-6" style="white-space: nowrap; text-align: left;">
                                 {{item}}
                             </div>
                         </div>
-                        <div v-if="index > 0" >
+                        <div v-if="index > 0">
                             {{item}}
                         </div>
                     </td>
@@ -29,8 +29,6 @@
     </div>
 </template>
 <script>
-// import "../../assets/js/jquery.dataTables.min.js";
-// import "../../assets/js/dataTables.fixedHeader.min.js";
 
 require( 'datatables.net-dt' );
 require( 'datatables.net-fixedheader-dt' );

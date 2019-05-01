@@ -81,6 +81,7 @@ export default {
   },
   beforeCreate() {},
   mounted() {
+    
     this.currentData.forEach(e => {
       if (e.name) {
         e.subData.forEach(q => {

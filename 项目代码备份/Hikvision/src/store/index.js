@@ -11,12 +11,19 @@ var state = {
   summaryEasyKPI:[],
   summaryLineA:[],
   summaryLineB:[],
+  summaryOrgList: [],
   planExecutionLine:[],
+  visitWarningKPI:[],
+  visitCustomerA: [],
+  visitCustomerB: [],
+  customerDistribution: [],
   planExecutionCollapseA: [],
   planExecutionCollapseB: [],
   visitWarningKPI:[],
   visitWarningTableA: [],
-  visitWarningTableB: []
+  visitWarningTableB: [],
+  currentLevel:[],
+  organization:[]
 }
 
 const store = new Vuex.Store({

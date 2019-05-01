@@ -60,7 +60,7 @@
                             <my-horkpi
                                 iconSize="10px"
                                 iconBgColor="#CF3381"
-                                title="重要"
+                                title="认证"
                                 :data="KPI[5]"
                                 :iconImgShow="false"
                                 v-if="KPI"
@@ -135,15 +135,15 @@
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="战略"
-                            :data="['战略','核心','潜力','重要']"
+                            defSelected="核心"
+                            :data="['战略','核心','潜力','认证']"
                             :myStyle="{background: '#efefef',width: '70px'}"
                             @setScroll="setScrollStyleA"
                         ></my-actionsheet>
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['名称', '负责销售', '类型', '本年自有BP(万)']" v-if="tableADataSet"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['客户', '销售', '类型', '本年自有BP']" v-if="tableADataSet"></my-table>
                 </div>
             </div>
             <div class="uncovered-customer-detail border-bottom" v-show="true">
@@ -157,7 +157,7 @@
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="战略"
+                            defSelected="核心"
                             :data="['战略','核心','市场','重要']"
                             :myStyle="{background: '#efefef',width: '70px'}"
                             @setScroll="setScrollStyleB"
@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['名称', '负责销售', '类型', '本年自有BP(万)']" v-if="tableBDataSet"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['用户', '销售', '类型', '本年自有BP']" v-if="tableBDataSet"></my-table>
                 </div>
             </div>
         </div>
@@ -196,42 +196,9 @@ export default {
             asshow2: false,
             ash1: "0px",
             ash2: "0px",
-            data1: [
-                ["NaN1", "NaN1", "重要客户", 20],
-                ["NaN2", "NaN", "重要客户", 25],
-                ["NaN3", "NaN", "重要客户", 30],
-                ["NaN4", "NaN5", "重要客户", 19.1],
-                ["NaN1", "NaN", "重要客户", 20],
-                ["NaN7", "NaN", "重要客户", 25],
-                ["NaN", "NaN", "重要客户", 30],
-                ["NaN10", "NaN", "重要客户", 19.1],
-                ["NaN", "NaN7", "重要客户", 20],
-                ["NaN", "NaN", "重要客户", 25],
-                ["NaN", "NaN", "重要客户", 10.5]
-            ],
-            tableTitle2: [
-                "用户名称",
-                "子行业",
-                "负责销售",
-                "客户类型",
-                "自有bp(万)"
-            ],
-            data2: [
-                ["NaN1", "NaN", "NaN1", "NaN2", 20],
-                ["NaN", "NaN2", "NaN3", "NaN", 25],
-                ["NaN3", "NaN", "NaN", "NaN", 30],
-                ["NaN", "NaN4", "NaN", "NaN", 19.1],
-                ["NaN5", "NaN", "NaN5", "NaN", 20],
-                ["NaN", "NaN", "NaN", "NaN4", 25],
-                ["NaN", "NaN", "NaN", "NaN", 30],
-                ["NaN", "NaN", "NaN", "NaN", 19.1],
-                ["NaN", "NaN", "NaN", "NaN", 20],
-                ["NaN", "NaN", "NaN", "NaN", 25],
-                ["NaN", "NaN", "NaN", "NaN", 10.5]
-            ],
             scroll: "scroll !important",
-            Aselected: "战略",
-            Bselected: "战略"
+            Aselected: "核心",
+            Bselected: "核心"
         };
     },
     mounted() {
@@ -245,24 +212,24 @@ export default {
                     战略:[],
                     核心:[],
                     潜力:[],
-                    重要:[]
+                    认证:[]
                 };
                 $.each(a,(i,v)=>{
                     if(v[0].qText==='战略客户'){
-                        let d1 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d1 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['战略'].push(d1);
                     };
                     if(v[0].qText==='核心客户'){
-                        let d2 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d2 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['核心'].push(d2);
                     };
                     if(v[0].qText==='潜力客户'){
-                        let d3 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d3 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['潜力'].push(d3);
                     };
-                    if(v[0].qText==='重要客户'){
-                        let d4 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
-                        b['重要'].push(d4);
+                    if(v[0].qText==='认证客户'){
+                        let d4 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
+                        b['认证'].push(d4);
                     };   
                 });
                 console.log('visitWarningTableA',b[this.Aselected]);
@@ -281,19 +248,19 @@ export default {
                 };
                 $.each(a,(i,v)=>{
                     if(v[0].qText==='战略锁定'){
-                        let d1 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d1 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['战略'].push(d1);
                     };
                     if(v[0].qText==='核心锁定'){
-                        let d2 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d2 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['核心'].push(d2);
                     };
                     if(v[0].qText==='市场锁定'){
-                        let d3 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d3 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['市场'].push(d3);
                     };
                     if(v[0].qText==='重要锁定'){
-                        let d4 = [v[1].qText,v[2].qText,v[0].qText,Math.round(v[3].qNum/100)/10];
+                        let d4 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
                         b['重要'].push(d4);
                     };   
                 });

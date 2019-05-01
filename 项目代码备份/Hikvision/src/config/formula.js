@@ -2,8 +2,8 @@ var formula = {
     summaryCircle: {
         qDimensions: [],
         qMeasures: [
-            `=num(count({<[RZTX/JH]={"J"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)/count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)*100,'0.0')`,
-            `=num(count({<[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)/count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)*100,'0.0')`,
+            `=num(count({<[RZTX/JH]={"J"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)/count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)*100,'0.0')`,
+            `=num(count({<[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)/count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)*100,'0.0')`,
             `=num(count({<[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count({<[RZTX/JH]={'J'}>}PlanID)*100,'0.0')`,
             `=num(count({<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)/count({<[RZTX/JH]={'T'}>}LogID)*100,'0.0')`
         ]
@@ -11,10 +11,10 @@ var formula = {
     summaryEasyKPI: {
         qDimensions: [],
         qMeasures: [
-            `=count({<[RZTX/JH]={"J"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)`,
-            `=count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)`,
-            `=count({<[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)`,
-            `=count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)`,
+            `=count({<[RZTX/JH]={"J"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)`,
+            `=count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)`,
+            `=count({<[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)`,
+            `=count({<WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} sub_OADAccount)`,
             `=count({<[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)`,
             `=count({<[RZTX/JH]={'J'}>}PlanID)`,
             `=count({<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)`,
@@ -34,6 +34,21 @@ var formula = {
             `=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y'},DimensionName=>}Partner_EndUser)`
         ]
     },
+    summaryOrgList: {
+        qDimensions: [
+            // "=$(selfLevel)"
+            "=$(firstLevel)",
+            "=$(nextLevel)"
+        ],
+        qMeasures: [
+            "=count({<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)/count({<[RZTX/JH]={'T'}>}LogID)",
+            "=count({<[RZTX/JH]={'T'}>}LogID)",
+            "=count({<[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count({<[RZTX/JH]={'J'}>}PlanID)",
+            "=count(total <[$(firstLevel)]> {<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)/count(total <[$(firstLevel)]>{<[RZTX/JH]={'T'}>}LogID)",
+            "=count(total <[$(firstLevel)]> {<[RZTX/JH]={'T'}>} LogID)",
+            "=count(total <[$(firstLevel)]> {<[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(total <[$(firstLevel)]> {<[RZTX/JH]={'J'}>}PlanID)"
+        ]
+    },
     planExecutionLine: {
         qDimensions: ["WeekName"],
         qMeasures: [
@@ -41,11 +56,18 @@ var formula = {
         ]
     },
     planExecutionCollapseA: {
-        qDimensions: ["=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,PUDescribe)","TaskType","=if(Is_Excute='N' and [RZTX/JH]='J' ,PlanActive)","=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,CALDAY)"],
+        qDimensions: ["=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,PUDescribe)",
+                      "TaskType",
+                      "=if(Is_Excute='N' and [RZTX/JH]='J' ,PlanActive)",
+                      "=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,CALDAY)"],
         qMeasures: ["=sum({<DimensionName=>}1)"]
     },
     planExecutionCollapseB: {
-        qDimensions: ["=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PUDescribe)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',TaskType)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',CALDAY)","=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PlanActive)"],
+        qDimensions: ["=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PUDescribe)",
+                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',TaskType)",
+                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PlanActive)",
+                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',CALDAY)"
+                     ],
         qMeasures: ["=sum({<DimensionName=>}1)"]
     },
     visitWarningKPI: {
@@ -64,13 +86,13 @@ var formula = {
         ]
     },
     visitWarningTableA: {
-        qDimensions: ["PartnerCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , DomainName )","SOADAccount"],
+        qDimensions: ["PartnerCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , Partner_EndUser )","DomainName"],
         qMeasures: [
             `=sum({<Year={$(vYear)}>}SalesTarget)`
         ]
     },
     visitWarningTableB: {
-        qDimensions: ["UserCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , DomainName)","SOADAccount"],
+        qDimensions: ["UserCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , Partner_EndUser )","DomainName"],
         qMeasures: [
             `=sum({<Year={$(vYear)}>}SalesTarget)`
         ]
@@ -82,11 +104,38 @@ var formula = {
         ]
 
     },
+    //组织架构
     organization:{
-        qDimensions: ["DeptName_Lv1","DeptName_Lv2","DeptName_Lv3","DeptName_Lv4","DeptName_Lv5"],
+        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
+        qDimensions: ["DeptName_Lv1","DeptName_Lv2","DeptName_Lv3","DeptName_Lv4"],
         qMeasures: ['1']
-
-    }
+    },
+    visitCustomerA: {
+        qDimensions: ["PartnerCategory"],
+        qMeasures: ["=count(distinct {<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}Partner_EndUser)",
+                    "=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}LogID)"
+        ]
+    },
+    visitCustomerB: {
+        qDimensions: ["UserCategory"],
+        qMeasures: [
+            "=count(distinct {<[RZTX/JH]={'T'},IsPartnerOrUser={'N','Z'},LogMode={'拜访'}>}Partner_EndUser)",
+            "=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}LogID)"
+        ]
+    },
+    customerDistribution: {
+        qDimensions: ["WorkType"],
+        qMeasures: [
+            "=count({<[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)/count(total {<[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)",
+            "=count({<[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)"
+        ]
+    },
+    //当前层级
+    currentLevel:{
+        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
+        qDimensions: ["level"],
+        qMeasures: []
+    },
 }
 
 export default formula;
