@@ -86,13 +86,11 @@ var formula = {
         ]
     },
     visitWarningTableA: {
-        qDimensions: ["PartnerCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , Partner_EndUser )","DomainName"],
-        qMeasures: [
-            `=sum({<Year={$(vYear)}>}SalesTarget)`
-        ]
+        qDimensions: ["PartnerCategory", "SOADAccount" ,"=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , DomainName )"],
+        qMeasures: [`=sum({<Year={$(vYear)}>}SalesTarget)`]
     },
     visitWarningTableB: {
-        qDimensions: ["UserCategory","=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , Partner_EndUser )","DomainName"],
+        qDimensions: ["UserCategory", "SOADAccount", "=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , DomainName)"],
         qMeasures: [
             `=sum({<Year={$(vYear)}>}SalesTarget)`
         ]

@@ -5,16 +5,13 @@ let colorStops = [{
             {
                 offset: 0,
                 color: "#675FEA" // 0% 处的颜色
-            },
-            {
+            },{
                 offset: 0.25,
                 color: "#5A88F6" // 0% 处的颜色
-            },
-            {
+            },{
                 offset: 0.75,
                 color: "#44AAE9" // 0% 处的颜色
-            },
-            {
+            },{
                 offset: 1,
                 color: "#49C3E0" // 100% 处的颜色
             }
@@ -26,10 +23,9 @@ let colorStops = [{
             {
                 offset: 0,
                 color: "#EC4B8F" // 0% 处的颜色
-            },
-            {
+            },{
                 offset: 0.25,
-                color: "#C741A8" // 0% 处的颜色
+                color: "rgba(199, 65, 168, 0.4)" // 0% 处的颜色
             },
             {
                 offset: 0.75,
@@ -37,7 +33,7 @@ let colorStops = [{
             },
             {
                 offset: 1,
-                color: "#8433D5" // 100% 处的颜色
+                color: "rgba(132, 51, 213, 0.4)" // 100% 处的颜色
             }
         ]
 }
@@ -46,7 +42,7 @@ let colorStops = [{
 let baseSerie = {
     data: [],
     type: 'line',
-    smooth: true,
+    smooth: false,
     symbol: 'circle',
     showSymbol: .1,
     // showSymbol: false,

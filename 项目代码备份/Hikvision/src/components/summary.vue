@@ -9,16 +9,16 @@
                 <div class="content-box flex flex-10 flex-column">
                     <div class="flex flex-3 col-2-pie">
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-1'" :data="pieData[0]" v-if="pieDataSet"></vant-pie>
+                            <vant-pie :id="'pie-1'" :rate="pieData[0]" :size="pieSize"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-2'" :data="pieData[1]" v-if="pieDataSet"></vant-pie>
+                            <vant-pie :id="'pie-2'" :rate="pieData[1]" :size="pieSize"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-3'" :data="pieData[2]" v-if="pieDataSet"></vant-pie>
+                            <vant-pie :id="'pie-3'" :rate="pieData[2]" :size="pieSize"></vant-pie>
                         </div>
                         <div class="flex flex-1 flex-row col-2-pie-param flex-align-center">
-                            <vant-pie :id="'pie-4'" :data="pieData[3]" v-if="pieDataSet"></vant-pie>
+                            <vant-pie :id="'pie-4'" :rate="pieData[3]" :size="pieSize"></vant-pie>
                         </div>
                     </div>
                     <div class="flex flex-1 flex-row">
@@ -64,7 +64,7 @@
                                     v-if="kpiDataSet"
                                 ></my-horkpi>
                             </div>
-                            <div class="col-xs-5 col-sm-5 text-center">
+                            <div class="col-xs-5 col-sm-5 text-center" style="padding-right:0 !important;">
                                 <my-horkpi
                                     iconSize="8px"
                                     iconBgColor="#e6e6e6"
@@ -99,6 +99,9 @@
                     </div>
                 </div>
                 <div class="content-box">
+                    <!-- <div class="flex flex-justify-center flex-align-center" style="min-height: 200px" v-if="!orgListDataSet || summarryIsLoading">
+                        <van-loading type="spinner" size="150px" />
+                    </div>  -->
                     <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-if="orgListDataSet"></vant-collapse>
                 </div>
             </div>
@@ -123,7 +126,7 @@
 </template>
 
 <script>
-import { Button, PullRefresh } from "vant";
+import { Button, PullRefresh, Loading } from "vant";
 import vantPie from "./common/vant-pie";
 import vantCollapse from "./common/org-vant-collapse";
 import easyKpi from "./common/easy-kpi";
@@ -142,12 +145,14 @@ export default {
         vantCollapse,
         [Button.name]: Button,
         [PullRefresh.name]: PullRefresh,
+        [Loading.name]: Loading,
         MyHorkpi: horkpi
     },
     data() {
         return {
             active: 0,
             list: [],
+            pieSize: "60px",
             eLineData1,
             eLineData2,
             col2LegendColor:["#6b6b6b", "#0f8ee9", "#FF6D00"],
@@ -157,24 +162,6 @@ export default {
                 ["已执行工作计划数", "工作计划数"],
                 ["有效拜访次数", "拜访次数"]
             ],
-            pieData: [
-                {
-                    size: "60px",
-                    rate: 0
-                },
-                {
-                    size: "60px",
-                    rate: 0
-                },
-                {
-                    size: "60px",
-                    rate: 0
-                },
-                {
-                    size: "60px",
-                    rate: 0
-                }
-            ],
             btActive: ["active", "", "", ""],
             btActiveNum: 0,
             isLoading: false,
@@ -182,34 +169,19 @@ export default {
         };
     },
     mounted() {
-        // window.addEventListener("resize", this.calcWidth(this.pieData), false);
+        window.addEventListener("resize", this.calcWidth, false)
     },
     computed: {
-        pieDataSet() {
+        pieData() {
+            var data = [0, 0, 0, 0];
             if (this.$store.state.summaryCircle.length > 0) {
-                var arr = [
-                    {
-                        size: "60px",
-                        rate: this.$store.state.summaryCircle[0][0].qNum
-                    },
-                    {
-                        size: "60px",
-                        rate: this.$store.state.summaryCircle[0][1].qNum
-                    },
-                    {
-                        size: "60px",
-                        rate: this.$store.state.summaryCircle[0][2].qNum
-                    },
-                    {
-                        size: "60px",
-                        rate: this.$store.state.summaryCircle[0][3].qNum
-                    }
-                ];
-                console.log("pieDataSet", arr);
-                this.calcWidth(arr);
-                return arr;
+                data.splice(0, 1, this.$store.state.summaryCircle[0][0].qNum);
+                data.splice(1, 1, this.$store.state.summaryCircle[0][1].qNum);
+                data.splice(2, 1, this.$store.state.summaryCircle[0][2].qNum);
+                data.splice(3, 1, this.$store.state.summaryCircle[0][3].qNum);
+                return data;
             }
-            return false;
+            return data;
         },
         kpiDataSet() {
             if (this.$store.state.summaryEasyKPI.length > 0) {
@@ -220,7 +192,6 @@ export default {
                     [d[0][4].qNum, d[0][5].qNum],
                     [d[0][6].qNum, d[0][7].qNum]
                 ];
-                console.log("kpiDataSet", a[this.btActiveNum]);
                 return a[this.btActiveNum];
             }
             return false;
@@ -238,15 +209,14 @@ export default {
                     config: {
                         legend: false
                     },
-                    xData: b,
+                    xData: b.reverse(),
                     yData: [
                         {
                             name: "拜访次数",
-                            value: c
+                            value: c.reverse()
                         }
                     ]
                 };
-                console.log('ElineDataASet',opt);
                 return opt;
             }
             return false;
@@ -266,19 +236,18 @@ export default {
                     config: {
                         legend: true
                     },
-                    xData: b,
+                    xData: b.reverse(),
                     yData: [
                         {
                             name: "用户数",
-                            value: c
+                            value: c.reverse()
                         },
                         {
                             name: "客户数",
-                            value: d
+                            value: d.reverse()
                         }
                     ]
                 };
-                console.log('ElineDataBSet',opt);
                 return opt;
             }
             return false;
@@ -323,33 +292,32 @@ export default {
                         }
                     });
                     vo.subData = e.sort((first,next)=>{
-                        return first.data.split('%')[0]-next.data.split('%')[0]
+                        return first.data[0].replace('%','')-next.data[0].replace('%','')
                     });
                 });
+                // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
                 console.log("orgListDataSet",d);
                 return d;
             }
             return false;
         }
     },
-    watch: {},
+    watch: {
+        summarryIsLoading(nVal){
+            // console.log('summarryIsLoading------------->',nVal);
+            this.summarryIsLoading = nVal;
+        }
+    },
     methods: {
         calcWidth(arr) {
-            // console.log('我被执行了');
             let pop = $(".col-2-pie-param").height();
             let avg = (window.innerWidth - 30) / 4 - 10;
             if (pop < avg) {
                 avg = pop;
             }
             avg += "px";
-            this.pieData[0].size = avg;
-            this.pieData[0].rate = arr[0].rate;
-            this.pieData[1].size = avg;
-            this.pieData[1].rate = arr[1].rate;
-            this.pieData[2].size = avg;
-            this.pieData[2].rate = arr[2].rate;
-            this.pieData[3].size = avg;
-            this.pieData[3].rate = arr[3].rate;
+            this.pieSize = avg;
+            console.log('this.pieSize: ', this.pieSize);
         },
         changeActiveBt(index) {
             this.btActiveNum = index;
@@ -376,7 +344,7 @@ export default {
         }
     },
     beforeDestroy() {
-        // window.removeEventListener("resize", this.calcWidth, false);
+        window.removeEventListener("resize", this.calcWidth, false);
     },
     destroyed() {
     }
@@ -472,4 +440,5 @@ export default {
   min-width: 6px;
   min-height: 6px;
 }
+
 </style>

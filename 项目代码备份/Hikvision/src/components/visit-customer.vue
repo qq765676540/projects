@@ -38,7 +38,7 @@ export default {
             config: {
                 colorList: ["#448DFF", "#59D4FF", "#751DE2", "#BB2B79", "#DB479B", "#F8B9D9", "#D391B8", "#C2A0F7", "#AEEFFE", "#A7D0FF"],
                 params_1: {
-                    title: "拜访用户数",
+                    title: "拜访客户数",
                     imgUrl: require("@/assets/image/pie-customer.png"),
                     size: "45px",
                     labelShow: false,

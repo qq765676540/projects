@@ -28,6 +28,10 @@ export default {
             default () {
                 return {};
             }
+        },
+        sign: {
+            type: String,
+            default: ''
         }
     },
     data() {
@@ -75,6 +79,15 @@ export default {
                     _serie.areaStyle.color.colorStops = colorStops[i].color;
                     i++;
                     i = i > 1 ? 0 : i;
+                    if(this.sign) {
+                        _serie.markPoint.label = {
+                            fontSize: 8,
+                            color: 'white',
+                            formatter(data) {
+                                return data.value + '%'
+                            }
+                        }
+                    }
                     series.push(_serie);
                 });
                 if (_data.config.legend) {
@@ -83,6 +96,13 @@ export default {
                 _option.legend.data = legend;
                 _option.series = series;
                 _option.xAxis.data = _data.xData;
+
+                if(this.sign) {
+                    _option.yAxis.axisLabel = {
+                        formatter: '{value}%'
+                    }
+                }
+
                 this.echartsIns.setOption(_option);
             }
         },

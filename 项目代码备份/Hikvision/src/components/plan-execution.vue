@@ -7,7 +7,7 @@
                     <span class="sub-title-name">近五周计划执行率</span>
                     <span class="sub-title-unit">单位(%)</span>
                 </div>
-                <easy-line :id="'plan-line-1'" :data="ElineDataCSet" v-if="ElineDataCSet"></easy-line>
+                <easy-line :id="'plan-line-1'" :data="ElineDataCSet" v-if="ElineDataCSet" sign="axisLabel"></easy-line>
             </div>
             <div class="curr-week-unexecution border-bottom flex flex-column">
                 <div class="sub-title">
@@ -86,18 +86,17 @@ export default {
                     config: {
                         legend: false
                     },
-                    xData: b,
+                    xData: b.reverse(),
                     yData: [
                         {
                             name: "计划执行率",
-                            value: c
+                            value: c.reverse()
                         }
                     ]
                 };
-                console.log("ElineDataCSet", opt);
                 return opt;
             }
-            return {};
+            return false;
         },
         CollapseADataSet() {
             if (this.$store.state.planExecutionCollapseA.length > 0) {
@@ -122,7 +121,6 @@ export default {
                     ];
                     b.push(c);
                 });
-                console.log("planExecutionCollapseA", b);
                 return b;
             }
             return false;
@@ -150,7 +148,6 @@ export default {
                     ];
                     b.push(c);
                 });
-                console.log("planExecutionCollapseB", b);
                 return b;
             }
             return false;

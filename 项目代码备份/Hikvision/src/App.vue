@@ -76,7 +76,7 @@ import animate from "animate.css";
 import Tabs from "./components/common/vant-tabs/index";
 
 import vueSwitch from "./components/common/vue-switch";
-import selector from "./components/sub-components/selector";
+import selector from "./components/common/selector";
 import waterMark from "./components/common/water-mark";
 
 import Tools from "./tools/tools";
@@ -120,7 +120,8 @@ export default {
                 bgColor: "rgba(199, 199, 199, 0.68)",
                 circleColor: "red"
             },
-            switchIsOpen: false
+            switchIsOpen: false,
+            qApp: null
         };
     },
     beforeCreate() {
@@ -143,11 +144,10 @@ export default {
             //     this.initOrganization();
             // });
             
-            
             parent.qApp.field('DimensionName').clear();
             parent.qApp.field('OADAccount').clear();
             
-            parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{ 
+            parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
                 parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{ 
                     this.cubeInit();
                     this.initOrganization(); 
@@ -156,10 +156,11 @@ export default {
         }
     },
     created() {
-        
+        // this.initOrganization();
     },
     mounted() {
         // this.cubeInit();
+        
     },
     methods: {
         resultTreeData(data) {},
@@ -171,11 +172,72 @@ export default {
             this.selectorFlag = false;
         },
         confirmSelect(data) {
-            parent.qApp.field("DimensionName").clear();
-            parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, true);
+            
+            // parent.qApp.field("DimensionName").clear().then(()=>{
+            //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false);
+            // }); 
+            if(data.org.length>0){
+                let selLevels = [];
+                data.org.filter((v)=>{
+                    selLevels.push(v.split(':')[1]);
+                });
+                selLevels = Array.from(new Set(selLevels.sort((a,b)=>{
+                    return b-a;
+                })));
+
+                let fieldName = "DeptName_Lv"+selLevels[0];
+                let values = [];
+                let VlauesDisplay = [];
+                data.org.filter((va)=>{
+                    if(selLevels[0] === va.split(':')[1]){
+                        let tmp = {};
+                        tmp.qText = va.split(':')[0];
+                        VlauesDisplay.push(va.split(':')[0]);
+                        values.push(tmp);
+                    }
+                });
+                // 执行org筛选
+                // parent.qApp.field("DeptName_Lv2").clear().then(()=>{
+                //     parent.qApp.field("DeptName_Lv3").clear().then(()=>{
+                //         parent.qApp.field("DeptName_Lv4").clear().then(()=>{
+                //             parent.qApp.field(fieldName).selectValues(values, true, false).then(()=>{
+                //                 this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
+                //             });
+                //         });
+                //     });
+                // });
+                parent.qApp.clearAll().then(()=>{
+                    parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
+                        parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
+                            // this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
+                            parent.qApp.field(fieldName).selectValues(values, true, false);
+                        });
+                    });
+                });
+                this.selectedOrg = VlauesDisplay;
+
+            }else{
+                // parent.qApp.field("DeptName_Lv2").clear().then(()=>{
+                //     parent.qApp.field("DeptName_Lv3").clear().then(()=>{
+                //         parent.qApp.field("DeptName_Lv4").clear().then(()=>{
+                //             this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
+                //         });
+                //     });
+                // });
+                
+                parent.qApp.clearAll().then(()=>{
+                    // this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
+                    parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
+                        parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false);
+                    });        
+                });
+                
+                this.selectedOrg = [];
+            }
+        
             this.selectorFlag = false;
             this.selectedTime = data.time;
-            this.selectedOrg = data.org;
+            
             console.log("confirmSelect: ", data.time, data.org);
 
             $(".selected-dim-org > .values").css({
@@ -184,6 +246,7 @@ export default {
             this.switchIsOpen = false;
         },
         switchTo() {
+            // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
         },
@@ -291,8 +354,9 @@ body,
 .nav-bar-top {
     height: 40px;
     line-height: 40px;
-    background: url("./assets/image/top-tab-bg.png") center no-repeat;
-    background-size: 100%;
+    /* background: url("./assets/image/top-tab-bg.png") center no-repeat; */
+    /* background-size: 100%; */
+    background-color: #1D71F0;
 }
 
 .van-nav-bar__title {

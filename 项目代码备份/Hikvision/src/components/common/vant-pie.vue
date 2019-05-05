@@ -3,11 +3,11 @@
     <div class="flex flex-1 flex-align-center flex-justify-center">
         <van-circle
             v-model="currentRate"
-            :rate="data.rate"
-            :size="data.size"
+            :rate="rate"
+            :size="size"
             :speed="100"
             :text="text"
-            :color="data.rate < 50 ? '#FF7D22' : '#0F8EE9'"
+            :color="rate < 50 ? '#FF7D22' : '#0F8EE9'"
             :layer-color="'#E9EFF4'"
             :stroke-width="60"
             />
@@ -28,11 +28,13 @@ export default {
       type: String,
       default: Math.random().toFixed(8)
     },
-    data: {
-      type: Object,
-      default() {
-        return []
-      }
+    rate: {
+      type: Number,
+      default: 0
+    },
+    size: {
+      type: String,
+      default: '20px'
     },
     pdSize:{
       type: String,
@@ -45,21 +47,17 @@ export default {
       currentRate: 0
     };
   },
-  beforeCreate() {},
-  mounted() {
-  },
   computed: {
     text() {
-      // if (this.data.size) {
         let content = this.currentRate.toFixed(0);
-        let fontSize = this.data.size.split("px")[0] / 2.7;
+        let fontSize = this.size.split("px")[0] / 2.7;
         let color = "#0F8EE9";
-        if (this.data.rate * 1 > 100) {
+        if (this.rate * 1 > 100) {
           color = "#FF7D22";
         }
-        if (content === "100" && this.data.rate * 1 > 100) {
+        if (content === "100" && this.rate * 1 > 100) {
           color = "#FF7D22";
-          content = this.data.rate;
+          content = this.rate;
         }
         let span = `
             <span style="font-size: ${fontSize}px;">${content}</span>%
@@ -67,7 +65,6 @@ export default {
         $(`#${this.id} .van-circle__text`).css({ color: color });
         $(`#${this.id} .van-circle__text`).html(span);
         return content + "";
-      // }
     }
   }
 };

@@ -1,22 +1,3 @@
-/* @font-face {
-    font-family: 'iFont';
-    src: url("../../../static/fonts/DS-DIGI.woff");
-}
-@font-face{
-    font-family: 'pangmenzhengdao';
-    src: url('../../../static/fonts/PangMenZhengDaoBiaoTiTi-1.ttf');
-    font-weight:bold;
-}
-@font-face{
-    font-family: 'huakanglijinhei';
-    src: url('../../../static/fonts/huakanglijinhei.ttf');
-    font-weight:bold;
-}
-@font-face{
-    font-family: 'huakangheiti';
-    src: url('../../../static/fonts/huakangheitiW7.ttf');
-} */
-
 body,
 p,
 h1,
@@ -266,7 +247,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
 }
 
 /*定义滚动条轨道 内阴影与圆角*/

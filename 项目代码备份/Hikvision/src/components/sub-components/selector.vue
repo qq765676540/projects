@@ -81,7 +81,7 @@ export default {
         // console.log(arr);
         let levelArr = this.$store.state.currentLevel;
         levelArr.forEach(v => {
-          this.orgLevel = v[0].qNum;
+          this.orgLevel = v[0].qNum+1;
         });
         let level1Arr = {},
           level2Arr = {},
@@ -128,19 +128,17 @@ export default {
               level4Arr[p[3].qText].add(tmpStr);
             }
           }
-
-          
         });
         // console.log(
         //   "2019-04-27 22:33:07->大门日志记录:",
+        //   'level4Arr:',level4Arr,
         //   'level3Arr:',level3Arr,
-        //   'level2Arr:',level2Arr,
-        //   'level1Arr:',level1Arr
         // );
 
         let maxLevel = 4;
 
         var cTmp = {};
+
         pushTreeData(level4Arr, 4);
         pushTreeData(level3Arr, 3);
         pushTreeData(level2Arr, 2);
@@ -153,7 +151,7 @@ export default {
             for (var item of tSet.values()) {
               let tmp2 = {
                 label: item,
-                id: item + ":" + level
+                id: item + ":" + (level+1)
               };
               if (level * 1 < maxLevel) {
                 tmp2.children = cTmp[item] ? cTmp[item].children || [] : [];

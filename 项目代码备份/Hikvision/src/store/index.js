@@ -7,6 +7,7 @@ import * as mutations from './mutations'
 Vue.use(Vuex)
 
 var state = {
+  isLoading:true,
   summaryCircle:[],
   summaryEasyKPI:[],
   summaryLineA:[],

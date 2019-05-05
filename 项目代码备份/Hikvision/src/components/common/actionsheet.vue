@@ -55,7 +55,7 @@ export default {
         myStyle: {
             type: Object,
             default() {
-                return { background: "#efefef" };
+                return { background: "#efefef", borderColor: "#cccccc96" };
             }
         },
         asshow: {
@@ -107,7 +107,7 @@ export default {
             this.actionStyle = {
                 height: scrollHeight
             };
-            this.$emit("setScroll", "hidden !important");
+            this.$emit("setScroll", "hidden !important",this.selected);
             this.show = true;
             this.$nextTick(() => {
                 $(".van-overlay").click(() => {

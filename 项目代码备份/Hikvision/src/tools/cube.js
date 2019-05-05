@@ -86,10 +86,11 @@ class Cube {
                 vApp.$store.dispatch('updateData', tmp);
                 //组织架构只需要初始化一次，初始化后直接销毁session
                 if(dataName === 'organization'){
-                    // qApp.destroySessionObject(reply.qInfo.qId);
+                    qApp.destroySessionObject(reply.qInfo.qId);
                 }
                 // (callback && typeof (callback) === "function") && callback(tmp);
                 // console.log(tmp.dataName+'数据',rows);
+                // console.log('Create Cube --> '+dataName+' <--执行了一次');
             })
             
         }

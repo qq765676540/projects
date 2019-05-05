@@ -6,7 +6,7 @@
         id="vist-warning"
     >
         <div class="vist-warning flex flex-column" id="vist-warning-box">
-            <div class="customer-distribution border-bottom" v-if="KPI.length">
+            <div class="customer-distribution border-bottom">
                 <div class="sub-title">
                     <div class="sub-title-icon plan-icon"></div>
                     <span class="sub-title-name">客用户拜访覆盖</span>
@@ -14,24 +14,23 @@
                 <div style="margin:0px 15px 0px 15px">
                     <div style="min-height:60px;margin:10px 0px 0px 0px">
                         <my-progress
-                            :data="progressData1"
+                            :data="progressData[0]"
                             barBgcolor_i="linear-gradient(to right,#594cff, #6bbbe5)"
                             barWidth="100%"
                             barHeight="10px"
                             barRadius="7px 7px 7px 7px"
                             fontColor="#85a7ff"
-                            title="分组客户覆盖率"
+                            title="分级客户覆盖率"
                         ></my-progress>
                     </div>
-                    <div style="min-height:50px">
+                    <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
                                 iconSize="10px"
                                 iconBgColor="#5181FF"
                                 title="战略"
-                                :data="KPI[2]"
+                                :data="progressData[2]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -39,9 +38,8 @@
                                 iconSize="10px"
                                 iconBgColor="#6700EA"
                                 title="潜力"
-                                :data="KPI[4]"
+                                :data="progressData[4]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -51,9 +49,8 @@
                                 iconSize="10px"
                                 iconBgColor="#6FCEFF"
                                 title="核心"
-                                :data="KPI[3]"
+                                :data="progressData[3]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -61,32 +58,30 @@
                                 iconSize="10px"
                                 iconBgColor="#CF3381"
                                 title="认证"
-                                :data="KPI[5]"
+                                :data="progressData[5]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:60px;margin:0px 0px 0px 0px">
                         <my-progress
-                            :data="progressData2"
-                            barBgcolor_i="linear-gradient(to right,#c03288, #6a08e4)"
+                            :data="progressData[1]"
+                            barBgcolor_i="linear-gradient(to right,#594cff, #6bbbe5)"
                             barWidth="100%"
                             barHeight="10px"
                             barRadius="7px 7px 7px 7px"
-                            fontColor="#e8a1c5"
+                            fontColor="#85a7ff"
                             title="锁定用户覆盖率"
                         ></my-progress>
                     </div>
-                    <div style="min-height:50px">
+                    <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
                                 iconSize="10px"
                                 iconBgColor="#5181FF"
                                 title="战略"
-                                :data="KPI[6]"
+                                :data="progressData[6]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -94,9 +89,8 @@
                                 iconSize="10px"
                                 iconBgColor="#6700EA"
                                 title="潜力"
-                                :data="KPI[8]"
+                                :data="progressData[8]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -106,9 +100,8 @@
                                 iconSize="10px"
                                 iconBgColor="#6FCEFF"
                                 title="核心"
-                                :data="KPI[7]"
+                                :data="progressData[7]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
@@ -116,9 +109,8 @@
                                 iconSize="10px"
                                 iconBgColor="#CF3381"
                                 title="重要"
-                                :data="KPI[9]"
+                                :data="progressData[9]"
                                 :iconImgShow="false"
-                                v-if="KPI"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -135,15 +127,15 @@
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="核心"
-                            :data="['战略','核心','潜力','认证']"
-                            :myStyle="{background: '#efefef',width: '70px'}"
+                            defSelected="全部"
+                            :data="['战略','核心','潜力','认证','全部']"
+                            :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}"
                             @setScroll="setScrollStyleA"
                         ></my-actionsheet>
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['客户', '销售', '类型', '本年自有BP']" v-if="tableADataSet"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['客户', '销售', '类型']" v-if="tableADataSet"></my-table>
                 </div>
             </div>
             <div class="uncovered-customer-detail border-bottom" v-show="true">
@@ -157,15 +149,15 @@
                         style="margin:5px 15px 0px 0px"
                     >
                         <my-actionsheet
-                            defSelected="核心"
-                            :data="['战略','核心','市场','重要']"
-                            :myStyle="{background: '#efefef',width: '70px'}"
+                            defSelected="全部"
+                            :data="['战略','核心','市场','重要', '全部']"
+                            :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '70px'}"
                             @setScroll="setScrollStyleB"
                         ></my-actionsheet>
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['用户', '销售', '类型', '本年自有BP']" v-if="tableBDataSet"></my-table>
+                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['用户', '销售', '类型']" v-if="tableBDataSet"></my-table>
                 </div>
             </div>
         </div>
@@ -190,118 +182,128 @@ export default {
     data() {
         return {
             isLoading: false,
-            progressData1: 0,
-            progressData2: 0,
             asshow1: false,
             asshow2: false,
             ash1: "0px",
             ash2: "0px",
             scroll: "scroll !important",
-            Aselected: "核心",
-            Bselected: "核心"
+            Aselected: "全部",
+            Bselected: "全部",
+
         };
-    },
-    mounted() {
-        this.setKpi();     
     },
     computed: {
         tableADataSet(){
             if(this.$store.state.visitWarningTableA.length>0){
-                let a = this.$store.state.visitWarningTableA;
-                let b = {
-                    战略:[],
-                    核心:[],
-                    潜力:[],
-                    认证:[]
+                let response = this.$store.state.visitWarningTableA;
+                let data = {
+                    全部: [],
+                    战略: [],
+                    核心: [],
+                    潜力: [],
+                    认证: []
                 };
-                $.each(a,(i,v)=>{
-                    if(v[0].qText==='战略客户'){
-                        let d1 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['战略'].push(d1);
-                    };
-                    if(v[0].qText==='核心客户'){
-                        let d2 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['核心'].push(d2);
-                    };
-                    if(v[0].qText==='潜力客户'){
-                        let d3 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['潜力'].push(d3);
-                    };
-                    if(v[0].qText==='认证客户'){
-                        let d4 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['认证'].push(d4);
-                    };   
+                $.each(response,(i,v)=>{
+                    var type = v[0].qText.substring(0, 2),
+                        custName = v[1].qText,
+                        salesman = v[2].qText,
+                        bp = v[3].qNum;
+
+                    var row = [custName, salesman, type, bp];
+                    
+                    data['全部'].push(row);
+
+                    if(type === '战略') {
+                        data['战略'].push(row);
+                    }
+                    else if(type === '核心') {
+                        data['核心'].push(row);
+                    }
+                    else if(type === '潜力') {
+                        data['潜力'].push(row);
+                    }
+                    else if(type === '认证') {
+                        data['认证'].push(row);
+                    }
                 });
-                console.log('visitWarningTableA',b[this.Aselected]);
-                return b[this.Aselected];
+
+                data[this.Aselected].sort((a, b)=>{
+                    return b[3] - a[3];
+                });
+
+                var result = [];
+                data[this.Aselected].forEach(item => {
+                    result.push(item.slice(0, 3));
+                });
+                return result;
             }
             return false;
         },
         tableBDataSet(){
             if(this.$store.state.visitWarningTableB.length>0){
-                let a = this.$store.state.visitWarningTableB;
-                let b = {
-                    战略:[],
-                    核心:[],
-                    市场:[],
-                    重要:[]
+                let response = this.$store.state.visitWarningTableB;
+                let data = {
+                    全部: [],
+                    战略: [],
+                    核心: [],
+                    市场: [],
+                    重要: []
                 };
-                $.each(a,(i,v)=>{
-                    if(v[0].qText==='战略锁定'){
-                        let d1 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['战略'].push(d1);
-                    };
-                    if(v[0].qText==='核心锁定'){
-                        let d2 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['核心'].push(d2);
-                    };
-                    if(v[0].qText==='市场锁定'){
-                        let d3 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['市场'].push(d3);
-                    };
-                    if(v[0].qText==='重要锁定'){
-                        let d4 = [v[1].qText,v[2].qText,v[0].qText.substr(0,4),Math.round(v[3].qNum/100)/10];
-                        b['重要'].push(d4);
-                    };   
-                });
-                console.log('visitWarningTableB',b[this.Bselected]);
-                return b[this.Bselected];
-            }
-            return false;
-        },
-        KPI(){
-            if(this.$store.state.visitWarningKPI.length>0){
-                let a = this.$store.state.visitWarningKPI[0];
-                let b = [];
-                $.each(a,(i,v)=>{
-                    if(i<2){
-                        b.push(Math.round(v.qNum));
-                    }else{
-                        b.push(v.qText);
+                $.each(response, (i,v)=>{
+                     var type = v[0].qText.substring(0, 2),
+                        custName = v[1].qText,
+                        salesman = v[2].qText,
+                        bp = v[3].qNum;
+
+                    var row = [custName, salesman, type, bp];    
+
+                    data['全部'].push(row);
+
+                    if(type === '战略'){
+                        data['战略'].push(row);
                     }
-                    
+                    else if(type === '核心'){
+                        data['核心'].push(row);
+                    }
+                    else if(type === '市场'){
+                        data['市场'].push(row);
+                    }
+                    else if(type === '重要'){
+                        data['重要'].push(row);
+                    } 
                 });
-                console.log('visitWarningKPI',b);
-                return b;
+
+                data[this.Bselected].sort((a, b)=>{
+                    return b[3] - a[3];
+                });
+
+                var result = [];
+                data[this.Bselected].forEach(item => {
+                    result.push(item.slice(0, 3));
+                });
+                return result;
             }
             return false;
         },
-        pullstyle(){
-            return {
-                'overflow-y': this.scroll
+        progressData(){
+            var result = [0,0,0,0,0,0,0,0,0,0];
+            if(!this.$store.state.visitWarningKPI.length){
+                return result;
             }
-        }
-    },
-    watch: {
-        KPI(n){
-            this.setKpi();
+            
+            this.$store.state.visitWarningKPI[0].forEach((kpi, index)=>{
+                if(index<2) {
+                    result.splice(index, 1, kpi.qNum==='NaN'?0:kpi.qNum.toFixed(0));
+                }
+                else {
+                    result.splice(index, 1, kpi.qText);
+                }
+                
+            })
+            return result;
         }
     },
     methods: {
-        setKpi(){
-            this.progressData1 = Math.round(this.$store.state.visitWarningKPI[0][0].qNum);
-            this.progressData2 = Math.round(this.$store.state.visitWarningKPI[0][1].qNum);
-        },
         onRefresh() {
             setTimeout(() => {
                 this.isLoading = false;

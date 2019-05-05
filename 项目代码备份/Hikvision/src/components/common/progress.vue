@@ -1,14 +1,14 @@
 <template>
     <div class="flex flex-column">
         <div class="flex flex-1">
-            <div class="flex flex-1 flex-justify-left flex-align-center">{{title}}</div>
+            <div class="flex flex-1 flex-justify-left">{{title}}</div>
             <div class="flex-1"></div>
-            <div class="flex flex-1 flex-justify-right flex-align-center" :style="fontStyle">{{data+'%'}}</div>
         </div>
-        <div class="flex-1">
-            <div :style="Bars" :id="id">
-                <div :style="BarsDiv"></div>
+        <div class="process-bar flex flex-row flex-1 flex-align-center">
+            <div :style="Bars" :id="id" class="process-outline flex-3">
+                <div :style="BarsDiv" class="process-progress"></div>
             </div>
+            <div class="process-value flex-1 flex-justify-right" :style="fontStyle">{{data+'%'}}</div>
         </div>
     </div>
 </template>
@@ -59,14 +59,15 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+            initData: 0
+        };
     },
     computed: {
         Bars: function() {
             return {
                 position: "relative",
                 width: this.barWidth,
-                padding: "1px",
                 background: this.barBgcolor_o,
                 "border-radius": this.barRadius
             };
@@ -76,12 +77,12 @@ export default {
                 display: "block",
                 position: "relative",
                 background: this.barBgcolor_i,
-                width: "0%",
+                width: this.initData + "%",
                 color: "#fff",
                 transition: "width 0.5s ease-out",
                 height: this.barHeight,
                 "line-height": this.barHeight,
-                "border-radius": this.barRadius
+                "border-radius": this.barRadius,
             };
         },
         fontStyle: function() {
@@ -91,18 +92,24 @@ export default {
             };
         }
     },
+    mounted() {
+        this.initData = this.data;
+    },
     watch: {
-        data: function(val) {
-            $("#" + this.id)
-                .find("div")
-                .css("width", val + "%");
+        data: function(nVal) {
+            this.initData = nVal;
         }
     },
-    mounted() {
-        
-    },
-    destroyed() {}
 };
 </script>
 <style scoped>
+
+.process-outline {
+    max-height: 10px;
+}
+
+.process-value {
+    max-width: 50px;
+    min-width: 50px;
+}
 </style>
