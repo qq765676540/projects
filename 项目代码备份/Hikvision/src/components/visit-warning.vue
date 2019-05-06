@@ -26,40 +26,36 @@
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#5181FF"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="战略"
                                 :data="progressData[2]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#6700EA"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="潜力"
                                 :data="progressData[4]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#6FCEFF"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="核心"
                                 :data="progressData[3]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#CF3381"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="认证"
                                 :data="progressData[5]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -77,40 +73,36 @@
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#5181FF"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="战略"
                                 :data="progressData[6]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#6700EA"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="潜力"
                                 :data="progressData[8]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#6FCEFF"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="核心"
                                 :data="progressData[7]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
                             <my-horkpi
-                                iconSize="10px"
-                                iconBgColor="#CF3381"
+                                iconSize="8px"
+                                iconBgColor="#d2eaf5"
                                 title="重要"
                                 :data="progressData[9]"
-                                :iconImgShow="false"
                             ></my-horkpi>
                         </div>
                     </div>
@@ -168,7 +160,7 @@
 import table from "./common/datatables";
 import progress from "./common/progress";
 import actionsheet from "./common/actionsheet";
-import horkpi from "./common/horizontal-kpi";
+import horkpi from "./common/horizontal-kpi-ext";
 import { PullRefresh } from "vant";
 export default {
     name: "visit-warning",
@@ -189,7 +181,6 @@ export default {
             scroll: "scroll !important",
             Aselected: "全部",
             Bselected: "全部",
-
         };
     },
     computed: {
@@ -296,7 +287,7 @@ export default {
                     result.splice(index, 1, kpi.qNum==='NaN'?0:kpi.qNum.toFixed(0));
                 }
                 else {
-                    result.splice(index, 1, kpi.qText);
+                    result.splice(index, 1, [kpi.qText,((kpi.qText.split('/')[0]/kpi.qText.split('/')[1]*100).toFixed(0)+'%').replace('NaN','0')]);
                 }
                 
             })

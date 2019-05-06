@@ -10,12 +10,12 @@
         <tbody>
             <tr v-for="i in data.length" :key="i">
                 <td v-for="(item,index) in (data[i-1].value?data[i-1].value:data[i-1])" :key="index" :style="{'text-align':index>2?'center':'left'}">
-                    <div v-if="index < 1" class="first-td flex flex-align-center">
-                        <div v-if="data[i-1].color" class="col-xs-2 col-sm-2">
+                    <div v-if="index < 1" class="flex flex-align-center">
+                        <div v-if="data[i-1].color">
                             <div class="title-name-icon" :style="{'background':data[i-1].color}">
                             </div>
                         </div>
-                        <div class="col-xs-6 col-sm-6" style="white-space: nowrap; text-align: left;">
+                        <div style="white-space: nowrap; text-align: left; padding-top:2px">
                             {{item}}
                         </div>
                     </div>
@@ -144,13 +144,9 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
 
 .title-name-icon {
     width: 10px;
-    height: 10px;
-    border-radius: 50%;
+    height: 4px;
+    border-radius: 3px;
 }
-
-/* .first-td{
-  margin-left: 20px;
-} */
 
 .table-title-row {
     white-space: nowrap;

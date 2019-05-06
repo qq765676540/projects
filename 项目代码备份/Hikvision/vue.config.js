@@ -5,10 +5,11 @@ const path = require('path')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 
 module.exports = {
-  // outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/TestMashup/dist',
-  outputDir: 'public/package',
+  // outputDir: 'C:/Users/Darcy/Documents/Qlik/Sense/Extensions/Hikvision/public',//WYG
+  outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/mashuptest/test',//YCQ
+  // outputDir: 'public/package',
   // publicPath: process.env.VUE_APP_PUBLICK_PATH,
-  publicPath: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_PUBLICK_PATH : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   configureWebpack: { // webpack 配置
     output: { // 输出重构  打包编译后的 文件名称  【模块名称.版本号.时间戳】
       filename: `js/[name].[hash].js`,
@@ -51,13 +52,13 @@ module.exports = {
     config.performance.set('maxEntrypointSize', 400 * 1024 * 10)
     config.performance.set('maxAssetSize', 550 * 1024 * 10)
 
-    config.resolve.alias.set('@img', path.resolve(__dirname, 'src/assets/images/'))
+    config.resolve.alias.set('@img', path.resolve(__dirname, 'src/assets/image/'))
 
     config.optimization.splitChunks({
       cacheGroups: {
         vendor: {
           chunks: 'all',
-          test: /[\\/]node_modules[\\/]/,
+          test: /[///]node_modules[///]/,
           name: 'vendor',
           minChunks: 1,
           maxInitialRequests: 5,
@@ -66,7 +67,7 @@ module.exports = {
         },
         common: {
           chunks: 'all',
-          test: /[\\/]src[\\/]common[\\/]/,
+          test: /[///]src[///]common[///]/,
           name: 'common',
           minChunks: 1,
           maxInitialRequests: 5,

@@ -18,9 +18,9 @@
                     <data-table
                         orderBy="2|desc"
                         :scrollY="220"
-                        :isShowTitle="false"
+                        :isShowTitle="true"
                         :data="tableData"
-                        :title="['a','b','c']"
+                        :title="['拜访任务类型','占比','次数']"
                         v-if="tableData"
                     ></data-table>
                 </div>
@@ -102,7 +102,7 @@ export default {
                 rows.forEach((row, index) => {
                     var color = this.colorList[index],
                         col1 = row[0].qText,
-                        col2 = (row[1].qNum * 100).toFixed(0),
+                        col2 = (row[1].qNum * 100).toFixed(0)+'%',
                         col3 = row[2].qNum;
 
 

@@ -15,6 +15,7 @@
     "autoprefixer": "^9.5.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
+    "datatables.net-fixedheader": "^3.1.5",
     "datatables.net-fixedheader-dt": "^3.1.5",
     "echarts": "^4.2.1",
     "extract-css-chunks-webpack-plugin": "^4.3.1",

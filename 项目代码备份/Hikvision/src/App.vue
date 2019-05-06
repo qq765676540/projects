@@ -23,7 +23,7 @@
                 <router-view v-if="active==0" class="view-container"/>
             </van-tab>
             <van-tab title="计划执行">
-                <router-view v-if="active==1" class="view-container no-padding"/>
+                <router-view v-if="active==1" class="view-container"/>
             </van-tab>
             <van-tab title="拜访预警">
                 <router-view v-if="active==2" class="view-container"/>
@@ -64,7 +64,7 @@
             :selectedTime="selectedTime"
             :selectedOrg="selectedOrg"
         ></selector>
-        <van-popup v-model="popShow">{{popContext}}</van-popup>
+        <van-popup v-model="popShow" v-on:click-overlay="closePop()" >{{popContext}}</van-popup>
         <waterMark userName="王永刚"></waterMark>
     </div>
 </template>
@@ -112,7 +112,6 @@ export default {
             selectorFlag: false,
             selectedTime: "本周",
             selectedOrg: [],
-            popShow: false,
             popContext: "",
             switchStyle: {
                 width: 54,
@@ -127,23 +126,6 @@ export default {
     beforeCreate() {
         if(parent.qApp){
 
-            /**
-             * 测试当前用户登录
-             */
-            // parent.qApp.field('OADAccount').clear();
-            // parent.qApp.field('OADAccount').selectValues([{qText:'LIRUI5'}], true, true).then(()=>{
-            //     this.initOrganization();
-            // });
-
-            /**
-             * 测试层级 增加默认第一层层级
-             * DeptName_Lv1:上海分公司
-             */
-            // parent.qApp.field('DeptName_Lv1').clear();
-            // parent.qApp.field('DeptName_Lv1').selectValues([{qText:'上海分公司'}], true, true).then(()=>{
-            //     this.initOrganization();
-            // });
-            
             parent.qApp.field('DimensionName').clear();
             parent.qApp.field('OADAccount').clear();
             
@@ -163,6 +145,9 @@ export default {
         
     },
     methods: {
+        closePop() {
+            this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+        },
         resultTreeData(data) {},
         onClickLeft() {},
         showSelector() {
@@ -171,11 +156,7 @@ export default {
         cancleSelect(data) {
             this.selectorFlag = false;
         },
-        confirmSelect(data) {
-            
-            // parent.qApp.field("DimensionName").clear().then(()=>{
-            //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false);
-            // }); 
+        confirmSelect(data) { 
             if(data.org.length>0){
                 let selLevels = [];
                 data.org.filter((v)=>{
@@ -187,46 +168,27 @@ export default {
 
                 let fieldName = "DeptName_Lv"+selLevels[0];
                 let values = [];
-                let VlauesDisplay = [];
+                let valuesDisplay = [];
                 data.org.filter((va)=>{
                     if(selLevels[0] === va.split(':')[1]){
                         let tmp = {};
                         tmp.qText = va.split(':')[0];
-                        VlauesDisplay.push(va.split(':')[0]);
+                        valuesDisplay.push(va.split(':')[0]);
                         values.push(tmp);
                     }
                 });
                 // 执行org筛选
-                // parent.qApp.field("DeptName_Lv2").clear().then(()=>{
-                //     parent.qApp.field("DeptName_Lv3").clear().then(()=>{
-                //         parent.qApp.field("DeptName_Lv4").clear().then(()=>{
-                //             parent.qApp.field(fieldName).selectValues(values, true, false).then(()=>{
-                //                 this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
-                //             });
-                //         });
-                //     });
-                // });
                 parent.qApp.clearAll().then(()=>{
                     parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
                         parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
-                            // this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
                             parent.qApp.field(fieldName).selectValues(values, true, false);
                         });
                     });
                 });
-                this.selectedOrg = VlauesDisplay;
+                this.selectedOrg = valuesDisplay;
 
             }else{
-                // parent.qApp.field("DeptName_Lv2").clear().then(()=>{
-                //     parent.qApp.field("DeptName_Lv3").clear().then(()=>{
-                //         parent.qApp.field("DeptName_Lv4").clear().then(()=>{
-                //             this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
-                //         });
-                //     });
-                // });
-                
                 parent.qApp.clearAll().then(()=>{
-                    // this.$store.dispatch('updateData', {dataName:'isLoading',data:true});
                     parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
                         parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false);
                     });        
@@ -246,7 +208,6 @@ export default {
             this.switchIsOpen = false;
         },
         switchTo() {
-            // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
         },
@@ -290,13 +251,21 @@ export default {
             cube.getData(parent.qApp, this, "customerDistribution",-1,1, "customerDistribution");
         }
     },
+    computed: {
+        popShow() {
+            return this.$store.state.isPopShow;
+        }
+    },
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
-            this.selBarFlag = pIndex == 1 ? false : true;
+            // this.selBarFlag = pIndex == 1 ? false : true;
         },
         selectedTime(nVal){
             this.$store.dispatch('updateData', {dataName: 'selectedTime',data: nVal});
+        },
+        popShow(nVal) {
+            console.log('popShow',nVal);
         }
     }
 };

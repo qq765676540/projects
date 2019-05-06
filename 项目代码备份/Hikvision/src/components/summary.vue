@@ -56,7 +56,7 @@
                             <div class="col-xs-7 col-sm-7 text-center">
                                 <my-horkpi
                                     iconSize="8px"
-                                    iconBgColor="#e6e6e6"
+                                    iconBgColor="#d2eaf5"
                                     :title="kpiName[btActiveNum][0]"
                                     :data="kpiDataSet[0]"
                                     fontColor="#5181FF"
@@ -67,10 +67,10 @@
                             <div class="col-xs-5 col-sm-5 text-center" style="padding-right:0 !important;">
                                 <my-horkpi
                                     iconSize="8px"
-                                    iconBgColor="#e6e6e6"
+                                    iconBgColor="#d2eaf5"
                                     :title="kpiName[btActiveNum][1]"
                                     :data="kpiDataSet[1]"
-                                    fontColor="#6FCEFF"
+                                    fontColor="#5181FF"
                                     :iconImgShow="false"
                                     v-if="kpiDataSet"
                                 ></my-horkpi>
@@ -84,15 +84,15 @@
                     <div class="sub-title-icon org-structure-icon"></div>
                     <span class="flex flex-1 sub-title-name flex-justify-left">组织架构</span>
                     <div class="flex flex-1 flex-justify-center col-2-right-title">
-                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[1]}">
-                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
                             <span>有效拜访率</span>
                         </div>
                         <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
-                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
                             <span>拜访数</span>
                         </div>
-                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[2]}">
+                        <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[2]}"></div>
                             <span>计划执行率</span>
                         </div>
@@ -118,6 +118,16 @@
                     <div class="sub-title-icon trend-icon"></div>
                     <span class="sub-title-name">拜访客用户周趋势</span>
                     <span class="sub-title-unit">单位(千)</span>
+                    <div class="flex flex-1 flex-justify-right col-2-right-title" >
+                        <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
+                            <span>用户数</span>
+                        </div>
+                        <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[0]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[2]}"></div>
+                            <span>客户数</span>
+                        </div>
+                    </div>                  
                 </div>
                 <easy-line :id="'line-2'" :data="ElineDataBSet" v-if="ElineDataBSet"></easy-line>
             </div>
@@ -234,7 +244,7 @@ export default {
                 });
                 let opt = {
                     config: {
-                        legend: true
+                        legend: false
                     },
                     xData: b.reverse(),
                     yData: [

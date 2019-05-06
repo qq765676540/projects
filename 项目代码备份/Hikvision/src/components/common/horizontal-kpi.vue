@@ -34,7 +34,7 @@ export default {
             default: "8px"
         },
         iconBgColor: {
-            default: "#448dff"
+            default: "#d2eaf5"
         },
         title: {
             default: "标题"
