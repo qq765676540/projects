@@ -18,6 +18,8 @@
             :animated="true"
             :swipeable="true"
             :sticky="true"
+            line-width="63"
+            line-height="2"
         >
             <van-tab title="总体情况">
                 <router-view v-if="active==0" class="view-container"/>
@@ -334,7 +336,7 @@ body,
     line-height: 40px;
     /* background: url("./assets/image/top-tab-bg.png") center no-repeat; */
     /* background-size: 100%; */
-    background-color: #1D71F0;
+    background-color: #3876cd;
 }
 
 .van-nav-bar__title {
@@ -382,14 +384,21 @@ body,
     display: flex;
 }
 
+.sub-title-name {
+    color: #333333;
+}
+
 .sub-title-icon {
-    width: 20px;
-    height: 30px;
-    line-height: 30px;
+    width: 3px;
+    height: 14px;
+    background: #1D71F0;
     margin-left: 10px;
+    margin-top: 8px;
+    /* 
     background-repeat: no-repeat;
     background-size: 20px 20px;
-    background-position: center;
+    background-position: center; 
+    */
 }
 
 .sub-title-unit {
