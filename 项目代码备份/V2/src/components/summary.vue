@@ -304,7 +304,7 @@ export default {
                     });
                 });
                 // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
-                console.log("orgListDataSet",d);
+                // console.log("orgListDataSet",d);
                 return d;
             }
             return false;
@@ -325,7 +325,7 @@ export default {
             }
             avg += "px";
             this.pieSize = avg;
-            console.log('this.pieSize: ', this.pieSize);
+            // console.log('this.pieSize: ', this.pieSize);
         },
         changeActiveBt(index) {
             this.btActiveNum = index;

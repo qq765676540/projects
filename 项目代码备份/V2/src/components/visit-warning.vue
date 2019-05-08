@@ -2,7 +2,7 @@
     <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh"
-        :style="pullstyle"
+        :style="{'overflow-y': scroll}"
         id="vist-warning"
     >
         <div class="vist-warning flex flex-column" id="vist-warning-box">

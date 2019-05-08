@@ -1,4 +1,4 @@
-import formula from '../config/formula'
+import formula from '../config/formulaDev'
 
 class Cube {
     constructor() {

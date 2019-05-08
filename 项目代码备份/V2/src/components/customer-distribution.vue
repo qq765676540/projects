@@ -87,7 +87,7 @@ export default {
                         }
                     });
                 });
-                console.log("customerDistribution Pie", pieData);
+                // console.log("customerDistribution Pie", pieData);
                 return pieData;
             }
             return false;
@@ -111,7 +111,7 @@ export default {
                     });
 
                 });
-                console.log("customerDistribution Table", tabData);
+                // console.log("customerDistribution Table", tabData);
                 return tabData;
             }
             return false;

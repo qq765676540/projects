@@ -1,4 +1,16 @@
 var formula = {
+    //当前层级
+    currentLevel:{
+        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
+        qDimensions: ["level"],
+        qMeasures: []
+    },
+    //组织架构
+    organization:{
+        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
+        qDimensions: ["DeptName_Lv1","DeptName_Lv2","DeptName_Lv3","DeptName_Lv4"],
+        qMeasures: ['1']
+    },
     summaryCircle: {
         qDimensions: [],
         qMeasures: [
@@ -95,19 +107,6 @@ var formula = {
             `=sum({<Year={$(vYear)}>}SalesTarget)`
         ]
     },
-    planExecution1:{
-        qDimensions: ["=WeekName"],
-        qMeasures: [
-            "count({<[RZTX/JH]={'J'},Is_Excute={'Y'},DimensionName=>}PlanID)/count({<[RZTX/JH]={'J'},DimensionName=>}PlanID)"
-        ]
-
-    },
-    //组织架构
-    organization:{
-        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
-        qDimensions: ["DeptName_Lv1","DeptName_Lv2","DeptName_Lv3","DeptName_Lv4"],
-        qMeasures: ['1']
-    },
     visitCustomerA: {
         qDimensions: ["PartnerCategory"],
         qMeasures: ["=count(distinct {<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}Partner_EndUser)",
@@ -128,12 +127,7 @@ var formula = {
             "=count({<[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)"
         ]
     },
-    //当前层级
-    currentLevel:{
-        //第五层结构无数据，暂区前4层数据--------,"DeptName_Lv5"
-        qDimensions: ["level"],
-        qMeasures: []
-    },
+    
 }
 
 export default formula;

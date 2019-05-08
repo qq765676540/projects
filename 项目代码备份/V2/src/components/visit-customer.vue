@@ -80,7 +80,7 @@ export default {
         dataA() {
             if(this.$store.state.visitCustomerA.length>0){
                 let a = this.$store.state.visitCustomerA;
-                console.log('visitCustomerA',a);
+                // console.log('visitCustomerA',a);
                 return a;
             }
             return false;
@@ -88,7 +88,7 @@ export default {
         dataB() {
             if(this.$store.state.visitCustomerB.length>0){
                 let a = this.$store.state.visitCustomerB;
-                console.log('visitCustomerB',a);
+                // console.log('visitCustomerB',a);
                 return a;
             }
             return false;

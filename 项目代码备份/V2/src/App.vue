@@ -66,9 +66,11 @@
             :selectedTime="selectedTime"
             :selectedOrg="selectedOrg"
         ></selector>
-        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
-            <van-loading type="spinner" size="30px" color="white"/>
-        </van-popup>
+        <div class="appPopstyle">
+            <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+                <van-loading type="spinner" size="30px" color="white"/>
+            </van-popup>
+        </div>
         <waterMark userName="王永刚"></waterMark>
     </div>
 </template>
@@ -129,25 +131,23 @@ export default {
         };
     },
     beforeCreate() {
-        if(parent.qApp){
+        // if(parent.qApp){
 
-            parent.qApp.field('DimensionName').clear();
-            parent.qApp.field('OADAccount').clear();
+        //     parent.qApp.field('DimensionName').clear();
+        //     parent.qApp.field('OADAccount').clear();
             
-            parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
-                parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{ 
-                    this.cubeInit();
-                    this.initOrganization(); 
-                });
-            });
-        }
+        //     parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
+        //         parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{ 
+        //             this.cubeInit();
+        //         });
+        //     });
+        // }
+        
     },
     created() {
-        // this.initOrganization();
     },
     mounted() {
-        // this.cubeInit();
-        
+        this.cubeInit();      
     },
     methods: {
         closePop() {
@@ -163,45 +163,35 @@ export default {
         },
         confirmSelect(data) { 
             if(data.org.length>0){
-                let selLevels = [];
+                let selectValues = [];
+                let displayValues = [];
                 data.org.filter((v)=>{
-                    selLevels.push(v.split(':')[1]);
-                });
-                selLevels = Array.from(new Set(selLevels.sort((a,b)=>{
-                    return b-a;
-                })));
-
-                let fieldName = "DeptName_Lv"+selLevels[0];
-                let values = [];
-                let valuesDisplay = [];
-                data.org.filter((va)=>{
-                    if(selLevels[0] === va.split(':')[1]){
-                        let tmp = {};
-                        tmp.qText = va.split(':')[0];
-                        valuesDisplay.push(va.split(':')[0]);
-                        values.push(tmp);
-                    }
+                    selectValues.push(v.split(':')[0]);
+                    displayValues.push(v.split(':')[1]);
                 });
                 // 执行org筛选
                 parent.qApp.clearAll().then(()=>{
-                    parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
-                        parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
-                            parent.qApp.field(fieldName).selectValues(values, true, false).then(()=>{
-                                this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                            });
-                        });
-                    });
+                    this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    // parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
+                    //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
+                    //         parent.qApp.field("OADAccount").selectValues(selectValues, true, false).then(()=>{
+                    //             this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    //         });
+                    //     });
+                    // });
                 });
-                this.selectedOrg = valuesDisplay;
+
+                this.selectedOrg = displayValues;
                 this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
 
             }else{
                 parent.qApp.clearAll().then(()=>{
-                    parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
-                        parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
-                                this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                            });
-                    });        
+                    this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    // parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
+                    //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
+                    //             this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    //         });
+                    // });        
                 });
                 
                 this.selectedOrg = [];
@@ -211,7 +201,7 @@ export default {
             this.selectorFlag = false;
             this.selectedTime = data.time;
             
-            console.log("confirmSelect: ", data.time, data.org);
+            // console.log("confirmSelect: ", data.time, data.org);
 
             $(".selected-dim-org > .values").css({
                 maxWidth: $(".selected-dim-org").width() - 40
@@ -223,15 +213,19 @@ export default {
             this.switchIsOpen = true;
         },
         cubeInit() {
-            //总体情况 - 销售日志 - 环形进图条
-            cube.getData(parent.qApp,this,"summaryCircle",-1,0,"summaryCircle");
+            //筛选：组织机构树
+            cube.getData(parent.qApp,this,"currentLevel",-1,0,"currentLevel");
+            cube.getData(parent.qApp,this,"organization",-1,0,"organization",false);
             //总体情况 - 销售日志 - 环形进图条 - 联动KPI
+            cube.getData(parent.qApp,this,"summaryCircle",-1,0,"summaryCircle");
             cube.getData(parent.qApp,this,"summaryEasyKPI",-1,0,"summaryEasyKPI");
-            // 总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, "summaryLineA",-1,0, "summaryLineA");
-            //总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, "summaryLineB",-1,0, "summaryLineB");
+            //总体情况 - 组织架构
             cube.getData(parent.qApp, this, "summaryOrgList",1,5, "summaryOrgList",false);
+            //总体情况 - 拜访次数周趋势
+            cube.getData(parent.qApp, this, "summaryLineA",-1,0, "summaryLineA");
+            //总体情况 - 拜访客用户周趋势
+            cube.getData(parent.qApp, this, "summaryLineB",-1,0, "summaryLineB");
+            
 
             //执行计划 - 近五周
             cube.getData(parent.qApp,this,"planExecutionLine",-1,0,"planExecutionLine");
@@ -239,25 +233,14 @@ export default {
             cube.getData(parent.qApp,this,"planExecutionCollapseA",-1,0,"planExecutionCollapseA");
             cube.getData(parent.qApp,this,"planExecutionCollapseB",-1,0,"planExecutionCollapseB");
 
-            //拜访预警 - KPI
+            //拜访预警 - 客用户拜访覆盖
             cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
-
-        },
-        initOrganization(){
-            
-            cube.getData(parent.qApp,this,"currentLevel",-1,0,"currentLevel");
-
-            //app.vue  组织架构
-            cube.getData(parent.qApp,this,"organization",-1,0,"organization",false);
-            cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
-            //拜访预警 - TableA & B
+            //拜访预警 - 未覆盖客用户
             cube.getData(parent.qApp,this,"visitWarningTableA",-1,3,"visitWarningTableA");
             cube.getData(parent.qApp,this,"visitWarningTableB",-1,3,"visitWarningTableB");
-
             //拜访对象
             cube.getData(parent.qApp, this, "visitCustomerA",-1,1, "visitCustomerA");
             cube.getData(parent.qApp, this, "visitCustomerB",-1,1, "visitCustomerB");
-
             //拜访构成
             cube.getData(parent.qApp, this, "customerDistribution",-1,1, "customerDistribution");
         }
@@ -276,7 +259,7 @@ export default {
             this.$store.dispatch('updateData', {dataName: 'selectedTime',data: nVal});
         },
         popShow(nVal) {
-            console.log('popShow',nVal);
+            // console.log('popShow',nVal);
         }
     }
 };
@@ -482,7 +465,7 @@ body,
     margin-top: 1px;
 }
 
-.van-popup {
+.appPopstyle .van-popup {
     background-color: rgba(255,255,255,0);
     overflow-y: hidden;
 }
