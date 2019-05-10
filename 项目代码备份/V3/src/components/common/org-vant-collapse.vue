@@ -145,6 +145,8 @@ export default {
 <style scoped>
 .vant-collapse {
   margin-top: 10px;
+  max-height: 260px;
+  overflow-y: scroll !important;
 }
 
 .vant-collapse .collapse-title {

@@ -247,7 +247,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
 }
 
 /*定义滚动条轨道 内阴影与圆角*/

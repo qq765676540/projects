@@ -25,34 +25,18 @@
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="战略"
-                                :data="progressData[2]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[2]"></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="潜力"
-                                :data="progressData[4]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[4]"></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="核心"
-                                :data="progressData[3]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[3]"></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="认证"
-                                :data="progressData[5]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:60px;margin:0px 0px 0px 0px">
@@ -68,34 +52,18 @@
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="战略"
-                                :data="progressData[6]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[6]"></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="潜力"
-                                :data="progressData[8]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[8]"></my-horkpi>
                         </div>
                     </div>
                     <div style="min-height:40px">
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="核心"
-                                :data="progressData[7]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[7]"></my-horkpi>
                         </div>
                         <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi
-                                iconBgColor="#d2eaf5"
-                                title="重要"
-                                :data="progressData[9]"
-                            ></my-horkpi>
+                            <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>
                         </div>
                     </div>
                 </div>
@@ -119,7 +87,12 @@
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableADataSet" :title="['客户', '销售', '类型']" v-if="tableADataSet"></my-table>
+                    <vant-collapse
+                        :id="'plan-collapse-3'"
+                        :data="CollapseADataSet[Aselected]"
+                        :isDefaultTitle="false"
+                        v-if="CollapseADataSet"
+                    ></vant-collapse>
                 </div>
             </div>
             <div class="uncovered-customer-detail border-bottom" v-show="true">
@@ -141,7 +114,12 @@
                     </div>
                 </div>
                 <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <my-table orderBy="4|desc" :scrollY="163" :data="tableBDataSet" :title="['用户', '销售', '类型']" v-if="tableBDataSet"></my-table>
+                    <vant-collapse
+                        :id="'plan-collapse-4'"
+                        :data="CollapseBDataSet[Bselected]"
+                        :isDefaultTitle="false"
+                        v-if="CollapseBDataSet"
+                    ></vant-collapse>
                 </div>
             </div>
         </div>
@@ -154,6 +132,7 @@ import progress from "./common/progress";
 import actionsheet from "./common/actionsheet";
 import horkpi from "./common/horizontal-kpi-ext";
 import { PullRefresh } from "vant";
+import vantCollapse from "./common/vant-collapse";
 export default {
     name: "visit-warning",
     components: {
@@ -161,7 +140,8 @@ export default {
         MyTable: table,
         MyProgress: progress,
         MyActionsheet: actionsheet,
-        MyHorkpi: horkpi
+        MyHorkpi: horkpi,
+        vantCollapse
     },
     data() {
         return {
@@ -172,13 +152,14 @@ export default {
             ash2: "0px",
             scroll: "scroll !important",
             Aselected: "全部",
-            Bselected: "全部",
+            Bselected: "全部"
         };
     },
     computed: {
-        tableADataSet(){
-            if(this.$store.state.visitWarningTableA.length>0){
-                let response = this.$store.state.visitWarningTableA;
+        CollapseADataSet() {
+            if (this.$store.state.visitWarningCollapseA1.length > 0) {
+                let a1 = this.$store.state.visitWarningCollapseA1;
+                let a2 = this.$store.state.visitWarningCollapseA2;
                 let data = {
                     全部: [],
                     战略: [],
@@ -186,45 +167,33 @@ export default {
                     潜力: [],
                     认证: []
                 };
-                $.each(response,(i,v)=>{
-                    var type = v[0].qText.substring(0, 2),
-                        custName = v[1].qText,
-                        salesman = v[2].qText,
-                        bp = v[3].qNum;
+                let dataIndex0 = this.getData(a1,a2,'全部');
+                let dataIndex1 = this.getData(a1,a2,'战略客户');
+                let dataIndex2 = this.getData(a1,a2,'核心客户');
+                let dataIndex3 = this.getData(a1,a2,'潜力客户');
+                let dataIndex4 = this.getData(a1,a2,'认证客户');
 
-                    var row = [custName, salesman, type, bp];
-                    
-                    data['全部'].push(row);
+                if (this.Aselected === "全部") {
+                    data[this.Aselected] = dataIndex0;
+                } else if (this.Aselected === "战略") {
+                    data[this.Aselected] = dataIndex1;
+                } else if (this.Aselected === "核心") {
+                    data[this.Aselected] = dataIndex2;
+                } else if (this.Aselected === "潜力") {
+                    data[this.Aselected] = dataIndex3;
+                } else {
+                    data[this.Aselected] = dataIndex4;
+                }
 
-                    if(type === '战略') {
-                        data['战略'].push(row);
-                    }
-                    else if(type === '核心') {
-                        data['核心'].push(row);
-                    }
-                    else if(type === '潜力') {
-                        data['潜力'].push(row);
-                    }
-                    else if(type === '认证') {
-                        data['认证'].push(row);
-                    }
-                });
-
-                data[this.Aselected].sort((a, b)=>{
-                    return b[3] - a[3];
-                });
-
-                var result = [];
-                data[this.Aselected].forEach(item => {
-                    result.push(item.slice(0, 3));
-                });
-                return result;
+                // console.log("2019-05-10 16:09:04->YCQ日志记录:", dataIndex0);
+                return data;
             }
             return false;
         },
-        tableBDataSet(){
-            if(this.$store.state.visitWarningTableB.length>0){
-                let response = this.$store.state.visitWarningTableB;
+        CollapseBDataSet() {
+            if (this.$store.state.visitWarningCollapseB1.length > 0) {
+                let a1 = this.$store.state.visitWarningCollapseB1;
+                let a2 = this.$store.state.visitWarningCollapseB2;
                 let data = {
                     全部: [],
                     战略: [],
@@ -232,57 +201,55 @@ export default {
                     市场: [],
                     重要: []
                 };
-                $.each(response, (i,v)=>{
-                     var type = v[0].qText.substring(0, 2),
-                        custName = v[1].qText,
-                        salesman = v[2].qText,
-                        bp = v[3].qNum;
+                let dataIndex0 = this.getData(a1,a2,'全部');
+                let dataIndex1 = this.getData(a1,a2,'战略锁定');
+                let dataIndex2 = this.getData(a1,a2,'核心锁定');
+                let dataIndex3 = this.getData(a1,a2,'市场锁定');
+                let dataIndex4 = this.getData(a1,a2,'重要锁定');
 
-                    var row = [custName, salesman, type, bp];    
+                if (this.Bselected === "全部") {
+                    data[this.Bselected] = dataIndex0;
+                } else if (this.Bselected === "战略") {
+                    data[this.Bselected] = dataIndex1;
+                } else if (this.Bselected === "核心") {
+                    data[this.Bselected] = dataIndex2;
+                } else if (this.Bselected === "市场") {
+                    data[this.Bselected] = dataIndex3;
+                } else {
+                    data[this.Bselected] = dataIndex4;
+                }
 
-                    data['全部'].push(row);
-
-                    if(type === '战略'){
-                        data['战略'].push(row);
-                    }
-                    else if(type === '核心'){
-                        data['核心'].push(row);
-                    }
-                    else if(type === '市场'){
-                        data['市场'].push(row);
-                    }
-                    else if(type === '重要'){
-                        data['重要'].push(row);
-                    } 
-                });
-
-                data[this.Bselected].sort((a, b)=>{
-                    return b[3] - a[3];
-                });
-
-                var result = [];
-                data[this.Bselected].forEach(item => {
-                    result.push(item.slice(0, 3));
-                });
-                return result;
+                // console.log("2019-05-10 16:09:04->YCQ日志记录:", dataIndex0);
+                return data;
             }
             return false;
         },
-        progressData(){
-            var result = [0,0,0,0,0,0,0,0,0,0];
-            if(!this.$store.state.visitWarningKPI.length){
+        progressData() {
+            var result = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            if (!this.$store.state.visitWarningKPI.length) {
                 return result;
             }
-            
-            this.$store.state.visitWarningKPI[0].forEach((kpi, index)=>{
-                if(index<2) {
-                    result.splice(index, 1, kpi.qNum==='NaN'?0:kpi.qNum.toFixed(0));
+
+            this.$store.state.visitWarningKPI[0].forEach((kpi, index) => {
+                if (index < 2) {
+                    result.splice(
+                        index,
+                        1,
+                        kpi.qNum === "NaN" ? 0 : kpi.qNum.toFixed(0)
+                    );
+                } else {
+                    result.splice(index, 1, [
+                        kpi.qText,
+                        (
+                            (
+                                (kpi.qText.split("/")[0] /
+                                    kpi.qText.split("/")[1]) *
+                                100
+                            ).toFixed(0) + "%"
+                        ).replace("NaN", "0")
+                    ]);
                 }
-                else {
-                    result.splice(index, 1, [kpi.qText,((kpi.qText.split('/')[0]/kpi.qText.split('/')[1]*100).toFixed(0)+'%').replace('NaN','0')]);
-                }
-                
-            })
+            });
             return result;
         }
     },
@@ -298,13 +265,41 @@ export default {
                 });
             }, 500);
         },
-        setScrollStyleA(style,selected) {
+        setScrollStyleA(style, selected) {
             this.scroll = style;
             this.Aselected = selected;
         },
-        setScrollStyleB(style,selected) {
+        setScrollStyleB(style, selected) {
             this.scroll = style;
             this.Bselected = selected;
+        },
+        getData(a, b, c) {
+            let data = [];
+            let tempdb = "";
+            a.filter(v => {
+                let tmp = {};
+                if (tempdb != v[0].qText && (v[2].qText===c || c==='全部')) {
+                    tmp.name = v[0].qText;
+                    tmp.title = v[0].qText;
+                    tmp.type = v[1].qText;
+                    tmp.data = c==='全部'?v[4].qNum:v[3].qNum;
+                    tmp.subData = [];
+                    tempdb = v[0].qText;
+                    data.push(tmp);
+                }
+            });
+
+            data.filter(vo => {
+                let e = [];
+                b.filter(vi => {
+                    if (vi[0].qText === vo.name && (vi[2].qText===c || c==='全部')) {
+                        e.push([vi[1].qText, vi[2].qText]);
+                    }
+                });
+                vo.subData = e;
+            });
+
+            return data;
         }
     }
 };

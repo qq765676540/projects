@@ -220,7 +220,8 @@ export default {
             cube.getData(parent.qApp,this,"summaryCircle",-1,0,"summaryCircle");
             cube.getData(parent.qApp,this,"summaryEasyKPI",-1,0,"summaryEasyKPI");
             //总体情况 - 组织架构
-            cube.getData(parent.qApp, this, "summaryOrgList",1,5, "summaryOrgList",false);
+            cube.getData(parent.qApp, this, "summaryOrgListA",1,5, "summaryOrgListA");
+            cube.getData(parent.qApp, this, "summaryOrgListB",1,5, "summaryOrgListB",false);
             //总体情况 - 拜访次数周趋势
             cube.getData(parent.qApp, this, "summaryLineA",-1,0, "summaryLineA");
             //总体情况 - 拜访客用户周趋势
@@ -230,14 +231,16 @@ export default {
             //执行计划 - 近五周
             cube.getData(parent.qApp,this,"planExecutionLine",-1,0,"planExecutionLine");
             //执行计划 - Collapse
-            cube.getData(parent.qApp,this,"planExecutionCollapseA",-1,0,"planExecutionCollapseA");
-            cube.getData(parent.qApp,this,"planExecutionCollapseB",-1,0,"planExecutionCollapseB");
+            cube.getData(parent.qApp,this,"planExecutionCollapseA",-1,6,"planExecutionCollapseA");
+            cube.getData(parent.qApp,this,"planExecutionCollapseB",-1,6,"planExecutionCollapseB");
 
             //拜访预警 - 客用户拜访覆盖
             cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
             //拜访预警 - 未覆盖客用户
-            cube.getData(parent.qApp,this,"visitWarningTableA",-1,3,"visitWarningTableA");
-            cube.getData(parent.qApp,this,"visitWarningTableB",-1,3,"visitWarningTableB");
+            cube.getData(parent.qApp,this,"visitWarningCollapseA1",-1,4,"visitWarningCollapseA1",false);
+            cube.getData(parent.qApp,this,"visitWarningCollapseA2",-1,4,"visitWarningCollapseA2",false);
+            cube.getData(parent.qApp,this,"visitWarningCollapseB1",-1,4,"visitWarningCollapseB1",false);
+            cube.getData(parent.qApp,this,"visitWarningCollapseB2",-1,4,"visitWarningCollapseB2",false);
             //拜访对象
             cube.getData(parent.qApp, this, "visitCustomerA",-1,1, "visitCustomerA");
             cube.getData(parent.qApp, this, "visitCustomerB",-1,1, "visitCustomerB");
@@ -365,6 +368,7 @@ body,
     line-height: 30px;
     margin-top: 3px;
     display: flex;
+    min-height: 30px;
 }
 
 .sub-title-name {
@@ -469,4 +473,5 @@ body,
     background-color: rgba(255,255,255,0);
     overflow-y: hidden;
 }
+
 </style>

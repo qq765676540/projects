@@ -30,11 +30,11 @@
                             v-for="(item,index) in (tableData[i-1].value?tableData[i-1].value:tableData[i-1])"
                             :key="index" :style="{'text-align':index>0?'center':'left'}"
                         >
-                            <div v-if="index < 1" class="first-td flex flex-align-center">
+                            <div v-if="index < 1" class="flex flex-align-center" style="margin-left:20px">
                                 <div v-if="tableData[i-1].color">
                                     <div class="title-name-icon" :style="{'background':tableData[i-1].color}"></div>
                                 </div>
-                                <div :style="'white-space: nowrap;text-align: left;padding-left: 3px;'">{{item}}</div>
+                                <div :style="'white-space: nowrap;padding-left: 3px;padding-top:2px'">{{item}}</div>
                             </div>
                             <div v-if="index > 0" class="flex flex-justify-center">{{item}}</div>
                         </td>
@@ -280,17 +280,13 @@ export default {
 
 .pie-datatables .col-bottom {
     min-height: 200px;
-    margin: 0 40px 10px 40px;
+    margin: 20px 0px 20px 0px;
 }
 
 .pie-datatables .title-name-icon {
     width: 12px;
     height: 8px;
     border-radius: 0px;
-}
-
-.pie-datatables {
-    margin-left: 20px;
 }
 
 .pie-datatables .table-title-row {

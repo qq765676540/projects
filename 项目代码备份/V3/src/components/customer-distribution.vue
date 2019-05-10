@@ -17,7 +17,7 @@
                 <div class="task-distribution-bottom">
                     <data-table
                         orderBy="2|desc"
-                        :scrollY="220"
+                        :scrollY="180"
                         :isShowTitle="true"
                         :data="tableData"
                         :title="['拜访任务类型','占比','次数']"

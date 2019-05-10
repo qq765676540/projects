@@ -58,11 +58,24 @@ var formula = {
             `=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y'},DimensionName=>}Partner_EndUser)`
         ]
     },
-    summaryOrgList: {
+    summaryOrgListA:{
         qDimensions: [
-            // "=$(selfLevel)"
-            "=$(firstLevel)",
-            "=$(nextLevel)"
+            "='$(DomainName)'",
+            "='-'"
+        ],
+        qMeasures: [
+            "=sum(1)",
+            "=sum(1)",
+            "=sum(1)",
+            "=count({<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)/count({<[RZTX/JH]={'T'}>}LogID)",
+            "=count({<[RZTX/JH]={'T'}>}LogID)",
+            "=count({<[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count({<[RZTX/JH]={'J'}>}PlanID)"
+        ]
+    },
+    summaryOrgListB: {
+        qDimensions: [
+            "=DeptName",
+            "=if(Parent_DeptID='$(DeptID)',DomainName)"   
         ],
         qMeasures: [
             "=count({<[RZTX/JH]={'T'},Is_Sign={'Y'}>}LogID)/count({<[RZTX/JH]={'T'}>}LogID)",
@@ -80,18 +93,21 @@ var formula = {
         ]
     },
     planExecutionCollapseA: {
-        qDimensions: ["=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,PUDescribe)",
-                      "TaskType",
-                      "=if(Is_Excute='N' and [RZTX/JH]='J' ,PlanActive)",
-                      "=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,CALDAY)"],
+        qDimensions: [
+            "=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,PUDescribe)",
+            "TaskType",
+            "=if(Is_Excute='N' and [RZTX/JH]='J' ,PlanActive)",
+            "=IF(DimensionName='本周' and Is_Excute='N' and [RZTX/JH]='J' ,CALDAY)"
+        ],
         qMeasures: ["=sum({<DimensionName=>}1)"]
     },
     planExecutionCollapseB: {
-        qDimensions: ["=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PUDescribe)",
-                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',TaskType)",
-                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PlanActive)",
-                      "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',CALDAY)"
-                     ],
+        qDimensions: [
+            "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PUDescribe)",
+            "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',TaskType)",
+            "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',PlanActive)",
+            "=IF(DimensionName='上周' and Is_Excute='N' and [RZTX/JH]='J',CALDAY)"
+        ],
         qMeasures: ["=sum({<DimensionName=>}1)"]
     },
     visitWarningKPI: {
@@ -110,19 +126,28 @@ var formula = {
         ]
     },
     visitWarningTableA: {
-        qDimensions: ["PartnerCategory", "SOADAccount" ,"=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , DomainName )"],
+        qDimensions: [
+            "PartnerCategory", 
+            "SOADAccount",
+            "=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , DomainName )"
+        ],
         qMeasures: [`=sum({<Year={$(vYear)}>}SalesTarget)`]
     },
     visitWarningTableB: {
-        qDimensions: ["UserCategory", "SOADAccount", "=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , DomainName)"],
+        qDimensions: [
+            "UserCategory", 
+            "SOADAccount", 
+            "=if( [RZTX/JH]<>'T'and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , DomainName)"
+        ],
         qMeasures: [
             `=sum({<Year={$(vYear)}>}SalesTarget)`
         ]
     },
     visitCustomerA: {
         qDimensions: ["PartnerCategory"],
-        qMeasures: ["=count(distinct {<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}Partner_EndUser)",
-                    "=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}LogID)"
+        qMeasures: [
+            "=count(distinct {<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}Partner_EndUser)",
+            "=count({<[RZTX/JH]={'T'},IsPartnerOrUser={'Y','Z'},LogMode={'拜访'}>}LogID)"
         ]
     },
     visitCustomerB: {

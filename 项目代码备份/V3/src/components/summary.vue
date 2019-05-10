@@ -261,8 +261,10 @@ export default {
             return false;
         },
         orgListDataSet() {
-            if(this.$store.state.summaryOrgList.length>0){
-                let a = this.$store.state.summaryOrgList;
+            if(this.$store.state.summaryOrgListA.length>0 && this.$store.state.summaryOrgListB.length>0){
+                let t1 = this.$store.state.summaryOrgListA;
+                let t2 = this.$store.state.summaryOrgListB;
+                let a = t1.concat(t2);
                 let b = [];
                 $.each(a,(i,v)=>{
                     let tmp = {};

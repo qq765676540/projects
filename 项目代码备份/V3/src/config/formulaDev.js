@@ -58,7 +58,21 @@ var formula = {
             `=sum(p12指标2)`
         ]
     },
-    summaryOrgList: {
+    summaryOrgListA:{
+        qDimensions: [
+            "='$(DomainName)'",
+            "='-'"
+        ],
+        qMeasures: [
+            "=sum(1)",
+            "=sum(1)",
+            "=sum(1)",
+            "=sum(0.55)",
+            "=sum(55)",
+            "=sum(0.55)"
+        ]
+    },
+    summaryOrgListB: {
         qDimensions: [
             "p13维度1",
             "p13维度2"
@@ -83,7 +97,9 @@ var formula = {
             "p21维度1",
             "p21维度2",
             "p21维度3",
-            "p21维度4"
+            "p21维度4",
+            "p21维度5",
+            "p21维度6"
         ],
         qMeasures: ["=sum(p21指标1)"]
     },
@@ -92,7 +108,9 @@ var formula = {
             "p21维度1",
             "p21维度2",
             "p21维度3",
-            "p21维度4"
+            "p21维度4",
+            "p21维度5",
+            "p21维度6"
         ],
         qMeasures: ["=sum(p21指标1)"]
     },
@@ -111,21 +129,37 @@ var formula = {
             "=sum(p30指标3)&'/'&sum(p30指标4)"
         ]
     },
-    visitWarningTableA: {
+    visitWarningCollapseA1: {
         qDimensions: [
             "p31维度1",
             "p31维度2",
             "p31维度3"
         ],
-        qMeasures: ["=sum(p31指标1)"]
+        qMeasures: ["=sum(p31指标1)","=sum(p31指标2)"]
     },
-    visitWarningTableB: {
+    visitWarningCollapseA2: {
+        qDimensions: [
+            "p32维度1",
+            "p32维度2",
+            "p32维度3"
+        ],
+        qMeasures: ["=sum(1)"]
+    },
+    visitWarningCollapseB1: {
         qDimensions: [
             "p31维度1",
             "p31维度2",
             "p31维度3"
         ],
-        qMeasures: ["=sum(p31指标1)"]
+        qMeasures: ["=sum(p31指标1)","=sum(p31指标2)"]
+    },
+    visitWarningCollapseB2: {
+        qDimensions: [
+            "p32维度1",
+            "p32维度2",
+            "p32维度3"
+        ],
+        qMeasures: ["=sum(1)"]
     },
     visitCustomerA: {
         qDimensions: ["p40维度1"],

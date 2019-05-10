@@ -7,12 +7,23 @@
                     <span class="sub-title-name">近五周计划执行率</span>
                     <span class="sub-title-unit">单位(%)</span>
                 </div>
-                <easy-line :id="'plan-line-1'" :data="ElineDataCSet" v-if="ElineDataCSet" sign="axisLabel"></easy-line>
+                <easy-line
+                    :id="'plan-line-1'"
+                    :data="ElineDataCSet"
+                    v-if="ElineDataCSet"
+                    sign="axisLabel"
+                ></easy-line>
             </div>
             <div class="curr-week-unexecution border-bottom flex flex-column">
                 <div class="sub-title">
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">本周未执行计划</span>
+                    <div class="flex flex-1 flex-justify-right col-2-right-title" >
+                        <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
+                            <span>未执行计划数量</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-box flex-11">
                     <vant-collapse
@@ -27,6 +38,12 @@
                 <div class="sub-title">
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">上周未执行计划</span>
+                    <div class="flex flex-1 flex-justify-right col-2-right-title" >
+                        <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
+                            <span>未执行计划数量</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-box flex-11">
                     <vant-collapse
@@ -48,7 +65,6 @@ import vantCollapse from "./common/vant-collapse";
 import { eLineData1, eLineData2 } from "./data/echarts-line-data";
 import { planData1, planData2 } from "./data/collapseData.js";
 
-
 export default {
     name: "overview",
     components: {
@@ -65,12 +81,12 @@ export default {
             planData1: planData1,
             planData2: planData2,
             popShow: false,
-            popContext: ""
+            popContext: "",
+            col2LegendColor:["#333333", "#0f8ee9", "#FF6D00", "#666666"]
         };
     },
     mounted() {
         $(".view").css({ height: "calc(100% - 80px)" });
-        
     },
     computed: {
         ElineDataCSet() {
@@ -103,25 +119,51 @@ export default {
                 let a = this.$store.state.planExecutionCollapseA;
                 let b = [];
                 $.each(a, (i, v) => {
-                    let c = {};
-                    c.name = v[0].qText;
-                    c.type = v[1].qText;
-                    c.title = v[0].qText;
-                    c.data =
-                        v[3].qText.substr(0, 4) +
-                        "/" +
-                        v[3].qText.substr(4, 2) +
-                        "/" +
-                        v[3].qText.substr(7, 2);
-                    c.subData = [
-                        {
-                            subTitle: v[0].qText,
-                            context: v[2].qText
-                        }
-                    ];
-                    b.push(c);
+                    let tmp = {};
+                    if (v[0].qText != "-") {
+                        tmp.name = v[0].qText;
+                        tmp.title = v[0].qText;
+                        tmp.type = v[1].qText;
+                        tmp.data = v[6].qNum;
+                        tmp.plan = [
+                            v[2].qText,
+                            v[3].qText,
+                            v[4].qText.substr(0, 4) +
+                                "/" +
+                                v[4].qText.substr(4, 2) +
+                                "/" +
+                                v[4].qText.substr(7, 2),
+                            v[5].qText
+                        ];
+                        b.push(tmp);
+                    }
                 });
-                return b;
+                let c = "";
+                let d = [];
+
+                b.filter(v => {
+                    let tmp = {};
+                    if (c != v.name) {
+                        tmp.name = v.name;
+                        tmp.title = v.title;
+                        tmp.type = v.type;
+                        tmp.data = v.data;
+                        tmp.subData = [];
+                        c = v.name;
+                        d.push(tmp);
+                    }
+                });
+
+                d.filter(vo => {
+                    let e = [];
+                    b.filter(vi => {
+                        if (vi.name === vo.name) {
+                            e.push(vi.plan);
+                        }
+                    });
+                    vo.subData = e;
+                });
+                return d;
             }
             return false;
         },
@@ -130,25 +172,51 @@ export default {
                 let a = this.$store.state.planExecutionCollapseB;
                 let b = [];
                 $.each(a, (i, v) => {
-                    let c = {};
-                    c.name = v[0].qText;
-                    c.type = v[1].qText;
-                    c.title = v[0].qText;
-                    c.data =
-                        v[3].qText.substr(0, 4) +
-                        "/" +
-                        v[3].qText.substr(4, 2) +
-                        "/" +
-                        v[3].qText.substr(7, 2);
-                    c.subData = [
-                        {
-                            subTitle: v[0].qText,
-                            context: v[2].qText
-                        }
-                    ];
-                    b.push(c);
+                    let tmp = {};
+                    if (v[0].qText != "-") {
+                        tmp.name = v[0].qText;
+                        tmp.title = v[0].qText;
+                        tmp.type = v[1].qText;
+                        tmp.data = v[6].qNum;
+                        tmp.plan = [
+                            v[2].qText,
+                            v[3].qText,
+                            v[4].qText.substr(0, 4) +
+                                "/" +
+                                v[4].qText.substr(4, 2) +
+                                "/" +
+                                v[4].qText.substr(7, 2),
+                            v[5].qText
+                        ];
+                        b.push(tmp);
+                    }
                 });
-                return b;
+                let c = "";
+                let d = [];
+
+                b.filter(v => {
+                    let tmp = {};
+                    if (c != v.name) {
+                        tmp.name = v.name;
+                        tmp.title = v.title;
+                        tmp.type = v.type;
+                        tmp.data = v.data;
+                        tmp.subData = [];
+                        c = v.name;
+                        d.push(tmp);
+                    }
+                });
+
+                d.filter(vo => {
+                    let e = [];
+                    b.filter(vi => {
+                        if (vi.name === vo.name) {
+                            e.push(vi.plan);
+                        }
+                    });
+                    vo.subData = e;
+                });
+                return d;
             }
             return false;
         }
@@ -185,25 +253,41 @@ export default {
 }
 
 .plan-execution .plan-execution-rate {
-    min-height: 320px;
+    min-height: 270px;
 }
 
 .plan-execution .curr-week-unexecution {
-    min-height: 320px;
+    min-height: 270px;
+    max-height: 270px;
+}
 
+.plan-execution .last-week-unexecution {
+    min-height: 270px;
+    max-height: 270px;
 }
 
 .plan-execution .curr-week-unexecution .content-box,
-.plan-execution .last-week-unexecution .content-box  {
+.plan-execution .last-week-unexecution .content-box {
     max-height: 8rem;
     overflow-y: auto;
 }
 
-.plan-execution .last-week-unexecution {
-    min-height: 320px;
-}
-
 .plan-execution .van-panel__header {
     background-color: #f7f7f7;
+}
+
+.plan-execution .col-2-right-title{
+    font-size: 10px;
+    white-space: nowrap;
+    margin-right: 14px;
+    max-width: 400px;
+    font-weight: bold;
+}
+
+.plan-execution .col-2-right-bg{
+    width: 12px;
+    height: 8px;
+    border-radius: 0px;
+    margin-left: 6px;
 }
 </style>

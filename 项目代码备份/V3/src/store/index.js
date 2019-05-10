@@ -8,23 +8,25 @@ Vue.use(Vuex)
 
 var state = {
   isPopShow:false,
+  currentLevel:[],
+  organization:[],
   summaryCircle:[],
   summaryEasyKPI:[],
   summaryLineA:[],
   summaryLineB:[],
-  summaryOrgList: [],
+  summaryOrgListA: [],
+  summaryOrgListB: [],
   planExecutionLine:[],
-  visitWarningKPI:[],
-  visitCustomerA: [],
-  visitCustomerB: [],
-  customerDistribution: [],
   planExecutionCollapseA: [],
   planExecutionCollapseB: [],
   visitWarningKPI:[],
-  visitWarningTableA: [],
-  visitWarningTableB: [],
-  currentLevel:[],
-  organization:[]
+  visitWarningCollapseA1: [],
+  visitWarningCollapseA2: [],
+  visitWarningCollapseB1: [],
+  visitWarningCollapseB2: [],
+  visitCustomerA: [],
+  visitCustomerB: [],
+  customerDistribution: []
 }
 
 const store = new Vuex.Store({
