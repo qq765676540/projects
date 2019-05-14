@@ -1,82 +1,56 @@
 <template>
-    <div id="app">
-        <van-nav-bar
-            class="nav-bar-top"
-            title="工作计划与日志看板"
-            left-text
-            left-arrow
-            @click-left="onClickLeft"
-            :sticky="true"
-        />
-        <van-tabs
-            v-model="active"
-            class="nav-tabs"
-            :color="'#29A6FF'"
-            :swipe-threshold="5"
-            title-active-color="#0066FF"
-            title-inactive-color="black"
-            :animated="true"
-            :swipeable="true"
-            :sticky="true"
-            line-width="63"
-            line-height="2"
-        >
-            <van-tab title="总体情况">
-                <router-view v-if="active==0" class="view-container"/>
-            </van-tab>
-            <van-tab title="计划执行">
-                <router-view v-if="active==1" class="view-container"/>
-            </van-tab>
-            <van-tab title="拜访预警">
-                <router-view v-if="active==2" class="view-container"/>
-            </van-tab>
-            <van-tab title="拜访对象">
-                <router-view v-if="active==3" class="view-container"/>
-            </van-tab>
-            <van-tab title="拜访构成">
-                <router-view v-if="active==4" class="view-container"/>
-            </van-tab>
-        </van-tabs>
-        <div v-show="selBarFlag" class="selection-tool flex flex-row">
-            <div class="selector-switch-box relative">
-                <vue-switch
-                    id="switch-1"
-                    class="selector-switch"
-                    :open="switchIsOpen"
-                    :switch-style="switchStyle"
-                    @switch-to="switchTo"
-                ></vue-switch>
-            </div>
-            <div class="selected-bar flex flex-row flex-5">
-                <ul class="selected-dim-date flex flex-row flex-2">
-                    <li class="name">时间:</li>
-                    <li class="values flex-1" v-text="selectedTime"></li>
-                </ul>
-                <ul class="selected-dim-org flex flex-row flex-5">
-                    <li class="name">组织:</li>
-                    <li class="values flex-3" v-text="selectedOrg.toString()"></li>
-                </ul>
-            </div>
+<div id="app">
+    <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" />
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" line-width="63" line-height="2">
+        <van-tab title="总体情况">
+            <router-view v-if="active==0" class="view-container" />
+        </van-tab>
+        <van-tab title="计划执行">
+            <router-view v-if="active==1" class="view-container" />
+        </van-tab>
+        <van-tab title="拜访预警">
+            <router-view v-if="active==2" class="view-container" />
+        </van-tab>
+        <van-tab title="拜访对象">
+            <router-view v-if="active==3" class="view-container" />
+        </van-tab>
+        <van-tab title="拜访构成">
+            <router-view v-if="active==4" class="view-container" />
+        </van-tab>
+    </van-tabs>
+    <div v-show="selBarFlag" class="selection-tool flex flex-row">
+        <div class="selector-switch-box relative">
+            <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
         </div>
-        <selector
-            v-show="selectorFlag"
-            :show="selectorFlag"
-            @cancle="cancleSelect"
-            @confirm="confirmSelect"
-            :selectedTime="selectedTime"
-            :selectedOrg="selectedOrg"
-        ></selector>
-        <div class="appPopstyle">
-            <van-popup v-model="popShow" v-on:click-overlay="closePop()">
-                <van-loading type="spinner" size="30px" color="white"/>
-            </van-popup>
+        <div class="selected-bar flex flex-row flex-5">
+            <ul class="selected-dim-date flex flex-row flex-2">
+                <li class="name">时间:</li>
+                <li class="values flex-1" v-text="selectedTime"></li>
+            </ul>
+            <ul class="selected-dim-org flex flex-row flex-5">
+                <li class="name">组织:</li>
+                <li class="values flex-3" v-text="selectedOrg.toString()"></li>
+            </ul>
         </div>
-        <waterMark userName="王永刚"></waterMark>
     </div>
+    <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+    <div class="appPopstyle">
+        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+            <van-loading type="spinner" size="30px" color="white" />
+        </van-popup>
+    </div>
+    <waterMark userName="王永刚"></waterMark>
+</div>
 </template>
 
 <script>
-import { NavBar, Tab, Switch, Popup, Loading } from "vant";
+import {
+    NavBar,
+    Tab,
+    Switch,
+    Popup,
+    Loading
+} from "vant";
 import animate from "animate.css";
 
 import Tabs from "./components/common/vant-tabs/index";
@@ -131,27 +105,22 @@ export default {
         };
     },
     beforeCreate() {
-        // if(parent.qApp){
-
-        //     parent.qApp.field('DimensionName').clear();
-        //     parent.qApp.field('OADAccount').clear();
-            
-        //     parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(()=>{
-        //         parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{ 
-        //             this.cubeInit();
-        //         });
-        //     });
-        // }
-        
+        if (parent.qApp) {
+            this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
+            parent.qApp.field('DimensionName').clear();
+            parent.qApp.field('DimensionName').selectValues([{qText: '本周'}], true, false).then(() => {
+                this.cubeInit();
+            });
+        }
     },
-    created() {
-    },
+    created() {},
     mounted() {
-        this.cubeInit();      
+        // this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
+        // this.cubeInit();      
     },
     methods: {
         closePop() {
-            this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+            this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
         },
         resultTreeData(data) {},
         onClickLeft() {},
@@ -161,46 +130,46 @@ export default {
         cancleSelect(data) {
             this.selectorFlag = false;
         },
-        confirmSelect(data) { 
-            if(data.org.length>0){
+        confirmSelect(data) {
+            if (data.org.length > 0) {
                 let selectValues = [];
                 let displayValues = [];
-                data.org.filter((v)=>{
+                data.org.filter((v) => {
                     selectValues.push(v.split(':')[0]);
                     displayValues.push(v.split(':')[1]);
                 });
                 // 执行org筛选
-                parent.qApp.clearAll().then(()=>{
-                    this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                    // parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
-                    //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
-                    //         parent.qApp.field("OADAccount").selectValues(selectValues, true, false).then(()=>{
-                    //             this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                    //         });
-                    //     });
-                    // });
+                parent.qApp.field('DimensionName').clear().then(() => {
+                    parent.qApp.field('OADAccount').clear().then(() => {
+                        parent.qApp.field("DimensionName").selectValues([{qText: data.time}], true, false).then(() => {
+                            parent.qApp.field("OADAccount").selectValues(selectValues, true, false).then(() => {
+                                this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
+                            });
+                        });
+                        // this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    });
                 });
 
                 this.selectedOrg = displayValues;
-                this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
+                this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
 
-            }else{
-                parent.qApp.clearAll().then(()=>{
-                    this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                    // parent.qApp.field('OADAccount').selectValues([{qText: 'LIRUI5'}], true, false).then(()=>{
-                    //     parent.qApp.field("DimensionName").selectValues([{ qText: data.time }], true, false).then(()=>{
-                    //             this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
-                    //         });
-                    // });        
+            } else {
+                parent.qApp.field('DimensionName').clear().then(() => {
+                    parent.qApp.field('OADAccount').clear().then(() => {
+                        parent.qApp.field("DimensionName").selectValues([{qText: data.time}], true, false).then(() => {
+                            this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
+                        });
+                        // this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                    });
                 });
-                
+
                 this.selectedOrg = [];
-                this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
+                this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
             }
-        
+
             this.selectorFlag = false;
             this.selectedTime = data.time;
-            
+
             // console.log("confirmSelect: ", data.time, data.org);
 
             $(".selected-dim-org > .values").css({
@@ -214,38 +183,37 @@ export default {
         },
         cubeInit() {
             //筛选：组织机构树
-            cube.getData(parent.qApp,this,"currentLevel",-1,0,"currentLevel");
-            cube.getData(parent.qApp,this,"organization",-1,0,"organization",false);
+            cube.getData(parent.qApp, this, "currentLevel", -1, 0, "currentLevel");
+            cube.getData(parent.qApp, this, "organization", -1, 0, "organization");
             //总体情况 - 销售日志 - 环形进图条 - 联动KPI
-            cube.getData(parent.qApp,this,"summaryCircle",-1,0,"summaryCircle");
-            cube.getData(parent.qApp,this,"summaryEasyKPI",-1,0,"summaryEasyKPI");
+            cube.getData(parent.qApp, this, "summaryCircle", -1, 0, "summaryCircle");
+            cube.getData(parent.qApp, this, "summaryEasyKPI", -1, 0, "summaryEasyKPI");
             //总体情况 - 组织架构
-            cube.getData(parent.qApp, this, "summaryOrgListA",1,5, "summaryOrgListA");
-            cube.getData(parent.qApp, this, "summaryOrgListB",1,5, "summaryOrgListB",false);
+            cube.getData(parent.qApp, this, "summaryOrgListA", 1, 5, "summaryOrgListA");
+            cube.getData(parent.qApp, this, "summaryOrgListB", 1, 5, "summaryOrgListB");
             //总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, "summaryLineA",-1,0, "summaryLineA");
+            cube.getData(parent.qApp, this, "summaryLineA", -1, 0, "summaryLineA");
             //总体情况 - 拜访客用户周趋势
-            cube.getData(parent.qApp, this, "summaryLineB",-1,0, "summaryLineB");
-            
+            cube.getData(parent.qApp, this, "summaryLineB", -1, 0, "summaryLineB");
 
             //执行计划 - 近五周
-            cube.getData(parent.qApp,this,"planExecutionLine",-1,0,"planExecutionLine");
+            cube.getData(parent.qApp, this, "planExecutionLine", -1, 0, "planExecutionLine");
             //执行计划 - Collapse
-            cube.getData(parent.qApp,this,"planExecutionCollapseA",-1,6,"planExecutionCollapseA");
-            cube.getData(parent.qApp,this,"planExecutionCollapseB",-1,6,"planExecutionCollapseB");
+            cube.getData(parent.qApp, this, "planExecutionCollapseA", -1, 6, "planExecutionCollapseA");
+            cube.getData(parent.qApp, this, "planExecutionCollapseB", -1, 6, "planExecutionCollapseB");
 
             //拜访预警 - 客用户拜访覆盖
-            cube.getData(parent.qApp,this,"visitWarningKPI",-1,0,"visitWarningKPI");
+            cube.getData(parent.qApp, this, "visitWarningKPI", -1, 0, "visitWarningKPI");
             //拜访预警 - 未覆盖客用户
-            cube.getData(parent.qApp,this,"visitWarningCollapseA1",-1,4,"visitWarningCollapseA1",false);
-            cube.getData(parent.qApp,this,"visitWarningCollapseA2",-1,4,"visitWarningCollapseA2",false);
-            cube.getData(parent.qApp,this,"visitWarningCollapseB1",-1,4,"visitWarningCollapseB1",false);
-            cube.getData(parent.qApp,this,"visitWarningCollapseB2",-1,4,"visitWarningCollapseB2",false);
+            cube.getData(parent.qApp, this, "visitWarningCollapseA1", -1, 4, "visitWarningCollapseA1");
+            cube.getData(parent.qApp, this, "visitWarningCollapseA2", -1, 4, "visitWarningCollapseA2");
+            cube.getData(parent.qApp, this, "visitWarningCollapseB1", -1, 4, "visitWarningCollapseB1");
+            cube.getData(parent.qApp, this, "visitWarningCollapseB2", -1, 4, "visitWarningCollapseB2");
             //拜访对象
-            cube.getData(parent.qApp, this, "visitCustomerA",-1,1, "visitCustomerA");
-            cube.getData(parent.qApp, this, "visitCustomerB",-1,1, "visitCustomerB");
+            cube.getData(parent.qApp, this, "visitCustomerA", -1, 1, "visitCustomerA");
+            cube.getData(parent.qApp, this, "visitCustomerB", -1, 1, "visitCustomerB");
             //拜访构成
-            cube.getData(parent.qApp, this, "customerDistribution",-1,1, "customerDistribution");
+            cube.getData(parent.qApp, this, "customerDistribution", -1, 1, "customerDistribution");
         }
     },
     computed: {
@@ -258,7 +226,7 @@ export default {
             this.$router.push(this.pageMap[pIndex]);
             // this.selBarFlag = pIndex == 1 ? false : true;
         },
-        selectedTime(nVal){
+        selectedTime(nVal) {
             this.$store.dispatch('updateData', {dataName: 'selectedTime',data: nVal});
         },
         popShow(nVal) {
@@ -417,7 +385,7 @@ body,
     padding-top: 2px;
 }
 
-.selected-dim-date > .values {
+.selected-dim-date>.values {
     display: flex;
     justify-content: flex-start;
 }
@@ -426,7 +394,7 @@ body,
     padding-top: 4px;
 }
 
-.selected-dim-org > .values {
+.selected-dim-org>.values {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -470,8 +438,7 @@ body,
 }
 
 .appPopstyle .van-popup {
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     overflow-y: hidden;
 }
-
 </style>

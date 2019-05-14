@@ -29,8 +29,8 @@
                     <div class="flex-justify-left" style="margin-left: -10px">{{val.subTitle}}</div>
                 </li>
                 <li class="flex-11 collapse-context flex flex-justify-right flex-align-center" @click="openContext($event,val.subTitle)">
-                  <div v-for="(val,index) in item.data" :key="index" class="flex" style="width:50px">
-                    <div class="flex-1 collapse-title-data" :style="{color:col2LegendColor[index]}">{{val}}</div>
+                  <div v-for="(v,i) in val.data" :key="i" class="flex" style="width:50px">
+                    <div class="flex-1 collapse-title-data" :style="{color:col2LegendColor[i]}">{{v}}</div>
                   </div>
                 </li>
               </ul>

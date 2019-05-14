@@ -187,8 +187,8 @@ export default {
             this.tableData = [];
             rows.forEach((row, index) => {
                 var col1 = row[0].qText,
-                    col2 = row[1].qNum,
-                    col3 = row[2].qNum;
+                    col2 = row[1].qNum==='NaN'?0:row[1].qNum,
+                    col3 = row[2].qNum==='NaN'?0:row[2].qNum;
 
                 ret.xData.push(col1);
 

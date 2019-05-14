@@ -1,5 +1,5 @@
-import formula from '../config/formulaDev'
-
+// import formula from '../config/formulaDev'
+import formula from '../config/formula'
 class Cube {
     constructor() {
     }
@@ -73,8 +73,6 @@ class Cube {
             params.qMeasures = this._initParam(qMeasures, "measure", orderType, qNullSuppression);
             params.qInterColumnSortOrder = [orderCol];
            
-            // console.log(dataName+'维度对象：',params.qDimensions);
-            // console.log(dataName+'指标对象：',params.qMeasures);
             qApp.createCube(params, function (reply) {
                 var rows = reply.qHyperCube.qDataPages[0].qMatrix;
                 
@@ -84,13 +82,11 @@ class Cube {
                 };
                 
                 vApp.$store.dispatch('updateData', tmp);
+
                 //组织架构只需要初始化一次，初始化后直接销毁session
-                if(dataName === 'organization'){
+                if(dataName === 'organization' || dataName === 'currentLevel'){
                     qApp.destroySessionObject(reply.qInfo.qId);
                 }
-                // (callback && typeof (callback) === "function") && callback(tmp);
-                // console.log(tmp.dataName+'数据',rows);
-                // console.log('Create Cube --> '+dataName+' <--执行了一次');
             })
             
         }

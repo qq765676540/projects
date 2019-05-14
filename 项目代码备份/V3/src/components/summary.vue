@@ -177,16 +177,18 @@ export default {
         };
     },
     mounted() {
-        window.addEventListener("resize", this.calcWidth, false)
+        window.addEventListener("resize", this.calcWidth, false);
+        
     },
     computed: {
         pieData() {
             var data = [0, 0, 0, 0];
             if (this.$store.state.summaryCircle.length > 0) {
-                data.splice(0, 1, this.$store.state.summaryCircle[0][0].qNum);
-                data.splice(1, 1, this.$store.state.summaryCircle[0][1].qNum);
-                data.splice(2, 1, this.$store.state.summaryCircle[0][2].qNum);
-                data.splice(3, 1, this.$store.state.summaryCircle[0][3].qNum);
+                let a = this.$store.state.summaryCircle;
+                data.splice(0, 1, a[0][0].qNum==='NaN'?0:a[0][0].qNum);
+                data.splice(1, 1, a[0][1].qNum==='NaN'?0:a[0][1].qNum);
+                data.splice(2, 1, a[0][2].qNum==='NaN'?0:a[0][2].qNum);
+                data.splice(3, 1, a[0][3].qNum==='NaN'?0:a[0][3].qNum);
                 return data;
             }
             return data;
@@ -271,9 +273,9 @@ export default {
                     if(v[0].qText!='-'){
                         tmp.name = v[0].qText;
                         tmp.title = v[0].qText;
-                        tmp.data = [Math.round(v[5].qNum*100)+'%',Math.round(v[6].qNum),Math.round(v[7].qNum*100)+'%'];
+                        tmp.data = [Math.round((v[5].qNum==='NaN'?0:v[5].qNum)*100)+'%',Math.round((v[6].qNum==='NaN'?0:v[6].qNum)),Math.round((v[7].qNum==='NaN'?0:v[7].qNum)*100)+'%'];
                         tmp.subData_subTitle = v[1].qText;
-                        tmp.subData_data = [Math.round(v[2].qNum*100)+'%',Math.round(v[3].qNum),Math.round(v[4].qNum*100)+'%'];
+                        tmp.subData_data = [Math.round((v[2].qNum==='NaN'?0:v[2].qNum)*100)+'%',Math.round((v[3].qNum==='NaN'?0:v[3].qNum)),Math.round((v[4].qNum==='NaN'?0:v[4].qNum)*100)+'%'];
                         b.push(tmp);
                     }    
                 });
@@ -307,6 +309,7 @@ export default {
                 });
                 // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
                 // console.log("orgListDataSet",d);
+                this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
                 return d;
             }
             return false;

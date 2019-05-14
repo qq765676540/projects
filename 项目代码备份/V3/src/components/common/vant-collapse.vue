@@ -11,30 +11,30 @@
                     <div slot="title">
                         <div class="flex flex-row">
                             <div
-                                class="flex flex-1 flex-align-center collapse-title-top"
+                                class="flex flex-2 flex-align-center collapse-title-top"
                                 :class="isDefaultTitle?'collapse-title':isDefaultTitle"
                             >
                                 <div class="title-name-icon"></div>
                                 <div class="title-name-value">{{item.name}}</div>
                             </div>
-                            <div class="flex-1">{{item.type}}</div>
-                            <div class="flex-2 collapse-title-data" style="color: #0f8ee9">
+                            <div class="flex-5">{{item.type}}</div>
+                            <div class="flex-1 collapse-title-data" style="color: #0f8ee9">
                                 {{item.data}}
                             </div>
                         </div>
                     </div>
                     <div class="flex-1" style="max-height:150px;overflow-y: scroll !important;">
-                        <div v-for="(v,i) in item.subData" :key="i" class="text-left">
-                            <div v-if="v.length>2">
-                                <div class="col-xs-4 col-sm-4">{{v[0]}}</div>
-                                <div class="col-xs-4 col-sm-4">{{v[1]}}</div>
-                                <div class="col-xs-4 col-sm-4">{{v[2]}}</div>
+                        <div v-for="(v,i) in item.subData" :key="i" class="flex flex-column flex-justify-center flex-align-center">
+                            <div v-if="v.length>2" class="flex" style="width: 90%">
+                                <div class="flex-4 text-left">{{v[0]}}</div>
+                                <div class="flex-1">{{v[1]}}</div>
+                                <div class="flex-1" style="white-space: nowrap;">{{v[2]}}</div>
                             </div>
-                            <div v-if="v.length>2">{{v[3]}}</div>
+                            <div v-if="v.length>2" style="width: 90%">{{v[3]}}</div>
 
-                            <div v-if="v.length<3">
-                                <div class="col-xs-6 col-sm-6">{{v[0]}}</div>
-                                <div class="col-xs-6 col-sm-6">{{v[1]}}</div>
+                            <div v-if="v.length<3" class="flex" style="width: 90%">
+                                <div class="flex-5 text-left">{{v[0]}}</div>
+                                <div class="flex-1 text-center" style="white-space: nowrap;">{{v[1]}}</div>
                             </div>
                         </div>
                     </div>
@@ -126,6 +126,8 @@ export default {
 <style scoped>
 .vant-collapse {
     margin-top: 10px;
+    max-height: 260px;
+    overflow-y: scroll !important;
 }
 
 .vant-collapse .collapse-title {

@@ -282,7 +282,7 @@ export default {
                     tmp.name = v[0].qText;
                     tmp.title = v[0].qText;
                     tmp.type = v[1].qText;
-                    tmp.data = c==='全部'?v[4].qNum:v[3].qNum;
+                    tmp.data = c==='全部'?(v[4].qNum==='NaN'?0:v[4].qNum):(v[3].qNum==='NaN'?0:v[3].qNum);
                     tmp.subData = [];
                     tempdb = v[0].qText;
                     data.push(tmp);
@@ -319,4 +319,5 @@ export default {
 .border-bottom {
     border-bottom: 5px solid #e6e9f0;
 }
+
 </style>

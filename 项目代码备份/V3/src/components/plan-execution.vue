@@ -124,7 +124,7 @@ export default {
                         tmp.name = v[0].qText;
                         tmp.title = v[0].qText;
                         tmp.type = v[1].qText;
-                        tmp.data = v[6].qNum;
+                        tmp.data = v[6].qNum==='NaN'?0:v[6].qNum;
                         tmp.plan = [
                             v[2].qText,
                             v[3].qText,
@@ -177,7 +177,7 @@ export default {
                         tmp.name = v[0].qText;
                         tmp.title = v[0].qText;
                         tmp.type = v[1].qText;
-                        tmp.data = v[6].qNum;
+                        tmp.data = v[6].qNum==='NaN'?0:v[6].qNum;
                         tmp.plan = [
                             v[2].qText,
                             v[3].qText,
