@@ -1,129 +1,82 @@
 <template>
-    <van-pull-refresh
-        v-model="isLoading"
-        @refresh="onRefresh"
-        :style="{'overflow-y': scroll}"
-        id="vist-warning"
-    >
-        <div class="vist-warning flex flex-column" id="vist-warning-box">
-            <div class="customer-distribution border-bottom">
-                <div class="sub-title">
-                    <div class="sub-title-icon"></div>
-                    <span class="sub-title-name">客用户拜访覆盖</span>
-                </div>
-                <div style="margin:0px 15px 0px 15px">
-                    <div style="min-height:60px;margin:10px 0px 0px 0px">
-                        <my-progress
-                            :data="progressData[0]"
-                            barBgcolor_i="#1495EB"
-                            barWidth="100%"
-                            barHeight="10px"
-                            barRadius="7px 7px 7px 7px"
-                            fontColor="#85a7ff"
-                            title="分级客户覆盖率"
-                        ></my-progress>
-                    </div>
-                    <div style="min-height:40px">
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[2]"></my-horkpi>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[4]"></my-horkpi>
-                        </div>
-                    </div>
-                    <div style="min-height:40px">
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[3]"></my-horkpi>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
-                        </div>
-                    </div>
-                    <div style="min-height:60px;margin:0px 0px 0px 0px">
-                        <my-progress
-                            :data="progressData[1]"
-                            barBgcolor_i="#1495EB"
-                            barWidth="100%"
-                            barHeight="10px"
-                            barRadius="7px 7px 7px 7px"
-                            fontColor="#85a7ff"
-                            title="锁定用户覆盖率"
-                        ></my-progress>
-                    </div>
-                    <div style="min-height:40px">
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[6]"></my-horkpi>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[8]"></my-horkpi>
-                        </div>
-                    </div>
-                    <div style="min-height:40px">
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[7]"></my-horkpi>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 text-center">
-                            <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>
-                        </div>
-                    </div>
-                </div>
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}" id="vist-warning">
+    <div class="vist-warning flex flex-column" id="vist-warning-box">
+        <div class="customer-distribution border-bottom">
+            <div class="sub-title">
+                <div class="sub-title-icon"></div>
+                <span class="sub-title-name">客用户拜访覆盖</span>
             </div>
-            <div class="covered-customer-detail border-bottom" v-show="true">
-                <div class="sub-title">
-                    <div class="sub-title col-xs-6 col-sm-6 padding-empty">
-                        <div class="sub-title-icon"></div>
-                        <span class="sub-title-name">拜访未覆盖客户名单</span>
+            <div style="margin:0px 15px 0px 15px">
+                <div style="min-height:60px;margin:10px 0px 0px 0px">
+                    <my-progress :data="progressData[0]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="分级客户覆盖率"></my-progress>
+                </div>
+                <div style="min-height:40px">
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[2]"></my-horkpi>
                     </div>
-                    <div
-                        class="col-xs-6 col-sm-6 text-right padding-empty"
-                        style="margin:5px 15px 0px 0px"
-                    >
-                        <my-actionsheet
-                            defSelected="全部"
-                            :data="['战略','核心','潜力','认证','全部']"
-                            :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}"
-                            @setScroll="setScrollStyleA"
-                        ></my-actionsheet>
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[4]"></my-horkpi>
                     </div>
                 </div>
-                <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <vant-collapse
-                        :id="'plan-collapse-3'"
-                        :data="CollapseADataSet[Aselected]"
-                        :isDefaultTitle="false"
-                        v-if="CollapseADataSet"
-                    ></vant-collapse>
-                </div>
-            </div>
-            <div class="uncovered-customer-detail border-bottom" v-show="true">
-                <div class="sub-title">
-                    <div class="sub-title col-xs-6 col-sm-6 padding-empty">
-                        <div class="sub-title-icon"></div>
-                        <span class="sub-title-name">拜访未覆盖用户名单</span>
+                <div style="min-height:40px">
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[3]"></my-horkpi>
                     </div>
-                    <div
-                        class="col-xs-6 col-sm-6 padding-empty text-right"
-                        style="margin:5px 15px 0px 0px"
-                    >
-                        <my-actionsheet
-                            defSelected="全部"
-                            :data="['战略','核心','市场','重要', '全部']"
-                            :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '70px'}"
-                            @setScroll="setScrollStyleB"
-                        ></my-actionsheet>
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
                     </div>
                 </div>
-                <div style="margin:15px 15px 20px 15px;min-height:200px">
-                    <vant-collapse
-                        :id="'plan-collapse-4'"
-                        :data="CollapseBDataSet[Bselected]"
-                        :isDefaultTitle="false"
-                        v-if="CollapseBDataSet"
-                    ></vant-collapse>
+                <div style="min-height:60px;margin:0px 0px 0px 0px">
+                    <my-progress :data="progressData[1]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="锁定用户覆盖率"></my-progress>
+                </div>
+                <div style="min-height:40px">
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[6]"></my-horkpi>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[8]"></my-horkpi>
+                    </div>
+                </div>
+                <div style="min-height:40px">
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[7]"></my-horkpi>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 text-center">
+                        <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>
+                    </div>
                 </div>
             </div>
         </div>
-    </van-pull-refresh>
+        <div class="covered-customer-detail border-bottom" v-show="true">
+            <div class="sub-title">
+                <div class="sub-title col-xs-6 col-sm-6 padding-empty">
+                    <div class="sub-title-icon"></div>
+                    <span class="sub-title-name">拜访未覆盖客户名单</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 text-right padding-empty" style="margin:5px 15px 0px 0px">
+                    <my-actionsheet defSelected="全部" :data="['战略','核心','潜力','认证','全部']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}" @setScroll="setScrollStyleA"></my-actionsheet>
+                </div>
+            </div>
+            <div style="margin:15px 15px 20px 15px;min-height:200px">
+                <vant-collapse :id="'plan-collapse-3'" :data="CollapseADataSet[Aselected]" :isDefaultTitle="false" v-if="CollapseADataSet"></vant-collapse>
+            </div>
+        </div>
+        <div class="uncovered-customer-detail border-bottom" v-show="true">
+            <div class="sub-title">
+                <div class="sub-title col-xs-6 col-sm-6 padding-empty">
+                    <div class="sub-title-icon"></div>
+                    <span class="sub-title-name">拜访未覆盖用户名单</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 padding-empty text-right" style="margin:5px 15px 0px 0px">
+                    <my-actionsheet defSelected="全部" :data="['战略','核心','市场','重要', '全部']" :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '70px'}" @setScroll="setScrollStyleB"></my-actionsheet>
+                </div>
+            </div>
+            <div style="margin:15px 15px 20px 15px;min-height:200px">
+                <vant-collapse :id="'plan-collapse-4'" :data="CollapseBDataSet[Bselected]" :isDefaultTitle="false" v-if="CollapseBDataSet"></vant-collapse>
+            </div>
+        </div>
+    </div>
+</van-pull-refresh>
 </template>
 
 <script>
@@ -131,7 +84,9 @@ import table from "./common/datatables";
 import progress from "./common/progress";
 import actionsheet from "./common/actionsheet";
 import horkpi from "./common/horizontal-kpi-ext";
-import { PullRefresh } from "vant";
+import {
+    PullRefresh
+} from "vant";
 import vantCollapse from "./common/vant-collapse";
 export default {
     name: "visit-warning",
@@ -167,11 +122,11 @@ export default {
                     潜力: [],
                     认证: []
                 };
-                let dataIndex0 = this.getData(a1,a2,'全部');
-                let dataIndex1 = this.getData(a1,a2,'战略客户');
-                let dataIndex2 = this.getData(a1,a2,'核心客户');
-                let dataIndex3 = this.getData(a1,a2,'潜力客户');
-                let dataIndex4 = this.getData(a1,a2,'认证客户');
+                let dataIndex0 = this.getData(a1, a2, "全部");
+                let dataIndex1 = this.getData(a1, a2, "战略客户");
+                let dataIndex2 = this.getData(a1, a2, "核心客户");
+                let dataIndex3 = this.getData(a1, a2, "潜力客户");
+                let dataIndex4 = this.getData(a1, a2, "认证客户");
 
                 if (this.Aselected === "全部") {
                     data[this.Aselected] = dataIndex0;
@@ -201,11 +156,11 @@ export default {
                     市场: [],
                     重要: []
                 };
-                let dataIndex0 = this.getData(a1,a2,'全部');
-                let dataIndex1 = this.getData(a1,a2,'战略锁定');
-                let dataIndex2 = this.getData(a1,a2,'核心锁定');
-                let dataIndex3 = this.getData(a1,a2,'市场锁定');
-                let dataIndex4 = this.getData(a1,a2,'重要锁定');
+                let dataIndex0 = this.getData(a1, a2, "全部");
+                let dataIndex1 = this.getData(a1, a2, "战略锁定");
+                let dataIndex2 = this.getData(a1, a2, "核心锁定");
+                let dataIndex3 = this.getData(a1, a2, "市场锁定");
+                let dataIndex4 = this.getData(a1, a2, "重要锁定");
 
                 if (this.Bselected === "全部") {
                     data[this.Bselected] = dataIndex0;
@@ -241,11 +196,14 @@ export default {
                     result.splice(index, 1, [
                         kpi.qText,
                         (
-                            (
-                                (kpi.qText.split("/")[0] /
-                                    kpi.qText.split("/")[1]) *
-                                100
-                            ).toFixed(0) + "%"
+                            (kpi.qText.split("/")[1] === "0" ||
+                                kpi.qText.split("/")[1] === "NaN" ?
+                                0 :
+                                (
+                                    (kpi.qText.split("/")[0] /
+                                        kpi.qText.split("/")[1]) *
+                                    100
+                                ).toFixed(0)) + "%"
                         ).replace("NaN", "0")
                     ]);
                 }
@@ -278,11 +236,21 @@ export default {
             let tempdb = "";
             a.filter(v => {
                 let tmp = {};
-                if (tempdb != v[0].qText && (v[2].qText===c || c==='全部')) {
+                if (
+                    tempdb != v[0].qText &&
+                    (v[2].qText === c || c === "全部")
+                ) {
                     tmp.name = v[0].qText;
                     tmp.title = v[0].qText;
                     tmp.type = v[1].qText;
-                    tmp.data = c==='全部'?(v[4].qNum==='NaN'?0:v[4].qNum):(v[3].qNum==='NaN'?0:v[3].qNum);
+                    tmp.data =
+                        c === "全部" ?
+                        v[4].qNum === "NaN" ?
+                        0 :
+                        v[4].qNum :
+                        v[3].qNum === "NaN" ?
+                        0 :
+                        v[3].qNum;
                     tmp.subData = [];
                     tempdb = v[0].qText;
                     data.push(tmp);
@@ -292,7 +260,10 @@ export default {
             data.filter(vo => {
                 let e = [];
                 b.filter(vi => {
-                    if (vi[0].qText === vo.name && (vi[2].qText===c || c==='全部')) {
+                    if (
+                        vi[0].qText === vo.name &&
+                        (vi[2].qText === c || c === "全部")
+                    ) {
                         e.push([vi[1].qText, vi[2].qText]);
                     }
                 });
@@ -319,5 +290,4 @@ export default {
 .border-bottom {
     border-bottom: 5px solid #e6e9f0;
 }
-
 </style>

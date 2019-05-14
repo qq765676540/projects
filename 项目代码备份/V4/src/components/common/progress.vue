@@ -93,7 +93,7 @@ export default {
         }
     },
     mounted() {
-        this.initData = this.data;
+        this.initData = this.data>100?100:this.data;
     },
     watch: {
         data: function(nVal) {
