@@ -132,7 +132,7 @@ export default {
                                 "/" +
                                 v[4].qText.substr(4, 2) +
                                 "/" +
-                                v[4].qText.substr(7, 2),
+                                v[4].qText.substr(6, 2),
                             v[5].qText
                         ];
                         b.push(tmp);
@@ -185,7 +185,7 @@ export default {
                                 "/" +
                                 v[4].qText.substr(4, 2) +
                                 "/" +
-                                v[4].qText.substr(7, 2),
+                                v[4].qText.substr(6, 2),
                             v[5].qText
                         ];
                         b.push(tmp);

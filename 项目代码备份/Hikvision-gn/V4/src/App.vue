@@ -158,7 +158,7 @@ export default {
             this.switchIsOpen = false;
             setTimeout(() => {
                 this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
-            }, 3500);
+            }, 3000);
         },
         switchTo() {
             this.selectorFlag = !this.selectorFlag;
@@ -197,6 +197,10 @@ export default {
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerB", -1, 1, "visitCustomerB");
             //拜访构成
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "customerDistribution", -1, 1, "customerDistribution");
+
+            setTimeout(() => {
+                this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
+            }, 3000);
         }
     },
     computed: {

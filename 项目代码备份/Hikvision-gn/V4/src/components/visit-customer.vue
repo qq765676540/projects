@@ -6,14 +6,14 @@
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">分级合作伙伴拜访情况</span>
             </div>
-            <pie-table class="vist-pie-table flex" :config="config" :dataRows="dataA" :thead="table.tHeadA" v-if="dataA"></pie-table>
+            <pie-table class="vist-pie-table flex" :config="configA" :dataRows="dataA" :thead="table.tHeadA" v-if="dataA"></pie-table>
         </div>
         <div class="industry-distribution border-bottom flex-1">
             <div class="sub-title flex-1">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">锁定用户拜访情况</span>
             </div>
-             <pie-table class="vist-pie-table flex" :config="config" :dataRows="dataB" :thead="table.tHeadB" v-if="dataB"></pie-table>
+             <pie-table class="vist-pie-table flex" :config="configB" :dataRows="dataB" :thead="table.tHeadB" v-if="dataB"></pie-table>
         </div>
     </div>
 </van-pull-refresh>
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             isLoading: false,
-            config: {
+            configA: {
                 colorList: [
                     "#1495EB",
                     "#60CBC1",
@@ -65,9 +65,39 @@ export default {
                     scrollY: 163,
                 }
             },
+            configB: {
+                colorList: [
+                    "#1495EB",
+                    "#60CBC1",
+                    "#F8DAB6",
+                    "#F46950",
+                    "#C28CC3",
+                    "#AB5787",
+                    "#2FC25B",
+                    "#8543E0",
+                    "#223273"
+                ],
+                params_1: {
+                    title: "拜访用户数",
+                    imgUrl: require("@/assets/image/pie-customer.png"),
+                    size: "45px",
+                    labelShow: false,
+                    radius: ["60%", "85%"],
+                    scrollY: 163,
+                    
+                },
+                params_2: {
+                    title: "拜访次数占比",
+                    imgUrl: require("@/assets/image/pie-customer-percent.png"),
+                    size: "75px",
+                    labelShow: false,
+                    radius: ["60%", "85%"],
+                    scrollY: 163,
+                }
+            },
             table: {
-                tHeadA: ["客户分级", "拜访客户数", "拜访次数"],
-                tHeadB: ["客户分级", "拜访客户数", "拜访次数"],
+                tHeadA: ["客户类型", "拜访客户数", "拜访次数"],
+                tHeadB: ["用户类型", "拜访用户数", "拜访次数"],
             },
             flag_1: false,
             flag_2: false

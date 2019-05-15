@@ -15,12 +15,12 @@
                         <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[2]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[4]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[3]"></my-horkpi>
                     </div>
                 </div>
                 <div style="min-height:40px">
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[3]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[4]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
                         <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
@@ -34,12 +34,12 @@
                         <my-horkpi iconBgColor="#d2eaf5" title="战略" :data="progressData[6]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[8]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="核心" :data="progressData[7]"></my-horkpi>
                     </div>
                 </div>
                 <div style="min-height:40px">
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[7]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[8]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
                         <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>

@@ -27,7 +27,7 @@
                                 class="col-2-button"
                                 :class="btActive[0]"
                                 @click="changeActiveBt(0)"
-                            >填写计划率</button>
+                            >计划填写率</button>
                         </div>
                         <div class="flex flex-1 flex-justify-center flex-align-center">
                             <button
@@ -202,6 +202,7 @@ export default {
                     [d[0][4].qNum, d[0][5].qNum],
                     [d[0][6].qNum, d[0][7].qNum]
                 ];
+                // console.log('KPI',a);
                 return a[this.btActiveNum];
             }
             return false;
@@ -309,7 +310,7 @@ export default {
                 });
                 // this.$store.dispatch('updateData', {dataName:'isLoading',data:false});
                 // console.log("orgListDataSet",d);
-                this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
+                // this.$store.dispatch('updateData', {dataName:'isPopShow',data:false});
                 return d;
             }
             return false;

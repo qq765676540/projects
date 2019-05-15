@@ -23,7 +23,7 @@ export default
         //当前层级
         currentLevel: {
             qDimensions: [
-                "='$(DeptID)'",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'$(DeptID)')",
                 "='-'",
                 "='$(Account)'",
                 "='$(DomainName)'",
@@ -35,8 +35,8 @@ export default
         //组织架构
         organization: {
             qDimensions: [
-                "=if(DeptID<>'$(DeptID)',DeptID)",
-                "Parent_DeptID",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',DeptID),'maxlevel')",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',Parent_DeptID),'-')",
                 "OADAccount",
                 "DomainName",
                 "Flag",
@@ -49,8 +49,8 @@ export default
             qMeasures: [
                 `=num(count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={"J"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)/count(distinct{<[DimensionName]={'${time}'},${orgStr},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)*100,'0.0')`,
                 `=num(count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)/count(distinct{<[DimensionName]={'${time}'},${orgStr},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)*100,'0.0')`,
-                `=num(count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)*100,'0.0')`,
-                `=num(count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)*100,'0.0')`
+                `=num(count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)*100,'0.0')`,
+                `=num(count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)*100,'0.0')`
             ]
         },
         summaryEasyKPI: {
@@ -60,10 +60,10 @@ export default
                 `=count(distinct{<[DimensionName]={'${time}'},${orgStr},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)`,
                 `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={"T"},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>} OADAccount)`,
                 `=count(distinct{<[DimensionName]={'${time}'},${orgStr},WorkPost-={"*总经理*","*总监*","*实习生*","*总裁*"}>}OADAccount)`,
-                `=count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)`,
-                `=count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)`,
-                `=count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)`,
-                `=count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)`
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)`,
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)`,
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)`,
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)`
             ]
         },
         summaryLineA: {
@@ -75,13 +75,13 @@ export default
         summaryLineB: {
             qDimensions: ["WeekName"],
             qMeasures: [
-                `=count(distinct{<${orgStr},[RZTX/JH]={'T'},IsPartnerOrUser_Y={'N','Z'},DimensionName=>}Partner_EndUser_Y)`,
-                `=count(distinct{<${orgStr},[RZTX/JH]={'T'},IsPartnerOrUser_Y={'Y','Z'},DimensionName=>}Partner_EndUser_Y)`
+                `=count(distinct{<${orgStr},[RZTX/JH]={'T'},IsPartnerOrUser_Y={'N','Z'},DimensionName=,LogMode={'拜访'}>}Partner_EndUser_Y)`,
+                `=count(distinct{<${orgStr},[RZTX/JH]={'T'},IsPartnerOrUser_Y={'Y','Z'},DimensionName=,LogMode={'拜访'}>}Partner_EndUser_Y)`
             ]
         },
         summaryOrgListA: {
             qDimensions: [
-                "='$(DomainName)'",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'$(DomainName)')",
                 "='-'"
             ],
             qMeasures: [
@@ -96,7 +96,7 @@ export default
         summaryOrgListB: {
             qDimensions: [
                 "=DeptName",
-                "=if(Parent_DeptID='$(DeptID)',DomainName)"
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(Parent_DeptID='$(DeptID)',DomainName),DomainName)"
             ],
             qMeasures: [
                 `=count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)`,

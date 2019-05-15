@@ -85,8 +85,8 @@ export default {
                 let a = this.$store.state.currentLevel;
                 let b = this.$store.state.organization;
                 let c = [];
-                if(b[0][0].qText==='-') {
-                    c = a;
+                if(a[0][0].qText==='-') {
+                    c = b;
                 } else {
                     c = a.concat(b);
                 }
