@@ -39,7 +39,7 @@
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
-    <waterMark userName="王永刚"></waterMark>
+    <waterMark :userName="userName" v-if="userName"></waterMark>
 </div>
 </template>
 
@@ -206,6 +206,13 @@ export default {
     computed: {
         popShow() {
             return this.$store.state.isPopShow;
+        },
+        userName() {
+            if(this.$store.state.currentLevel.length > 0){
+                let a = this.$store.state.currentLevel;
+                return a[0][3].qText;
+            }
+            return false
         }
     },
     watch: {

@@ -154,18 +154,18 @@ export default
             qDimensions: [
                 `=if(${orgMatch},DomainName)`,
                 "DeptName",
-                "=if(PartnerCategory<>'其他',PartnerCategory)"
+                "PartnerCategory_KN"
             ],
             qMeasures: [
-                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[是否拜访]={2},IsPartnerOrUser={'Y','Z'}>}Partner_EndUserName)`,
-                `=count(total <DomainName> distinct{<[DimensionName]={'${time}'},${orgStr},[是否拜访]={2},IsPartnerOrUser={'Y','Z'}>}Partner_EndUserName)`
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr}>}Partner_KN)`,
+                `=count(total <DomainName> distinct{<[DimensionName]={'${time}'},${orgStr}>}Partner_KN)`
             ]
         },
         visitWarningCollapseA2: {
             qDimensions: [
                 "DomainName",
-                `=if([DimensionName]='${time}' and ${orgMatch} and [是否拜访]='2' and  (IsPartnerOrUser='Y' OR IsPartnerOrUser='Z' ) , Partner_EndUserName )`,
-                "=if(PartnerCategory<>'其他',PartnerCategory)"
+                `=if([DimensionName]='${time}' and ${orgMatch}, PartnerName_KN)`,
+                "PartnerCategory_KN"
             ],
             qMeasures: ["=sum(1)"]
         },
@@ -173,18 +173,18 @@ export default
             qDimensions: [
                 `=if(${orgMatch},DomainName)`,
                 "DeptName",
-                "=if(UserCategory<>'其他',UserCategory)"
+                "UserCategory_YN"
             ],
             qMeasures: [
-                `=count(distinct{<[DimensionName]={'${time}'},${orgStr},[是否拜访]={2},IsPartnerOrUser={'N','Z'}>}Partner_EndUserName)`,
-                `=count(total <DomainName> distinct{<[DimensionName]={'${time}'},${orgStr},[是否拜访]={2},IsPartnerOrUser={'N','Z'}>}Partner_EndUserName)`
+                `=count(distinct{<[DimensionName]={'${time}'},${orgStr}>}User_YN)`,
+                `=count(total <DomainName> distinct{<[DimensionName]={'${time}'},${orgStr}>}User_YN)`
             ]
         },
         visitWarningCollapseB2: {
             qDimensions: [
                 `=if(${orgMatch},DomainName)`,
-                `=if([DimensionName]='${time}' and ${orgMatch} and 是否拜访='2' and  (IsPartnerOrUser='N' OR IsPartnerOrUser='Z' ) , Partner_EndUserName)`,
-                "=if(UserCategory<>'其他',UserCategory)"
+                `=if([DimensionName]='${time}' and ${orgMatch}, UserName_YN)`,
+                "UserCategory_YN"
             ],
             qMeasures: ["=sum(1)"]
         },
