@@ -1,40 +1,52 @@
 <template>
 <div id="app">
-    <div class="nav-bar-top flex">
-        <div class="nav-bar-top_left fa fa-angle-left flex-1"></div>
-        <div class="nav-bar-top_title flex-10">商机统计分析</div>
-        <div class="nav-bar-top_right flex-1"></div>
-    </div>
-    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
-        <van-tab title="商机总览">
-            <!-- <keep-alive> -->
-                <router-view v-if="active==0" class="view-container flex-container" />
-            <!-- </keep-alive> -->
+    <van-nav-bar class="nav-bar-top" title="研发财务看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" />
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" :line-width="63" :line-height="2">
+        <van-tab title="首页">
+            <router-view v-if="active==0" class="view-container" />
         </van-tab>
-        <van-tab title="商机预警">
-            <!-- <keep-alive> -->
-                <router-view v-if="active==1" class="view-container flex-container" />
-            <!-- </keep-alive> -->
+        <van-tab title="收入">
+            <router-view v-if="active==1" class="view-container" />
         </van-tab>
-        <van-tab title="商机构成">
-            <!-- <keep-alive> -->
-                <router-view v-if="active==2" class="view-container flex-container" />
-            <!-- </keep-alive> -->
+        <van-tab title="毛利">
+            <router-view v-if="active==2" class="view-container" />
         </van-tab>
-        <van-tab title="商机分布">
-            <!-- <keep-alive> -->
-                <router-view v-if="active==3" class="view-container flex-container" />
-            <!-- </keep-alive> -->
+        <van-tab title="费用">
+            <router-view v-if="active==3" class="view-container" />
+        </van-tab>
+        <van-tab title="订单">
+            <router-view v-if="active==4" class="view-container" />
         </van-tab>
     </van-tabs>
-    <div class="main-selection flex flex-row">
-        <div class="filter flex-1" @click="curFilter='filter_1', asShow=true">行业:{{selected.filter_1}}</div>
-        <div class="filter flex-1" @click="curFilter='filter_2', asShow=true">区域:{{selected.filter_2}}</div>
-        <div class="filter flex-1" @click="curFilter='filter_3', asShow=true">筛选3</div>
+    <div v-show="selBarFlag" class="selection-tool flex">
+        <div class="flex flex-align-center flex-3">
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}"  @click="filterStyleActive='整体'">整体</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="filterStyleActive='海外'">海外</div>
+        </div>
+        <div class="selected-bar flex flex-2">
+            <ul class="selected-dim-date flex flex-2">
+                <li class="name">时间:</li>
+                <li class="values flex-1" v-text="selectedTime"></li>
+            </ul>
+            <!-- 
+            <ul class="selected-dim-org flex flex-row flex-5">
+                <li class="name">组织:</li>
+                <li class="values flex-3" v-text="selectedOrg.toString()"></li>
+            </ul> 
+            -->
+        </div>
+        <div class="selector-switch-box relative">
+            <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
+        </div>
     </div>
-    <div class="actionsheet absolute" v-show="asShow" @click.stop="asShow=false">
-        <van-actionsheet v-model="asShow" :actions="selctions" :overlay="false" @select="onSelect" cancel-text="取消" />
+    <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+    <div class="appPopstyle">
+        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+            <van-loading type="spinner" size="30px" color="white" />
+        </van-popup>
     </div>
+    <waterMark userName="王永刚"></waterMark>
 </div>
 </template>
 
@@ -43,99 +55,186 @@ import {
     NavBar,
     Tab,
     Switch,
-    Actionsheet
+    Popup,
+    Loading
 } from "vant";
+import animate from "animate.css";
+
 import Tabs from "./components/common/vant-tabs/index";
-// import Cube from "./tools/cube.js";
+
+import vueSwitch from "./components/common/vue-switch";
+import selector from "./components/common/selector";
+import waterMark from "./components/common/water-mark";
+
+import Tools from "./tools/tools";
+var tool = new Tools();
+
+import Cube from "./tools/cube";
+var cube = new Cube();
 
 export default {
-    name: "app",
+    name: "App",
     components: {
         [NavBar.name]: NavBar,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
-        [Actionsheet.name]: Actionsheet
+        selector,
+        [Popup.name]: Popup,
+        [Loading.name]: Loading,
+        waterMark,
+        vueSwitch
     },
     data() {
         return {
             active: 0,
+            lang: false,
+            selBarFlag: true,
             pageMap: {
-                0: "summary",
-                1: "warning",
-                2: "constitute",
-                3: "distribution",
+                0: "home",
+                1: "income",
+                2: "gross",
+                3: "cost",
+                4: "order"
             },
-            filter_1: [{
-                name: '全部'
-            },{
-                name: '选项1'
-            }, {
-                name: '选项2',
-            }, {
-                name: '选项3'
-            }, {
-                name: '选项4',
-            }, {
-                name: '选项5'
-            }],
-            filter_2: [{
-                name: '全部'
-            },{
-                name: '选项6',
-            }, {
-                name: '选项7'
-            }, {
-                name: '选项8',
-            }, {
-                name: '选项9'
-            }, {
-                name: '选项10',
-            }],
-            asShow: false,
-            curFilter: 'filter_1',
-            selected: {
-                filter_1: '全部',
-                filter_2: '全部'
-            }
-        }
+            selectorFlag: false,
+            selectedTime: "本月",
+            selectedOrg: [],
+            selectedOrgSetCube: [],
+            popContext: "",
+            switchStyle: {
+                width: 54,
+                height: 24,
+                bgColor: "rgba(199, 199, 199, 0.68)",
+                circleColor: "red"
+            },
+            switchIsOpen: false,
+            qApp: null,
+            filterStyleActive: '整体'
+        };
     },
+    beforeCreate() {
+        
+    },
+    created() {},
     mounted() {
-        // Cube.getKpiData(window.qApp, this, {
-        //     kpiName: "measure_1"
-        // });
+        // this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
+        // this.cubeInit();
     },
     methods: {
+        closePop() {
+            this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
+        },
+        resultTreeData(data) {},
         onClickLeft() {},
-        onSelect(selected) {
-            this.$set(this.selected, this.curFilter, selected.name);
-            this.asShow = false;
-            // console.log('this.selected: ', JSON.stringify(this.selected));
+        showSelector() {
+            this.selectorFlag = this.selectorFlag ? false : true;
+        },
+        cancleSelect(data) {
+            this.selectorFlag = false;
+        },
+        confirmSelect(data) {
+            if (data.org.length > 0) {
+
+                let selectValues = [];
+                let displayValues = [];
+
+                data.org.filter((v) => {
+                    selectValues.push(v.split(':')[0]);
+                    displayValues.push(v.split(':')[1]);
+                });
+
+                this.selectedOrg = displayValues;
+                this.selectedOrgSetCube = selectValues;                
+            } else {
+                this.selectedOrg = [];
+                this.selectedOrgSetCube = [];
+            }
+
+            this.selectorFlag = false;
+            this.selectedTime = data.time;
+            
+            // this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
+            // this.cubeInit();
+
+            $(".selected-dim-org > .values").css({
+                maxWidth: $(".selected-dim-org").width() - 40
+            });
+            this.switchIsOpen = false;
+            setTimeout(() => {
+                this.$store.dispatch('updateData', {dataName: 'isPopShow',data: false});
+            }, 3500);
+        },
+        switchTo() {
+            this.selectorFlag = !this.selectorFlag;
+            this.switchIsOpen = true;
+        },
+        cubeInit() {
+            //筛选：组织机构树
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "currentLevel", -1, 0, "currentLevel");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "organization", -1, 0, "organization");
+            //总体情况 - 销售日志 - 环形进图条 - 联动KPI
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryCircle", -1, 0, "summaryCircle");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryEasyKPI", -1, 0, "summaryEasyKPI");
+            //总体情况 - 组织架构
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryOrgListA", 1, 5, "summaryOrgListA");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryOrgListB", 1, 5, "summaryOrgListB");
+            //总体情况 - 拜访次数周趋势
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryLineA", -1, 0, "summaryLineA");
+            //总体情况 - 拜访客用户周趋势
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryLineB", -1, 0, "summaryLineB");
+
+            //执行计划 - 近五周
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionLine", -1, 0, "planExecutionLine");
+            //执行计划 - Collapse
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionCollapseA", -1, 6, "planExecutionCollapseA");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionCollapseB", -1, 6, "planExecutionCollapseB");
+
+            //拜访预警 - 客用户拜访覆盖
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningKPI", -1, 0, "visitWarningKPI");
+            //拜访预警 - 未覆盖客用户
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseA1", -1, 4, "visitWarningCollapseA1");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseA2", -1, 4, "visitWarningCollapseA2");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB1", -1, 4, "visitWarningCollapseB1");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB2", -1, 4, "visitWarningCollapseB2");
+            //拜访对象
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerA", -1, 1, "visitCustomerA");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerB", -1, 1, "visitCustomerB");
+            //拜访构成
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "customerDistribution", -1, 1, "customerDistribution");
         }
     },
     computed: {
-        selctions() {
-            return this[this.curFilter];
+        popShow() {
+            return this.$store.state.isPopShow;
         }
     },
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
-            this.selBarFlag = pIndex == 1 ? false : true;
+            // this.selBarFlag = pIndex == 1 ? false : true;
         },
-        curFilter(selected) {
-            if(selected=='filter_3') {
-                window.qApp.field('City').selectValues([{qText: '门托'}], true, false)
-            }
+        selectedTime(nVal) {
+            this.$store.dispatch('updateData', {dataName: 'selectedTime',data: nVal});
+        },
+        popShow(nVal) {
+            // console.log('popShow',nVal);
         }
     }
 };
 </script>
 
 <style>
-@import "./assets/css/font-awesome.min.css";
 @import "./assets/css/common.css";
 @import "./components/common/vant-tabs/index.css";
+
+/* * {
+  touch-action: none;
+} */
+.van-pull-refresh {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -145,115 +244,173 @@ export default {
 
 html,
 body,
-body>div,
 #app,
-.nav-tabs,
-.van-tabs__content {
+.nav-tabs {
     height: 100%;
     width: 100%;
     overflow: hidden !important;
 }
 
-.nav-bar-top {
-    color: white;
-    height: 40px;
-    line-height: 40px;
-    background-color: #1d71f0;
-    font-size: 16px;
+.van-tabs__content,
+.van-tab__pane {
+    height: 100%;
 }
 
-.nav-bar-top_left {
-    font-size: 36px;
-    padding-top: 2px;
+.lang-switch {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
 }
 
 .view-container {
     padding-top: 40px;
-    height: calc(100% - 40px);
-    max-height: calc(100% - 40px);
+    height: calc(100% - 20px);
+    max-height: calc(100% -20px);
 }
 
-.main-title {
-    min-height: 40px;
-    border: 1px #ff0000 solid;
+.view-container.no-padding {
+    padding-top: 0 !important;
 }
 
-.main-selection {
+.nav-bar-top {
     height: 40px;
     line-height: 40px;
-    width: 100%;
+    background-color: #3876cd;
+}
+
+.van-nav-bar__title {
+    color: white;
+    font-size: 18px;
+}
+
+.van-nav-bar .van-icon {
+    color: white;
+}
+
+.van-nav-bar__arrow {
+    font-size: 32px;
+}
+
+.van-tabs__nav,
+.van-tab {
+    height: 40px;
+    line-height: 40px;
+}
+
+.van-tabs__nav .van-ellipsis {
+    font-size: 15px;
+}
+
+.selection-tool {
     position: absolute;
-    top: 80px;
-    z-index: 100;
-}
-
-.main-selection .filter {
-    font-size: 14px;
-    color: #333333;
-    cursor: pointer;
-    background: white;
-    border-top: 2px solid #F1F4FB;
-    border-bottom: 4px solid #F1F4FB;
-}
-
-.van-tabs__nav--line {
-    padding-bottom: 8px !important;
+    top: 84px;
+    height: 36px;
+    line: 36px;
+    width: 100vw;
+    background-color: #eeeff3;
+    padding-left: 6px;
 }
 
 .sub-title {
     font-family: "PingFangSC-Medium";
-    /* font-weight: bold; */
     color: black;
     font-size: 16px;
     -webkit-box-align: end;
     text-indent: 4px;
-    width: 100%;
-    max-height: 30px;
+    height: 30px;
     line-height: 30px;
     margin-top: 3px;
     display: flex;
+    min-height: 30px;
+}
+
+.sub-title-name {
+    color: #333333;
 }
 
 .sub-title-icon {
     width: 3px;
-    height: 16px;
-    line-height: 30px;
+    height: 14px;
+    background: #1D71F0;
     margin-left: 10px;
     margin-top: 8px;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-    background-color: #1d71f0;
-    border-radius: 1px;
 }
 
-.actionsheet {
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
+.sub-title-unit {
+    color: #b4b6b7;
+    font-size: 12px;
+    text-align: left;
+}
+
+.selected-bar {
+    align-items: center;
+}
+
+.selected-bar .name {
+    text-indent: 8px;
+}
+
+.selected-bar .values {
+    text-indent: 4px;
+}
+
+.selector-switch-box {
+    width: 60px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.selected-dim-date {
+    min-width: 70px;
+    min-width: 70px;
+    padding-top: 2px;
+}
+
+.selected-dim-date>.values {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.selected-dim-org {
+    padding-top: 4px;
+}
+
+.selected-dim-org>.values {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.selector-switch {
     position: absolute;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    top: 6px;
+    left: 4px;
 }
 
-.van-actionsheet {
-    overflow-y: auto !important;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 240px;
-    background-color: white;
-    padding-top: 10px;
-    padding-bottom: 30px;
+.border-bottom {
+    border-bottom: 5px solid #e6e9f0;
 }
 
-.van-actionsheet__item {
-    line-height: 40px;
-    border-bottom: 2px solid rgba(182, 174, 174, 0.1);
+.appPopstyle .van-popup {
+    background-color: rgba(255, 255, 255, 0);
+    overflow-y: hidden;
 }
 
-.van-actionsheet__cancel {
-    line-height: 40px;
-    color: #1D71F0;
+.filterStyle {
+    border-radius: 4px;
+    border: 0.025rem solid rgba(128, 128, 128, 0.5);
+    background-color: #fff;
+    width: 60px;
+    line-height: 25px;
+    height: 25px;
+    font-size: 12px;
+    margin-right: 2px;
+}
+.filterStyleActive {
+    background-color: #039ce3;
+    color: white;
+    border: none;
 }
 </style>

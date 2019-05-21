@@ -16,4 +16,4 @@ Tools.prototype.deepClone = function(source) {
     return targetObj;
 }
 
-export default new Tools();
+export default Tools;

@@ -1,4 +1,4 @@
-// import formula from '../config/formulaDev'
+// import getFormula from '../config/formulaDev'
 import getFormula from '../config/formula'
 class Cube {
     constructor() {

@@ -167,7 +167,7 @@ export default
                 `=if([DimensionName]='${time}' and ${orgMatch}, PartnerName_KN)`,
                 "PartnerCategory_KN"
             ],
-            qMeasures: ["=sum(1)"]
+            qMeasures: [`=sum({<${orgMatch},Year={'$(vYear)'}>}SalesTarget)`]
         },
         visitWarningCollapseB1: {
             qDimensions: [
@@ -186,7 +186,7 @@ export default
                 `=if([DimensionName]='${time}' and ${orgMatch}, UserName_YN)`,
                 "UserCategory_YN"
             ],
-            qMeasures: ["=sum(1)"]
+            qMeasures: [`=sum({<${orgMatch},Year={'$(vYear)'}>}SalesTarget)`]
         },
         visitCustomerA: {
             qDimensions: ["=IF(PartnerCategory_Y<>'其他',PartnerCategory_Y)"],

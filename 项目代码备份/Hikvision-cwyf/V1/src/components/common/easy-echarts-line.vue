@@ -5,14 +5,16 @@
 </template>
 
 <script>
-// import accounting from "accounting";
+import accounting from "accounting";
 import echarts from "echarts";
-import toolsBean from "../../tools/tools";
 import {
     lineOption,
     baseSerie,
-    colorStops
+    colorStops,
+    lineColor
 } from "../eOption/line-option.js";
+import Tools from "../../tools/tools";
+var toolsBean = new Tools();
 
 export default {
     name: "easy-line",
@@ -74,7 +76,8 @@ export default {
                     _serie.name = item.name;
                     _serie.data = item.value;
                     _serie.silent = true;
-                    _serie.lineStyle.color.colorStops = colorStops[i].color;
+                    _serie.markPoint.itemStyle.color = lineColor[i];
+                    _serie.lineStyle.color = lineColor[i];
                     _serie.areaStyle.color.colorStops = colorStops[i].color;
                     i++;
                     i = i > 1 ? 0 : i;

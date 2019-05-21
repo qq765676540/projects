@@ -84,7 +84,7 @@
                     <div class="flex flex-1 flex-justify-center col-2-right-title">
                         <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
-                            <span>有效拜访率</span>
+                            <span>有效拜访率↑</span>
                         </div>
                         <div class="flex flex-1 flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
@@ -97,9 +97,6 @@
                     </div>
                 </div>
                 <div class="content-box">
-                    <!-- <div class="flex flex-justify-center flex-align-center" style="min-height: 200px" v-if="!orgListDataSet || summarryIsLoading">
-                        <van-loading type="spinner" size="150px" />
-                    </div>  -->
                     <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-if="orgListDataSet"></vant-collapse>
                 </div>
             </div>
@@ -107,7 +104,7 @@
                 <div class="sub-title">
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">拜访次数周趋势</span>
-                    <!-- <span class="sub-title-unit">单位(千)</span> -->
+                    <span class="sub-title-unit">单位(次数)</span>
                 </div>
                 <easy-line :id="'line-1'" :data="ElineDataASet" v-if="ElineDataASet"></easy-line>
             </div>
@@ -115,7 +112,7 @@
                 <div class="sub-title">
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">拜访客用户周趋势</span>
-                    <!-- <span class="sub-title-unit">单位(千)</span> -->
+                    <span class="sub-title-unit">单位(个数)</span>
                     <div class="flex flex-1 flex-justify-right col-2-right-title" >
                         <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
                             <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[1]}"></div>
@@ -163,7 +160,7 @@ export default {
             pieSize: "60px",
             eLineData1,
             eLineData2,
-            col2LegendColor:["#333333", "#0f8ee9", "#FF6D00", "#666666"],
+            col2LegendColor:["#FF6D00", "#0f8ee9", "#333333", "#666666"],
             kpiName: [
                 ["填写计划销售人数", "总销售人数"],
                 ["填写工作记录人数", "总销售人数"],

@@ -144,7 +144,7 @@ export default {
 <style scoped>
 .vist-customer {
     width: 100%;
-    height: calc(100% - 120px);
+    height: calc(100% - 10px);
     overflow: hidden;
 }
 
@@ -152,20 +152,11 @@ export default {
     min-height: 350px;
 }
 
-.vist-customer .partner-distribution-icon {
-    background-image: url("../assets/image/vist-customer-icon.png");
-}
-
 .vist-customer .industry-distribution {
     min-height: 350px;
 }
 
-.vist-customer-middle {
-    min-height: 200px;
-}
-
-.vist-customer-bottom {
-    min-height: 200px;
-    margin: 0 10px 10px 10px;
+.border-bottom {
+    border-bottom: 5px solid #e6e9f0;
 }
 </style>

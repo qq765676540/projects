@@ -193,8 +193,8 @@ export default {
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB1", -1, 4, "visitWarningCollapseB1");
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB2", -1, 4, "visitWarningCollapseB2");
             //拜访对象
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerA", -1, 1, "visitCustomerA");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerB", -1, 1, "visitCustomerB");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerA", -1, 0, "visitCustomerA");
+            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerB", -1, 0, "visitCustomerB");
             //拜访构成
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "customerDistribution", -1, 1, "customerDistribution");
 

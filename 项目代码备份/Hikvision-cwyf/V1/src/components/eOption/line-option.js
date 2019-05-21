@@ -1,19 +1,14 @@
+let lineColor = ["#0f8ee9", "#FF6D00"];
 let colorStops = [{
     icon: 'image://' + require('@/assets/image/rect-blue.png'),
     color:
         [
             {
                 offset: 0,
-                color: "#675FEA" // 0% 处的颜色
-            }, {
-                offset: 0.25,
-                color: "#5A88F6" // 0% 处的颜色
-            }, {
-                offset: 0.75,
-                color: "#44AAE9" // 0% 处的颜色
-            }, {
+                color: "#ACD5FF" // 0% 处的颜色
+            },{
                 offset: 1,
-                color: "#49C3E0" // 100% 处的颜色
+                color: "#D1E8FF" // 100% 处的颜色
             }
         ],
 }, {
@@ -23,15 +18,10 @@ let colorStops = [{
             {
                 offset: 0,
                 color: "#EC4B8F" // 0% 处的颜色
-            }, {
-                offset: 0.25,
-                color: "rgba(199, 65, 168, 0.4)" // 0% 处的颜色
-            }, {
-                offset: 0.75,
-                color: "#A13FBB" // 0% 处的颜色
-            }, {
+            },
+            {
                 offset: 1,
-                color: "rgba(132, 51, 213, 0.4)" // 100% 处的颜色
+                color: "#fbd2e3" // 100% 处的颜色
             }
         ]
 }
@@ -40,7 +30,7 @@ let colorStops = [{
 let baseSerie = {
     data: [],
     type: 'line',
-    smooth: true,
+    smooth: false,
     symbol: 'circle',
     showSymbol: .1,
     // showSymbol: false,
@@ -57,27 +47,29 @@ let baseSerie = {
             type: 'max'
         }],
         itemStyle: {
-            color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: colorStops[0].color,
-                global: false // 缺省为 false
-            }
+            color: lineColor[0]
+            // color: {
+            //     type: 'linear',
+            //     x: 0,
+            //     y: 0,
+            //     x2: 0,
+            //     y2: 1,
+            //     colorStops: colorStops[0].color,
+            //     global: false // 缺省为 false
+            // }
         }
     },
     lineStyle: {
-        color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: colorStops[0].color,
-            global: false // 缺省为 false
-        },
+        color: lineColor[0],
+        // color: {
+        //     type: 'linear',
+        //     x: 0,
+        //     y: 0,
+        //     x2: 0,
+        //     y2: 1,
+        //     colorStops: colorStops[0].color,
+        //     global: false // 缺省为 false
+        // },
         opacity: .7
     },
     areaStyle: {
@@ -139,6 +131,9 @@ let lineOption = {
         formatter: "{c}%"
     },
     yAxis: {
+        axisLabel: {
+            showMaxLabel: true
+        },
         offset: -20,
         type: 'value',
         splitNumber: 3,
@@ -163,4 +158,4 @@ let lineOption = {
 
 
 
-export { lineOption, baseSerie, colorStops };
+export { lineOption, baseSerie, colorStops, lineColor };

@@ -65,12 +65,14 @@ export default {
                 let _data = Object.assign([], this.data);
                 let legend = [];
                 let series = [];
+                let maxmin = [];
                 let i = 0;
                 _data.yData.forEach(item => {
                     legend.push({
                         name: item.name,
                         icon: colorStops[i].icon
                     });
+                    maxmin = maxmin.concat(item.value);
                     // legend.push(item.name);
                     var _serie = toolsBean.deepClone(baseSerie);
                     _serie.name = item.name;
@@ -98,7 +100,8 @@ export default {
                 _option.legend.data = legend;
                 _option.series = series;
                 _option.xAxis.data = _data.xData;
-
+                _option.yAxis.max = Math.max.apply(null,maxmin);
+                _option.yAxis.min = Math.min.apply(null,maxmin);
                 if(this.sign) {
                     _option.yAxis.axisLabel = {
                         formatter: '{value}%'

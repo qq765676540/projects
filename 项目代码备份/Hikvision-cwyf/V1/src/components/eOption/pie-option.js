@@ -1,68 +1,101 @@
-var scale = 1;
-var echartData = [{
-    value: 124,
-    name: '曲阜师范大学'
-}, {
-    value: 234,
-    name: '潍坊学院'
-}, {
-    value: 111,
-    name: '青岛职业技术学院'
-}, {
-    value: 214,
-    name: '淄博师范高等专科'
-}]
-
-var rich = {
-    value: {
-        fontSize: 12 * scale,
-        padding: [2, 0],
-        align: 'center'
-    },
-    name: {
-        align: 'center',
-        fontSize: 9 * scale,
-        padding: [2, 0]
-    },
-    hr: {
-        borderColor: '#0F8EE955',
-        width: '100%',
-        borderWidth: 1,
-        height: 0,
-    }
-}
-
-var option = {
-    series: [{
-        type: 'pie',
-        radius: ['35%', '50%'],
-        hoverAnimation: false,
-        color: ['#C28CC3', '#F46950', '#60CBC1', '#0F8EE9', '#6f81da', '#00ffb4'],
+var dataStyle = {
+    normal: {
         label: {
-            normal: {
-                formatter: function(params, ticket, callback) {
-                    var total = 0; 
-                    var percent = 0; 
-                    echartData.forEach(function(value, index, array) {
-                        total += value.value;
-                    });
-                    percent = ((params.value / total) * 100).toFixed(1);
-                    return '{value|' + params.value + '/' + percent +'%}\n{hr|}\n{name|' + params.name + '}';
-                },
-                rich: rich
-            },
+            show: true,
+            color: '#fff',
+            fontSize: 18,
         },
         labelLine: {
-            normal: {
-                length: 20 * scale,
-                length2: 0,
-                lineStyle: {
-                    color: '#0F8EE955'
-                }
+            length: 12,
+            length2: 12,
+            lineStyle: {
+                color: 'rgba(20,150,200,0.7)'
             }
         },
-        data: echartData
-    }]
-}
+    }
+};
 
-export default option;
+var labelShow = {
+    show: true,
+    normal: {
+        formatter: '{c}\n{d}%',
+        fontSize: 15,
+        color: 'black'
+    },
+};
+
+var option = {
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: ['#00358e', '#0053b7', '#036dd8', '#059de0', '#00b9cc', '#81c106', '#aeb702', '#dda03e'], 
+    tooltip: {
+        show: true,
+        formatter: "{b} <br/> {c} ({d}%)"
+    },
+    angleAxis: {
+        type: 'category',
+        z: 10,
+        axisLine: {
+            color: '#fff',
+            lineStyle: {
+                width: 1,
+                color: '#1595C8',
+            }
+        },
+    },
+    radiusAxis: {
+        axisTick: {
+            show: false
+        },
+        axisLabel: {
+            show: false,
+            color: '#fff',
+        },
+        axisLine: {
+            show: false,
+            color: '#fff',
+            lineStyle: {
+                color: '#fff',
+            }
+        },
+        splitLine: {
+            color: '#000',
+            lineStyle: {
+                type: 'dotted',
+                color: 'rgba(170,170,170,.5)',
+            }
+        },
+    },
+    polar: {
+        center: ['40%', '52%'],
+        radius: '56%',
+    },
+    legend: {
+        show: true,
+        orient: 'vertical',
+        left: '75%',
+        top: '20%',
+        icon: 'circle',
+        textStyle: {
+            color: '#54C0E6',
+            fontSize: 14
+        },
+        itemWidth: 14,
+        itemHeight: 14,
+        itemGap: 15,
+        data: []
+    },
+    series: {
+        type: 'pie',
+        clockWise: true,
+        center: ['40%', '52%'],
+        radius: ['40%', '53%'],
+        itemStyle: dataStyle,
+        hoverAnimation: true,
+        label: {
+            fontSize: 15,
+        },
+        data: []
+    }
+};
+
+export {option, labelShow};

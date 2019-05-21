@@ -20,10 +20,10 @@
                 </div>
                 <div style="min-height:40px">
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[4]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="认证" :data="progressData[5]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="潜力" :data="progressData[4]"></my-horkpi>
                     </div>
                 </div>
                 <div style="min-height:60px;margin:0px 0px 0px 0px">
@@ -39,10 +39,10 @@
                 </div>
                 <div style="min-height:40px">
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[8]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>
                     </div>
                     <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="重要" :data="progressData[9]"></my-horkpi>
+                        <my-horkpi iconBgColor="#d2eaf5" title="市场" :data="progressData[8]"></my-horkpi>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <span class="sub-title-name">拜访未覆盖客户名单</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 text-right padding-empty" style="margin:5px 15px 0px 0px">
-                    <my-actionsheet defSelected="全部" :data="['战略','核心','潜力','认证','全部']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}" @setScroll="setScrollStyleA"></my-actionsheet>
+                    <my-actionsheet defSelected="全部" :data="['全部','战略','核心','潜力','认证']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}" @setScroll="setScrollStyleA"></my-actionsheet>
                 </div>
             </div>
             <div style="margin:15px 15px 20px 15px;min-height:200px">
@@ -68,7 +68,7 @@
                     <span class="sub-title-name">拜访未覆盖用户名单</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 padding-empty text-right" style="margin:5px 15px 0px 0px">
-                    <my-actionsheet defSelected="全部" :data="['战略','核心','市场','重要', '全部']" :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '70px'}" @setScroll="setScrollStyleB"></my-actionsheet>
+                    <my-actionsheet defSelected="全部" :data="['全部','战略','核心','市场','重要']" :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '70px'}" @setScroll="setScrollStyleB"></my-actionsheet>
                 </div>
             </div>
             <div style="margin:15px 15px 20px 15px;min-height:200px">
@@ -264,10 +264,17 @@ export default {
                         vi[0].qText === vo.name &&
                         (vi[2].qText === c || c === "全部")
                     ) {
-                        e.push([vi[1].qText, vi[2].qText]);
+                        e.push([vi[1].qText, vi[2].qText, vi[3].qNum]);
                     }
                 });
-                vo.subData = e;
+                let f = e.sort((a,b)=>{
+                    return b[2]-a[2];
+                });
+                let g = [];
+                f.filter(v => {
+                    g.push([v[0],v[1]]);
+                });
+                vo.subData = g;
             });
 
             return data;

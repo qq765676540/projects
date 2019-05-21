@@ -1,6 +1,6 @@
 <template>
     <div :id="id+'box'" class="pie-datatables flex flex-column">
-        <div class="flex flex-11 flex-row col-pie">
+        <div class="flex flex-9 flex-row col-pie">
             <e-pie
                 class="flex flex-1"
                 :id="id+'ePieA'"
@@ -107,6 +107,7 @@ export default {
             scrollY: 163,
             paging: false,
             searching: false,
+            ordering: false,
             info: false,
             columnDefs: [
                 {
@@ -116,18 +117,18 @@ export default {
             ]
         });
 
-        this.tabInstance
-            .column("1:visible")
-            .order("desc")
-            .draw();
+        // this.tabInstance
+        //     .column("1:visible")
+        //     .order("desc")
+        //     .draw();
 
         $(".dataTables_wrapper.no-footer .dataTables_scrollBody").css(
             "border",
             "none"
         );
-        this.tabInstance.on("order.dt", () => {
-            this.init(1);
-        });
+        // this.tabInstance.on("order.dt", () => {
+        //     this.init(1);
+        // });
     },
     methods: {
         init(a) {
@@ -136,22 +137,22 @@ export default {
 
             _self.putData(tmpPieData);
 
-            var order = this.tabInstance.order();
+            // var order = this.tabInstance.order();
 
-            let dOrder = order[0][1] === "asc" ? 1 : -1;
+            // let dOrder = order[0][1] === "asc" ? 1 : -1;
 
-            if (order[0][0] === 1) {
-                tmpPieData.sort((a, b) => {
-                    return (a.customVal - b.customVal) * dOrder;
-                });
-                _self.putData(tmpPieData);
-            }
-            if (order[0][0] === 2) {
-                tmpPieData.sort((a, b) => {
-                    return (a.visitVal - b.visitVal) * dOrder;
-                });
-                _self.putData(tmpPieData);
-            }
+            // if (order[0][0] === 1) {
+            //     tmpPieData.sort((a, b) => {
+            //         return (a.customVal - b.customVal) * dOrder;
+            //     });
+            //     _self.putData(tmpPieData);
+            // }
+            // if (order[0][0] === 2) {
+            //     tmpPieData.sort((a, b) => {
+            //         return (a.visitVal - b.visitVal) * dOrder;
+            //     });
+            //     _self.putData(tmpPieData);
+            // }
         },
         putData(_data) {
             let tmp1 = [],
@@ -178,7 +179,34 @@ export default {
         setPieData(rows) {
             rows = rows || [];
             rows.sort((a, b) => {
-                return b[1].qNum - a[1].qNum;
+                let ordera = 0;
+                let orderb = 0;
+
+                if(a[0].qText==='战略客户' || a[0].qText==='战略锁定'){
+                    ordera = 1;
+                }else if(a[0].qText==='核心客户' || a[0].qText==='核心锁定'){
+                    ordera = 2;
+                }else if(a[0].qText==='认证客户' || a[0].qText==='重要锁定'){
+                    ordera = 3;
+                }else if(a[0].qText==='潜力客户' || a[0].qText==='市场锁定'){
+                    ordera = 4;
+                }else {
+                    ordera = 5;
+                }
+
+                if(b[0].qText==='战略客户' || b[0].qText==='战略锁定'){
+                    orderb = 1;
+                }else if(b[0].qText==='核心客户' || b[0].qText==='核心锁定'){
+                    orderb = 2;
+                }else if(b[0].qText==='认证客户' || b[0].qText==='重要锁定'){
+                    orderb = 3;
+                }else if(b[0].qText==='潜力客户' || b[0].qText==='市场锁定'){
+                    orderb = 4;
+                }else {
+                    orderb = 5;
+                }
+
+                return ordera-orderb;//b[1].qNum - a[1].qNum;
             });
             var ret = {
                 xData: [],
@@ -219,11 +247,11 @@ export default {
         dataRows: {
             handler(nVal, oVal) {
                 if (this.isDiff(nVal, oVal)) {
-                    console.log("nVal", oVal);
+                    // console.log("nVal", oVal);
                     this.setPieData(nVal);
-                    $("#" + this.id)
-                        .on("init.dt", function() {})
-                        .dataTable();
+                    // $("#" + this.id)
+                    //     .on("init.dt", function() {})
+                    //     .dataTable();
                 }
             },
             deep: true
@@ -279,8 +307,8 @@ export default {
 }
 
 .pie-datatables .col-bottom {
-    min-height: 200px;
-    margin: 20px 0px 20px 0px;
+    min-height: 180px;
+    max-height: 200px;
 }
 
 .pie-datatables .title-name-icon {
@@ -296,6 +324,6 @@ export default {
 }
 
 .pie-datatables .col-pie {
-    min-height: 200px;
+    min-height: 180px;
 }
 </style>

@@ -7,14 +7,26 @@ import * as mutations from './mutations'
 Vue.use(Vuex)
 
 var state = {
-  isLoading: true,
-  measure_2: [],
-  measure_3: [],
-  measure_4: [],
-  summaryState: false,
-  warningState: false,
-  constituteState: false,
-  distributionState: false
+  isPopShow:false,
+  currentLevel:[],
+  organization:[],
+  summaryCircle:[],
+  summaryEasyKPI:[],
+  summaryLineA:[],
+  summaryLineB:[],
+  summaryOrgListA: [],
+  summaryOrgListB: [],
+  planExecutionLine:[],
+  planExecutionCollapseA: [],
+  planExecutionCollapseB: [],
+  visitWarningKPI:[],
+  visitWarningCollapseA1: [],
+  visitWarningCollapseA2: [],
+  visitWarningCollapseB1: [],
+  visitWarningCollapseB2: [],
+  visitCustomerA: [],
+  visitCustomerB: [],
+  customerDistribution: []
 }
 
 const store = new Vuex.Store({

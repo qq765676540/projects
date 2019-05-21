@@ -146,12 +146,12 @@ export default {
 
 .task-distribution-middle {
     margin-left: -10px;
-    min-height: 300px;
+    min-height: 270px;
 }
 
 .task-distribution-bottom {
     min-height: 200px;
-    margin: 0 40px 10px 40px;
+    margin: -20px 40px 10px 40px;
 }
 
 .table.dataTable.no-footer {

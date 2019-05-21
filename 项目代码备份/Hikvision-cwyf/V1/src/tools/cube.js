@@ -1,20 +1,25 @@
+// import formula from '../config/formulaDev'
 import getFormula from '../config/formula'
-
 class Cube {
     constructor() {
     }
+
     /**
+     * 拼接createCube方法所需参数
      * @param {*} arr 
      * @param {*} type 
      */
 
-    _initParam(arr, type, orderType, qNullSuppression = true) {
+    _initParam(arr, type, orderType, qNullSuppression) {
+        if(qNullSuppression===undefined){
+            qNullSuppression=true;
+        }
         if (arr.length === 0) {
             return [];
         } else {
             var list = [];
             var item = {};
-            arr.forEach(name=> {
+            arr.forEach(function (name, i) {
                 if (type === "measure") {
                     item = {
                         qDef: {
@@ -29,15 +34,15 @@ class Cube {
                         qDef: {
                             qFieldDefs: [name]
                         },
-                        qNullSuppression: qNullSuppression,
-                        qOtherTotalSpec: {
-                            qOtherMode: "OTHER_OFF",
-                            qSuppressOther: true,
-                            qOtherSortMode: "OTHER_SORT_DESCENDING",
-                            qOtherCounted: {
-                                qv: "5"
+                        "qNullSuppression": qNullSuppression,
+                        "qOtherTotalSpec": {
+                            "qOtherMode": "OTHER_OFF",
+                            "qSuppressOther": true,
+                            "qOtherSortMode": "OTHER_SORT_DESCENDING",
+                            "qOtherCounted": {
+                                "qv": "5"
                             },
-                            qOtherLimitMode: "OTHER_GE_LIMIT"
+                            "qOtherLimitMode": "OTHER_GE_LIMIT"
                         }
                     }
                 }
@@ -47,132 +52,47 @@ class Cube {
         }
     }
     /**
-     * config: {
-     *     kpiName: String, 必填
-     *     kpiParams: Array,
-     *     storeName: String,
-     *     orderType: 1|-1,
-     *     orderCol: Number,
-     *     filtNull: Boolean
-     * }
+     * 所需参数
+     * qsAPP对象，Vue实例，formula，第N列指标排序默认倒序，时间过滤，组织机构过滤，返回数据名，回调函数 
+     *  
      */
-    getData(qApp, vApp, config) {
-        var cf = {
-            kpiName: config.kpiName,
-            kpiParams: config.kpiParams || [],
-            storeName: config.storeName || config.kpiName,
-            orderType: config.orderType || 1,
-            orderCol: config.orderCol || 0,
-            filtNull: config.filtNull || true,
-            qHeight: config.qHeight || 20
-        }
-
+    getData(qApp, vApp, time, org, kpiName, orderType , orderCol, dataName,qNullSuppression) {
         if (qApp) {
-            var formula = getFormula(cf.kpiName, cf.kpiParams),
-                qDimensions = formula.qDimensions,
+            var formula = getFormula(time,org,kpiName);
+            var qDimensions = formula.qDimensions,
                 qMeasures = formula.qMeasures;
-                console.log('formula: ', formula);
-
             var params = {
                 qInitialDataFetch: [{
-                    qTop: 0,
-                    qLeft: 0,
-                    qHeight: cf.qHeight,
+                    // qTop: 0,
+                    // qLeft: 0,
+                    qHeight: 200,
                     qWidth: 10
                 }],
             };
 
-            params.qDimensions = this._initParam(qDimensions, "dimension", cf.orderType, cf.filtNull);
-            params.qMeasures = this._initParam(qMeasures, "measure", cf.orderType, cf.filtNull);
-            params.qInterColumnSortOrder = [cf.orderCol];
-            params.qSuppressZero = cf.filtNull;
-
+            params.qDimensions = this._initParam(qDimensions, "dimension", orderType, qNullSuppression);
+            params.qMeasures = this._initParam(qMeasures, "measure", orderType, qNullSuppression);
+            params.qInterColumnSortOrder = [orderCol];
+            // console.log(kpiName+'-qDimensions',params.qDimensions);
+            // console.log(kpiName+'-qMeasures',params.qMeasures);
             qApp.createCube(params, function (reply) {
                 var rows = reply.qHyperCube.qDataPages[0].qMatrix;
                 
                 let tmp = {
-                    dataName: cf.storeName,
+                    dataName: dataName,
                     data: rows
                 };
-
-                vApp.$store.dispatch('updateData', tmp);
-                console.log('tmp: ', cf.storeName);
                 
+                vApp.$store.dispatch('updateData', tmp);
+                qApp.destroySessionObject(reply.qInfo.qId);
                 //组织架构只需要初始化一次，初始化后直接销毁session
-                // if (cf.storeName === 'organization') {
+                // if(dataName === 'organization' || dataName === 'currentLevel'){
                 //     qApp.destroySessionObject(reply.qInfo.qId);
                 // }
             })
-
-        }
-    }
-
-    /*---------------------------------------------------------------------*/
-    _initKpiParam(arr) {
-        if (arr.length === 0) {
-            return [];
-        }
-        else {
-            var list = [];
-            var item = {};
-            var shortName = [];
-            arr.forEach(name=> {
-                item = {
-                    qDef: {
-                        qDef: name[0]
-                    }
-                }
-                list.push(item);
-                shortName.push(name[1])
-            });
-            return {list, shortName};
-        }
-    }
-
-    getKpiData(qApp, vApp, config) {
-        var cf = {
-            kpiName: config.kpiName,
-            kpiParams: config.kpiParams || [],
-            storeName: config.storeName || config.kpiName,
-            orderType: config.orderType || 1,
-            orderCol: config.orderType || 0,
-            filtNull: config.filtNull || true
-        }
-
-        if (qApp) {
-            var formula = getFormula(cf.kpiName, cf.kpiParams),
-                qMeasures = formula.qMeasures;
-
-            var params = {
-                qInitialDataFetch: [{
-                    qTop: 0,
-                    qLeft: 0,
-                    qHeight: 1,
-                    qWidth: 100
-                }],
-            };
-
-            var kpiParams = this._initKpiParam(qMeasures);
-            params.qMeasures = kpiParams.list;
-            params.qInterColumnSortOrder = [cf.orderCol];
-            var shortName = kpiParams.shortName,
-                result = {};
-        
-
-            qApp.createCube(params, function (reply) {
-                var values = reply.qHyperCube.qDataPages[0].qMatrix[0] || [];
-
-                values.forEach((v, i)=>{
-                    result[shortName[i]] = v
-                });
-
-                window.Log.info('result', result);
-
-                vApp.$store.dispatch('updateData', result);
-            })
-
+            
         }
     }
 }
 
-export default new Cube();
+export default Cube;

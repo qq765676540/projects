@@ -31,9 +31,6 @@ let baseSerie = {
     data: [],
     type: 'line',
     smooth: false,
-    symbol: 'circle',
-    showSymbol: .1,
-    // showSymbol: false,
     markPoint: {
         label: {
             fontSize: 8,
@@ -127,8 +124,12 @@ let lineOption = {
         }
     },
     tooltip: {
-        show: true,
-        formatter: "{c}%"
+        trigger: 'axis',
+        triggerOn: 'click',
+        axisPointer: {
+            type: 'cross'
+        },
+        formatter: '{b0}<br>{c0}'
     },
     yAxis: {
         axisLabel: {
@@ -136,7 +137,9 @@ let lineOption = {
         },
         offset: -20,
         type: 'value',
-        splitNumber: 3,
+        // splitNumber: 2,
+        max: 100,
+        min: 0,
         axisLabel: {
             formatter: '{value}'
         },
