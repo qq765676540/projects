@@ -1,18 +1,18 @@
 <template>
 <div>
-    <div :id="id" class="echarts-pie"></div>
+    <div :id="id" class="echarts-barMarkLine"></div>
 </div>
 </template>
 
 <script>
 import echarts from "echarts";
-import pieGetOption from "../echarts-option/pie-option.js";
+import barMarkLineGetOption from "../echarts-option/bar-markLine-option.js";
 
 import Tools from "../../tools/tools";
 var toolsBean = new Tools();
 
 export default {
-    name: "echarts-pie",
+    name: "echarts-bar",
     components: {},
     props: {
         id: {
@@ -29,7 +29,7 @@ export default {
     },
     data() {
         return {
-            option: toolsBean.deepClone(pieGetOption(this.name,this.data))
+            option: toolsBean.deepClone(barMarkLineGetOption(this.name,this.data))
         };
     },
     beforeCreate() {},
@@ -45,7 +45,7 @@ export default {
         data: {
             handler(nVal, oVal) {
                 if (this.isDiff(nVal, oVal)) {
-                    this.option=toolsBean.deepClone(pieGetOption(this.name,nVal));
+                    this.option=toolsBean.deepClone(barMarkLineGetOption(this.name,nVal));
                     this.echartsIns.dispose();
                     this.echartsIns = echarts.init(document.getElementById(this.id));
                     this.setOption(this.option);
@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style scoped>
-.echarts-pie {
+.echarts-barMarkLine {
     width: 98%;
     min-height: 320px;
     margin-left: 10px;

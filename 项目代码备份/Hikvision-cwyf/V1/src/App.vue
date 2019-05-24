@@ -174,34 +174,6 @@ export default {
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "currentLevel", -1, 0, "currentLevel");
             cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "organization", -1, 0, "organization");
             //总体情况 - 销售日志 - 环形进图条 - 联动KPI
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryCircle", -1, 0, "summaryCircle");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryEasyKPI", -1, 0, "summaryEasyKPI");
-            //总体情况 - 组织架构
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryOrgListA", 1, 5, "summaryOrgListA");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryOrgListB", 1, 5, "summaryOrgListB");
-            //总体情况 - 拜访次数周趋势
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryLineA", -1, 0, "summaryLineA");
-            //总体情况 - 拜访客用户周趋势
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "summaryLineB", -1, 0, "summaryLineB");
-
-            //执行计划 - 近五周
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionLine", -1, 0, "planExecutionLine");
-            //执行计划 - Collapse
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionCollapseA", -1, 6, "planExecutionCollapseA");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "planExecutionCollapseB", -1, 6, "planExecutionCollapseB");
-
-            //拜访预警 - 客用户拜访覆盖
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningKPI", -1, 0, "visitWarningKPI");
-            //拜访预警 - 未覆盖客用户
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseA1", -1, 4, "visitWarningCollapseA1");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseA2", -1, 4, "visitWarningCollapseA2");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB1", -1, 4, "visitWarningCollapseB1");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitWarningCollapseB2", -1, 4, "visitWarningCollapseB2");
-            //拜访对象
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerA", -1, 1, "visitCustomerA");
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "visitCustomerB", -1, 1, "visitCustomerB");
-            //拜访构成
-            cube.getData(parent.qApp, this, this.selectedTime, this.selectedOrgSetCube, "customerDistribution", -1, 1, "customerDistribution");
         }
     },
     computed: {
