@@ -31,7 +31,7 @@ export default
                 "='$(DeptName)'",
                 "='0000'"
             ],
-            qMeasures: []
+            qMeasures: ["=sum(1)"]
         },
         //组织架构
         organization: {
@@ -40,7 +40,7 @@ export default
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',Parent_DeptID),'-')",
                 "OADAccount",
                 "DomainName",
-                "Flag",
+                "='0'&Flag",
                 "DeptName",
                 "DeptSort"
             ],

@@ -9,9 +9,10 @@ export default
                 "='$(Account)'",
                 "='$(DomainName)'",
                 "='-'",
-                "='$(DeptName)'"
+                "='$(DeptName)'",
+                "='0000'"
             ],
-            qMeasures: []
+            qMeasures: ["=sum(1)"]
         },
         //组织架构
         organization: {
@@ -20,8 +21,9 @@ export default
                 "Parent_DeptID",
                 "OADAccount",
                 "DomainName",
-                "Flag",
-                "DeptName"
+                "='0'&Flag",
+                "DeptName",
+                "DeptSort"
             ],
             qMeasures: ["=sum(1)"]
         },

@@ -90,7 +90,7 @@ export default {
                 } else {
                     c = a.concat(b);
                 }
-                
+
                 c.filter((v)=>{
                   let tmp = {};
                   if(deptName!=v[5].qText) {
@@ -114,12 +114,12 @@ export default {
                         if(vo.id === vi[0].qText){
                             tmp.id = vi[2].qText+':'+vi[3].qText; //过滤值：显示值
                             tmp.label = vi[3].qText;
-                            tmp.flag = vi[4].qText==='-'?0:1; 
+                            tmp.flag = vi[4].qText; 
                             vo.children.push(tmp);
                         }
                     });
                     vo.children = vo.children.sort((first,next)=>{
-                        return next.flag-first.flag;
+                        return next.flag - first.flag;
                     });
                 });
 
