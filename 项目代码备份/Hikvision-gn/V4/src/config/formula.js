@@ -28,7 +28,8 @@ export default
                 "='$(Account)'",
                 "='$(DomainName)'",
                 "='-'",
-                "='$(DeptName)'"
+                "='$(DeptName)'",
+                "='0000'"
             ],
             qMeasures: []
         },
@@ -40,7 +41,8 @@ export default
                 "OADAccount",
                 "DomainName",
                 "Flag",
-                "DeptName"
+                "DeptName",
+                "DeptSort"
             ],
             qMeasures: ["=sum({<OADAccount=>}1)"]
         },

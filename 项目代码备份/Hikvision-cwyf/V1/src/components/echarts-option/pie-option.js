@@ -20,17 +20,7 @@ let option = {
                     type: 'pie',
                     radius: ['30%', '60%'],
                     avoidLabelOverlap: false,
-                    color: [
-                        "#0F8EE9",
-                        "#60CBC1",
-                        "#F8DAB6",
-                        "#F46950",
-                        "#C28CC3",
-                        "#AB5787",
-                        "#2FC25B",
-                        "#8543E0",
-                        "#223273"
-                    ],
+                    color: ["#448DFF", "#59D4FF", "#751DE2", "#BB2B79", "#DB479B", "#F8B9D9", "#D391B8", "#C2A0F7", "#AEEFFE", "#A7D0FF"],
                     label: {
                         formatter: '{d}%\n{hr|}\n{padding|{b}}\n{c}',
                         rich: {

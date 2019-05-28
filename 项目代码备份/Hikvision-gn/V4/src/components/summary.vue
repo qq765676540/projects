@@ -119,7 +119,7 @@
                             <span>用户数</span>
                         </div>
                         <div class="flex flex-justify-center flex-align-center" :style="{'color':col2LegendColor[3]}">
-                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[2]}"></div>
+                            <div class="col-2-right-bg" :style="{'background-color': col2LegendColor[0]}"></div>
                             <span>客户数</span>
                         </div>
                     </div>                  

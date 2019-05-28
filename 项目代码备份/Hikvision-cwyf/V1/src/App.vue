@@ -20,7 +20,7 @@
     </van-tabs>
     <div v-show="selBarFlag" class="selection-tool flex">
         <div class="flex flex-align-center flex-3">
-            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}"  @click="filterStyleActive='整体'">整体</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="filterStyleActive='整体'">整体</div>
             <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
             <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="filterStyleActive='海外'">海外</div>
         </div>
@@ -46,7 +46,7 @@
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
-    <waterMark userName="王永刚"></waterMark>
+    <waterMark userName="水印"></waterMark>
 </div>
 </template>
 
@@ -278,7 +278,7 @@ body,
     position: absolute;
     top: 84px;
     height: 36px;
-    line: 36px;
+    line-height: 36px;
     width: 100vw;
     background-color: #eeeff3;
     padding-left: 6px;
@@ -313,6 +313,7 @@ body,
     color: #b4b6b7;
     font-size: 12px;
     text-align: left;
+    margin-top: 1px;
 }
 
 .selected-bar {

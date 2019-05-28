@@ -8,7 +8,7 @@
                 <!-- <span class="sub-title-unit">单位(%)</span> -->
             </div>
             <div class="content-box flex flex-column flex-1">
-                <echarts-bar-line name="income-bp" :data="bpData" :drilldown="bpDrillDownData"></echarts-bar-line>
+                <echarts-bar-line name="income-bp" :data="bpData" :drilldown="bpDrillDownData" id="income-bp"></echarts-bar-line>
             </div>
         </div>
         <div class="income-structure border-bottom flex flex-column">
@@ -18,7 +18,7 @@
                 <!-- <span class="sub-title-unit">单位(%)</span> -->
             </div>
             <div class="content-box flex flex-column flex-1">
-                <van-tabs style="z-index:0" type="card" v-model="structureTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                <van-tabs class="structureTabs" type="card" v-model="structureTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
                     <van-tab title="业务部-行业"></van-tab>
                     <van-tab title="行业-业务部"></van-tab>
                 </van-tabs>
@@ -34,10 +34,24 @@
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">分公司情况</span>
-                <!-- <span class="sub-title-unit">单位(%)</span> -->
+                <span class="sub-title-unit">单位(万)</span>
             </div>
             <div class="content-box flex flex-column flex-1">
-                
+                <echarts-bar-line name="income-branch" :data="branchData" id="income-branch"></echarts-bar-line>
+            </div>
+        </div>
+        <div class="income-trend border-bottom flex flex-column">
+            <div class="sub-title">
+                <div class="sub-title-icon"></div>
+                <span class="sub-title-name">均价&数量趋势</span>
+                <span class="sub-title-unit">单位(万)</span>
+            </div>
+            <div class="content-box flex flex-column flex-1">
+                <van-tabs class="trendTabs" type="card" v-model="trendTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="均价"></van-tab>
+                    <van-tab title="数量"></van-tab>
+                </van-tabs>
+                <echarts-line name="income-trend" :data="trendData" id="income-trend"></echarts-line>
             </div>
         </div>
     </div>
@@ -53,6 +67,7 @@ import {
 import echartsBarLine from "./common/echarts-bar-line";
 import echartsBarMarkline from "./common/echarts-bar-markLine";
 import echartsPie from "./common/echarts-pie";
+import echartsLine from "./common/echarts-line";
 import demoData from "./data/demoData";
 import { log } from 'util';
 
@@ -64,12 +79,14 @@ export default {
         [Tab.name]: Tab,
         echartsBarLine,
         echartsBarMarkline,
-        echartsPie
+        echartsPie,
+        echartsLine
     },
     data() {
         return {
             isLoading: false,
-            structureTabAtive: 0
+            structureTabAtive: 0,
+            trendTabAtive: 0
         };
     },
     mounted() {
@@ -89,6 +106,12 @@ export default {
         },
         structurePieData() {
             return demoData.incomeData.structure[2]
+        },
+        branchData() {
+            return demoData.incomeData.branch
+        },
+        trendData() {
+            return demoData.incomeData.trend
         }
     },
     watch: {
@@ -118,13 +141,6 @@ export default {
     overflow-x: hidden !important;
 }
 
-.income .sub-title-unit {
-    font-family: PingFangSC-Light;
-    color: #8e9091;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
 .income .income-bp {
     min-height: 370px;
 }
@@ -134,7 +150,21 @@ export default {
     max-height: 700px;
 }
 
+.income .income-structure .structureTabs {
+    z-index: 0;
+    width: 280px;
+}
+
 .income .income-branch {
-    min-height: 370px;
+    min-height: 390px;
+}
+
+.income .income-trend {
+    min-height: 450px;
+}
+
+.income .income-trend .trendTabs {
+    z-index: 0;
+    width: 180px;
 }
 </style>

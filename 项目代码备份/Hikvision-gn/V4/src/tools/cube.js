@@ -63,9 +63,9 @@ class Cube {
                 qMeasures = formula.qMeasures;
             var params = {
                 qInitialDataFetch: [{
-                    // qTop: 0,
-                    // qLeft: 0,
-                    qHeight: 200,
+                    qTop: 0,
+                    qLeft: 0,
+                    qHeight: 1000,
                     qWidth: 10
                 }],
             };

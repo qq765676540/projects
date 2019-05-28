@@ -98,11 +98,15 @@ export default {
                     tmp.id = v[0].qText;
                     tmp.label = deptName;
                     tmp.pid = v[1].qText;
+                    tmp.sortflag = v[6].qText;
                     tmp.children = []
                     deptNameArr.push(tmp);
                   }
                 });
-
+                
+                deptNameArr = deptNameArr.sort((a,b) => {
+                    return a.sortflag-b.sortflag;
+                });
                 //遍历销售人员
                 deptNameArr.filter((vo)=>{
                     c.filter((vi)=>{

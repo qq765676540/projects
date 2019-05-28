@@ -123,7 +123,7 @@ let option = {
                 itemStyle: {
                     normal: {
                         barBorderColor: "rgba(0,0,0,0)",
-                        color: "red"
+                        color: "#ff6666"
                     },
                     emphasis: {
                         barBorderColor: "rgba(0,0,0,0)",

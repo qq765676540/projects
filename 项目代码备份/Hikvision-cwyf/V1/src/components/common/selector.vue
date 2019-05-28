@@ -1,17 +1,24 @@
 <template>
 <div v-show="show">
-    <div class="selector flex flex-column flex-1">
-        <div class="selector-time flex flex-column flex-1">
-            <span class="title flex-1">时间区间</span>
-            <ul class="selections flex-3">
-                <ul class="flex-3">
+    <div class="selector flex flex-column">
+        <div class="selector-time flex flex-column">
+            <span class="title">时间区间</span>
+            <ul class="selections">
+                <ul>
                     <li v-for="(value, key) in timeItems" :key="key" class="time-item" :class="{active: value}" @click="selectTime(key)">{{key}}</li>
                 </ul>
             </ul>
         </div>
-        <div class="selector-org-tree flex flex-column flex-3">
-            <span class="title flex-1">组织架构</span>
-            <vue-tree :tree-data="treeData" v-model="ids" :options="options" class="org-tree flex-9" />
+        <div class="selector-currency flex flex-column">
+            <span class="title">默认货币</span>
+            <div class="flex flex-align-center" style="margin-left: 10px">
+                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='人民币'}" @click="currencyStyleActive='人民币'">人民币</div>
+                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='美元'}" @click="currencyStyleActive='美元'" style="margin-left: 15px">美元</div>
+            </div>
+        </div>
+        <div class="selector-org-tree flex flex-column">
+            <span class="title">组织架构</span>
+            <vue-tree :tree-data="treeData" v-model="ids" :options="options" class="org-tree" />
         </div>
         <div class="selector-btn flex flex-justify-center">
             <div class="flex-1"></div>
@@ -58,7 +65,8 @@ export default {
             },
             ids: [],
             options: {},
-            treeData: treeData
+            treeData: treeData,
+            currencyStyleActive: '人民币'
         };
     },
     created() {
@@ -110,7 +118,7 @@ export default {
 
 .selector {
     background-color: white;
-    height: calc(100% - 150px);
+    height: calc(100% - 10px);
     width: 100%;
     position: absolute;
     top: 124px;
@@ -126,6 +134,7 @@ export default {
     text-indent: 10px;
     font-size: 14px;
     font-weight: bold;
+    margin: 5px 0px 5px 0px;
 }
 
 .selector .selector-time {
@@ -160,7 +169,7 @@ export default {
 .selector .selector-org-tree {
     max-width: calc(100% - 180px);
     min-width: calc(100% - 180px);
-    max-height: 360px;
+    min-height: 330px;
 }
 
 .selector .vue-tree-list {
@@ -234,4 +243,22 @@ export default {
     font-size: 16px;
     content: "\f078";
 }
+
+.currencyStyle {
+    border-radius: 4px;
+    border: 0.025rem solid rgba(128, 128, 128, 0.5);
+    background-color: #fff;
+    width: 100px;
+    line-height: 25px;
+    height: 25px;
+    font-size: 12px;
+    margin-right: 2px;
+}
+
+.currencyStyleActive {
+    background-color: #039ce3;
+    color: white;
+    border: none;
+}
+
 </style>

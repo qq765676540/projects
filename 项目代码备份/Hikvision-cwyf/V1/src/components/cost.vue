@@ -1,53 +1,56 @@
 <template>
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-    <div class="gross flex flex-column">
-        <div class="partner-distribution border-bottom flex flex-1 flex-column">
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}">
+    <div class="cost flex flex-column">
+        <div class="cost-rate border-bottom flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
-                <span class="sub-title-name">分级合作伙伴拜访情况</span>
+                <span class="sub-title-name">费用增长</span>
+                <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
+                    <my-actionsheet defSelected="费用合计" :data="['费用合计','费用XXA','费用XXB','费用XXC','费用XXD']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}" @setScroll="setRateScrollStyle"></my-actionsheet>
+                </div>
+            </div>
+            <div style="margin:0px 15px 0px 15px">
+                <echarts-bar-line name="cost-rate" :data="rateData" id="cost-rate"></echarts-bar-line>
             </div>
         </div>
     </div>
 </van-pull-refresh>
 </template>
 
-<script>
+<script scoped>
 import {PullRefresh} from "vant";
-
+import actionsheet from "./common/actionsheet";
+import echartsBarLine from "./common/echarts-bar-line";
+import demoData from "./data/demoData";
 
 export default {
     name: "cost",
     components: {
-        [PullRefresh.name]: PullRefresh
+        [PullRefresh.name]: PullRefresh,
+        MyActionsheet: actionsheet,
+        echartsBarLine
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+            scroll: "scroll !important",
+            rateScroll: '费用合计'
         }
     },
     beforeCreate() {
         
     },
     computed: {
-        dataA() {
-            if(this.$store.state.visitCustomerA.length>0){
-                let a = this.$store.state.visitCustomerA;
-                // console.log('visitCustomerA',a);
-                return a;
-            }
-            return false;
+        rateData() {
+            return demoData.cost.rate
         },
-        dataB() {
-            if(this.$store.state.visitCustomerB.length>0){
-                let a = this.$store.state.visitCustomerB;
-                // console.log('visitCustomerB',a);
-                return a;
-            }
-            return false;
-        }
     },
     mounted() {},
     methods: {
+        setRateScrollStyle(style,selected) {
+            this.scroll = style;
+            this.rateScroll = selected;
+        },
         onRefresh() {
             setTimeout(() => {
                 this.isLoading = false;
@@ -64,18 +67,18 @@ export default {
 </script>
 
 <style scoped>
-.gross {
+.cost {
     width: 100%;
     height: calc(100% - 120px);
     overflow: hidden;
 }
 
-.gross .partner-distribution {
-    min-height: 350px;
+.cost .cost-rate {
+    min-height: 370px;
 }
 
 
-.gross-bottom {
+.cost-bottom {
     min-height: 200px;
     margin: 0 10px 10px 10px;
 }
