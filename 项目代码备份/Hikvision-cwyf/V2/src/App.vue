@@ -1,99 +1,64 @@
 <template>
 <!-- 页面挂载入口 -->
-    <div id="app">
-        <van-nav-bar
-            class="nav-bar-top"
-            title="研发财务看板"
-            left-text
-            left-arrow
-            @click-left="onClickLeft"
-            :sticky="true"
-        />
-        <van-tabs
-            v-model="active"
-            class="nav-tabs"
-            :color="'#29A6FF'"
-            :swipe-threshold="5"
-            title-active-color="#0066FF"
-            title-inactive-color="black"
-            :animated="true"
-            :swipeable="true"
-            :sticky="true"
-            :line-width="63"
-            :line-height="2"
-        >
-            <van-tab title="首页">
-                <router-view v-if="active==0" class="view-container"/>
-            </van-tab>
-            <van-tab title="收入">
-                <router-view v-if="active==1" class="view-container"/>
-            </van-tab>
-            <van-tab title="毛利">
-                <router-view v-if="active==2" class="view-container"/>
-            </van-tab>
-            <van-tab title="费用">
-                <router-view v-if="active==3" class="view-container"/>
-            </van-tab>
-            <van-tab title="订单">
-                <router-view v-if="active==4" class="view-container"/>
-            </van-tab>
-        </van-tabs>
-        <div v-show="selBarFlag" class="selection-tool flex">
-            <div class="flex flex-align-center flex-3">
-                <div
-                    :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}"
-                    @click="filterStyleActive='整体'"
-                >整体</div>
-                <div
-                    :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}"
-                    @click="filterStyleActive='国内'"
-                >国内</div>
-                <div
-                    :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}"
-                    @click="filterStyleActive='海外'"
-                >海外</div>
-            </div>
-            <div class="selected-bar flex flex-2">
-                <ul class="selected-dim-date flex flex-2">
-                    <li class="name">时间:</li>
-                    <li class="values flex-1" v-text="selectedTime"></li>
-                </ul>
-                <!-- 
+<div id="app">
+    <van-nav-bar class="nav-bar-top" title="研发财务看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" />
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" :line-width="63" :line-height="2">
+        <van-tab title="首页">
+            <router-view v-if="active==0" class="view-container" />
+        </van-tab>
+        <van-tab title="收入">
+            <router-view v-if="active==1" class="view-container" />
+        </van-tab>
+        <van-tab title="毛利">
+            <router-view v-if="active==2" class="view-container" />
+        </van-tab>
+        <van-tab title="费用">
+            <router-view v-if="active==3" class="view-container" />
+        </van-tab>
+        <van-tab title="订单">
+            <router-view v-if="active==4" class="view-container" />
+        </van-tab>
+    </van-tabs>
+    <div v-show="selBarFlag" class="selection-tool flex">
+        <div class="flex flex-align-center flex-3">
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="filterStyleActive='整体'">整体</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="filterStyleActive='海外'">海外</div>
+        </div>
+        <div class="selected-bar flex flex-2">
+            <ul class="selected-dim-date flex flex-2">
+                <li class="name">时间:</li>
+                <li class="values flex-1" v-text="selectedTime"></li>
+            </ul>
+            <!-- 
             <ul class="selected-dim-org flex flex-row flex-5">
                 <li class="name">组织:</li>
                 <li class="values flex-3" v-text="selectedOrg.toString()"></li>
-            </ul> 
-                -->
-            </div>
-            <div class="selector-switch-box relative">
-                <vue-switch
-                    id="switch-1"
-                    class="selector-switch"
-                    :open="switchIsOpen"
-                    :switch-style="switchStyle"
-                    @switch-to="switchTo"
-                ></vue-switch>
-            </div>
+            </ul>
+            -->
         </div>
-        <selector
-            v-show="selectorFlag"
-            :show="selectorFlag"
-            @cancle="cancleSelect"
-            @confirm="confirmSelect"
-            :selectedTime="selectedTime"
-            :selectedOrg="selectedOrg"
-        ></selector>
-        <div class="appPopstyle">
-            <van-popup v-model="popShow" v-on:click-overlay="closePop()">
-                <van-loading type="spinner" size="30px" color="white"/>
-            </van-popup>
+        <div class="selector-switch-box relative">
+            <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
         </div>
-        <waterMark userName="水印"></waterMark>
     </div>
+    <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+    <div class="appPopstyle">
+        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+            <van-loading type="spinner" size="30px" color="white" />
+        </van-popup>
+    </div>
+    <waterMark :userName="userName" v-if="userName"></waterMark>
+</div>
 </template>
 
 <script>
-import { NavBar, Tab, Switch, Popup, Loading } from "vant";
+import {
+    NavBar,
+    Tab,
+    Switch,
+    Popup,
+    Loading
+} from "vant";
 import animate from "animate.css";
 
 import Tabs from "./components/common/vant-tabs/index";
@@ -151,8 +116,22 @@ export default {
     beforeCreate() {},
     created() {},
     mounted() {
+        Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    group: "",
+                    name: "level"
+                },
+                qWidth: 5,
+                qHeight: 1,
+                dataName: "level"
+            },
+            (rs) => {
+                this.filterStyleActive = rs[0][2].qText=='Y'?'海外':'整体';
+                this.cubeInit();
+            });
         // this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
-        this.cubeInit();
     },
     methods: {
         closePop() {
@@ -187,7 +166,7 @@ export default {
             }
 
             this.selectorFlag = false;
-            this.selectedTime = data.time;
+            this.selectedTime = data.time.year?(data.time.year + '年' + data.time.startMonth + '-' + data.time.endMonth + '月'):data.time;
 
             // this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
             // this.cubeInit();
@@ -217,7 +196,7 @@ export default {
                     name: "home-overview"
                 },
                 dataName: "home-overview-total",
-                qWidth: 30,
+                qWidth: 35,
                 qHeight: 1
             });
 
@@ -228,14 +207,20 @@ export default {
                     group: "group",
                     name: "home-overview"
                 },
-                qWidth: 30,
-                qHeight: 1
+                qWidth: 35,
+                qHeight: 2
             });
         }
     },
     computed: {
         popShow() {
             return this.$store.state.isPopShow;
+        },
+        userName() {
+            if(this.$store.state.level.length>0){
+                return this.$store.state.level[0][0].qText;
+            }
+            return false;
         }
     },
     watch: {
@@ -251,6 +236,43 @@ export default {
         },
         popShow(nVal) {
             // console.log('popShow',nVal);
+        },
+        filterStyleActive(nVal) {
+            this.filterStyleActive = nVal;
+            switch (nVal) {
+                case '整体':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'T'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    break;
+                case '国内':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'I'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    break;
+                case '海外':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'O'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'U'
+                    });
+                    break;
+                default:
+                    break;
+            }
         }
     }
 };
@@ -400,7 +422,7 @@ body,
     padding-top: 2px;
 }
 
-.selected-dim-date > .values {
+.selected-dim-date>.values {
     display: flex;
     justify-content: flex-start;
 }
@@ -409,7 +431,7 @@ body,
     padding-top: 4px;
 }
 
-.selected-dim-org > .values {
+.selected-dim-org>.values {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

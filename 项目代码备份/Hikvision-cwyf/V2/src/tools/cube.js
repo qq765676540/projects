@@ -57,7 +57,7 @@ class Cube {
         }
     }
     
-    getData(qApp, vApp, opt) {
+    getData(qApp, vApp, opt, callback) {
 
         let cf = {
             formulaOpt: opt.formulaOpt || {time: '本月',org:['集团'],group:'total',name:''},
@@ -100,8 +100,8 @@ class Cube {
                 vApp.$store.dispatch('updateData', vuexOpt);
                 qApp.destroySessionObject(reply.qInfo.qId);
                 
-            });
-            
+                (callback && typeof (callback) === "function") && callback(rows);
+            });   
         }
     }
 }

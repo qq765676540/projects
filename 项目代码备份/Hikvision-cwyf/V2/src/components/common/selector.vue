@@ -12,8 +12,8 @@
         <div class="selector-currency flex flex-column">
             <span class="title">默认货币</span>
             <div class="flex flex-align-center" style="margin-left: 10px">
-                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='人民币'}" @click="currencyStyleActive='人民币'">人民币</div>
-                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='美元'}" @click="currencyStyleActive='美元'" style="margin-left: 15px">美元</div>
+                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='人民币'}" @click="setCurrency('R')">人民币</div>
+                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive==='美元'}" @click="setCurrency('U')" style="margin-left: 15px">美元</div>
             </div>
         </div>
         <div class="selector-org-tree flex flex-column">
@@ -80,6 +80,9 @@ export default {
     },
     watch: {},
     methods: {
+        setCurrency(curr) {
+            this.$store.dispatch('updateData', {dataName: 'currency',data: curr});
+        },
         getTime(data) {
             this.time_bucket =
                 data.year + "年" + data.startMonth + "月至" + data.endMonth + "月";

@@ -8,8 +8,11 @@ Vue.use(Vuex)
 
 var state = {
   isPopShow: false,
+  dataScope: 'T',
   currency: 'R',
-  'home-overview-total': []
+  level: [],
+  'home-overview-total': [],
+  'home-overview-group': []
 }
 
 const store = new Vuex.Store({

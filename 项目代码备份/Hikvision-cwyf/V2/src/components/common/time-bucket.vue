@@ -7,7 +7,7 @@
     </div>
     <div class="flex">
       <div class="flex-1">
-        <van-picker :columns="year" @change="onChangeYear"/>
+        <van-picker :columns="year" @change="onChangeYear" :default-index="2"/>
       </div>
       <div class="flex-1 center">
         <div>年&nbsp;</div>
@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      startYear: 2010,
+      startYear: new Date().getFullYear()-2,
       endYear: new Date().getFullYear(),
       year: [],
       data: {

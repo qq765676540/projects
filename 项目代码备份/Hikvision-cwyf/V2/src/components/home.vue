@@ -1,41 +1,58 @@
 <template>
 <!-- 首页 -->
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <div class="home">
-            <div class="overview border-bottom flex flex-column">
-                <div class="sub-title">
-                    <div class="sub-title-icon"></div>
-                    <span class="sub-title-name">整体销售情况</span>
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <div class="home">
+        <div class="overview border-bottom flex flex-column">
+            <div class="sub-title">
+                <div class="sub-title-icon"></div>
+                <span class="sub-title-name">整体销售情况</span>
+            </div>
+            <div class="content-box flex flex-column">
+                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_1" v-if="kpiData"></easy-kpi>
+                    </div>
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_2" v-if="kpiData"></easy-kpi>
+                    </div>
                 </div>
-                <div class="content-box flex flex-column">
-                    <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_1" v-if="kpiData1"></easy-kpi></div>
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_2"></easy-kpi></div>
+                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_3" v-if="kpiData"></easy-kpi>
                     </div>
-                    <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_3"></easy-kpi></div>
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_4"></easy-kpi></div>
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_4" v-if="kpiData"></easy-kpi>
                     </div>
-                    <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_5"></easy-kpi></div>
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_6"></easy-kpi></div>
+                </div>
+                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_5" v-if="kpiData"></easy-kpi>
                     </div>
-                    <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_7"></easy-kpi></div>
-                        <div class="flex-1"><easy-kpi :data="kpiData.kpi_8"></easy-kpi></div>
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_6" v-if="kpiData"></easy-kpi>
+                    </div>
+                </div>
+                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_7" v-if="kpiData"></easy-kpi>
+                    </div>
+                    <div class="flex-1">
+                        <easy-kpi :data="kpiData.kpi_8" v-if="kpiData"></easy-kpi>
                     </div>
                 </div>
             </div>
         </div>
-    </van-pull-refresh>
+    </div>
+</van-pull-refresh>
 </template>
 
 <script>
-import { PullRefresh } from "vant";
+import {
+    PullRefresh
+} from "vant";
 
 import easyKpi from "./common/easy-kpi";
 import demoData from "./data/demoData";
-
 
 export default {
     name: "home",
@@ -49,22 +66,282 @@ export default {
         };
     },
     mounted() {
-        
+
     },
     computed: {
         kpiData() {
-            return demoData.homeData.overview;
-        },
-        kpiData1() {
-            if(this.$store.state['home-overview-total'].length) {
-                console.log('YCQ日志记录:Data->',this.$store.state['home-overview-total']);
-                return this.$store.state['home-overview-total'];
+            if (this.$store.state['home-overview-total'].length > 0 &&
+                this.$store.state['home-overview-group'].length > 0) {
+                let dataArr = this.$store.state['home-overview-total'].concat(this.$store.state['home-overview-group']);
+                let kpiData = {
+                    RT: {},
+                    UT: {},
+                    RI: {},
+                    UI: {},
+                    RO: {},
+                    UO: {}
+                };
+                dataArr.filter(v => {
+                    switch (v[0].qText) {
+                        case '整体':
+                            kpiData['RT']['kpi_1'] = [
+                                ['总收入', v[1].qText, ''],
+                                ['完成率', v[2].qText, ''],
+                                ['同比', v[3].qText, '']
+                            ];
+                            kpiData['RT']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['RT']['kpi_3'] = [
+                                ['毛利额', v[7].qText, ''],
+                                ['完成率', v[8].qText, ''],
+                                ['同比', v[9].qText, '']
+                            ];
+                            kpiData['RT']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['RT']['kpi_5'] = [
+                                ['扣费毛利', v[13].qText, ''],
+                                ['完成率', v[14].qText, ''],
+                                ['同比', v[15].qText, '']
+                            ];
+                            kpiData['RT']['kpi_6'] = [
+                                ['扣费毛利率', v[16].qText, ''],
+                                ['去年同期', v[17].qText, ''],
+                                ['同比', v[18].qText, '']
+                            ];
+                            kpiData['RT']['kpi_7'] = [
+                                ['人均销售额', v[19].qText, '万元/人'],
+                                ['去年同期', v[20].qText, '万元/人'],
+                                ['同比', v[21].qText, '']
+                            ];
+                            kpiData['RT']['kpi_8'] = [
+                                ['人均扣费毛利', v[22].qText, '万元/人'],
+                                ['去年同期', v[23].qText, '万元/人'],
+                                ['同比', v[24].qText, '']
+                            ];
+                            kpiData['UT']['kpi_1'] = [
+                                ['总收入', v[25].qText, ''],
+                                ['完成率', v[26].qText, ''],
+                                ['同比', v[27].qText, '']
+                            ];
+                            kpiData['UT']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['UT']['kpi_3'] = [
+                                ['毛利额', v[28].qText, ''],
+                                ['完成率', v[29].qText, ''],
+                                ['同比', v[30].qText, '']
+                            ];
+                            kpiData['UT']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['UT']['kpi_5'] = [
+                                ['扣费毛利', '', ''],
+                                ['完成率', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UT']['kpi_6'] = [
+                                ['扣费毛利率', '', ''],
+                                ['去年同期', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UT']['kpi_7'] = [
+                                ['人均销售额', v[31].qText, '万元/人'],
+                                ['去年同期', v[32].qText, '万元/人'],
+                                ['同比', v[33].qText, '']
+                            ];
+                            kpiData['UT']['kpi_8'] = [
+                                ['人均扣费毛利', '', '万元/人'],
+                                ['去年同期', '', '万元/人'],
+                                ['同比', '', '']
+                            ];
+                            break;
+                        case '国内':
+                            kpiData['RI']['kpi_1'] = [
+                                ['总收入', v[1].qText, ''],
+                                ['完成率', v[2].qText, ''],
+                                ['同比', v[3].qText, '']
+                            ];
+                            kpiData['RI']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['RI']['kpi_3'] = [
+                                ['毛利额', v[7].qText, ''],
+                                ['完成率', v[8].qText, ''],
+                                ['同比', v[9].qText, '']
+                            ];
+                            kpiData['RI']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['RI']['kpi_5'] = [
+                                ['扣费毛利', v[13].qText, ''],
+                                ['完成率', v[14].qText, ''],
+                                ['同比', v[15].qText, '']
+                            ];
+                            kpiData['RI']['kpi_6'] = [
+                                ['扣费毛利率', v[16].qText, ''],
+                                ['去年同期', v[17].qText, ''],
+                                ['同比', v[18].qText, '']
+                            ];
+                            kpiData['RI']['kpi_7'] = [
+                                ['人均销售额', v[19].qText, '万元/人'],
+                                ['去年同期', v[20].qText, '万元/人'],
+                                ['同比', v[21].qText, '']
+                            ];
+                            kpiData['RI']['kpi_8'] = [
+                                ['人均扣费毛利', v[22].qText, '万元/人'],
+                                ['去年同期', v[23].qText, '万元/人'],
+                                ['同比', v[24].qText, '']
+                            ];
+                            kpiData['UI']['kpi_1'] = [
+                                ['总收入', v[25].qText, ''],
+                                ['完成率', v[26].qText, ''],
+                                ['同比', v[27].qText, '']
+                            ];
+                            kpiData['UI']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['UI']['kpi_3'] = [
+                                ['毛利额', v[28].qText, ''],
+                                ['完成率', v[29].qText, ''],
+                                ['同比', v[30].qText, '']
+                            ];
+                            kpiData['UI']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['UI']['kpi_5'] = [
+                                ['扣费毛利', '', ''],
+                                ['完成率', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UI']['kpi_6'] = [
+                                ['扣费毛利率', '', ''],
+                                ['去年同期', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UI']['kpi_7'] = [
+                                ['人均销售额', v[31].qText, '万元/人'],
+                                ['去年同期', v[32].qText, '万元/人'],
+                                ['同比', v[33].qText, '']
+                            ];
+                            kpiData['UI']['kpi_8'] = [
+                                ['人均扣费毛利', '', '万元/人'],
+                                ['去年同期', '', '万元/人'],
+                                ['同比', '', '']
+                            ];
+                            break;
+                        case '海外':
+                            kpiData['RO']['kpi_1'] = [
+                                ['总收入', v[1].qText, ''],
+                                ['完成率', v[2].qText, ''],
+                                ['同比', v[3].qText, '']
+                            ];
+                            kpiData['RO']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['RO']['kpi_3'] = [
+                                ['毛利额', v[7].qText, ''],
+                                ['完成率', v[8].qText, ''],
+                                ['同比', v[9].qText, '']
+                            ];
+                            kpiData['RO']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['RO']['kpi_5'] = [
+                                ['扣费毛利', v[13].qText, ''],
+                                ['完成率', v[14].qText, ''],
+                                ['同比', v[15].qText, '']
+                            ];
+                            kpiData['RO']['kpi_6'] = [
+                                ['扣费毛利率', v[16].qText, ''],
+                                ['去年同期', v[17].qText, ''],
+                                ['同比', v[18].qText, '']
+                            ];
+                            kpiData['RO']['kpi_7'] = [
+                                ['人均销售额', v[19].qText, '万元/人'],
+                                ['去年同期', v[20].qText, '万元/人'],
+                                ['同比', v[21].qText, '']
+                            ];
+                            kpiData['RO']['kpi_8'] = [
+                                ['人均扣费毛利', v[22].qText, '万元/人'],
+                                ['去年同期', v[23].qText, '万元/人'],
+                                ['同比', v[24].qText, '']
+                            ];
+                            kpiData['UO']['kpi_1'] = [
+                                ['总收入', v[25].qText, ''],
+                                ['完成率', v[26].qText, ''],
+                                ['同比', v[27].qText, '']
+                            ];
+                            kpiData['UO']['kpi_2'] = [
+                                ['战略产品', v[4].qText, '台'],
+                                ['完成率', v[5].qText, ''],
+                                ['同比', v[6].qText, '']
+                            ];
+                            kpiData['UO']['kpi_3'] = [
+                                ['毛利额', v[28].qText, ''],
+                                ['完成率', v[29].qText, ''],
+                                ['同比', v[30].qText, '']
+                            ];
+                            kpiData['UO']['kpi_4'] = [
+                                ['毛利率', v[10].qText, ''],
+                                ['去年同期', v[11].qText, ''],
+                                ['同比', v[12].qText, '']
+                            ];
+                            kpiData['UO']['kpi_5'] = [
+                                ['扣费毛利', '', ''],
+                                ['完成率', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UO']['kpi_6'] = [
+                                ['扣费毛利率', '', ''],
+                                ['去年同期', '', ''],
+                                ['同比', '', '']
+                            ];
+                            kpiData['UO']['kpi_7'] = [
+                                ['人均销售额', v[31].qText, '万元/人'],
+                                ['去年同期', v[32].qText, '万元/人'],
+                                ['同比', v[33].qText, '']
+                            ];
+                            kpiData['UO']['kpi_8'] = [
+                                ['人均扣费毛利', '', '万元/人'],
+                                ['去年同期', '', '万元/人'],
+                                ['同比', '', '']
+                            ];
+                            break;
+                        default:
+                            break;
+                    }
+                });
+                // console.log('YCQ日志记录:标识->', this.$store.state.currency + this.$store.state.dataScope);
+                return kpiData[this.$store.state.currency + this.$store.state.dataScope];
             }
             return false;
+            //demoData.homeData.overview
         }
     },
     watch: {
-        
+
     },
     methods: {
         onRefresh() {
@@ -79,10 +356,8 @@ export default {
             }, 300);
         }
     },
-    beforeDestroy() {
-    },
-    destroyed() {
-    }
+    beforeDestroy() {},
+    destroyed() {}
 };
 </script>
 
@@ -124,6 +399,7 @@ export default {
     white-space: nowrap;
     max-width: 1160px;
 }
+
 .home .active {
     background-color: #0f8ee9;
     border-radius: 15px;
@@ -149,7 +425,7 @@ export default {
     max-width: 260px;
 }
 
-.home .col-2-right-title{
+.home .col-2-right-title {
     font-size: 10px;
     white-space: nowrap;
     margin-right: 14px;
@@ -157,7 +433,7 @@ export default {
     font-weight: bold;
 }
 
-.home .col-2-right-bg{
+.home .col-2-right-bg {
     width: 12px;
     height: 8px;
     border-radius: 0px;
@@ -169,11 +445,10 @@ export default {
 }
 
 .subtitle-name-icon {
-  border-radius: 50%;
-  width: 6px;
-  height: 6px;
-  min-width: 6px;
-  min-height: 6px;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    min-height: 6px;
 }
-
 </style>
