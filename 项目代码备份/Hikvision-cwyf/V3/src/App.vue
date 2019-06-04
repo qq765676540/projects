@@ -21,8 +21,8 @@
     </van-tabs>
     <div v-show="selBarFlag" class="selection-tool flex">
         <div class="flex flex-align-center flex-3">
-            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="filterStyleActive='整体'">整体</div>
-            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
+            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="filterStyleActive='整体'">整体</div>
+            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
             <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="filterStyleActive='海外'">海外</div>
         </div>
         <div class="selected-bar flex flex-2">
@@ -136,7 +136,9 @@ export default {
                 this.orgLevel = rs[0][1].qText;
                 this.orgFlag = rs[0][2].qText;
                 this.dataScope = 'T';
-                this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
+                if(this.orgFlag!='Y'){
+                    this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
+                }
             });
         // this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
     },
@@ -217,10 +219,10 @@ export default {
                     dataScope: dataScope,
                     name: "home-overview"
                 },
-                qWidth: 35,
-                qHeight: 1
+                qWidth: 50,
+                qHeight: 10
             });
-            
+
         }
     },
     computed: {
@@ -288,7 +290,6 @@ export default {
                     break;
             }
             this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
-            console.log('YCQ日志记录:dataScope切换->',nVal);
         }
     }
 };
