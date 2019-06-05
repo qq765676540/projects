@@ -222,6 +222,18 @@ export default {
                 qWidth: 50,
                 qHeight: 10
             });
+            //收入-bp
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "income-bp"
+                },
+                qWidth: 15,
+                qHeight: 500
+            });
 
         }
     },

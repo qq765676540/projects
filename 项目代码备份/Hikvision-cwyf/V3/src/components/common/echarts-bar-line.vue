@@ -50,8 +50,8 @@ export default {
             this.setOption(this.option);
             this.echartsIns.on('click', 'xAxis.category', function (params) {
                 if (_self.drilldown[params.value] != undefined) {
-                    _self.setOption(barLineGetOption(_self.name,_self.drilldown[params.value]));
-                    _self.echartsIns.resize();
+                    _self.echartsIns.clear();
+                    _self.setOption(barLineGetOption(_self.name+'-drill',_self.drilldown[params.value]));
                     _self.goback = params.value;
                 }
             });

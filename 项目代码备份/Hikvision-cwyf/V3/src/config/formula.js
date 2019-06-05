@@ -103,7 +103,26 @@ export default
                 `=sum({<${dataScope}>}p1n1_u_kpi_8_3)`
             ]
         },
-
+        'income-bp': {
+            qDimensions: [
+                `p2n1dim1`,
+                `p2n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p2n1mea1)`,
+                `=sum(p2n1mea2)`,
+                `=sum(p2n1mea3)`,
+                `=sum(p2n1mea4)`,
+                `=sum(p2n1mea5)`,
+                `=sum(p2n1mea6)`,
+                `=sum(total <p2n1dim1> p2n1mea1)`,
+                `=sum(total <p2n1dim1> p2n1mea2)`,
+                `=sum(total <p2n1dim1> p2n1mea3)`,
+                `=sum(total <p2n1dim1> p2n1mea4)`,
+                `=sum(total <p2n1dim1> p2n1mea5)`,
+                `=sum(total <p2n1dim1> p2n1mea6)`
+            ]
+        },
     }
     return formula[name];
 }

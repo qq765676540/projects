@@ -12,7 +12,8 @@ var state = {
   currency: 'R',
   level: [],
   org: [],
-  'home-overview': []
+  'home-overview': [],
+  'income-bp': []
 }
 
 const store = new Vuex.Store({
