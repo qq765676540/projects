@@ -222,7 +222,7 @@ export default {
                 qWidth: 50,
                 qHeight: 10
             });
-            //收入-bp
+            //收入BP
             Cube.getData(parent.qApp, this, {
                 formulaOpt: {
                     time: this.selectedTime,
@@ -232,6 +232,18 @@ export default {
                     name: "income-bp"
                 },
                 qWidth: 15,
+                qHeight: 500
+            });
+            //收入构成
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "income-structure-bar"
+                },
+                qWidth: 16,
                 qHeight: 500
             });
 

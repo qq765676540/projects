@@ -3,7 +3,7 @@ let option = {
         return {
             title:{
                 show: true,
-                text: data.text,
+                text: '',
                 textStyle: {
                     color: '#777777',
                     fontSize: 14
@@ -12,7 +12,7 @@ let option = {
             tooltip: {
                 trigger: 'item',
                 triggerOn: 'click',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                formatter: "{b}: {c} ({d}%)"
             },
             series: [
                 {
@@ -51,7 +51,7 @@ let option = {
                             }
                         }
                     },
-                    data: data.pie
+                    data: data
                 }
             ]
         }
@@ -60,7 +60,7 @@ let option = {
         return {
             title:{
                 show: true,
-                text: data.text,
+                text: '',
                 textStyle: {
                     color: '#777777',
                     fontSize: 14
@@ -69,7 +69,7 @@ let option = {
             tooltip: {
                 trigger: 'item',
                 triggerOn: 'click',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                formatter: "{b}: {c} ({d}%)"
             },
             series: [
                 {

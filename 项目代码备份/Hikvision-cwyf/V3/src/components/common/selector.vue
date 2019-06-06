@@ -196,6 +196,7 @@ export default {
     max-width: calc(100% - 180px);
     min-width: calc(100% - 180px);
     min-height: 330px;
+    margin-top: 15px;
 }
 
 .selector .vue-tree-list {

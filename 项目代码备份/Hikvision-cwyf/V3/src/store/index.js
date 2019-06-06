@@ -13,7 +13,8 @@ var state = {
   level: [],
   org: [],
   'home-overview': [],
-  'income-bp': []
+  'income-bp': [],
+  'income-structure-bar': []
 }
 
 const store = new Vuex.Store({

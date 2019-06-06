@@ -104,61 +104,55 @@ var demoData = {
             }
 
         },
-        structure: [
-            {
-                bar: {
-                    text: '业务部总体行业同比',
-                    xAxis: [
-                        '行业XXXA',
-                        '行业XXXB',
-                        '行业XXXC',
-                        '行业XXXD',
-                        '行业XXXE',
-                        '行业XXXF',
-                        '行业XXXG',
-                        '行业XXXC',
-                        '行业XXXD',
-                        '行业XXXE',
-                        '行业XXXF',
-                        '行业XXXG'
-                    ],
-                    series: [90, 100, 80, 80, 70, 68, 95, 80, 80, 70, 68, 95],
-                    avg: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
-                }
-            },
-            {
-                bar: {
-                    text: '业务部总体行业同比',
-                    xAxis: [
-                        '行业XXXA',
-                        '行业XXXB',
-                        '行业XXXC',
-                        '行业XXXD',
-                        '行业XXXE',
-                        '行业XXXF',
-                        '行业XXXG',
-                        '行业XXXC',
-                        '行业XXXD',
-                        '行业XXXE',
-                        '行业XXXF',
-                        '行业XXXG'
-                    ],
-                    series: [100, 80, 79, 50, 70, 68, 100, 80, 80, 70, 68, 95],
-                    avg: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-                }
-            },
-            {
-                pie: [
-                    { value: 335, name: '直接访问' },
-                    { value: 310, name: '邮件营销' },
-                    { value: 234, name: '联盟广告' },
-                    { value: 135, name: '视频广告' },
-                    { value: 1548, name: '搜索引擎' }
+        structureBar: {
+            text: '',
+            xAxis: [
+                '行业XXXA',
+                '行业XXXB',
+                '行业XXXC',
+                '行业XXXD',
+                '行业XXXE',
+                '行业XXXF',
+                '行业XXXG',
+                '行业XXXC',
+                '行业XXXD',
+                '行业XXXE',
+                '行业XXXF',
+                '行业XXXG'
+            ],
+            series: [90, 100, 80, 80, 70, 68, 95, 80, 80, 70, 68, 95],
+            avg: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+        },
+        structureBarDrillDown: {
+            '行业XXXA': {
+                text: '',
+                xAxis: [
+                    '业务部XXXA',
+                    '业务部XXXB',
+                    '业务部XXXC',
+                    '业务部XXXD',
+                    '业务部XXXE',
+                    '业务部XXXF',
+                    '业务部XXXG',
+                    '业务部XXXC',
+                    '业务部XXXD',
+                    '业务部XXXE',
+                    '业务部XXXF',
+                    '业务部XXXG'
                 ],
-                text: '业务部总体占比'
-
+                series: [90, 100, 80, 80, 70, 68, 95, 80, 80, 70, 68, 95],
+                avg: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
             }
-        ],
+        },
+        structurePie: {
+            pie: [
+                { value: 335, name: '直接访问' },
+                { value: 310, name: '邮件营销' },
+                { value: 234, name: '联盟广告' },
+                { value: 135, name: '视频广告' },
+                { value: 1548, name: '搜索引擎' }
+            ]
+        },
         branch: {
             xAxisData: [
                 '业务部ABC01',

@@ -2,21 +2,21 @@
 <div :id="id" class="easy-kpi flex flex-column">
     <div class="flex flex-1 flex-justify-left flex-align-center title">{{data[0][0]}}</div>
     <div class="flex flex-1 flex-justify-left flex-align-center">
-        <div class="title">{{data[0][1]}}</div>
-        <div class='unit' v-if="data[0][2]!=''">{{data[0][2]}}</div>
+        <div class="titleVal">{{data[0][1]}}</div>
+        <div class='titleunit' v-if="data[0][2]!=''">{{data[0][2]}}</div>
     </div>
     <div class="flex flex-1 flex-justify-left flex-align-center" style="padding-top:8px">
         <div class="flex flex-2 flex-justify-left flex-align-center subtitle">{{data[1][0]}}</div>
         <div class="flex flex-3 flex-justify-left flex-align-center"> 
             <div class="subtitle">{{data[1][1]}}</div>
-            <div class='unit' v-if="data[1][2]!=''">{{data[1][2]}}</div>
+            <div class='subtitleunit' v-if="data[1][2]!=''">{{data[1][2]}}</div>
         </div>
     </div>
     <div class="flex flex-1 flex-justify-left flex-align-center">
         <div class="flex flex-2 flex-justify-left flex-align-center subtitle">同&nbsp;&nbsp;&nbsp;&nbsp;比</div>
         <div class="flex flex-3 flex-justify-left flex-align-center">
             <div class="subtitle">{{data[2][1]}}</div>
-            <div class='unit' v-if="data[2][2]!=''">{{data[2][2]}}</div>
+            <div class='subtitleunit' v-if="data[2][2]!=''">{{data[2][2]}}</div>
         </div>
     </div>
 </div>
@@ -72,15 +72,30 @@ export default {
     font-size: 16px;
     color: #222222;
     margin: 3px;
+    font-weight: bold;
 }
+
+.titleVal {
+    font-size: 26px;
+    color: #222222;
+    margin: 3px;
+    font-weight: bold;
+}
+
 .subtitle {
     font-size: 14px;
     color: #444444;
     margin: 3px;
 }
-.unit {
-    font-size: 8px;
+.titleunit {
+    font-size: 6px;
     color: #444444;
-    margin-top: 2px;
+    margin-top: 8px;
+}
+
+.subtitleunit {
+    font-size: 6px;
+    color: #444444;
+    margin-top: 1px;
 }
 </style>

@@ -123,6 +123,37 @@ export default
                 `=sum(total <p2n1dim1> p2n1mea6)`
             ]
         },
+        'income-structure-bar': {
+            qDimensions: [
+                `p2n2dim1`,
+                `p2n2dim2`
+            ],
+            qMeasures: [
+                `=sum(p2n2mea1)`,
+                `=sum(p2n2mea2)`,
+                `=sum(p2n2mea3)`,
+                `=sum(p2n2mea4)`,
+                `=sum(total <p2n2dim1> p2n2mea1)`,
+                `=sum(total <p2n2dim1> p2n2mea2)`,
+                `=sum(total <p2n2dim1> p2n2mea3)`,
+                `=sum(total <p2n2dim1> p2n2mea4)`,
+                `=sum(p2n2mea5)`,
+                `=sum(p2n2mea6)`,
+                `=sum(total <p2n2dim1> p2n2mea5)`,
+                `=sum(total <p2n2dim1> p2n2mea6)`
+            ]
+        },
+        'income-structure-pie': {
+            qDimensions: [
+                `p2n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p2n3mea1)`,
+                `=sum(p2n3mea2)`,
+                `=sum(p2n3mea3)`,
+                `=sum(p2n3mea4)`
+            ]
+        },
     }
     return formula[name];
 }
