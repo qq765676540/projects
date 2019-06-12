@@ -1,7 +1,7 @@
 <template>
 <!-- 页面挂载入口 -->
 <div id="app">
-    <van-nav-bar class="nav-bar-top" title="研发财务看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" />
+    <!-- <van-nav-bar class="nav-bar-top" title="研发财务看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" /> -->
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" :line-width="63" :line-height="2">
         <van-tab title="首页">
             <router-view v-if="active==0" class="view-container" />
@@ -310,7 +310,7 @@ export default {
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
-            // this.selBarFlag = pIndex == 1 ? false : true;
+            this.$store.dispatch('updateData', {dataName: 'pageActive',data: pIndex});
         },
         selectedTime(nVal) {
             this.$store.dispatch("updateData", {
@@ -319,7 +319,7 @@ export default {
             });
         },
         popShow(nVal) {
-            // console.log('popShow',nVal);
+            //console.log('popShow',nVal);
         },
         filterStyleActive(nVal) {
             this.filterStyleActive = nVal;
@@ -351,10 +351,17 @@ export default {
                         dataName: 'dataScope',
                         data: 'O'
                     });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'currency',
-                        data: 'U'
-                    });
+                    if(this.$store.state.pageActive!=3) {
+                        this.$store.dispatch('updateData', {
+                            dataName: 'currency',
+                            data: 'U'
+                        });
+                    }else {
+                        this.$store.dispatch('updateData', {
+                            dataName: 'currency',
+                            data: 'R'
+                        });
+                    }
                     this.dataScope = 'O';
                     break;
                 default:
@@ -446,7 +453,7 @@ body,
 
 .selection-tool {
     position: absolute;
-    top: 84px;
+    top: 44px;
     height: 36px;
     line-height: 36px;
     width: 100vw;

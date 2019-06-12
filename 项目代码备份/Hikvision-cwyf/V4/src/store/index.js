@@ -7,6 +7,7 @@ import * as mutations from './mutations'
 Vue.use(Vuex)
 
 var state = {
+  pageActive: 0,
   isPopShow: false,
   dataScope: 'T',
   currency: 'R',
