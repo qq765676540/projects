@@ -217,6 +217,41 @@ export default
                 `=sum(p4n1mea4)`
             ]
         },
+        'cost-structure': {
+            qDimensions: [
+                `='KPI'`
+            ],
+            qMeasures: [
+                `=sum(p4n2mea1)`,
+                `=sum(p4n2mea2)`,
+                `=sum(p4n2mea3)`,
+                `=sum(p4n2mea4)`,
+                `=sum(p4n2mea5)`,
+                `=sum(p4n2mea6)`,
+                `=sum(p4n2mea7)`,
+                `=sum(p4n2mea8)`,
+                `=sum(p4n2mea9)`,
+                `=sum(p4n2mea10)`,
+                `=sum(p4n2mea11)`,
+                `=sum(p4n2mea12)`,
+                `=sum(p4n2mea13)`,
+                `=sum(p4n2mea14)`,
+                `=sum(p4n2mea15)`,
+                `=sum(p4n2mea16)`,
+                `=sum(p4n2mea17)`,
+                `=sum(p4n2mea18)`
+            ]
+        },
+        'cost-trend': {
+            qDimensions: [
+                `p4n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p4n3mea1)`,
+                `=sum(p4n3mea2)`,
+                `=sum(p4n3mea3)`
+            ]
+        },
     }
     return formula[name];
 }

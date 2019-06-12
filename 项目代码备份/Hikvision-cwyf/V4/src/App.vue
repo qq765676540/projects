@@ -317,6 +317,30 @@ export default {
                 qWidth: 6,
                 qHeight: 15
             });
+            //费用-费用构成
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "cost-structure"
+                },
+                qWidth: 20,
+                qHeight: 1
+            });
+            //费用-人均费用情况
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "cost-trend"
+                },
+                qWidth: 4,
+                qHeight: 30
+            });
         }
     },
     computed: {

@@ -22,6 +22,8 @@ var state = {
   'gross-deduction': [],
   'cost-rate': [],
   'cost-rateTotal': [],
+  'cost-structure': [],
+  'cost-trend': [],
 }
 
 const store = new Vuex.Store({
