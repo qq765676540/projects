@@ -443,4 +443,8 @@ export default {
     width: 100%;
     overflow-y: scroll !important;
 }
+
+.overview {
+    min-height: 575px;
+}
 </style>

@@ -1,4 +1,5 @@
 <template>
+<!-- 费用页面 -->
 <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}">
     <div class="cost flex flex-column">
         <div class="cost-rate border-bottom flex flex-column">
@@ -6,11 +7,11 @@
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">费用增长</span>
                 <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
-                    <my-actionsheet defSelected="费用合计" :data="['费用合计','费用XXA','费用XXB','费用XXC','费用XXD']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '70px'}" @setScroll="setRateScrollStyle"></my-actionsheet>
+                    <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
                 </div>
             </div>
             <div style="margin:0px 15px 0px 15px">
-                <echarts-bar-line name="cost-rate" :data="rateData" id="cost-rate"></echarts-bar-line>
+                <echarts-bar-line name="cost-rate" :data="rateData[rateScroll]" id="cost-rate" v-if="rateData"></echarts-bar-line>
             </div>
         </div>
         <div class="cost-structure border-bottom flex flex-column">
@@ -45,13 +46,13 @@
                 </div>
             </div>
         </div>
-        <div class="cost-trend border-bottom flex flex-column">
+        <div class="cost-trend flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">均价&数据趋势</span>
             </div>
             <div style="margin:0px 15px 0px 15px">
-                <echarts-line name="cost-trend" :data="trendData" id="cost-trend"></echarts-line>
+                <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
             </div>
         </div>
     </div>
@@ -88,7 +89,43 @@ export default {
     },
     computed: {
         rateData() {
-            return demoData.costData.rate
+            if (this.$store.state['cost-rate'].length > 0 && this.$store.state['cost-rateTotal'].length > 0) {
+                let dataArr = this.$store.state['cost-rateTotal'].concat(this.$store.state['cost-rate']);
+                let data = {};
+                let costType = [];
+                let monthList = [];
+                dataArr.filter(v => {
+                    costType.push(v[0].qText);
+                    monthList.push(v[1].qText);
+                });
+                costType = Array.from(new Set(costType));
+                monthList = Array.from(new Set(monthList));
+                monthList = monthList.sort();
+                data['title'] = costType;
+                costType.filter(v => {
+                    data[v] = {
+                        xAxisData: monthList,
+                        seriesData1: [],
+                        seriesData2: [],
+                        seriesData3: [],
+                        seriesData4: []
+                    };
+                    monthList.filter(vo => {
+                        dataArr.filter(vi => {
+                            if(vi[0].qText == v && vi[1].qText == vo) {
+                                data[v]['seriesData1'].push(vi[2].qNum);
+                                data[v]['seriesData2'].push(vi[3].qNum);
+                                data[v]['seriesData3'].push(vi[4].qNum);
+                                data[v]['seriesData4'].push(vi[5].qNum);
+                            }
+                        });
+                    });
+                });
+                console.log('YCQ日志记录:标识->',data);
+                return data;
+            }
+            return false;
+            // demoData.costData.rate
         },
         structureData() {
             return demoData.costData.structure;

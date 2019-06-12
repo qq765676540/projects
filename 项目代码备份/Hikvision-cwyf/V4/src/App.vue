@@ -294,6 +294,29 @@ export default {
                 qWidth: 8,
                 qHeight: 100
             });
+            //费用-费用增长
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "cost-rate"
+                },
+                qWidth: 6,
+                qHeight: 200
+            });
+            Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    orgManager: orgManager,
+                    dataScope: dataScope,
+                    name: "cost-rateTotal"
+                },
+                qWidth: 6,
+                qHeight: 15
+            });
         }
     },
     computed: {

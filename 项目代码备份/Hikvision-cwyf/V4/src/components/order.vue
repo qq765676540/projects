@@ -19,7 +19,7 @@
                 <echarts-pie name="order-structure" :data="structurePieData" id="order-structure" v-if="structurePieData"></echarts-pie>
             </div>
         </div>
-        <div class="order-branch border-bottom flex flex-column">
+        <div class="order-branch flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">分公司未清情况</span>

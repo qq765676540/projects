@@ -38,10 +38,10 @@
                 <span class="sub-title-unit">单位(万)</span>
             </div>
             <div class="content-box flex flex-column flex-1">
-                <echarts-bar-line name="income-branch" :data="branchData" id="income-branch"></echarts-bar-line>
+                <echarts-bar-line name="income-branch" :data="branchData" id="income-branch" v-if="branchData"></echarts-bar-line>
             </div>
         </div>
-        <div class="income-trend border-bottom flex flex-column">
+        <div class="income-trend flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">均价&数量趋势</span>
@@ -52,7 +52,7 @@
                     <van-tab title="均价"></van-tab>
                     <van-tab title="数量"></van-tab>
                 </van-tabs>
-                <echarts-line name="income-trend" :data="trendData" id="income-trend"></echarts-line>
+                <echarts-line name="income-trend" :data="trendData" id="income-trend" v-if="trendData"></echarts-line>
             </div>
         </div>
     </div>

@@ -20,6 +20,8 @@ var state = {
   'income-trend': [],
   'gross-bp': [],
   'gross-deduction': [],
+  'cost-rate': [],
+  'cost-rateTotal': [],
 }
 
 const store = new Vuex.Store({

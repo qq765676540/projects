@@ -193,6 +193,30 @@ export default
                 `=sum(p3n2mea6)`
             ]
         },
+        'cost-rate': {
+            qDimensions: [
+                `p4n1dim1`,
+                `p4n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p4n1mea1)`,
+                `=sum(p4n1mea2)`,
+                `=sum(p4n1mea3)`,
+                `=sum(p4n1mea4)`
+            ]
+        },
+        'cost-rateTotal': {
+            qDimensions: [
+                `='费用合计'`,
+                `p4n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p4n1mea1)`,
+                `=sum(p4n1mea2)`,
+                `=sum(p4n1mea3)`,
+                `=sum(p4n1mea4)`
+            ]
+        },
     }
     return formula[name];
 }
