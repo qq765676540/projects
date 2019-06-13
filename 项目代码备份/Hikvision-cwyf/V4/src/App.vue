@@ -88,6 +88,7 @@ export default {
     data() {
         return {
             active: 0,
+            cubeCount: 0,
             lang: false,
             selBarFlag: true,
             pageMap: {
@@ -119,6 +120,10 @@ export default {
     beforeCreate() {},
     created() {},
     mounted() {
+        // this.$store.dispatch('updateData', {
+        //     dataName: 'isPopShow',
+        //     data: true
+        // });
         Cube.getData(parent.qApp, this, {
                 formulaOpt: {
                     time: this.selectedTime,
@@ -136,11 +141,10 @@ export default {
                 this.orgLevel = rs[0][1].qText;
                 this.orgFlag = rs[0][2].qText;
                 this.dataScope = 'T';
-                if(this.orgFlag!='Y'){
+                if (this.orgFlag != 'Y') {
                     this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
                 }
             });
-        // this.$store.dispatch('updateData', {dataName:'isPopShow',data:true});
     },
     methods: {
         closePop() {
@@ -177,175 +181,255 @@ export default {
             this.selectorFlag = false;
             this.selectedTime = data.time.year ? (data.time.year + '年' + data.time.startMonth + '-' + data.time.endMonth + '月') : data.time;
 
-            // this.$store.dispatch('updateData', {dataName: 'isPopShow',data: true});
-            // this.cubeInit();
+            this.cubeCount = 0;
+            this.cubeInit();
 
             $(".selected-dim-org > .values").css({
                 maxWidth: $(".selected-dim-org").width() - 40
             });
             this.switchIsOpen = false;
-            setTimeout(() => {
-                this.$store.dispatch("updateData", {
-                    dataName: "isPopShow",
-                    data: false
-                });
-            }, 3500);
         },
         switchTo() {
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
         },
         cubeInit(orgLevel, orgFlag, dataScope) {
+            // console.log('YCQ日志记录:我执行了cubeInit');
             let orgManager = (orgLevel == 'Level1' || (orgLevel == 'Level2' && orgFlag == 'Y')) ? 'Y' : 'N';
             //组织机构
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "org"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "org"
+                    },
+                    dataName: "org",
+                    qWidth: 5,
+                    qHeight: 30
                 },
-                dataName: "org",
-                qWidth: 5,
-                qHeight: 30
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //首页
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "home-overview"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "home-overview"
+                    },
+                    qWidth: 50,
+                    qHeight: 10
                 },
-                qWidth: 50,
-                qHeight: 10
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入-BP
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "income-bp"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "income-bp"
+                    },
+                    qWidth: 15,
+                    qHeight: 500
                 },
-                qWidth: 15,
-                qHeight: 500
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入-构成
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "income-structure-bar"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "income-structure-bar"
+                    },
+                    qWidth: 16,
+                    qHeight: 500
                 },
-                qWidth: 16,
-                qHeight: 500
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入-分公司
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "income-branch"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "income-branch"
+                    },
+                    qWidth: 8,
+                    qHeight: 200
                 },
-                qWidth: 8,
-                qHeight: 200
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入-均价&数量
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "income-trend"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "income-trend"
+                    },
+                    qWidth: 8,
+                    qHeight: 1000
                 },
-                qWidth: 8,
-                qHeight: 1000
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //毛利-毛利额BP达成率及增长情况
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "gross-bp"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "gross-bp"
+                    },
+                    qWidth: 8,
+                    qHeight: 200
                 },
-                qWidth: 8,
-                qHeight: 200
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //毛利-毛利率&扣费毛利率
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "gross-deduction"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "gross-deduction"
+                    },
+                    qWidth: 8,
+                    qHeight: 100
                 },
-                qWidth: 8,
-                qHeight: 100
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用-费用增长
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "cost-rate"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "cost-rate"
+                    },
+                    qWidth: 6,
+                    qHeight: 200
                 },
-                qWidth: 6,
-                qHeight: 200
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "cost-rateTotal"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "cost-rateTotal"
+                    },
+                    qWidth: 6,
+                    qHeight: 15
                 },
-                qWidth: 6,
-                qHeight: 15
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用-费用构成
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "cost-structure"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "cost-structure"
+                    },
+                    qWidth: 20,
+                    qHeight: 1
                 },
-                qWidth: 20,
-                qHeight: 1
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用-人均费用情况
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: orgManager,
-                    dataScope: dataScope,
-                    name: "cost-trend"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "cost-trend"
+                    },
+                    qWidth: 4,
+                    qHeight: 30
                 },
-                qWidth: 4,
-                qHeight: 30
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
+            //订单-订单情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-base"
+                    },
+                    qWidth: 8,
+                    qHeight: 30
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
+            //订单-产品线未清情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-structure"
+                    },
+                    qWidth: 4,
+                    qHeight: 100
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
+            //订单-分公司未清情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-branch"
+                    },
+                    qWidth: 3,
+                    qHeight: 100
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
         }
     },
     computed: {
         popShow() {
-            return this.$store.state.isPopShow;
+            if (this.cubeCount==15) {
+                // console.log('YCQ日志记录:我执行了一次Loading->');
+                return false;
+            }
+            return true;
         },
         userName() {
             if (this.$store.state.level.length > 0) {
@@ -357,7 +441,10 @@ export default {
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
-            this.$store.dispatch('updateData', {dataName: 'pageActive',data: pIndex});
+            this.$store.dispatch('updateData', {
+                dataName: 'pageActive',
+                data: pIndex
+            });
         },
         selectedTime(nVal) {
             this.$store.dispatch("updateData", {
@@ -398,12 +485,12 @@ export default {
                         dataName: 'dataScope',
                         data: 'O'
                     });
-                    if(this.$store.state.pageActive!=3) {
+                    if (this.$store.state.pageActive != 3) {
                         this.$store.dispatch('updateData', {
                             dataName: 'currency',
                             data: 'U'
                         });
-                    }else {
+                    } else {
                         this.$store.dispatch('updateData', {
                             dataName: 'currency',
                             data: 'R'

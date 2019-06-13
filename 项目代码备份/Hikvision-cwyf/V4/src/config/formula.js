@@ -252,6 +252,38 @@ export default
                 `=sum(p4n3mea3)`
             ]
         },
+        'order-base': {
+            qDimensions: [
+                `p5n1dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n1mea1)`,
+                `=sum(p5n1mea2)`,
+                `=sum(p5n1mea3)`,
+                `=sum(p5n1mea4)`,
+                `=sum(p5n1mea5)`,
+                `=sum(p5n1mea6)`
+            ]
+        },
+        'order-structure': {
+            qDimensions: [
+                `p5n2dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n2mea1)`,
+                `=sum(p5n2mea2)`,
+                `=sum(p5n2mea3)`
+            ]
+        },
+        'order-branch': {
+            qDimensions: [
+                `p5n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n3mea1)`,
+                `=sum(p5n3mea2)`
+            ]
+        }
     }
     return formula[name];
 }

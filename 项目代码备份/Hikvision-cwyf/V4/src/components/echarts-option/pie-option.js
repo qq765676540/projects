@@ -69,7 +69,12 @@ let option = {
             tooltip: {
                 trigger: 'item',
                 triggerOn: 'click',
-                formatter: "{b}: {c} ({d}%)"
+                formatter: v => {
+                    // console.log('YCQ日志记录:标识->',v);
+                    return `${v.name}<br>未清金额: ${v.value}<br>未清数量: ${v.data.qty}<br>金额占比: ${v.percent}%`;
+                },
+                extraCssText: 'text-align:left;'
+                // "{b}: {c} ({d}%)"
             },
             series: [
                 {

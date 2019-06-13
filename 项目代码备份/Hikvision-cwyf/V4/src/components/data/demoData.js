@@ -343,11 +343,11 @@ var demoData = {
         },
         structure: {
             pie: [
-                { value: 335, name: '直接访问' },
-                { value: 310, name: '邮件营销' },
-                { value: 234, name: '联盟广告' },
-                { value: 135, name: '视频广告' },
-                { value: 1048, name: '搜索引擎' }
+                { value: 335, name: '直接访问', qty: 100 },
+                { value: 310, name: '邮件营销', qty: 200 },
+                { value: 234, name: '联盟广告', qty: 300 },
+                { value: 135, name: '视频广告', qty: 200 },
+                { value: 1048, name: '搜索引擎', qty: 100 }
             ],
             text: ''
         },

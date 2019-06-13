@@ -24,6 +24,9 @@ var state = {
   'cost-rateTotal': [],
   'cost-structure': [],
   'cost-trend': [],
+  'order-base': [],
+  'order-structure': [],
+  'order-branch': []
 }
 
 const store = new Vuex.Store({

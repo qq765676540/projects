@@ -150,8 +150,8 @@ export default {
                             ['同比', '', '']
                         ];
                         kpiData['U']['kpi_7'] = [
-                            ['人均销售额', dataArr[43].qText, '万元/人'],
-                            ['去年同期', dataArr[44].qText, '万元/人'],
+                            ['人均销售额', dataArr[43].qText, '万美元/人'],
+                            ['去年同期', dataArr[44].qText, '万美元/人'],
                             ['同比', dataArr[45].qText, '']
                         ];
                         kpiData['U']['kpi_8'] = [
@@ -305,24 +305,24 @@ export default {
                                 ['同比', dataArr[36].qText, '']
                             ];
                             kpiData['U']['kpi_5'] = [
-                                ['扣费毛利', dataArr[37].qText, ''],
-                                ['完成率', dataArr[38].qText, ''],
-                                ['同比', dataArr[39].qText, '']
-                            ];
-                            kpiData['U']['kpi_6'] = [
-                                ['扣费毛利率', dataArr[40].qText, ''],
-                                ['去年同期', dataArr[41].qText, ''],
-                                ['同比', dataArr[42].qText, '']
-                            ];
-                            kpiData['U']['kpi_7'] = [
-                                ['人均销售额', dataArr[43].qText, '万元/人'],
-                                ['去年同期', dataArr[44].qText, '万元/人'],
+                                ['人均销售额', dataArr[43].qText, '万美元/人'],
+                                ['去年同期', dataArr[44].qText, '万美元/人'],
                                 ['同比', dataArr[45].qText, '']
                             ];
+                            kpiData['U']['kpi_6'] = [
+                                ['', '', 'none'],
+                                ['', '', ''],
+                                ['', '', '']
+                            ];
+                            kpiData['U']['kpi_7'] = [
+                                ['', '', 'none'],
+                                ['', '', ''],
+                                ['', '', '']
+                            ];
                             kpiData['U']['kpi_8'] = [
-                                ['人均扣费毛利', dataArr[46].qText, ''],
-                                ['去年同期', dataArr[47].qText, ''],
-                                ['同比', dataArr[48].qText, '']
+                                ['', '', 'none'],
+                                ['', '', ''],
+                                ['', '', '']
                             ];
                         } else {
                             kpiData['R']['kpi_1'] = [

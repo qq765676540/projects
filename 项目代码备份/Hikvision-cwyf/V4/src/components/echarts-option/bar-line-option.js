@@ -639,7 +639,7 @@ let option = {
     },
     'order-base': (data) => {
         return {
-            color: ['#addaf8', '#1495EB', 'orange', '#ff6666'],
+            color: ['#59D4FF', '#448DFF', '#751DE2', '#D391B8'],
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -777,10 +777,7 @@ let option = {
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
-                ${v[0].seriesName + ': ' + v[0].value}<br>
-                ${v[1].seriesName + ': ' + v[1].value}<br>
-                ${v[2].seriesName + ': ' + v[2].value}<br>
-                ${v[3].seriesName + ': ' + v[3].value}`;
+                ${v[0].seriesName + ': ' + v[0].value}`;
                 },
                 extraCssText: 'text-align:left;'
             },
