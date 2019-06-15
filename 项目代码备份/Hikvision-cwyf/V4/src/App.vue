@@ -89,6 +89,7 @@ export default {
         return {
             active: 0,
             cubeCount: 0,
+            cubeStop: 12,
             lang: false,
             selBarFlag: true,
             pageMap: {
@@ -99,7 +100,7 @@ export default {
                 4: "order"
             },
             selectorFlag: false,
-            selectedTime: "本月",
+            selectedTime: "本年",
             selectedOrg: [],
             selectedOrgSetCube: [],
             popContext: "",
@@ -148,13 +149,8 @@ export default {
     },
     methods: {
         closePop() {
-            this.$store.dispatch("updateData", {
-                dataName: "isPopShow",
-                data: false
-            });
+            this.cubeCount = this.cubeStop;
         },
-        resultTreeData(data) {},
-        onClickLeft() {},
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
@@ -163,16 +159,14 @@ export default {
         },
         confirmSelect(data) {
             if (data.org.length > 0) {
-                let selectValues = [];
-                let displayValues = [];
-
-                data.org.filter(v => {
-                    selectValues.push(v.split(":")[0]);
-                    displayValues.push(v.split(":")[1]);
-                });
-
-                this.selectedOrg = displayValues;
-                this.selectedOrgSetCube = selectValues;
+                // let selectValues = [];
+                // let displayValues = [];
+                // data.org.filter(v => {
+                //     selectValues.push(v.split(":")[0]);
+                //     displayValues.push(v.split(":")[1]);
+                // });
+                this.selectedOrg = data.org;
+                this.selectedOrgSetCube = data.org;
             } else {
                 this.selectedOrg = [];
                 this.selectedOrgSetCube = [];
@@ -181,8 +175,7 @@ export default {
             this.selectorFlag = false;
             this.selectedTime = data.time.year ? (data.time.year + '年' + data.time.startMonth + '-' + data.time.endMonth + '月') : data.time;
 
-            this.cubeCount = 0;
-            this.cubeInit();
+            this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
 
             $(".selected-dim-org > .values").css({
                 maxWidth: $(".selected-dim-org").width() - 40
@@ -194,8 +187,9 @@ export default {
             this.switchIsOpen = true;
         },
         cubeInit(orgLevel, orgFlag, dataScope) {
+            this.cubeCount = 0 ;
             // console.log('YCQ日志记录:我执行了cubeInit');
-            let orgManager = (orgLevel == 'Level1' || (orgLevel == 'Level2' && orgFlag == 'Y')) ? 'Y' : 'N';
+            let orgManager = (orgLevel == 'LV1' || (orgLevel == 'LV2' && orgFlag == 'Y')) ? 'Y' : 'N';
             //组织机构
             Cube.getData(parent.qApp, this, {
                     formulaOpt: {
@@ -376,56 +370,56 @@ export default {
                 (rs) => {
                     this.cubeCount += 1;
                 });
-            //订单-订单情况
-            Cube.getData(parent.qApp, this, {
-                    formulaOpt: {
-                        time: this.selectedTime,
-                        org: this.selectedOrgSetCube,
-                        orgManager: orgManager,
-                        dataScope: dataScope,
-                        name: "order-base"
-                    },
-                    qWidth: 8,
-                    qHeight: 30
-                },
-                (rs) => {
-                    this.cubeCount += 1;
-                });
-            //订单-产品线未清情况
-            Cube.getData(parent.qApp, this, {
-                    formulaOpt: {
-                        time: this.selectedTime,
-                        org: this.selectedOrgSetCube,
-                        orgManager: orgManager,
-                        dataScope: dataScope,
-                        name: "order-structure"
-                    },
-                    qWidth: 4,
-                    qHeight: 100
-                },
-                (rs) => {
-                    this.cubeCount += 1;
-                });
-            //订单-分公司未清情况
-            Cube.getData(parent.qApp, this, {
-                    formulaOpt: {
-                        time: this.selectedTime,
-                        org: this.selectedOrgSetCube,
-                        orgManager: orgManager,
-                        dataScope: dataScope,
-                        name: "order-branch"
-                    },
-                    qWidth: 3,
-                    qHeight: 100
-                },
-                (rs) => {
-                    this.cubeCount += 1;
-                });
+            // //订单-订单情况
+            // Cube.getData(parent.qApp, this, {
+            //         formulaOpt: {
+            //             time: this.selectedTime,
+            //             org: this.selectedOrgSetCube,
+            //             orgManager: orgManager,
+            //             dataScope: dataScope,
+            //             name: "order-base"
+            //         },
+            //         qWidth: 8,
+            //         qHeight: 30
+            //     },
+            //     (rs) => {
+            //         this.cubeCount += 1;
+            //     });
+            // //订单-产品线未清情况
+            // Cube.getData(parent.qApp, this, {
+            //         formulaOpt: {
+            //             time: this.selectedTime,
+            //             org: this.selectedOrgSetCube,
+            //             orgManager: orgManager,
+            //             dataScope: dataScope,
+            //             name: "order-structure"
+            //         },
+            //         qWidth: 4,
+            //         qHeight: 100
+            //     },
+            //     (rs) => {
+            //         this.cubeCount += 1;
+            //     });
+            // //订单-分公司未清情况
+            // Cube.getData(parent.qApp, this, {
+            //         formulaOpt: {
+            //             time: this.selectedTime,
+            //             org: this.selectedOrgSetCube,
+            //             orgManager: orgManager,
+            //             dataScope: dataScope,
+            //             name: "order-branch"
+            //         },
+            //         qWidth: 3,
+            //         qHeight: 100
+            //     },
+            //     (rs) => {
+            //         this.cubeCount += 1;
+            //     });
         }
     },
     computed: {
         popShow() {
-            if (this.cubeCount==15) {
+            if (this.cubeCount==this.cubeStop) {
                 // console.log('YCQ日志记录:我执行了一次Loading->');
                 return false;
             }

@@ -61,6 +61,9 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
+                            if(v.length>5) {
+                                return `{name|${v.substr(0,5)+'...'}}`;
+                            }
                             return `{name|${v}}`;
                         },
                         color: '#333333',
@@ -215,6 +218,12 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         color: '#333333',
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
+                        },
                         axisPointer: {
                             type: 'shadow'
                         }

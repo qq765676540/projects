@@ -42,10 +42,10 @@ export default {
       data: {
         year: 2019,
         startMonth: 1,
-        endMonth: 2
+        endMonth: 1
       },
       month1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      month2: [1]
+      month2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     };
   },
   watch: {

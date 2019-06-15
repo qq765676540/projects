@@ -2,6 +2,9 @@ let option = {
     'income-bp': (data) => {
         return {
             color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            grid: {
+                left: '13%'
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -28,7 +31,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
+                    start: 0,
                     end: 100
                 },
                 {
@@ -61,6 +64,9 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
+                            if(v.length>5) {
+                                return `{name|${v.substr(0,5)+'...'}}`;
+                            }
                             return `{name|${v}}`;
                         },
                         color: '#333333',
@@ -131,6 +137,9 @@ let option = {
     'income-bp-drill': (data) => {
         return {
             color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            grid: {
+                left: '13%'
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -157,7 +166,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
+                    start: 0,
                     end: 100
                 },
                 {
@@ -192,6 +201,12 @@ let option = {
                         color: '#333333',
                         axisPointer: {
                             type: 'shadow'
+                        },
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
                         }
                     }
                 }
@@ -277,7 +292,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
+                    start: data.dataZoom,
                     end: 100
                 },
                 {
@@ -309,7 +324,13 @@ let option = {
                     data: data.xAxisData,
                     axisLabel: {
                         rotate: 45,
-                        color: '#333333'
+                        color: '#333333',
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],
@@ -369,6 +390,9 @@ let option = {
     'gross-bp': (data) => {
         return {
             color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            grid: {
+                left: '13%'
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -395,7 +419,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
+                    start: 0,
                     end: 100
                 },
                 {
@@ -430,6 +454,12 @@ let option = {
                         color: '#333333',
                         axisPointer: {
                             type: 'shadow'
+                        },
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
                         }
                     }
                 }
@@ -557,7 +587,13 @@ let option = {
                     data: data.xAxisData,
                     axisLabel: {
                         rotate: 45,
-                        color: '#333333'
+                        color: '#333333',
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],
@@ -703,7 +739,13 @@ let option = {
                     data: data.xAxisData,
                     axisLabel: {
                         rotate: 45,
-                        color: '#333333'
+                        color: '#333333',
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],
@@ -794,7 +836,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 0,
+                    start: data.dataZoom,
                     end: 100
                 },
                 {
@@ -826,7 +868,13 @@ let option = {
                     data: data.xAxisData,
                     axisLabel: {
                         rotate: 45,
-                        color: '#333333'
+                        color: '#333333',
+                        formatter: v => {
+                            if(v.length>5) {
+                                return v.substr(0,5)+'...';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],

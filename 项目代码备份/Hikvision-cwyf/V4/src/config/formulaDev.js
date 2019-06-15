@@ -1,187 +1,289 @@
-var formula = {
-    //当前层级
-    currentLevel:{
-        qDimensions: [
-            "='$(DeptID)'",
-            "='-'",
-            "='$(Account)'",
-            "='$(DomainName)'",
-            "='-'",
-            "='$(DeptName)'"
-        ],
-        qMeasures: []
-    },
-    //组织架构
-    organization:{
-        qDimensions: [
-            "DeptID",
-            "Parent_DeptID",
-            "OADAccount",
-            "DomainName",
-            "Flag",
-            "DeptName"
-        ],
-        qMeasures: ["=sum(1)"]
-    },
-    summaryCircle: {
-        qDimensions: [],
-        qMeasures: [
-            `=sum(填写计划率)`,
-            `=sum(工作记录填写率)`,
-            `=sum(计划执行率)`,
-            `=sum(有效拜访率)`
-        ]
-    },
-    summaryEasyKPI: {
-        qDimensions: [],
-        qMeasures: [
-            `=sum(p11指标1)`,
-            `=sum(p11指标2)`,
-            `=sum(p11指标3)`,
-            `=sum(p11指标4)`,
-            `=sum(p11指标5)`,
-            `=sum(p11指标6)`,
-            `=sum(p11指标7)`,
-            `=sum(p11指标8)`
-        ]
-    },
-    summaryLineA: {
-        qDimensions: ["p12周"],
-        qMeasures: [
-            `=sum(p12指标1)`
-        ]
-    },
-    summaryLineB: {
-        qDimensions: ["p12周"],
-        qMeasures: [
-            `=sum(p12指标1)`,
-            `=sum(p12指标2)`
-        ]
-    },
-    summaryOrgListA:{
-        qDimensions: [
-            "='$(DomainName)'",
-            "='-'"
-        ],
-        qMeasures: [
-            "=sum(1)",
-            "=sum(1)",
-            "=sum(1)",
-            "=sum(0.55)",
-            "=sum(55)",
-            "=sum(0.55)"
-        ]
-    },
-    summaryOrgListB: {
-        qDimensions: [
-            "p13维度1",
-            "p13维度2"
-        ],
-        qMeasures: [
-            "=sum(p13指标1)",
-            "=sum(p13指标2)",
-            "=sum(p13指标3)",
-            "=sum(p13指标4)",
-            "=sum(p13指标5)",
-            "=sum(p13指标6)",
-        ]
-    },
-    planExecutionLine: {
-        qDimensions: ["p20周"],
-        qMeasures: [
-            "=sum(p20指标1)"
-        ]
-    },
-    planExecutionCollapseA: {
-        qDimensions: [
-            "p21维度1",
-            "p21维度2",
-            "p21维度3",
-            "p21维度4",
-            "p21维度5",
-            "p21维度6"
-        ],
-        qMeasures: ["=sum(p21指标1)"]
-    },
-    planExecutionCollapseB: {
-        qDimensions: [
-            "p21维度1",
-            "p21维度2",
-            "p21维度3",
-            "p21维度4",
-            "p21维度5",
-            "p21维度6"
-        ],
-        qMeasures: ["=sum(p21指标1)"]
-    },
-    visitWarningKPI: {
-        qDimensions: [],
-        qMeasures: [
-            "=sum(p30指标1)",
-            "=sum(p30指标2)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)",
-            "=sum(p30指标3)&'/'&sum(p30指标4)"
-        ]
-    },
-    visitWarningCollapseA1: {
-        qDimensions: [
-            "p31维度1",
-            "p31维度2",
-            "p31维度3"
-        ],
-        qMeasures: ["=sum(p31指标1)","=sum(p31指标2)"]
-    },
-    visitWarningCollapseA2: {
-        qDimensions: [
-            "p32维度1",
-            "p32维度2",
-            "p32维度3"
-        ],
-        qMeasures: ["=sum(1)"]
-    },
-    visitWarningCollapseB1: {
-        qDimensions: [
-            "p31维度1",
-            "p31维度2",
-            "p31维度3"
-        ],
-        qMeasures: ["=sum(p31指标1)","=sum(p31指标2)"]
-    },
-    visitWarningCollapseB2: {
-        qDimensions: [
-            "p32维度1",
-            "p32维度2",
-            "p32维度3"
-        ],
-        qMeasures: ["=sum(1)"]
-    },
-    visitCustomerA: {
-        qDimensions: ["p40维度1"],
-        qMeasures: [
-            "=sum(p40指标1)",
-            "=sum(p40指标2)"
-        ]
-    },
-    visitCustomerB: {
-        qDimensions: ["p40维度1"],
-        qMeasures: [
-            "=sum(p40指标1)",
-            "=sum(p40指标2)"
-        ]
-    },
-    customerDistribution: {
-        qDimensions: ["p50维度1"],
-        qMeasures: [
-            "=sum(p50指标1)",
-            "=sum(p50指标2)"
-        ]
-    },
+/** 
+ * 向qliksense的APP请求数据时所用的维度指标表达式
+ **/
+export default
+    function getFormula(opt) {
+    let time = opt.time;
+    let org = opt.org;
+    let orgManager = opt.orgManager;
+    let dataScope = opt.dataScope == 'T' ? "[group]=" : "[group]={'" + (opt.dataScope == 'I' ? '国内' : '海外') + "'}";
+    let name = opt.name;
+    let orgStr = "";
+    let orgMatch = "";
+    // if (org.length > 0) {
+    //     orgStr = "[OADAccount]={";
+    //     orgMatch = "match([OADAccount],";
+    //     $.each(org, (i, v) => {
+    //         if (i === org.length - 1) {
+    //             orgStr = orgStr + "'" + v + "'}"
+    //             orgMatch = orgMatch + "'" + v + "')>0"
+    //         } else {
+    //             orgStr = orgStr + "'" + v + "',"
+    //             orgMatch = orgMatch + "'" + v + "',"
+    //         }
+    //     });
+    // }
+    // else {
+    //     orgStr = "[OADAccount]=";
+    //     orgMatch = "[OADAccount]=[OADAccount]";
+    // }
+    // console.log('YCQ日志记录:过滤->',org);
+    let formula = {
+        'level': {
+            qDimensions: [
+                `p0n1user`,
+                `p0n1level`,
+                `p0n1hwflag`
+            ],
+            qMeasures: [
+                `=sum(1)`
+            ]
+        },
+        'org': {
+            qDimensions: [
+                `p0n2user`,
+                `p0n2org`
+            ],
+            qMeasures: [
+                `=sum(1)`
+            ]
+        },
+        'home-overview': {
+            qDimensions: [
+                `='KPI'`
+            ],
+            qMeasures: [
+                `=sum({<${dataScope}>}p1n1_r_kpi_1_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_1_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_1_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_2_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_2_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_2_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_3_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_3_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_3_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_4_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_4_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_4_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_5_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_5_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_5_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_6_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_6_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_6_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_7_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_7_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_7_3)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_8_1)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_8_2)`,
+                `=sum({<${dataScope}>}p1n1_r_kpi_8_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_1_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_1_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_1_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_2_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_2_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_2_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_3_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_3_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_3_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_4_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_4_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_4_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_5_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_5_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_5_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_6_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_6_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_6_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_7_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_7_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_7_3)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_8_1)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_8_2)`,
+                `=sum({<${dataScope}>}p1n1_u_kpi_8_3)`
+            ]
+        },
+        'income-bp': {
+            qDimensions: [
+                `p2n1dim1`,
+                `p2n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p2n1mea1)`,
+                `=sum(p2n1mea2)`,
+                `=sum(p2n1mea3)`,
+                `=sum(p2n1mea4)`,
+                `=sum(p2n1mea5)`,
+                `=sum(p2n1mea6)`,
+                `=sum(total <p2n1dim1> p2n1mea1)`,
+                `=sum(total <p2n1dim1> p2n1mea2)`,
+                `=sum(total <p2n1dim1> p2n1mea3)`,
+                `=sum(total <p2n1dim1> p2n1mea4)`,
+                `=sum(total <p2n1dim1> p2n1mea5)`,
+                `=sum(total <p2n1dim1> p2n1mea6)`
+            ]
+        },
+        'income-structure-bar': {
+            qDimensions: [
+                `p2n2dim1`,
+                `p2n2dim2`
+            ],
+            qMeasures: [
+                `=sum(p2n2mea1)`,
+                `=sum(p2n2mea2)`,
+                `=sum(p2n2mea3)`,
+                `=sum(p2n2mea4)`,
+                `=sum(total <p2n2dim1> p2n2mea1)`,
+                `=sum(total <p2n2dim1> p2n2mea2)`,
+                `=sum(total <p2n2dim1> p2n2mea3)`,
+                `=sum(total <p2n2dim1> p2n2mea4)`,
+                `=sum(p2n2mea5)`,
+                `=sum(p2n2mea6)`,
+                `=sum(total <p2n2dim1> p2n2mea5)`,
+                `=sum(total <p2n2dim1> p2n2mea6)`
+            ]
+        },
+        'income-branch': {
+            qDimensions: [
+                `p2n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p2n3mea1)`,
+                `=sum(p2n3mea2)`,
+                `=sum(p2n3mea3)`,
+                `=sum(p2n3mea4)`,
+                `=sum(p2n3mea5)`,
+                `=sum(p2n3mea6)`
+            ]
+        },
+        'income-trend': {
+            qDimensions: [
+                `p2n4dim1`,
+                `p2n4dim2`
+            ],
+            qMeasures: [
+                `=sum(p2n4mea1)`,
+                `=sum(p2n4mea2)`,
+                `=sum(p2n4mea3)`
+            ]
+        },
+        'gross-bp': {
+            qDimensions: [
+                `p3n1dim1`
+            ],
+            qMeasures: [
+                `=sum(p3n1mea1)`,
+                `=sum(p3n1mea2)`,
+                `=sum(p3n1mea3)`,
+                `=sum(p3n1mea4)`,
+                `=sum(p3n1mea5)`,
+                `=sum(p3n1mea6)`
+            ]
+        },
+        'gross-deduction': {
+            qDimensions: [
+                `p3n2dim1`
+            ],
+            qMeasures: [
+                `=sum(p3n2mea1)`,
+                `=sum(p3n2mea2)`,
+                `=sum(p3n2mea3)`,
+                `=sum(p3n2mea4)`,
+                `=sum(p3n2mea5)`,
+                `=sum(p3n2mea6)`
+            ]
+        },
+        'cost-rate': {
+            qDimensions: [
+                `p4n1dim1`,
+                `p4n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p4n1mea1)`,
+                `=sum(p4n1mea2)`,
+                `=sum(p4n1mea3)`,
+                `=sum(p4n1mea4)`
+            ]
+        },
+        'cost-rateTotal': {
+            qDimensions: [
+                `='费用合计'`,
+                `p4n1dim2`
+            ],
+            qMeasures: [
+                `=sum(p4n1mea1)`,
+                `=sum(p4n1mea2)`,
+                `=sum(p4n1mea3)`,
+                `=sum(p4n1mea4)`
+            ]
+        },
+        'cost-structure': {
+            qDimensions: [
+                `='KPI'`
+            ],
+            qMeasures: [
+                `=sum(p4n2mea1)`,
+                `=sum(p4n2mea2)`,
+                `=sum(p4n2mea3)`,
+                `=sum(p4n2mea4)`,
+                `=sum(p4n2mea5)`,
+                `=sum(p4n2mea6)`,
+                `=sum(p4n2mea7)`,
+                `=sum(p4n2mea8)`,
+                `=sum(p4n2mea9)`,
+                `=sum(p4n2mea10)`,
+                `=sum(p4n2mea11)`,
+                `=sum(p4n2mea12)`,
+                `=sum(p4n2mea13)`,
+                `=sum(p4n2mea14)`,
+                `=sum(p4n2mea15)`,
+                `=sum(p4n2mea16)`,
+                `=sum(p4n2mea17)`,
+                `=sum(p4n2mea18)`
+            ]
+        },
+        'cost-trend': {
+            qDimensions: [
+                `p4n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p4n3mea1)`,
+                `=sum(p4n3mea2)`,
+                `=sum(p4n3mea3)`
+            ]
+        },
+        'order-base': {
+            qDimensions: [
+                `p5n1dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n1mea1)`,
+                `=sum(p5n1mea2)`,
+                `=sum(p5n1mea3)`,
+                `=sum(p5n1mea4)`,
+                `=sum(p5n1mea5)`,
+                `=sum(p5n1mea6)`
+            ]
+        },
+        'order-structure': {
+            qDimensions: [
+                `p5n2dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n2mea1)`,
+                `=sum(p5n2mea2)`,
+                `=sum(p5n2mea3)`
+            ]
+        },
+        'order-branch': {
+            qDimensions: [
+                `p5n3dim1`
+            ],
+            qMeasures: [
+                `=sum(p5n3mea1)`,
+                `=sum(p5n3mea2)`
+            ]
+        }
+    }
+    return formula[name];
 }
-
-export default formula;

@@ -87,8 +87,8 @@ export default {
                 }];
                 orgData.filter(v => {
                     let temp = {};
-                    temp.label = v[2].qText;
-                    temp.id = v[2].qText;
+                    temp.label = v[1].qText;
+                    temp.id = v[1].qText;
                     treeData[0].children.push(temp);
                 });
                 return treeData;

@@ -10,6 +10,9 @@ let option = {
                     fontSize: 14
                 }
             },
+            grid: {
+                left: '13%'
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -64,8 +67,13 @@ let option = {
                 type: 'category',
                 data: data.xAxis,
                 axisLabel: {
-                    rotate: 45
-
+                    rotate: 45,
+                    formatter: v => {
+                        if(v.length>6) {
+                            return v.substr(0,6)+'...';
+                        }
+                        return v;
+                    }
                 }
             },
             yAxis: {
@@ -160,7 +168,13 @@ let option = {
                 type: 'category',
                 data: data.xAxis,
                 axisLabel: {
-                    rotate: 45
+                    rotate: 45,
+                    formatter: v => {
+                        if(v.length>6) {
+                            return v.substr(0,6)+'...';
+                        }
+                        return v;
+                    }
                 }
             },
             yAxis: {
@@ -207,7 +221,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 70,
+                    start: 50,
                     end: 100
                 },
                 {
@@ -242,7 +256,13 @@ let option = {
                 type: 'category',
                 data: data.xAxis,
                 axisLabel: {
-                    rotate: 45
+                    rotate: 45,
+                    formatter: v => {
+                        if(v.length>6) {
+                            return v.substr(0,6)+'...';
+                        }
+                        return v;
+                    }
                 }
             },
             yAxis: {

@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="income-c border-bottom flex flex-column" v-if="incomeBranchSubtitle!='T'">
+        <div class="income-branch border-bottom flex flex-column" v-if="incomeBranchSubtitle!='T'">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">{{ incomeBranchSubtitle }}</span>
@@ -45,7 +45,7 @@
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">均价&数量趋势</span>
-                <span class="sub-title-unit">单位(万)</span>
+                <!-- <span class="sub-title-unit">单位(万)</span> -->
             </div>
             <div class="content-box flex flex-column flex-1">
                 <van-tabs class="trendTabs" type="card" v-model="trendTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
@@ -182,6 +182,7 @@ export default {
                 });
                 bpData['R']['drill'] = Rdrill;
                 bpData['U']['drill'] = Udrill;
+                // console.log('YCQ日志记录:收入BP->',dataArr);
                 return bpData[this.$store.state.currency];
             }
             return false;
@@ -321,13 +322,15 @@ export default {
                         xAxisData: [],
                         seriesData1: [],
                         seriesData2: [],
-                        seriesData3: []
+                        seriesData3: [],
+                        dataZoom: (100-parseInt(7/dataArr.length*100))
                     },
                     U: {
                         xAxisData: [],
                         seriesData1: [],
                         seriesData2: [],
-                        seriesData3: []
+                        seriesData3: [],
+                        dataZoom: (100-parseInt(7/dataArr.length*100))
                     }
                 };
                 dataArr.filter(v => {
@@ -400,8 +403,8 @@ export default {
                     xAxis.filter(vo => {
                         dataArr.filter(vi => {
                             if(vi[0].qText==vo && vi[1].qText==v) {
-                                qtyRtemp.data.push(vi[4].qNum);
-                                qtyUtemp.data.push(vi[4].qNum);
+                                qtyRtemp.data.push(vi[4].qNum==0?'-':vi[4].qNum);
+                                qtyUtemp.data.push(vi[4].qNum==0?'-':vi[4].qNum);
                                 amountRtemp.data.push(vi[2].qNum);
                                 amountUtemp.data.push(vi[3].qNum);
                             }
@@ -422,12 +425,11 @@ export default {
         }
     },
     watch: {
-
     },
     methods: {
         getStructureDrillVal(val) {
             this.structureDrillVal = val;
-            console.log('YCQ日志记录:Drill->', val);
+            // console.log('YCQ日志记录:Drill->', val);
         },
         onRefresh() {
             setTimeout(() => {

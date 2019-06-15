@@ -107,10 +107,11 @@ export default {
                     data['U']['seriesData4'].push(v[4].qNum);
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                return data[this.$store.state['currency']];
+                // return data[this.$store.state['currency']];
+                return demoData.orderData.base
             }
-            return false;
-            //demoData.orderData.base
+            // return false;
+            return demoData.orderData.base
         },
         structurePieData() {
             if (this.$store.state['order-structure'].length > 0) {
@@ -137,10 +138,11 @@ export default {
                     
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                return data[this.$store.state['currency']];
+                // return data[this.$store.state['currency']];
+                return demoData.orderData.structure
             }
-            return false;
-            // demoData.orderData.structure
+            // return false;
+            return demoData.orderData.structure
         },
         branchData() {
             if (this.$store.state['order-branch'].length > 0) {
@@ -148,11 +150,13 @@ export default {
                 let data = {
                     R: {
                         xAxisData: [],
-                        seriesData1: []
+                        seriesData1: [],
+                        dataZoom: (100-parseInt(7/dataArr.length*100))
                     },
                     U: {
                         xAxisData: [],
-                        seriesData1: []
+                        seriesData1: [],
+                        dataZoom: (100-parseInt(7/dataArr.length*100))
                     }
                 };
                 dataArr.filter(v => {
@@ -162,10 +166,11 @@ export default {
                     data['U']['seriesData1'].push(v[2].qNum);
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                return data[this.$store.state['currency']];
+                // return data[this.$store.state['currency']];
+                return demoData.orderData.branch
             }
-            return false;
-            // demoData.orderData.branch
+            // return false;
+            return demoData.orderData.branch
         },
     },
     methods: {
