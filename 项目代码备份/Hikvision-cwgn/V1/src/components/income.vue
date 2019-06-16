@@ -98,6 +98,22 @@
             <my-datatable v-if="productData" id="productData" :data="productData[industryTabAtive]" :title="productData[2]"></my-datatable>
         </div>
     </div>
+    <div class="income-city flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">各城市业绩情况</span>
+            <div class="flex flex-1 flex-justify-right">
+                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="总收入"></van-tab>
+                    <van-tab title="自有收入"></van-tab>
+                </van-tabs>
+            </div>
+        </div>
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+            <income-all :data="cityAll" v-if="industryTabAtive==0&&cityAll"></income-all>
+            <income-self :data="citySelf" v-if="industryTabAtive==1&&citySelf"></income-self>
+        </div>
+    </div>
 
 </div>
 </template>
@@ -228,37 +244,39 @@ export default {
         },
         cityAll() {
             var arr = [];
-            if (this.$store.state["income-cityz"].length) {
+            if (this.$store.state["income-cityz"].length>0) {
                 var data = this.$store.state["income-cityz"];
                 data.forEach(i => {
                     arr.push({
                         value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
-                        name: i[0].qText,
+                        name: i[2].qText,
                         growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
                         rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
                         nameTrue: i[2].qText,
                         level: i[1].qText
                     });
                 });
+                return arr;
             }
-            return arr;
+            return false;
         },
         citySelf() {
             var arr = [];
-            if (this.$store.state["income-cityzy"].length) {
+            if (this.$store.state["income-cityzy"].length>0) {
                 var data = this.$store.state["income-cityzy"];
                 data.forEach(i => {
                     arr.push({
                         value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
-                        name: i[0].qText,
+                        name: i[2].qText,
                         growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
                         rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
                         nameTrue: i[2].qText,
                         level: i[1].qText
                     });
                 });
+                return arr;
             }
-            return arr;
+            return false;
         }
     },
     methods: {}
@@ -284,7 +302,11 @@ export default {
 }
 
 .income-product {
-    min-height: 300px;
+    min-height: 120px;
+}
+
+.income-city {
+    min-height: 400px;
 }
 
 .titleName {

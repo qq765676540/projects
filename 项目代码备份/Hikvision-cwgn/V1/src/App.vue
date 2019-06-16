@@ -39,6 +39,12 @@
         <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg" :orgData="orgData"></selector>
     </div>
 
+    <div class="appPopstyle">
+        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+            <van-loading type="spinner" size="30px" color="white" />
+        </van-popup>
+    </div>
+
     <waterMark :userName="userName" v-if="userName"></waterMark>
 </div>
 </template>
@@ -47,7 +53,9 @@
 import {
     NavBar,
     Tab,
-    Actionsheet
+    Actionsheet,
+    Popup,
+    Loading
 } from "vant";
 import Tabs from "./components/common/vant-tabs/index";
 import Cube from "./tools/cube.js";
@@ -66,6 +74,8 @@ export default {
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Actionsheet.name]: Actionsheet,
+        [Popup.name]: Popup,
+        [Loading.name]: Loading,
         waterMark,
         selector,
         vueSwitch
@@ -73,6 +83,8 @@ export default {
     data() {
         return {
             active: 0,
+            cubeCount: 0,
+            cubeStop: 29,
             switchIsOpen: false,
             switchStyle: {
                 width: 54,
@@ -100,14 +112,20 @@ export default {
         };
     },
     computed: {
+        popShow() {
+            if (this.cubeCount == this.cubeStop) {
+                return false;
+            }
+            return true;
+        },
         orgData() {
-            if (this.$store.state["main-business-center"].length) {
+            if (this.$store.state["main-business-center"].length > 0) {
                 return this.$store.state["main-business-center"];
             }
             return false;
         },
         userName() {
-            if (this.$store.state["main-persion"].length) {
+            if (this.$store.state["main-persion"].length > 0) {
                 return this.$store.state["main-persion"][0][0].qText;
             }
             return false;
@@ -117,7 +135,9 @@ export default {
         this.cubeInit();
     },
     methods: {
-        onClickLeft() {},
+        closePop() {
+            this.cubeCount = this.cubeStop;
+        },
         cancleSelect() {
             this.selectorFlag = false;
         },
@@ -129,6 +149,7 @@ export default {
                 maxWidth: $(".selected-dim-org").width() - 40
             });
             this.switchIsOpen = false;
+            this.cubeInit();
         },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
@@ -138,276 +159,342 @@ export default {
             this.switchIsOpen = true;
         },
         cubeInit() {
+            this.cubeCount = 0;
             //当前操作人
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "main-persion"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "main-persion"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //业务中心
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "main-business-center"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "main-business-center"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //首页-总体情况
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "over-all-kpi"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "over-all-kpi"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //首页进度
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "over-all-progress"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "over-all-progress"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //首页业绩排名
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "over-all-ranking"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "over-all-ranking"
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
-                orderType: -1,
-                orderCol: 1
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 收入概览
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-view"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-view"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 全年预算进度
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-year"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-year"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 行业总收入
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-industry"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-industry"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-industryTotal"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-industryTotal"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 产品总收入
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-product"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-product"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-productTotal"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-productTotal"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 城市总收入
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-cityz"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-cityz"
+                    },
+                    orderType: -1,
+                    orderCol: 3
                 },
-                orderType: -1,
-                orderCol: 3
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //收入 城市自有收入
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "income-cityzy"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "income-cityzy"
+                    },
+                    orderType: -1,
+                    orderCol: 3
                 },
-                orderType: -1,
-                orderCol: 3
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //毛利 毛利概览
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "margin-all"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "margin-all"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //毛利 各城市毛利额情况
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "margin-city"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "margin-city"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 重点费用情况
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-main"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-main"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 费用结构
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-pie"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-pie"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 人力成本
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-rlcb"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-rlcb"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 广宣费用
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-gxfy"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-gxfy"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 物流成本
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-wlcb"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-wlcb"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 营销成本
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-yxcb"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-yxcb"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 差旅费用
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-clfy"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-clfy"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 差旅费用表格
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-clfy-chart"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-clfy-chart"
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
-                orderType: -1,
-                orderCol: 1
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 业务招待
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-ywzd"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-ywzd"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 业务招待表格
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-ywzd-chart"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-ywzd-chart"
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
-                orderType: -1,
-                orderCol: 1
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 日常开支
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-rckz"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-rckz"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //费用 日常开支图标
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "cost-rckz-chart"
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "cost-rckz-chart"
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
-                orderType: -1,
-                orderCol: 1
-            });
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //扣费毛利 概览
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "de-margin-all"
-                }
-            });
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "de-margin-all"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
             //扣费毛利 人均效能
             Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "de-margin-per"
-                }
-            });
-            setTimeout(() => {
-                this.$store.dispatch("updateData", {
-                    dataName: "isPopShow",
-                    data: false
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrg,
+                        name: "de-margin-per"
+                    }
+                },
+                (rs) => {
+                    this.cubeCount += 1;
                 });
-            }, 3000);
         }
     },
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
             this.selBarFlag = pIndex == 1 ? false : true;
-        },
-        "selectedTime.name": function () {
-            this.cubeInit();
-            this.switchIsOpen = false;
-        },
-        "selectedTime.year": function () {
-            this.cubeInit();
-            this.switchIsOpen = false;
-        },
-        "selectedTime.startMonth": function () {
-            this.cubeInit();
-            this.switchIsOpen = false;
-        },
-        "selectedTime.endMonth": function () {
-            this.cubeInit();
-            this.switchIsOpen = false;
         },
         selectedOrg() {
             this.cubeInit();
@@ -567,5 +654,10 @@ body>div,
 
 .border-bottom {
     border-bottom: 5px solid #e6e9f0;
+}
+
+.appPopstyle .van-popup {
+    background-color: rgba(255, 255, 255, 0);
+    overflow-y: hidden;
 }
 </style>

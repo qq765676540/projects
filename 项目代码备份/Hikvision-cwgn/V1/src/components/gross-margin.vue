@@ -1,183 +1,129 @@
 <template>
-  <div class="constitute">
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>毛利概览</b>
+<div class="constitute">
+    <div class="gross-view border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">毛利概览</span>
         </div>
-      </div>
-      <div class="content">
-        <div class="contentDesc">毛利额</div>
-        <easy-kpi :data="marginAll[0]"></easy-kpi>
-        <div class="flex flex-row">
-          <Progress class="flex flex-9" :percentage="marginAll[1]" :show-pivot="false"></Progress>
-          <div class="flex flex-1 barDesc">{{marginAll[1]}}%</div>
+        <div class="content-box flex flex-column flex-1">
+            <!-- <my-progress v-if="grossViewData" :data="grossViewData['kpi_1']" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="gross-view"></my-progress> -->
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin-left: 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_3" v-if="kpiData"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_4" v-if="kpiData"></easy-kpi>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-row contentCon">
-          <div class="flex flex-1">
-            <i class="desc">同比</i>
-            <b class="num">{{marginAll[2]}}%</b>
-          </div>
-        </div>
-        <!-- 毛利率 -->
-        <div class="contentDesc">毛利率</div>
-        <div class="flex flex-row contentCon">
-          <div class="flex flex-1">
-            <i class="mainnum">{{marginAll[3]}}%</i>
-          </div>
-          <div class="flex flex-1 height">
-            <i class="desc">上年同期</i>
-            <b class="num">{{marginAll[4]}}</b>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>各城市毛利额情况</b>
+    <div class="gross-city flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">各城市业绩情况</span>
         </div>
-      </div>
-      <div class="content grossBar">
-        <gross-margin-bar :data="marginBar"></gross-margin-bar>
-      </div>
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+            <gross-margin-bar v-if="marginBar" :data="marginBar"></gross-margin-bar>
+        </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
-import easyKpi from "./common/easy-kpi";
-import { Progress } from "vant";
+// import myProgress from "./common/progress-s1";
+import easyKpi from "./common/easy-kpi-ext";
 import grossMarginBar from "./grossMargin/gross-margin-bar";
 import accounting from "accounting";
 export default {
-  components: { easyKpi, Progress, grossMarginBar },
-  data() {
-    return {};
-  },
-  mounted() {},
-  computed: {
-    marginAll() {
-      var arr = [{ color: "#666666", size: "32px", value: 0 }, 0, 0, 0, 0];
-      if (this.$store.state["margin-all"].length) {
-        var data = this.$store.state["margin-all"][0];
-        arr = [
-          {
-            color: "#666666",
-            size: "40px",
-            value:
-              data[0].qText == "-"
-                ? 0
-                : accounting.formatNumber(parseInt(data[0].qText) / 10000)
-          },
-          data[1].qText == "-" || parseFloat(data[1].qText) <= 0
-            ? 0
-            : parseInt((parseFloat(data[1].qText) * 100).toFixed()),
-          data[2].qText == "-"
-            ? 0
-            : (parseFloat(data[2].qText) * 100).toFixed(1),
-          data[3].qText == "-"
-            ? 0
-            : (parseFloat(data[3].qText) * 100).toFixed(1),
-          data[4].qText == "-"
-            ? 0
-            : accounting.formatNumber(parseInt(data[4].qText) / 10000)
-        ];
-      }
-      return arr;
+    components: {
+        // myProgress,
+        grossMarginBar,
+        easyKpi
     },
-    marginBar() {
-      var arr = [];
-      if (this.$store.state["margin-city"].length) {
-        var data = this.$store.state["margin-city"];
-        data.forEach(i => {
-          arr.push({
-            value:
-              i[3].qText == "-"
-                ? 0
-                : accounting.formatNumber(parseInt(i[3].qText) / 10000),
-            name: i[0].qText,
-            growth:
-              i[4].qText == "-"
-                ? 0
-                : (parseFloat(i[4].qText) * 100).toFixed(1)
-          });
-        });
-      }
-      return arr;
-    }
-  },
-  methods: {}
+    data() {
+        return {};
+    },
+    mounted() {},
+    computed: {
+        kpiData() {
+            if (this.$store.state["over-all-kpi"].length > 0) {
+                let dataArr = this.$store.state["over-all-kpi"][0];
+                let kpiData = {
+                    kpi_3: [
+                        ['毛利额', dataArr[7].qText, ''],
+                        ['同比', dataArr[8].qText, ''],
+                        ['', '', '']
+                    ],
+                    kpi_4: [
+                        ['毛利率', dataArr[9].qText, ''],
+                        ['上年同期', dataArr[10].qText, ''],
+                        ['', '', '']
+                    ]
+                };
+                return kpiData;
+            }
+            return false;
+            // return demoData.homeData.overview
+        },
+        grossViewData() {
+            if (this.$store.state["margin-all"].length > 0) {
+                let dataArr = this.$store.state["margin-all"][0];
+                let data = {
+                    kpi_1: [{
+                        value: dataArr[2].qText
+                    }, {
+                        title: '毛利额',
+                        value: dataArr[1].qText
+                    }, {
+                        title: '同比',
+                        value: dataArr[3].qText
+                    }, {
+                        title: '',
+                        value: ''
+                    }, {
+                        title: '',
+                        value: ''
+                    }],
+                    kpi_2: [dataArr[4].qText, dataArr[5].qText]
+                };
+                return data
+            }
+            return false;
+        },
+        marginBar() {
+            var arr = [];
+            if (this.$store.state["margin-city"].length>0) {
+                var data = this.$store.state["margin-city"];
+                data.forEach(i => {
+                    arr.push({
+                        value: i[1].qText == "-" ?
+                            0 : accounting.formatNumber(parseInt(i[1].qText) / 10000),
+                        name: i[0].qText,
+                        growth: i[2].qText == "-" ?
+                            0 : (parseFloat(i[2].qText) * 100).toFixed(1)
+                    });
+                });
+                return arr;
+            }
+            return false;
+        }
+    },
+    methods: {}
 };
 </script>
 
 <style scoped>
 .constitute {
-  width: 100%;
-  overflow-y: scroll !important;
-  background-color: #dddddd;
-  flex-direction: column;
+    width: 100%;
+    overflow-y: scroll !important;
 }
-.overCon {
-  width: 100%;
-  background-color: #fff;
-  margin: 4px 0;
-  padding: 6px 4%;
-  height: auto;
+
+.gross-view {
+    min-height: 190px;
 }
-.overCon > .title {
-  font-size: 16px;
-  line-height: 30px;
-  width: 100%;
-  text-align: left;
+
+.income-city {
+    min-height: 400px;
 }
-.sign {
-  display: inline-block;
-  width: 6px;
-  height: 16px;
-  background-color: #29a6ff;
-  margin: 3px 4px 0 0;
-}
-.overCon .content {
-  text-align: left;
-}
-.overCon .content .contentDesc {
-  margin: 12px 0 0 4px;
-}
-.contentCon {
-  padding-bottom: 5px;
-}
-.desc {
-  font-style: normal;
-  color: #999999;
-}
-.num {
-  font-style: normal;
-  color: #666666;
-  padding-left: 4px;
-}
-.height .num {
-  line-height: 52px;
-}
-.height .desc {
-  line-height: 52px;
-}
-.barDesc {
-  position: relative;
-  top: -7px;
-  left: 7px;
-}
-.margin10 {
-  margin: 10px;
-}
-.mainnum {
-  font-size: 40px;
-  font-style: normal;
-  line-height: 52px;
-}
-.grossBar {
-  min-height: 80px;
-}
+
 </style>

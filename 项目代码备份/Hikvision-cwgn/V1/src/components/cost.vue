@@ -1,73 +1,69 @@
 <template>
   <div class="constitute">
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>重点费用情况</b>
-        </div>
+    <div class="cost-view border-bottom flex flex-column">
+      <div class="sub-title">
+          <div class="sub-title-icon"></div>
+          <span class="sub-title-name">重点费用情况</span>
       </div>
-      <div class="content flex flex-column overall">
+      <div class="content flex flex-column overall" style="padding: 0px 5px 0px 5px;">
         <div class="flex flex-1 flex-row">
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">人力成本</div>
-            <div class="conNum">{{costAll[0]}}</div>
-            <div class="warning">{{costAll[1]}}</div>
-            <div class="conDesc">同比:{{costAll[2]}}%</div>
+            <div class="flex-1 conTitle">人力成本</div>
+            <div class="flex-1 conNum">{{costAll[0]}}</div>
+            <div class="flex-1 warning">{{costAll[1]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[2]}}%</div>
           </div>
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">业务招待</div>
-            <div class="conNum">{{costAll[3]}}</div>
-            <div class="warning">{{costAll[4]}}</div>
-            <div class="conDesc">同比:{{costAll[5]}}</div>
+            <div class="flex-1 conTitle">业务招待</div>
+            <div class="flex-1 conNum">{{costAll[3]}}</div>
+            <div class="flex-1 warning">{{costAll[4]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[5]}}</div>
           </div>
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">差旅支出</div>
-            <div class="conNum">{{costAll[6]}}</div>
-            <div class="warning">{{costAll[7]}}</div>
-            <div class="conDesc">同比:{{costAll[8]}}</div>
+            <div class="flex-1 conTitle">差旅支出</div>
+            <div class="flex-1 conNum">{{costAll[6]}}</div>
+            <div class="flex-1 warning">{{costAll[7]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[8]}}</div>
           </div>
         </div>
         <div class="flex flex-1 flex-row">
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">物流成本</div>
-            <div class="conNum">{{costAll[9]}}</div>
-            <div class="warning">{{costAll[10]}}</div>
-            <div class="conDesc">同比:{{costAll[11]}}</div>
+            <div class="flex-1 conTitle">物流成本</div>
+            <div class="flex-1 conNum">{{costAll[9]}}</div>
+            <div class="flex-1 warning">{{costAll[10]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[11]}}</div>
           </div>
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">市内交通</div>
-            <div class="conNum">{{costAll[12]}}</div>
-            <div class="warning">{{costAll[13]}}</div>
-            <div class="conDesc">同比:{{costAll[14]}}</div>
+            <div class="flex-1 conTitle">市内交通</div>
+            <div class="flex-1 conNum">{{costAll[12]}}</div>
+            <div class="flex-1 warning">{{costAll[13]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[14]}}</div>
           </div>
           <div class="flex flex-1 flex-column con">
-            <div class="conTitle">退货拆解</div>
-            <div class="conNum">{{costAll[15]}}</div>
-            <div class="warning">{{costAll[16]}}</div>
-            <div class="conDesc">同比:{{costAll[17]}}</div>
+            <div class="flex-1 conTitle">退货拆解</div>
+            <div class="flex-1 conNum">{{costAll[15]}}</div>
+            <div class="flex-1 warning">{{costAll[16]}}</div>
+            <div class="flex-1 conDesc">同比:{{costAll[17]}}</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>费用结构</b>
-        </div>
+    <div class="cost-structure border-bottom flex flex-column">
+      <div class="sub-title">
+          <div class="sub-title-icon"></div>
+          <span class="sub-title-name">费用结构</span>
       </div>
       <div class="content">
         <cost-card :data="pieData"></cost-card>
       </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>详情页</b>
-          <div class="selection" @click="selectedHandle">{{selected}}</div>
-        </div>
+    <div class="cost-detail flex flex-column">
+      <div class="sub-title">
+          <div class="sub-title-icon"></div>
+          <span class="sub-title-name">详情页</span>
+          <div class="flex flex-1 flex-justify-right">
+            <div class="selection" @click="selectedHandle">{{selected}}</div>
+          </div>
       </div>
       <div class="content">
         <div v-show="selected == '人力成本'" class="flex flex-column">
@@ -407,7 +403,7 @@ export default {
         var data = this.$store.state["cost-pie"];
         data.forEach(i => {
           arr.push({
-            value: i[1].qText == "-" ? 0 : parseInt(i[1].qText) / 10000,
+            value: i[1].qText,
             name: i[0].qText
           });
         });
@@ -804,48 +800,22 @@ export default {
 .constitute {
   width: 100%;
   overflow-y: scroll !important;
-  background-color: #dddddd;
-  flex-direction: column;
 }
-.overCon {
-  width: 100%;
-  background-color: #fff;
-  margin: 4px 0;
-  padding: 6px 4%;
-  height: auto;
+
+.cost-view {
+  min-height: 240px;
 }
-.overCon > .title {
-  font-size: 16px;
-  line-height: 30px;
-  width: 100%;
-  text-align: left;
+
+.cost-structure {
+  min-height: 310px;
 }
-.sign {
-  display: inline-block;
-  width: 6px;
-  height: 16px;
-  background-color: #29a6ff;
-  margin: 3px 4px 0 0;
+
+.cost-detail {
+  min-height: 190px;
 }
-.overCon .content {
-  text-align: left;
-}
-.overall {
-  text-align: center;
-}
-.con {
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-radius: 4px;
-  margin: 2px;
-  box-shadow: 2px 2px 8px #888888;
-}
-.con > div {
-  width: 100%;
-  text-align: center;
-}
+
 .selection {
-  float: right;
-  width: 120px;
+  width: 80px;
   height: 27px;
   border: 1px solid #29a6ff;
   background-color: #29a6ff;
@@ -854,7 +824,10 @@ export default {
   font-size: 12px;
   line-height: 27px;
   text-align: center;
+  margin-right: 8px;
+  margin-top: 2px;
 }
+
 .conTitle {
   font-size: 14px;
   line-height: 30px;
@@ -886,5 +859,16 @@ export default {
 }
 .margin4 {
   margin: 6px;
+}
+
+.con {
+  border: 1px solid rgba(0, 0, 0, 0);
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #e9e9e9, 2px 2px 5px #e9e9e9, 2px 2px 5px #e9e9e9,2px 2px 10px #e9e9e9; 
+}
+.con > div {
+  width: 100%;
+  text-align: center;
 }
 </style>

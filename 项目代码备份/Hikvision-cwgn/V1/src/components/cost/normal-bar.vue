@@ -109,7 +109,7 @@ export default {
             {
               data: value,
               type: "bar",
-              color: "rgba(206,19,28,0.6)",
+              color: "rgba(20,149,235,1)",
             }
           ]
         };

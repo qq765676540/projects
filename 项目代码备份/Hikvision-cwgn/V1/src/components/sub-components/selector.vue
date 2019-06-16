@@ -23,7 +23,8 @@
           >{{item}}</span>
         </div>
       </div>
-      <div class="selector-btn flex flex-column flex-1">
+      <div class="selector-btn flex flex-1">
+        <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
         <div class="selector-btn-confirm active" @click="confirm">确定</div>
       </div>
     </div>
@@ -198,14 +199,24 @@ export default {
   font-size: 14px;
 }
 
+.selector .selector-btn .selector-btn-cancle {
+    position: absolute;
+    bottom: 10px;
+    height: 30px;
+    line-height: 30px;
+    width: 70px;
+    left: calc(50% - 70px);
+    border-radius: 0px;
+}
+
 .selector .selector-btn .selector-btn-confirm {
   position: absolute;
   bottom: 10px;
   height: 30px;
   line-height: 30px;
   width: 70px;
-  left: calc(50% - 35px);
-  border-radius: 20px;
+  left: 50%;
+  border-radius: 0px;
 }
 
 .selector .selector-btn-cancle.active,

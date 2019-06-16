@@ -21,7 +21,7 @@
       </div>
       <div class="flex flex-row flex-1 content">
         <div class="flex flex-1">完成率</div>
-        <div class="flex flex-3">{{this.selectedMsg.rate}}</div>
+        <div class="flex flex-3">{{this.selectedMsg.rate}}%</div>
       </div>
     </div>
   </div>
@@ -112,7 +112,7 @@ export default {
         var itemStyle = {
           normal: {},
           emphasis: {
-            color: "rgba(206,19,28,1)",
+            color: "rgba(20,149,235,1)",
             barBorderWidth: 1,
             shadowBlur: 10,
             shadowOffsetX: 0,
@@ -137,7 +137,7 @@ export default {
               type: "inside",
               xAxisIndex: [0],
               start: 0,
-              end: 100
+              end: 70
             },
             {
               type: "slider",
@@ -153,7 +153,7 @@ export default {
                 }
               },
               height: 5,
-              bottom: 55,
+              bottom: 30,
               handleStyle: {
                 color: "",
                 opacity: 0
@@ -191,14 +191,14 @@ export default {
               name: "自有收入",
               type: "bar",
               data: value,
-              color: "rgba(206,19,28,0.6)",
+              color: "rgba(20,149,235,0.6)",
               itemStyle: itemStyle
             },
             {
               name: "同比",
               type: "line",
               yAxisIndex: 1,
-              color: "#999999",
+              color: "orange",
               data: growth
             }
           ]

@@ -103,7 +103,7 @@ export default {
             {
               type: "inside",
               xAxisIndex: [0],
-              start: 0,
+              start: 50,
               end: 100
             },
             {
@@ -120,7 +120,7 @@ export default {
                 }
               },
               height: 5,
-              bottom: 55,
+              bottom: 40,
               handleStyle: {
                 color: "",
                 opacity: 0
@@ -171,14 +171,14 @@ export default {
             {
               name: "扣费毛利/人力成本",
               type: "bar",
-              color: "rgba(206,19,28,0.6)",
+              color: "#448DFF",
               data: value
             },
             {
               name: "同比",
               type: "line",
               yAxisIndex: 1,
-              color: "#999999",
+              color: "orange",
               data: growth
             }
           ]

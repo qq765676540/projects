@@ -56,7 +56,7 @@ class Cube {
          * qsAPP对象，Vue实例，formula，第N列指标排序默认倒序，时间过滤，组织机构过滤，返回数据名，回调函数 
          *  
          */
-    getData(qApp, vApp, opt) {
+    getData(qApp, vApp, opt, callback) {
 
         let cf = {
             formulaOpt: opt.formulaOpt || { time: '本月', org: ['集团'], name: '' },
@@ -98,6 +98,7 @@ class Cube {
                 vApp.$store.dispatch('updateData', vuexOpt);
                 qApp.destroySessionObject(reply.qInfo.qId);
 
+                (callback && typeof (callback) === "function") && callback(rows);
             })
 
         }

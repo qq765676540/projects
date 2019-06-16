@@ -113,7 +113,7 @@ export default {
             {
               type: "inside",
               xAxisIndex: [0],
-              start: 0,
+              start: 50,
               end: 100
             },
             {
@@ -130,7 +130,7 @@ export default {
                 }
               },
               height: 5,
-              bottom: 55,
+              bottom: 40,
               handleStyle: {
                 color: "",
                 opacity: 0
@@ -171,13 +171,13 @@ export default {
             {
               name: "人均费用",
               type: "bar",
-              color: "rgba(206,19,28,0.6)",
+              color: "#448DFF",
               data: value
             },
             {
               name: "同比",
               type: "line",
-              color: "#999999",
+              color: "orange",
               yAxisIndex: 1,
               data: growth
             }
