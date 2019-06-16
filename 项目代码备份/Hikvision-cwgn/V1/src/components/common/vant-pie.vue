@@ -6,7 +6,7 @@
             :rate="data.rate"
             :size="data.size"
             :speed="100"
-            :text="text"
+            :text="data.rate+'%'"
             :color="data.rate > 100 ? '#FF7D22' : '#0F8EE9'"
             :layer-color="'#E9EFF4'"
             :stroke-width="60"
@@ -17,7 +17,6 @@
 
 <script>
 import { Circle } from "vant";
-import jQuery from "jquery"
 
 export default {
   name: "vant-pie",
@@ -51,38 +50,14 @@ export default {
   },
   beforeCreate() {},
   mounted() {
+    $(`#${this.id} .van-circle__text`).css({ 'font-size': '14px' });
   },
   computed: {
-    text() {
-      // if (this.data.size) {
-        let content = this.currentRate.toFixed(0);
-        let fontSize = this.data.size.split("px")[0] / 2.7;
-        let color = "#0F8EE9";
-        if (this.data.rate * 1 > 100) {
-          color = "#FF7D22";
-        }
-        if (content === "100" && this.data.rate * 1 > 100) {
-          color = "#FF7D22";
-          content = this.data.rate;
-        }
-        let span = `
-            <span style="font-size: ${fontSize}px;">${content}</span>%
-        `;
-        jQuery(`#${this.id} .van-circle__text`).css({ color: color });
-        jQuery(`#${this.id} .van-circle__text`).html(span);
-        return content + "";
-      // }
-    }
   }
 };
 </script>
 
 <style scoped>
-.vant-pie >>> .van-circle__layer {
-  /* transform-origin: 50% !important;    */
-   /* transform-origin: 0px 0px !important; */
-
-}
 
 .vant-pie {
   font-size: 12px;

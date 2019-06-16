@@ -1,55 +1,30 @@
 <template>
 <div id="app">
-    <div class="nav-bar-top flex">
-        <div class="nav-bar-top_left fa fa-angle-left flex-1"></div>
-        <div class="nav-bar-top_title flex-10">总体业绩</div>
-        <div class="nav-bar-top_right flex-1"></div>
-    </div>
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
         <van-tab title="首页">
-            <!-- <keep-alive> -->
             <router-view v-if="active==0" class="view-container flex-container" />
-            <!-- </keep-alive> -->
         </van-tab>
         <van-tab title="收入">
-            <!-- <keep-alive> -->
             <router-view v-if="active==1" class="view-container flex-container" />
-            <!-- </keep-alive> -->
         </van-tab>
         <van-tab title="毛利">
-            <!-- <keep-alive> -->
             <router-view v-if="active==2" class="view-container flex-container" />
-            <!-- </keep-alive> -->
         </van-tab>
         <van-tab title="费用">
-            <!-- <keep-alive> -->
             <router-view v-if="active==3" class="view-container flex-container" />
-            <!-- </keep-alive> -->
         </van-tab>
         <van-tab title="扣费毛利">
-            <!-- <keep-alive> -->
             <router-view v-if="active==4" class="view-container flex-container" />
-            <!-- </keep-alive> -->
         </van-tab>
     </van-tabs>
     <div class="main-selection flex flex-row">
-        <!-- <i class="selection-btn flex-1" @click="showSelector"></i>
-      <van-switch
-        v-model="selectorFlag"
-        active-color="#07c160"
-        inactive-color="#f44"
-        size="15px"
-        class="selector-switch"
-      /> -->
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
         </div>
         <div class="selected-bar flex flex-row flex-5">
             <ul class="selected-dim-date flex flex-row flex-4">
                 <li class="name">时间:</li>
-                <li class="values textStyle flex-2" v-text="selectedTime.name=='其他'
-              ?(selectedTime.year+'年'+selectedTime.startMonth+'月至'+selectedTime.endMonth+'月')
-              :selectedTime.name"></li>
+                <li class="values textStyle flex-2" v-text="selectedTime.name=='其他'?(selectedTime.year+'年'+selectedTime.startMonth+'月至'+selectedTime.endMonth+'月'):selectedTime.name"></li>
             </ul>
             <ul class="selected-dim-org flex flex-row flex-3">
                 <li class="name">业务中心:</li>
@@ -179,20 +154,12 @@ export default {
                     name: "main-business-center"
                 }
             });
-            //首页总收入格
+            //首页-总体情况
             Cube.getData(parent.qApp, this, {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "over-all-top"
-                }
-            });
-            //首页费用格
-            Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrg,
-                    name: "over-all-btm"
+                    name: "over-all-kpi"
                 }
             });
             //首页进度
@@ -218,7 +185,7 @@ export default {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "income-all"
+                    name: "income-view"
                 }
             });
             //收入 全年预算进度
@@ -234,15 +201,14 @@ export default {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "income-hz"
+                    name: "income-industry"
                 }
             });
-            //收入 行业自有收入
             Cube.getData(parent.qApp, this, {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "income-hzy"
+                    name: "income-industryTotal"
                 }
             });
             //收入 产品总收入
@@ -250,15 +216,14 @@ export default {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "income-cz"
+                    name: "income-product"
                 }
             });
-            //收入 产品自有收入
             Cube.getData(parent.qApp, this, {
                 formulaOpt: {
                     time: this.selectedTime,
                     org: this.selectedOrg,
-                    name: "income-czy"
+                    name: "income-productTotal"
                 }
             });
             //收入 城市总收入
@@ -508,23 +473,13 @@ body>div,
 }
 
 .main-selection {
-    height: 40px;
-    line-height: 40px;
-    width: 100%;
     position: absolute;
-    top: 80px;
-    z-index: 100;
+    top: 44px;
+    height: 36px;
+    line-height: 36px;
+    width: 100vw;
     background-color: #eeeff3;
     padding-left: 6px;
-}
-
-.main-selection .filter {
-    font-size: 14px;
-    color: #333333;
-    cursor: pointer;
-    background: white;
-    border-top: 2px solid #f1f4fb;
-    border-bottom: 4px solid #f1f4fb;
 }
 
 .van-tabs__nav--line {
@@ -533,16 +488,19 @@ body>div,
 
 .sub-title {
     font-family: "PingFangSC-Medium";
-    /* font-weight: bold; */
     color: black;
     font-size: 16px;
     -webkit-box-align: end;
     text-indent: 4px;
-    width: 100%;
-    max-height: 30px;
+    height: 30px;
     line-height: 30px;
     margin-top: 3px;
     display: flex;
+    min-height: 30px;
+}
+
+.sub-title-name {
+    color: #333333;
 }
 
 .textStyle {
@@ -553,15 +511,10 @@ body>div,
 
 .sub-title-icon {
     width: 3px;
-    height: 16px;
-    line-height: 30px;
+    height: 14px;
+    background: #1d71f0;
     margin-left: 10px;
     margin-top: 8px;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-    background-color: #1d71f0;
-    border-radius: 1px;
 }
 
 .van-actionsheet {
@@ -610,5 +563,9 @@ body>div,
     position: absolute;
     top: 6px;
     left: 4px;
+}
+
+.border-bottom {
+    border-bottom: 5px solid #e6e9f0;
 }
 </style>

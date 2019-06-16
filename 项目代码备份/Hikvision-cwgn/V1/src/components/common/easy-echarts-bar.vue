@@ -86,42 +86,7 @@ export default {
             axisLabel: {
               interval: 0,
               align: "left",
-              color: "grey",
-              formatter: function(params) {
-                var res = "";
-                var myseries = thisData.y;
-                for (var j = 0; j < myseries.length; j++) {
-                  if (myseries[j] == params) {
-                    if (j == 0) {
-                      res += "{img1|}" + myseries[j];
-                    } else if (j == 1) {
-                      res += "{img2|}" + myseries[j];
-                    } else if (j == 2) {
-                      res += "{img3|}" + myseries[j];
-                    } else {
-                      res += j + ". " + myseries[j];
-                    }
-                  }
-                }
-                return res;
-              },
-              rich: {
-                img1: {
-                  backgroundColor: {
-                    image: "../no1.png"
-                  }
-                },
-                img2: {
-                  backgroundColor: {
-                    image: "../no2.png"
-                  }
-                },
-                img3: {
-                  backgroundColor: {
-                    image: "../no3.png"
-                  }
-                }
-              }
+              color: "grey"
             }
           },
           xAxis: [

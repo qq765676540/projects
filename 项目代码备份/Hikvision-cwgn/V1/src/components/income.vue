@@ -1,546 +1,312 @@
 <template>
-  <div class="constitute">
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>收入概览</b>
+<div class="constitute">
+    <div class="income-view border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">收入概览</span>
         </div>
-      </div>
-      <div class="content">
-        <div class="contentDesc">总收入</div>
-        <easy-kpi :data="incomeAll[0]"></easy-kpi>
-        <div class="flex flex-row">
-          <Progress class="flex flex-9" :percentage="incomeAll[1]" :show-pivot="false"></Progress>
-          <div class="flex flex-1 barDesc">{{incomeAll[1]}}%</div>
+        <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_1']" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="DsOaFaijf"></my-progress>
         </div>
-        <div class="flex flex-row contentCon">
-          <div class="flex flex-1">
-            <i class="desc">目标值</i>
-            <b class="num">{{incomeAll[2]}}</b>
-          </div>
-          <div class="flex flex-1">
-            <i class="desc">缺口值</i>
-            <b class="num">{{incomeAll[3]}}</b>
-          </div>
-          <div class="flex flex-1">
-            <i class="desc">同比</i>
-            <b class="num">{{incomeAll[4]}}%</b>
-          </div>
+        <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_2']" barBgcolor_i="#59D4FF" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="KdafsSIey"></my-progress>
         </div>
-        <div class="contentDesc">自有收入</div>
-        <easy-kpi :data="incomeAll[5]"></easy-kpi>
-        <div class="flex flex-row">
-          <Progress class="flex flex-9" :percentage="incomeAll[6]" :show-pivot="false"></Progress>
-          <div class="flex flex-1 barDesc">{{incomeAll[6]}}%</div>
-        </div>
-        <div class="flex flex-row contentCon">
-          <div class="flex flex-1">
-            <i class="desc">目标值</i>
-            <b class="num">{{incomeAll[7]}}</b>
-          </div>
-          <div class="flex flex-1">
-            <i class="desc">缺口值</i>
-            <b class="num">{{incomeAll[8]}}</b>
-          </div>
-          <div class="flex flex-1">
-            <i class="desc">同比</i>
-            <b class="num">{{incomeAll[9]}}%</b>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>全年预算进度</b>
+    <div class="income-budget border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">全年预算进度</span>
         </div>
-      </div>
-      <div class="content flex flex-column">
-        <div class="flex flex-1 flex-row">
-          <div class="flex flex-1 margin10">
-            <vant-pie :id="'pie-11'" :data="incomeYear[0]"></vant-pie>
-          </div>
-          <div class="flex flex-5 flex-column margin10">
-            <div>总收入</div>
-            <easy-kpi :data="incomeYear[1]"></easy-kpi>
-            <div class="flex flex-row">
-              <div class="flex flex-1">
-                <i class="desc">目标值</i>
-                <b class="num">{{incomeYear[2]}}</b>
-              </div>
-              <div class="flex flex-1">
-                <i class="desc">缺口值</i>
-                <b class="num">{{incomeYear[3]}}</b>
-              </div>
+        <div class="content-box flex flex-column flex-1" style="margin-top: 5px" v-if="incomeYear">
+            <div class="flex flex-1">
+                <div class="flex flex-2">
+                    <vant-pie :id="'pie-11'" :data="incomeYear[0]"></vant-pie>
+                </div>
+                <div class="flex flex-5 flex-column">
+                    <div class="flex flex-1">
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="titleName flex flex-1 flex-align-center">总收入</div>
+                            <div class="titleValue flex flex-1 flex-align-center">{{incomeYear[1]}}</div>
+                        </div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left">
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="subtitleName flex flex-1 flex-align-center">目标值</div>
+                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="subtitleName flex flex-1 flex-align-center">缺口值</div>
+                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[3]}}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="flex flex-1 flex-row">
-          <div class="flex flex-1 margin10">
-            <vant-pie :id="'pie-11'" :data="incomeYear[4]"></vant-pie>
-          </div>
-          <div class="flex flex-5 flex-column margin10">
-            <div>自有收入</div>
-            <easy-kpi :data="incomeYear[5]"></easy-kpi>
-            <div class="flex flex-row">
-              <div class="flex flex-1">
-                <i class="desc">目标值</i>
-                <b class="num">{{incomeYear[6]}}</b>
-              </div>
-              <div class="flex flex-1">
-                <i class="desc">缺口值</i>
-                <b class="num">{{incomeYear[7]}}</b>
-              </div>
+            <div class="flex flex-1">
+                <div class="flex flex-2">
+                    <vant-pie :id="'pie-11'" :data="incomeYear[4]"></vant-pie>
+                </div>
+                <div class="flex flex-5 flex-column">
+                    <div class="flex flex-1">
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="titleName flex flex-1 flex-align-center">自有收入</div>
+                            <div class="titleValue flex flex-1 flex-align-center">{{incomeYear[5]}}</div>
+                        </div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left">
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="subtitleName flex flex-1 flex-align-center">目标值</div>
+                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[6]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left">
+                            <div class="subtitleName flex flex-1 flex-align-center">缺口值</div>
+                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[7]}}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>行业分类</b>
+    <div class="income-industry border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">行业分类</span>
+            <div class="flex flex-1 flex-justify-right">
+                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="总收入"></van-tab>
+                    <van-tab title="自有收入"></van-tab>
+                </van-tabs>
+            </div>
         </div>
-      </div>
-      <div class="content">
-        <tabs
-          v-model="active"
-          type="card"
-          color="#0F8EE9"
-          title-active-color="#FFFFFF"
-          title-inactive-color="#0F8EE9"
-        >
-          <tab title="总收入">
-            <cost-table
-              :id="'hz'"
-              class="tableCon"
-              :headData="tradeTableAll.title"
-              :bodyData="tradeTableAll.row"
-            ></cost-table>
-          </tab>
-          <tab title="自有收入">
-            <cost-table
-              :id="'hzy'"
-              class="tableCon"
-              :headData="tradeTableSelf.title"
-              :bodyData="tradeTableSelf.row"
-            ></cost-table>
-          </tab>
-        </tabs>
-      </div>
-    </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>产品分类</b>
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+            <my-datatable v-if="industryData" id="industryData" :data="industryData[industryTabAtive]" :title="industryData[2]"></my-datatable>
         </div>
-      </div>
-      <div class="content">
-        <tabs
-          v-model="active"
-          type="card"
-          color="#0F8EE9"
-          title-active-color="#FFFFFF"
-          title-inactive-color="#0F8EE9"
-        >
-          <tab title="总收入">
-            <cost-table
-              :id="'cz'"
-              class="tableCon"
-              :headData="productTableAll.title"
-              :bodyData="productTableAll.row"
-            ></cost-table>
-          </tab>
-          <tab title="自有收入">
-            <cost-table
-              :id="'czy'"
-              class="tableCon"
-              :headData="productTableSelf.title"
-              :bodyData="productTableSelf.row"
-            ></cost-table>
-          </tab>
-        </tabs>
-      </div>
     </div>
-    <div class="overCon">
-      <div class="title">
-        <div>
-          <i class="sign"></i>
-          <b>各城市业绩情况</b>
+    <div class="income-product border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">产品分类</span>
+            <div class="flex flex-1 flex-justify-right">
+                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="总收入"></van-tab>
+                    <van-tab title="自有收入"></van-tab>
+                </van-tabs>
+            </div>
         </div>
-      </div>
-      <div class="content">
-        <tabs
-          v-model="active"
-          type="card"
-          color="#0F8EE9"
-          title-active-color="#FFFFFF"
-          title-inactive-color="#0F8EE9"
-        >
-          <tab title="总收入">
-            <income-all :data="cityAll"></income-all>
-          </tab>
-          <tab title="自有收入">
-            <income-self :data="citySelf"></income-self>
-          </tab>
-        </tabs>
-      </div>
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+            <my-datatable v-if="productData" id="productData" :data="productData[industryTabAtive]" :title="productData[2]"></my-datatable>
+        </div>
     </div>
-  </div>
+
+</div>
 </template>
 
 <script>
-import easyKpi from "./common/easy-kpi";
-import { Progress } from "vant";
 import vantPie from "./common/vant-pie";
-import { Tab, Tabs } from "vant";
+import {
+    Tab,
+    Tabs
+} from "vant";
 import incomeAll from "./income/income-all";
 import incomeSelf from "./income/income-self";
+import myProgress from "./common/progress-s1";
+import myDatatable from "./common/datatables";
 import costTable from "./cost/cost-table";
 import accounting from "accounting";
 export default {
-  components: {
-    easyKpi,
-    Progress,
-    vantPie,
-    Tab,
-    Tabs,
-    incomeAll,
-    incomeSelf,
-    costTable
-  },
-  data() {
-    return {
-      active: 0
-    };
-  },
-  mounted() {},
-  computed: {
-    incomeAll() {
-      var arr = [
-        { color: "#666666", size: "32px", value: 0 },
-        0,
-        0,
-        0,
-        0,
-        { color: "#666666", size: "32px", value: 0 },
-        0,
-        0,
-        0,
-        0
-      ];
-      if (this.$store.state["income-all"].length) {
-        var data = this.$store.state["income-all"][0];
-        arr = [
-          {
-            color: "#666666",
-            size: "32px",
-            value: data[0].qText == "-" ? 0 : parseInt(data[0].qText)/10000
-          },
-          data[1].qText == "-" ? 0 : parseFloat((parseFloat(data[1].qText) * 100).toFixed(1)),
-          data[2].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[2].qText)/10000),
-          data[3].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[3].qText)/10000),
-          data[4].qText == "-" ? 0 : parseFloat((parseFloat(data[4].qText) * 100).toFixed(1)),
-          {
-            color: "#666666",
-            size: "32px",
-            value: data[5].qText == "-" ? 0 : parseInt(data[5].qText)/10000
-          },
-          data[6].qText == "-" ? 0 : parseFloat((parseFloat(data[6].qText) * 100).toFixed(1)),
-          data[7].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[7].qText)/10000),
-          data[8].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[8].qText)/10000),
-          data[9].qText == "-" ? 0 : parseFloat((parseFloat(data[9].qText) * 100).toFixed(1)),
-        ];
-      }
-      return arr;
+    components: {
+        myProgress,
+        myDatatable,
+        vantPie,
+        Tab,
+        Tabs,
+        incomeAll,
+        incomeSelf,
+        costTable
     },
-    incomeYear() {
-      var arr = [
-        { size: "60px", rate: 0 },
-        { color: "#666666", size: "32px", value: 0 },
-        0,
-        0,
-        { size: "60px", rate: 0 },
-        { color: "#666666", size: "32px", value: 0 },
-        0,
-        0
-      ];
-      if (this.$store.state["income-year"].length) {
-        var data = this.$store.state["income-year"][0];
-        arr = [
-          { size: "60px", rate: data[0].qText == "-" ? 0 : parseInt(data[0].qText) },
-          { color: "#666666", size: "32px", value: data[1].qText == "-" ? 0 : parseInt(data[1].qText)/10000 },
-          data[2].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[2].qText)/10000),
-          data[3].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[3].qText)/10000),
-          { size: "60px", rate: parseInt(data[4].qText) },
-          { color: "#666666", size: "32px", value: parseInt(data[5].qText)/10000 },
-          data[6].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[6].qText)/10000),
-          data[7].qText == "-" ? 0 : accounting.formatNumber(parseInt(data[7].qText)/10000),
-        ];
-      }
-      return arr;
+    data() {
+        return {
+            active: 0,
+            industryTabAtive: 0
+        };
     },
-    tradeTableAll() {
-      var obj = {
-        title: [
-          {
-            name: "行业",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "总收入",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "占比",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "同比",
-            style: {},
-            rowStyle: {}
-          }
-        ],
-        row: []
-      };
-      if (this.$store.state["income-hz"].length) {
-        var data = this.$store.state["income-hz"];
-        var row = [];
-        data.forEach(i => {
-          row.push([
-            i[0].qText,
-            i[1].qText == "-" ? 0 : parseInt(i[1].qText/10000),
-            i[2].qText == "-" ? "0%" : (parseFloat(i[2].qText) * 100).toFixed(1)+ "%",
-            i[3].qText == "-" ? "0%" : (parseFloat(i[3].qText) * 100).toFixed(1)+ "%",
-          ]);
-        });
-        obj.row = row;
-      }
-      return obj;
+    mounted() {},
+    computed: {
+        incomeViewData() {
+            if (this.$store.state["income-view"].length > 0) {
+                let dataArr = this.$store.state["income-view"][0];
+                let data = {
+                    kpi_1: [{
+                        value: dataArr[2].qText
+                    }, {
+                        title: '总收入',
+                        value: dataArr[1].qText
+                    }, {
+                        title: '目标值',
+                        value: dataArr[3].qText
+                    }, {
+                        title: '缺口值',
+                        value: dataArr[4].qText
+                    }, {
+                        title: '同比',
+                        value: dataArr[5].qText
+                    }],
+                    kpi_2: [{
+                        value: dataArr[7].qText
+                    }, {
+                        title: '自有收入',
+                        value: dataArr[6].qText
+                    }, {
+                        title: '目标值',
+                        value: dataArr[8].qText
+                    }, {
+                        title: '缺口值',
+                        value: dataArr[9].qText
+                    }, {
+                        title: '同比',
+                        value: dataArr[10].qText
+                    }]
+                };
+                return data;
+            }
+            return false;
+        },
+        incomeYear() {
+            if (this.$store.state["income-year"].length) {
+                let data = this.$store.state["income-year"][0];
+                let arr = [{
+                        size: "60px",
+                        rate: data[0].qText
+                    },
+                    data[1].qText,
+                    data[2].qText,
+                    data[3].qText,
+                    {
+                        size: "60px",
+                        rate: data[4].qText
+                    },
+                    data[5].qText,
+                    data[6].qText,
+                    data[7].qText
+                ];
+                return arr;
+            }
+            return false;
+        },
+        industryData() {
+            if (this.$store.state["income-industry"].length>0 && this.$store.state["income-industryTotal"].length>0) {
+                let dataArr = this.$store.state["income-industryTotal"].concat(this.$store.state["income-industry"]);
+                let data = {
+                  0: [],
+                  1: [],
+                  2: ["行业","金额","占比","同比"]
+                };
+                dataArr.filter(v => {
+                  data[0].push([v[0].qText,v[1].qText,v[2].qText,v[3].qText]);
+                  data[1].push([v[0].qText,v[4].qText,v[5].qText,v[6].qText]);
+                });
+                return data;
+            }
+            return false;
+        },
+        productData() {
+            if (this.$store.state["income-product"].length>0 && this.$store.state["income-productTotal"].length>0) {
+                let dataArr = this.$store.state["income-productTotal"].concat(this.$store.state["income-product"]);
+                let data = {
+                  0: [],
+                  1: [],
+                  2: ["行业","金额","占比","同比"]
+                };
+                dataArr.filter(v => {
+                  data[0].push([v[0].qText,v[1].qText,v[2].qText,v[3].qText]);
+                  data[1].push([v[0].qText,v[4].qText,v[5].qText,v[6].qText]);
+                });
+                return data;
+            }
+            return false;
+        },
+        cityAll() {
+            var arr = [];
+            if (this.$store.state["income-cityz"].length) {
+                var data = this.$store.state["income-cityz"];
+                data.forEach(i => {
+                    arr.push({
+                        value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
+                        name: i[0].qText,
+                        growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
+                        rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
+                        nameTrue: i[2].qText,
+                        level: i[1].qText
+                    });
+                });
+            }
+            return arr;
+        },
+        citySelf() {
+            var arr = [];
+            if (this.$store.state["income-cityzy"].length) {
+                var data = this.$store.state["income-cityzy"];
+                data.forEach(i => {
+                    arr.push({
+                        value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
+                        name: i[0].qText,
+                        growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
+                        rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
+                        nameTrue: i[2].qText,
+                        level: i[1].qText
+                    });
+                });
+            }
+            return arr;
+        }
     },
-    tradeTableSelf() {
-      var obj = {
-        title: [
-          {
-            name: "行业",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "自有收入",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "占比",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "同比",
-            style: {},
-            rowStyle: {}
-          }
-        ],
-        row: []
-      };
-      if (this.$store.state["income-hzy"].length) {
-        var data = this.$store.state["income-hzy"];
-        var row = [];
-        data.forEach(i => {
-          row.push([
-            i[0].qText,
-            i[1].qText == "-" ? 0 : parseInt(i[1].qText/10000),
-            i[2].qText == "-" ? "0%" : (parseFloat(i[2].qText) * 100).toFixed(1)+ "%",
-            i[3].qText == "-" ? "0%" : (parseFloat(i[3].qText) * 100).toFixed(1)+ "%",
-          ]);
-        });
-        obj.row = row;
-      }
-      return obj;
-    },
-    productTableAll() {
-      var obj = {
-        title: [
-          {
-            name: "经销商标识",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "总收入",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "占比",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "同比",
-            style: {},
-            rowStyle: {}
-          }
-        ],
-        row: []
-      };
-      if (this.$store.state["income-cz"].length) {
-        var data = this.$store.state["income-cz"];
-        var row = [];
-        data.forEach(i => {
-          row.push([
-            i[0].qText,
-            i[1].qText == "-" ? 0 : parseInt(i[1].qText/10000),
-            i[2].qText == "-" ? "0%" : (parseFloat(i[2].qText) * 100).toFixed(1)+ "%",
-            i[3].qText == "-" ? "0%" : (parseFloat(i[3].qText) * 100).toFixed(1)+ "%",
-          ]);
-        });
-        obj.row = row;
-      }
-      return obj;
-    },
-    productTableSelf() {
-      var obj = {
-        title: [
-          {
-            name: "经销商标识",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "自有收入",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "占比",
-            style: {},
-            rowStyle: {}
-          },
-          {
-            name: "同比",
-            style: {},
-            rowStyle: {}
-          }
-        ],
-        row: []
-      };
-      if (this.$store.state["income-czy"].length) {
-        var data = this.$store.state["income-czy"];
-        var row = [];
-        data.forEach(i => {
-          row.push([
-            i[0].qText,
-            i[1].qText == "-" ? 0 : parseInt(i[1].qText/10000),
-            i[2].qText == "-" ? "0%" : (parseFloat(i[2].qText) * 100).toFixed(1)+ "%",
-            i[3].qText == "-" ? "0%" : (parseFloat(i[3].qText) * 100).toFixed(1)+ "%",
-          ]);
-        });
-        obj.row = row;
-      }
-      return obj;
-    },
-    cityAll() {
-      var arr = [];
-      if (this.$store.state["income-cityz"].length) {
-        var data = this.$store.state["income-cityz"];
-        data.forEach(i => {
-          arr.push({
-            value: i[3].qText == "-" ? 0 : parseInt(i[3].qText/10000),
-            name: i[0].qText,
-            growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
-            rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
-            nameTrue: i[2].qText,
-            level: i[1].qText
-          });
-        });
-      }
-      return arr;
-    },
-    citySelf() {
-      var arr = [];
-      if (this.$store.state["income-cityzy"].length) {
-        var data = this.$store.state["income-cityzy"];
-        data.forEach(i => {
-          arr.push({
-            value: i[3].qText == "-" ? 0 : parseInt(i[3].qText/10000),
-            name: i[0].qText,
-            growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
-            rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
-            nameTrue: i[2].qText,
-            level: i[1].qText
-          });
-        });
-      }
-      return arr;
-    }
-  },
-  methods: {}
+    methods: {}
 };
 </script>
 
 <style scoped>
-.tableCon {
-  margin-top: 5px;
-}
 .constitute {
-  width: 100%;
-  overflow-y: scroll !important;
-  background-color: #dddddd;
-  flex-direction: column;
+    width: 100%;
+    overflow-y: scroll !important;
 }
-.overCon {
-  width: 100%;
-  background-color: #fff;
-  margin: 4px 0;
-  padding: 6px 4%;
-  height: auto;
+
+.income-view {
+    min-height: 240px;
 }
-.overCon > .title {
-  font-size: 16px;
-  line-height: 30px;
-  width: 100%;
-  text-align: left;
+
+.income-budget {
+    min-height: 240px;
 }
-.sign {
-  display: inline-block;
-  width: 6px;
-  height: 16px;
-  background-color: #29a6ff;
-  margin: 3px 4px 0 0;
+
+.income-industry {
+    min-height: 300px;
 }
-.overCon .content {
-  text-align: left;
+
+.income-product {
+    min-height: 300px;
 }
-.overCon .content .contentDesc {
-  margin: 12px 0 0 4px;
+
+.titleName {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    margin-top: 3px;
 }
-.contentCon {
-  padding-bottom: 5px;
+
+.titleValue {
+    font-size: 22px;
+    font-weight: bold;
+    color: #222222;
 }
-.desc {
-  font-style: normal;
-  color: #999999;
+
+.subtitleName {
+    font-size: 12px;
+    color: #333333;
 }
-.num {
-  font-style: normal;
-  color: #666666;
-  padding-left: 4px;
-}
-.barDesc {
-  position: relative;
-  top: -7px;
-  left: 7px;
-}
-.margin10 {
-  margin: 10px;
+
+.subtitleValue {
+    font-size: 14px;
+    color: #222222;
 }
 </style>

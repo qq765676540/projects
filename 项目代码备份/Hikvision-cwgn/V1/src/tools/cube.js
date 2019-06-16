@@ -63,8 +63,8 @@ class Cube {
             orderType: opt.orderType || -1, //排序
             orderCol: opt.orderCol || 0, //第几列
             filtNull: opt.filtNull && true, //null过滤
-            qHeight: opt.qHeight || 100, //
-            qWidth: opt.qWidth || 100, //
+            qHeight: opt.qHeight || 300, //
+            qWidth: opt.qWidth || 30, //
             dataName: opt.dataName || opt.formulaOpt.name //最终数据的名字
         }
 

@@ -4,6 +4,7 @@ import router from './router/index'
 import store from './store/index'
 import 'lib-flexible/flexible.js'
 import "vant/lib/index.css";
+import "./assets/js/jquery.extends.js"
 
 import Vant from 'vant'
 Vue.use(Vant)
