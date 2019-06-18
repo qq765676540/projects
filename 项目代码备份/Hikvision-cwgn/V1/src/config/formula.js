@@ -71,7 +71,7 @@ function getFormula(opt) {
                 `=num(Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY)/ Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR),'0.0%')`,
                 `=num(Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)/Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY),'0.0%')`,
                 `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/10000,'#,##0')`,
-                `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/10000,'#,##0')`,
+                `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/fabs(Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)),'0.0%')`,
                 `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR),'0.0%')`,
                 `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<${timeStr},${orgStr},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY),'0.0%')`
             ]
@@ -99,12 +99,12 @@ function getFormula(opt) {
             qDimensions: ["='KPI'"],
             qMeasures: [
                 `=num(Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
-                `=round(Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB001'}>}ZFI_MBZ)*100)`,
+                `=round(Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB001'}>}ZFI_MBZ)*100,0.1)`,
                 `=num(Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB001'}>}ZFI_MBZ)/10000,'#,##0')`,
                 `=num((Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB001'}>}ZFI_MBZ)-Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR))/10000,'#,##0')`,
                 `=num((Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`,
                 `=num(Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
-                `=round(Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB002'}>}ZFI_MBZ)*100)`,
+                `=round(Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB002'}>}ZFI_MBZ)*100,0.1)`,
                 `=num(Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB002'}>}ZFI_MBZ)/10000,'#,##0')`,
                 `=num((Sum({<${timeYearEndDayStr},${orgStr},ZFI_XWLX={'GN-MB002'}>}ZFI_MBZ)-Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR))/10000,'#,##0')`,
                 `=num((Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`
@@ -431,37 +431,14 @@ function getFormula(opt) {
                 `=CALMONTH_T`
             ],
             qMeasures: [
-                `=Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)
-                /Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
-                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/
-                Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)
-                -(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)/
-                Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY))
-                )/fAbs((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)/
-                Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
-                `=Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY)
-                /Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
-                `=(Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)
-                -Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)
-                )/fAbs((Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
-                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)
-                -Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY))
-                /Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
-                `=(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)
-                -Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ))
-                -((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-
-                Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY))
-                )/fAbs(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-
-                Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
-                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)
-                -Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY)
-                )/Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY)`,
-                `=(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY))
-                /Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY)
-                )-((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY_LY))
-                /Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))
-                )/fAbs(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY_LY))
-                /Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)))`,
+                `=Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
+                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)-(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))/fAbs((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
+                `=Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
+                `=(Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY))/fAbs((Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
+                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ)`,
+                `=(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ))-((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))/fAbs(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFI_XWLX={'GN-RS001'}>}ZFI_MBZ_LY)))`,
+                `=(Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<ZDEPTCOD1={'00DM000000'}>}ZFI_FY))/Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY)`,
+                `=(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY))/Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY))-((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)))/fAbs(((Sum({<ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJML_LY)-Sum({<[/BIC/ZDEPTCOD1]={'00DM000000'}>}ZFI_FY_LY))/Sum({<ZFYXZ={'人力成本'},ZDEPTCOD1={'00DM000000'}>}ZFI_FY_LY)))`
             ]
         },
 

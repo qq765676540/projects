@@ -20,9 +20,9 @@
     <div class="gross-city flex flex-column">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
-            <span class="sub-title-name">各城市业绩情况</span>
+            <span class="sub-title-name">各城市毛利情况</span>
         </div>
-        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+        <div class="content-box flex flex-1 flex-column" style="margin: 5px 7px 5px 5px;">
             <gross-margin-bar v-if="marginBar" :data="marginBar"></gross-margin-bar>
         </div>
     </div>

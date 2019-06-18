@@ -88,7 +88,7 @@ export default {
 .costTr > th {
   border-left: 1px solid #aaaaaa;
   line-height: 30px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
 }

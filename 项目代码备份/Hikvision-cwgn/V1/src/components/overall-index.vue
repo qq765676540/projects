@@ -125,7 +125,7 @@ export default {
                     ],
                     kpi_7: [
                         ['扣费毛利', dataArr[16].qText, ''],
-                        ['上年同期', dataArr[17].qText, ''],
+                        ['同比', dataArr[17].qText, ''],
                         ['', '', '']
                     ],
                     kpi_8: [

@@ -138,5 +138,6 @@ export default {
 .normalBarCon {
   min-width: 100%;
   min-height: 160px;
+  margin-left: 20px;
 }
 </style>

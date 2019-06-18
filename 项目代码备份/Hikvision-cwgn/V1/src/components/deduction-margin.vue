@@ -26,16 +26,16 @@
             </div>
         </div>
         <div class="content">
-            <div v-show="selected == '人均收入'" class="flex flex-column">
+            <div v-if="selected == '人均收入'" class="flex flex-column">
                 <per-recive :update="update" :data="chartsData.perRecive"></per-recive>
             </div>
-            <div v-show="selected == '人均费用'" class="flex flex-column">
+            <div v-if="selected == '人均费用'" class="flex flex-column">
                 <per-cost :update="update" :data="chartsData.perCost"></per-cost>
             </div>
-            <div v-show="selected == '人均扣费毛利'" class="flex flex-column">
+            <div v-if="selected == '人均扣费毛利'" class="flex flex-column">
                 <deduction-margin-per :update="update" :data="chartsData.deMarginPer"></deduction-margin-per>
             </div>
-            <div v-show="selected == '扣费毛利/人力成本'" class="flex flex-column">
+            <div v-if="selected == '扣费毛利/人力成本'" class="flex flex-column">
                 <deduction-margin-cost :update="update" :data="chartsData.deMarginCost"></deduction-margin-cost>
             </div>
         </div>
@@ -90,7 +90,7 @@ export default {
                 let kpiData = {
                     kpi_7: [
                         ['扣费毛利', dataArr[16].qText, ''],
-                        ['上年同期', dataArr[17].qText, ''],
+                        ['同比', dataArr[17].qText, ''],
                         ['', '', '']
                     ],
                     kpi_8: [
@@ -147,7 +147,7 @@ export default {
                     obj.perRecive[index] = {};
                     obj.perRecive[index].name = i[0].qText;
                     obj.perRecive[index].value =
-                        i[1].qText == "-" ? 0 : parseFloat(i[1].qText / 10000).toFixed(3) - 0;
+                        i[1].qText == "-" ? 0 : parseFloat(i[1].qText / 10000).toFixed(0) - 0;
                     obj.perRecive[index].growth =
                         i[2].qText == "-" ?
                         0 :
@@ -155,7 +155,7 @@ export default {
                     obj.perCost[index] = [];
                     obj.perCost[index].name = i[0].qText;
                     obj.perCost[index].value =
-                        i[3].qText == "-" ? 0 : parseFloat(i[3].qText / 10000).toFixed(3) - 0;
+                        i[3].qText == "-" ? 0 : parseFloat(i[3].qText / 10000).toFixed(0) - 0;
                     obj.perCost[index].growth =
                         i[4].qText == "-" ?
                         0 :
@@ -163,7 +163,7 @@ export default {
                     obj.deMarginPer[index] = [];
                     obj.deMarginPer[index].name = i[0].qText;
                     obj.deMarginPer[index].value =
-                        i[5].qText == "-" ? 0 : parseFloat(i[5].qText / 10000).toFixed(3) - 0;
+                        i[5].qText == "-" ? 0 : parseFloat(i[5].qText / 10000).toFixed(0) - 0;
                     obj.deMarginPer[index].growth =
                         i[6].qText == "-" ?
                         0 :
@@ -171,7 +171,7 @@ export default {
                     obj.deMarginCost[index] = [];
                     obj.deMarginCost[index].name = i[0].qText;
                     obj.deMarginCost[index].value =
-                        i[7].qText == "-" ? 0 : parseFloat(i[7].qText / 10000).toFixed(3) - 0;
+                        i[7].qText == "-" ? 0 : parseFloat(i[7].qText / 10000).toFixed(0) - 0;
                     obj.deMarginCost[index].growth =
                         i[8].qText == "-" ?
                         0 :

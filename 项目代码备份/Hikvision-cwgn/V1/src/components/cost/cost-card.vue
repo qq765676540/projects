@@ -62,7 +62,7 @@ export default {
                     },
                     percent: {
                         align: "center",
-                        fontSize: 16,
+                        fontSize: 12,
                         padding: [9, 0]
                     },
                     value: {
@@ -82,7 +82,7 @@ export default {
                         trigger: 'item',
                         triggerOn: 'click',
                         formatter: v => {
-                            return `${v.name}<br>金额: ${v.value}<br>占比: ${v.percent}%`;
+                            return `${v.name}<br>金额: ${v.value}<br>占比: ${v.percent.toFixed(1)}%`;
                         },
                         extraCssText: 'text-align:left;'
                     },
@@ -109,9 +109,9 @@ export default {
                                 },
                                 formatter: function (params) {
                                     return (
-                                        "{value|" + params.value + "} {percent|" +
-                                        params.percent +
-                                        "%}\n{hr|}\n{name|" +
+                                        "{value|" + params.value + "} ({percent|" +
+                                        params.percent.toFixed(1) +
+                                        "%)}\n{hr|}\n{name|" +
                                         params.name +
                                         "}"
                                     );

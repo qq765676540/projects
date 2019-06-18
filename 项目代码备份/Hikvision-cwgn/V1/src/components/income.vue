@@ -6,10 +6,10 @@
             <span class="sub-title-name">收入概览</span>
         </div>
         <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
-            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_1']" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="DsOaFaijf"></my-progress>
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_1']" barBgcolor_i="#1495EB" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="DsOaFaijf"></my-progress>
         </div>
         <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
-            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_2']" barBgcolor_i="#59D4FF" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="KdafsSIey"></my-progress>
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_2']" barBgcolor_i="#59D4FF" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="KdafsSIey"></my-progress>
         </div>
     </div>
     <div class="income-budget border-bottom flex flex-column">
@@ -73,7 +73,7 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">行业分类</span>
             <div class="flex flex-1 flex-justify-right">
-                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                <van-tabs style="z-index: 0;width: 180px;margin-top: 3px" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
                     <van-tab title="总收入"></van-tab>
                     <van-tab title="自有收入"></van-tab>
                 </van-tabs>
@@ -88,22 +88,22 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">产品分类</span>
             <div class="flex flex-1 flex-justify-right">
-                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                <van-tabs style="z-index: 0;width: 180px;margin-top: 3px" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
                     <van-tab title="总收入"></van-tab>
                     <van-tab title="自有收入"></van-tab>
                 </van-tabs>
             </div>
         </div>
         <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
-            <my-datatable v-if="productData" id="productData" :data="productData[industryTabAtive]" :title="productData[2]"></my-datatable>
+            <my-datatable v-if="productData" id="productData" :data="productData[industryTabAtive]" :title="productData[2]" :scrollY="120"></my-datatable>
         </div>
     </div>
     <div class="income-city flex flex-column">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
-            <span class="sub-title-name">各城市业绩情况</span>
+            <span class="sub-title-name">各城市收入情况</span>
             <div class="flex flex-1 flex-justify-right">
-                <van-tabs style="z-index: 0;width: 180px;" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                <van-tabs style="z-index: 0;width: 180px;margin-top: 3px" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
                     <van-tab title="总收入"></van-tab>
                     <van-tab title="自有收入"></van-tab>
                 </van-tabs>
@@ -163,7 +163,7 @@ export default {
                         value: dataArr[3].qText
                     }, {
                         title: '缺口值',
-                        value: dataArr[4].qText
+                        value: dataArr[4].qText/1<0?0:dataArr[4].qText
                     }, {
                         title: '同比',
                         value: dataArr[5].qText
@@ -178,7 +178,7 @@ export default {
                         value: dataArr[8].qText
                     }, {
                         title: '缺口值',
-                        value: dataArr[9].qText
+                        value: dataArr[9].qText/1<0?0:dataArr[9].qText
                     }, {
                         title: '同比',
                         value: dataArr[10].qText
@@ -197,14 +197,14 @@ export default {
                     },
                     data[1].qText,
                     data[2].qText,
-                    data[3].qText,
+                    data[3].qText/1<0?0:data[3].qText,
                     {
                         size: "60px",
                         rate: data[4].qText
                     },
                     data[5].qText,
                     data[6].qText,
-                    data[7].qText
+                    data[7].qText/1<0?0:data[7].qText
                 ];
                 return arr;
             }
@@ -216,7 +216,7 @@ export default {
                 let data = {
                   0: [],
                   1: [],
-                  2: ["行业","金额","占比","同比"]
+                  2: ["分类","金额","占比","同比"]
                 };
                 dataArr.filter(v => {
                   data[0].push([v[0].qText,v[1].qText,v[2].qText,v[3].qText]);
@@ -232,7 +232,7 @@ export default {
                 let data = {
                   0: [],
                   1: [],
-                  2: ["行业","金额","占比","同比"]
+                  2: ["分类","金额","占比","同比"]
                 };
                 dataArr.filter(v => {
                   data[0].push([v[0].qText,v[1].qText,v[2].qText,v[3].qText]);
@@ -302,7 +302,7 @@ export default {
 }
 
 .income-product {
-    min-height: 120px;
+    min-height: 100px;
 }
 
 .income-city {
