@@ -153,7 +153,10 @@ export default {
 </script>
 
 <style scoped>
+.costCard {
+    margin-top: 30px;
+}
 .costCardCon {
-    min-height: 280px;
+    height: 280px;
 }
 </style>

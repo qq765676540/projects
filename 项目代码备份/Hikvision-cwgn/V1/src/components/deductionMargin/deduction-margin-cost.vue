@@ -189,13 +189,24 @@ export default {
                     series: [{
                         name: "扣费毛利/人力成本",
                         type: "bar",
-                        color: "#448DFF",
+                        color: "rgba(20,149,235,0.6)",
                         data: value,
                         label: {
                             show: true,
                             position: 'top',
                             color: '#666666',
                             formatter: '{c}'
+                        },
+                        itemStyle: {
+                            normal: {},
+                            emphasis: {
+                                color: ["rgba(20,149,235,1)"],
+                                barBorderWidth: 1,
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowOffsetY: 0,
+                                shadowColor: "rgba(0,0,0,0.5)"
+                            }
                         }
                     }]
                 };

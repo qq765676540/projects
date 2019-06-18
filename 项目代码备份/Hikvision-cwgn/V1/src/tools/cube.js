@@ -87,7 +87,7 @@ class Cube {
 
             // console.log(cf.dataName+'-qDimensions',params.qDimensions);
             // console.log(cf.dataName+'-qMeasures',params.qMeasures);
-
+   
             qApp.createCube(params, function(reply) {
                 let rows = reply.qHyperCube.qDataPages[0].qMatrix;
                 let vuexOpt = {

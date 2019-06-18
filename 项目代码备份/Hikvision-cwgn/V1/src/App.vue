@@ -113,7 +113,7 @@ export default {
     },
     computed: {
         popShow() {
-            if (this.cubeCount == this.cubeStop) {
+            if (this.cubeCount%29 == 0 ) {
                 return false;
             }
             return true;

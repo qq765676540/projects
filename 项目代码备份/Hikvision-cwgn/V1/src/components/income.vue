@@ -32,12 +32,12 @@
                     </div>
                     <div class="flex flex-1 flex-justify-left">
                         <div class="flex flex-1 flex-justify-left">
-                            <div class="subtitleName flex flex-1 flex-align-center">目标值</div>
-                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[2]}}</div>
+                            <div class="subtitleName flex flex-1 flex-align-center">目标值&nbsp;&nbsp;{{incomeYear[2]}}</div>
+                            <!-- <div class="subtitleValue flex flex-2 flex-align-center"></div> -->
                         </div>
                         <div class="flex flex-1 flex-justify-left">
-                            <div class="subtitleName flex flex-1 flex-align-center">缺口值</div>
-                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[3]}}</div>
+                            <div class="subtitleName flex flex-1 flex-align-center">缺口值&nbsp;&nbsp;{{incomeYear[3]}}</div>
+                            <!-- <div class="subtitleValue flex flex-2 flex-align-center"></div> -->
                         </div>
                     </div>
                 </div>
@@ -56,12 +56,12 @@
                     </div>
                     <div class="flex flex-1 flex-justify-left">
                         <div class="flex flex-1 flex-justify-left">
-                            <div class="subtitleName flex flex-1 flex-align-center">目标值</div>
-                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[6]}}</div>
+                            <div class="subtitleName flex flex-1 flex-align-center">目标值&nbsp;&nbsp;{{incomeYear[6]}}</div>
+                            <!-- <div class="subtitleValue flex flex-2 flex-align-center"></div> -->
                         </div>
                         <div class="flex flex-1 flex-justify-left">
-                            <div class="subtitleName flex flex-1 flex-align-center">缺口值</div>
-                            <div class="subtitleValue flex flex-2 flex-align-center">{{incomeYear[7]}}</div>
+                            <div class="subtitleName flex flex-1 flex-align-center">缺口值&nbsp;&nbsp;{{incomeYear[7]}}</div>
+                            <!-- <div class="subtitleValue flex flex-2 flex-align-center"></div> -->
                         </div>
                     </div>
                 </div>

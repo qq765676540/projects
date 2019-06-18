@@ -16,12 +16,12 @@
             <div class="flex flex-3">{{this.selectedMsg.grossMargin}}</div>
         </div>
         <div class="flex flex-row flex-1 content">
-            <div class="flex flex-1">同比</div>
-            <div class="flex flex-3">{{this.selectedMsg.growth}}%</div>
-        </div>
-        <div class="flex flex-row flex-1 content">
             <div class="flex flex-1">完成率</div>
             <div class="flex flex-3">{{this.selectedMsg.rate}}%</div>
+        </div>
+        <div class="flex flex-row flex-1 content">
+            <div class="flex flex-1">同比</div>
+            <div class="flex flex-3">{{this.selectedMsg.growth}}%</div>
         </div>
     </div>
 </div>

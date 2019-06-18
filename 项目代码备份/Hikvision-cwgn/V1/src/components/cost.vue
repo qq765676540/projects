@@ -70,21 +70,19 @@
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-11'" :data="humanCost[0]" v-if="humanCost"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
+                    </div>
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
+                        <vant-pie :id="'pie-12'" :data="humanCost[1]" v-if="humanCost"></vant-pie>
+                        <div class="center">全年预算进度</div>
                     </div>
                     <div class="flex flex-column flex-1">
-                        <vant-pie :id="'pie-12'" :data="humanCost[1]" v-if="humanCost"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="humanCost">
-                        <div>本期费用</div>
-                        <div>{{humanCost[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="humanCost">
-                        <div>同比</div>
-                        <div>{{humanCost[4]}}%</div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="humanCost">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{humanCost[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="humanCost">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{humanCost[4]}}%</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,21 +90,19 @@
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-21'" :data="gxcb[0]" v-if="gxcb"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
+                    </div>
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
+                        <vant-pie :id="'pie-22'" :data="gxcb[1]" v-if="gxcb"></vant-pie>
+                        <div class="center">全年预算进度</div>
                     </div>
                     <div class="flex flex-column flex-1">
-                        <vant-pie :id="'pie-22'" :data="gxcb[1]" v-if="gxcb"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="gxcb">
-                        <div>本期费用</div>
-                        <div>{{gxcb[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="gxcb">
-                        <div>同比</div>
-                        <div>{{gxcb[4]}}%</div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="gxcb">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{gxcb[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="gxcb">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{gxcb[4]}}%</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,66 +110,60 @@
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-31'" :data="wlcb[0]" v-if="wlcb"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
                     </div>
-                    <div class="flex flex-column flex-1">
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
                         <vant-pie :id="'pie-32'" :data="wlcb[1]" v-if="wlcb"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
+                        <div class="center">全年预算进度</div>
+                    </div>
+                <div class="flex flex-column flex-1">
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
+                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{wlcb[2]}}</div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
+                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{wlcb[4]}}%</div>
                     </div>
                 </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="wlcb">
-                        <div>本期费用</div>
-                        <div>{{wlcb[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="wlcb">
-                        <div>同比</div>
-                        <div>{{wlcb[4]}}%</div>
-                    </div>
                 </div>
             </div>
             <div v-if="selected == '营销成本'" class="flex flex-column" style="margin-top:10px">
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-41'" :data="yxcb[0]" v-if="yxcb"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
                     </div>
-                    <div class="flex flex-column flex-1">
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
                         <vant-pie :id="'pie-42'" :data="yxcb[1]" v-if="yxcb"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
+                        <div class="center">全年预算进度</div>
+                    </div>
+                <div class="flex flex-column flex-1">
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
+                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{yxcb[2]}}</div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
+                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{yxcb[4]}}%</div>
                     </div>
                 </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="yxcb">
-                        <div>本期费用</div>
-                        <div>{{yxcb[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="yxcb">
-                        <div>同比</div>
-                        <div>{{yxcb[4]}}%</div>
-                    </div>
                 </div>
             </div>
             <div v-if="selected == '差旅费用'" class="flex flex-column" style="margin-top:10px">
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-51'" :data="clfy[0]" v-if="clfy"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
                     </div>
-                    <div class="flex flex-column flex-1">
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
                         <vant-pie :id="'pie-52'" :data="clfy[1]" v-if="clfy"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
+                        <div class="center">全年预算进度</div>
+                    </div>
+                <div class="flex flex-column flex-1">
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
+                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{clfy[2]}}</div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
+                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{clfy[4]}}%</div>
                     </div>
                 </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="clfy">
-                        <div>本期费用</div>
-                        <div>{{clfy[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="clfy">
-                        <div>同比</div>
-                        <div>{{clfy[4]}}%</div>
-                    </div>
                 </div>
                 <div class="flex flex-1 flex-column" style="margin: 10px">
                     <my-datatable v-if="clfyTable" id="table1" :data="clfyTable.row" :title="clfyTable.title"></my-datatable>
@@ -183,22 +173,20 @@
                 <div class="flex flex-justify-center">
                     <div class="flex flex-column flex-1">
                         <vant-pie :id="'pie-61'" :data="ywzd[0]" v-if="ywzd"></vant-pie>
-                        <div class="center margin4">预算完成率</div>
+                        <div class="center">预算完成率</div>
                     </div>
-                    <div class="flex flex-column flex-1">
+                    <div class="flex flex-column flex-1" style="margin-right:20px">
                         <vant-pie :id="'pie-62'" :data="ywzd[1]" v-if="ywzd"></vant-pie>
-                        <div class="center margin4">全年预算进度</div>
+                        <div class="center">全年预算进度</div>
+                    </div>
+                <div class="flex flex-column flex-1">
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
+                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{ywzd[2]}}</div>
+                    </div>
+                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
+                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{ywzd[4]}}%</div>
                     </div>
                 </div>
-                <div class="flex">
-                    <div class="flex flex-1 flex-justify-center" v-if="ywzd">
-                        <div>本期费用</div>
-                        <div>{{ywzd[2]}}</div>
-                    </div>
-                    <div class="flex flex-1 flex-justify-center" v-if="ywzd">
-                        <div>同比</div>
-                        <div>{{ywzd[4]}}%</div>
-                    </div>
                 </div>
                 <div class="flex flex-1 flex-column" style="margin: 10px">
                     <my-datatable v-if="ywzdTable" id="table2" :data="ywzdTable.row" :title="ywzdTable.title"></my-datatable>
@@ -213,7 +201,7 @@
                     <div class="flex flex-1" v-if="rckz">同比增长{{rckz[2]}}%</div>
                     <div class="flex flex-1" v-if="rckz">全年预算进度{{rckz[3]}}%</div>
                 </div>
-                <normal-bar :update="update" :data="rckzTable"  v-if="rckzTable"></normal-bar>
+                <normal-bar :update="update" :data="rckzTable" v-if="rckzTable"></normal-bar>
             </div>
         </div>
     </div>
@@ -413,14 +401,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -454,14 +440,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -495,14 +479,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -536,14 +518,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -577,14 +557,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -602,7 +580,7 @@ export default {
         },
         clfyTable() {
             var table = {
-                title: ["姓名","金额","占比"],
+                title: ["姓名", "金额TOP5", "占比"],
                 row: []
             };
             if (this.$store.state["cost-clfy-chart"].length) {
@@ -614,7 +592,7 @@ export default {
                             i[1].qText == "-" ?
                             0 :
                             accounting.formatNumber(parseInt(i[1].qText) / 10000),
-                            i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1)+'%'
+                            i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1) + '%'
                         ]);
                     }
                 });
@@ -640,14 +618,12 @@ export default {
                 arr = [{
                         size: "60px",
                         rate: data[0].qText == "-" ?
-                            0 :
-                            (parseFloat(data[0].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[0].qText) * 100).toFixed(1) - 0
                     },
                     {
                         size: "60px",
                         rate: data[1].qText == "-" ?
-                            0 :
-                            (parseFloat(data[1].qText) * 100).toFixed(1) - 0
+                            0 : (parseFloat(data[1].qText) * 100).toFixed(1) - 0
                     },
                     data[2].qText == "-" ?
                     0 :
@@ -665,7 +641,7 @@ export default {
         },
         ywzdTable() {
             var table = {
-                title: ["姓名","金额","占比"],
+                title: ["姓名", "金额TOP5", "占比"],
                 row: []
             };
             if (this.$store.state["cost-ywzd-chart"].length) {
@@ -677,7 +653,7 @@ export default {
                             i[1].qText == "-" ?
                             0 :
                             accounting.formatNumber(parseInt(i[1].qText) / 10000),
-                            i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1)+'%'
+                            i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1) + '%'
                         ]);
                     }
                 });
@@ -744,7 +720,7 @@ export default {
 }
 
 .cost-structure {
-    min-height: 310px;
+    min-height: 220px;
 }
 
 .cost-detail {
