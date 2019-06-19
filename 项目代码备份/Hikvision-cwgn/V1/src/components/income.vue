@@ -68,21 +68,6 @@
             </div>
         </div>
     </div>
-    <div class="income-industry border-bottom flex flex-column">
-        <div class="sub-title">
-            <div class="sub-title-icon"></div>
-            <span class="sub-title-name">行业分类</span>
-            <div class="flex flex-1 flex-justify-right">
-                <van-tabs style="z-index: 0;width: 180px;margin-top: 3px" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
-                    <van-tab title="总收入"></van-tab>
-                    <van-tab title="自有收入"></van-tab>
-                </van-tabs>
-            </div>
-        </div>
-        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
-            <my-datatable v-if="industryData" id="industryData" :data="industryData[industryTabAtive]" :title="industryData[2]"></my-datatable>
-        </div>
-    </div>
     <div class="income-product border-bottom flex flex-column">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
@@ -96,6 +81,21 @@
         </div>
         <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
             <my-datatable v-if="productData" id="productData" :data="productData[industryTabAtive]" :title="productData[2]" :scrollY="120"></my-datatable>
+        </div>
+    </div>
+    <div class="income-industry border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">行业分类</span>
+            <div class="flex flex-1 flex-justify-right">
+                <van-tabs style="z-index: 0;width: 180px;margin-top: 3px" type="card" v-model="industryTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="总收入"></van-tab>
+                    <van-tab title="自有收入"></van-tab>
+                </van-tabs>
+            </div>
+        </div>
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
+            <my-datatable v-if="industryData" id="industryData" :data="industryData[industryTabAtive]" :title="industryData[2]"></my-datatable>
         </div>
     </div>
     <div class="income-city flex flex-column">
