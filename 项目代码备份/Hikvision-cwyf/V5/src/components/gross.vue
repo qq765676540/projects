@@ -66,11 +66,11 @@ export default {
                     data['R']['xAxisData'].push(v[0].qText);
                     data['R']['seriesData1'].push(v[1].qNum);
                     data['R']['seriesData2'].push(v[2].qNum);
-                    data['R']['seriesData3'].push(v[3].qNum);
+                    data['R']['seriesData3'].push(v[3].qNum=='NaN'?0:v[3].qNum);
                     data['U']['xAxisData'].push(v[0].qText);
                     data['U']['seriesData1'].push(v[4].qNum);
                     data['U']['seriesData2'].push(v[5].qNum);
-                    data['U']['seriesData3'].push(v[6].qNum);
+                    data['U']['seriesData3'].push(v[6].qNum=='NaN'?0:v[6].qNum);
                 });
                 return data[this.$store.state.currency];
             }
@@ -80,6 +80,7 @@ export default {
         deductionData() {
             if (this.$store.state['gross-deduction'].length > 0) {
                 let dataArr = this.$store.state['gross-deduction'];
+                let flag = this.$store.state['level'][0][2].qText;
                 let data = {
                     totalR: {
                         xAxis: [],
@@ -156,21 +157,21 @@ export default {
                 };
                 dataArr.filter(v => {
                     data['totalR']['xAxis'].push(v[0].qText);
-                    data['totalR']['series'][0]['data'].push(v[1].qNum);
-                    data['totalR']['series'][1]['data'].push(v[2].qNum);
-                    data['totalR']['series'][2]['data'].push(v[3].qNum);
-                    data['totalR']['series'][3]['data'].push(v[4].qNum);
+                    data['totalR']['series'][0]['data'].push(v[1].qNum=='NaN'?'-':v[1].qNum);
+                    data['totalR']['series'][1]['data'].push(v[2].qNum=='NaN'?'-':v[2].qNum);
+                    data['totalR']['series'][2]['data'].push(v[3].qNum=='NaN'?'-':v[3].qNum);
+                    data['totalR']['series'][3]['data'].push(v[4].qNum=='NaN'?'-':v[4].qNum);
                     data['totalU']['xAxis'].push(v[0].qText);
-                    data['totalU']['series'][0]['data'].push(v[5].qNum);
-                    data['totalU']['series'][1]['data'].push(v[6].qNum);
+                    data['totalU']['series'][0]['data'].push(v[5].qNum=='NaN'?'-':v[5].qNum);
+                    data['totalU']['series'][1]['data'].push(v[6].qNum=='NaN'?'-':v[6].qNum);
                     data['otherR']['xAxis'].push(v[0].qText);
-                    data['otherR']['series'][0]['data'].push(v[1].qNum);
-                    data['otherR']['series'][1]['data'].push(v[2].qNum);
+                    data['otherR']['series'][0]['data'].push(v[1].qNum=='NaN'?'-':v[1].qNum);
+                    data['otherR']['series'][1]['data'].push(v[2].qNum=='NaN'?'-':v[2].qNum);
                     data['otherU']['xAxis'].push(v[0].qText);
-                    data['otherU']['series'][0]['data'].push(v[5].qNum);
-                    data['otherU']['series'][1]['data'].push(v[6].qNum);
+                    data['otherU']['series'][0]['data'].push(v[5].qNum=='NaN'?'-':v[5].qNum);
+                    data['otherU']['series'][1]['data'].push(v[6].qNum=='NaN'?'-':v[6].qNum);
                 });
-                return data[(this.$store.state.dataScope=='T'?'total':'other')+this.$store.state.currency];
+                return data[(this.$store.state.dataScope=='T'||flag=='Y'?'total':'other')+this.$store.state.currency];
             }
             return false;
             // demoData.grossData.deduction

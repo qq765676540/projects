@@ -146,7 +146,8 @@ export default
         'org': {
             qDimensions: [
                 `=vRole`,
-                `=if(vOrgAdmin='Y',TXTSH_YWB,TXTSH_CBX)`
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`,
+                `=if(vOrgAdmin='Y',$(vYWB),if(ZFI_CBX<>'',ZFI_CBX))`
             ],
             qMeasures: [
                 `=sum(1)`
@@ -227,7 +228,7 @@ export default
         },
         'income-bp': {
             qDimensions: [
-                `=if(vOrgAdmin='Y',TXTSH_YWB,TXTSH_CBX)`
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`
             ],
             qMeasures: [
                 `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB001'}>}ZFI_MBZ)/10000)`,
@@ -240,8 +241,8 @@ export default
         },
         'income-bpDrill': {
             qDimensions: [
-                `=if(vOrgAdmin='Y',TXTSH_YWB,TXTSH_CBX)`,
-                `=if(vOrgAdmin='Y',TXTSH_CBX,TXTSH_CPXL)`
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`,
+                `=if(vOrgAdmin='Y',if(TXTSH_CBX<>'',TXTSH_CBX),if(TXTSH_CPXL<>'',TXTSH_CPXL))`
             ],
             qMeasures: [
                 `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB001'}>}ZFI_MBZ)/10000)`,
@@ -254,19 +255,19 @@ export default
         },
         'income-structure-bar': {
             qDimensions: [
-                `TXTMD_HY`
+                `=$(vHY)`
             ],
             qMeasures: [
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
-                `=round((Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
+                `=round((Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`,
-                `=round((Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`    
+                `=round((Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`    
             ]
         },
         'income-structureDrill-bar': {
             qDimensions: [
-                `TXTMD_HY`,
-                `=if(vOrgAdmin='Y',TXTSH_YWB,TXTSH_CBX)`
+                `=$(vHY)`,
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`
             ],
             qMeasures: [
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
@@ -277,7 +278,7 @@ export default
         },
         'income-structure-pie': {
             qDimensions: [
-                `TXTMD_HY`
+                `=$(vHY)`
             ],
             qMeasures: [
                 `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)/10000)`,
@@ -286,8 +287,8 @@ export default
         },
         'income-structureDrill-pie': {
             qDimensions: [
-                `TXTMD_HY`,
-                `=if(vOrgAdmin='Y',TXTSH_YWB,TXTSH_CBX)`
+                `=$(vHY)`,
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`
             ],
             qMeasures: [
                 `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)/10000)`,
@@ -310,7 +311,8 @@ export default
         'income-trend': {
             qDimensions: [
                 `=if(CALMONTH>=${l12sMonth} and CALMONTH<=${l12eMonth},CALMONTH)`,
-                `${orgFilterDim}`
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`,
+                `=if(vOrgAdmin='Y',if(ZFI_YWB<>'',ZFI_YWB),if(ZFI_CBX<>'',ZFI_CBX))`
             ],
             qMeasures: [
                 `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_PJSR)/Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}DLV_QTY))`,
@@ -320,7 +322,7 @@ export default
         },
         'gross-bp': {
             qDimensions: [
-                `${orgFilterDim}`
+                `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`
             ],
             qMeasures: [
                 `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB004'}>}ZFI_MBZ)/10000)`,
@@ -346,7 +348,7 @@ export default
         },
         'cost-rate': {
             qDimensions: [
-                `ZFYXZ`,
+                `=if(ZFYXZ<>'',ZFYXZ)`,
                 `=if(CALYEAR=left('${startMonth}',4),right(CALMONTH,2)&'月')`
             ],
             qMeasures: [

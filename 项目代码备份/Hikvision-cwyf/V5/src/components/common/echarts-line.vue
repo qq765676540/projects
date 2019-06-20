@@ -49,6 +49,7 @@ export default {
                     this.echartsIns.dispose();
                     this.echartsIns = echarts.init(document.getElementById(this.id));
                     this.setOption(this.option);
+                    this.echartsIns.resize();
                 }
             },
             deep: true

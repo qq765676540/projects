@@ -78,6 +78,9 @@ export default {
         orgTreeData() {
             if (this.$store.state.org.length > 0) {
                 let orgData = this.$store.state.org;
+                orgData = orgData.sort((a,b) => {
+                    return a[2].qText.charCodeAt() - b[2].qText.charCodeAt();
+                });
                 let treeData = [{
                     label: orgData[0][0].qText,
                     id: orgData[0][0].qText,

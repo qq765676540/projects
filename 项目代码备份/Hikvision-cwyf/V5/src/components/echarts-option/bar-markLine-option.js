@@ -1,5 +1,6 @@
 let option = {
     'income-structure': (data) => {
+        let zoomNum = parseInt(6/data.xAxis.length*100);
         return {
             color: ['#1495EB'],
             title:{
@@ -28,8 +29,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
-                    end: 100
+                    start: 0,
+                    end: zoomNum
                 },
                 {
                     type: 'slider',
@@ -103,6 +104,7 @@ let option = {
                     }
                 },
                 axisLabel: {
+                    rotate: 45,
                     formatter: '{value}%'
                 }
             },
@@ -111,6 +113,8 @@ let option = {
                 data: data.series,
                 label: {
                     show: true,
+                    rotate: 45,
+                    offset: [5,-5],
                     position: 'top',
                     color: '#666666',
                     formatter: '{c}%'
@@ -157,6 +161,7 @@ let option = {
         }
     },
     'income-structure-drill': (data) => {
+        let zoomNum = parseInt(6/data.xAxis.length*100);
         return {
             color: ['#1495EB'],
             title:{
@@ -185,8 +190,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 30,
-                    end: 100
+                    start: 0,
+                    end: zoomNum
                 },
                 {
                     type: 'slider',
@@ -255,6 +260,7 @@ let option = {
                     }
                 },
                 axisLabel: {
+                    rotate: 45,
                     formatter: '{value}%'
                 }
             },
@@ -263,6 +269,8 @@ let option = {
                 data: data.series,
                 label: {
                     show: true,
+                    rotate: 45,
+                    offset: [5,-5],
                     position: 'top',
                     color: '#666666',
                     formatter: '{c}%'

@@ -2,7 +2,7 @@ let option = {
     'income-bp': (data) => {
         let zoomNum = parseInt(6/data.xAxisData.length*100);
         return {
-            color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
                 containLabel: false,
                 left: '12%'
@@ -97,8 +97,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if(v.length > 4) {
-                                return (v/10000).toFixed(1) + '亿';
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -117,6 +117,7 @@ let option = {
                         }
                     },
                     axisLabel: {
+                        rotate: 45,
                         formatter: '{value}%'
                     }
                 }
@@ -145,7 +146,7 @@ let option = {
     'income-bp-drill': (data) => {
         let zoomNum = parseInt(6/data.xAxisData.length*100);
         return {
-            color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
                 left: '13%'
             },
@@ -153,7 +154,7 @@ let option = {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
@@ -234,8 +235,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if(v.length > 4) {
-                                return (v/10000).toFixed(1) + '亿';
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -254,6 +255,7 @@ let option = {
                         }
                     },
                     axisLabel: {
+                        rotate: 45,
                         formatter: '{value}%'
                     }
                 }
@@ -280,13 +282,17 @@ let option = {
         }
     },
     'income-branch': (data) => {
+        let zoomNum = parseInt(6/data.xAxisData.length*100);
         return {
             color: ['#addaf8', '#1495EB', '#ff6666'],
+            grid: {
+                containLabel: false
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
@@ -307,8 +313,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: data.dataZoom,
-                    end: 100
+                    start: 0,
+                    end: zoomNum
                 },
                 {
                     type: 'slider',
@@ -361,7 +367,14 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: '{value}',
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 },
                 {
@@ -377,6 +390,7 @@ let option = {
                         }
                     },
                     axisLabel: {
+                        rotate: 45,
                         formatter: '{value}%'
                     }
                 }
@@ -403,22 +417,23 @@ let option = {
         }
     },
     'gross-bp': (data) => {
+        let zoomNum = parseInt(6/data.xAxisData.length*100);
         return {
-            color: ['#e3e3e3', '#1495EB', '#ff6666'],
+            color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
-                left: '13%'
+                left: '12%'
             },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
                 ${v[1].seriesName + ': ' + v[1].value}<br>
                 ${v[0].seriesName + ': ' + v[0].value}<br>
-                ${'达成率: ' + (v[1].value / v[0].value * 100).toFixed(0) + '%'}<br>
+                ${'达成率: ' + (v[0].value == 0 ? 0:(v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
                 ${v[2].seriesName + ': ' + v[2].value + '%'}`;
                 },
                 extraCssText: 'text-align:left;'
@@ -435,7 +450,7 @@ let option = {
                     type: 'inside',
                     xAxisIndex: [0],
                     start: 0,
-                    end: 100
+                    end: zoomNum
                 },
                 {
                     type: 'slider',
@@ -491,7 +506,14 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: '{value}',
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 },
                 {
@@ -507,6 +529,7 @@ let option = {
                         }
                     },
                     axisLabel: {
+                        rotate: 45,
                         formatter: '{value}%'
                     }
                 }
@@ -539,7 +562,7 @@ let option = {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
@@ -624,7 +647,14 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: '{value}',
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 },
                 {
@@ -632,14 +662,13 @@ let option = {
                     splitLine: {
                         show: false
                     },
-                    // min: Math.min.apply(null, data.seriesData3),
-                    // max: Math.max.apply(null, data.seriesData3),
                     axisLine: {
                         lineStyle: {
                             color: '#888888'
                         }
                     },
                     axisLabel: {
+                        rotate: 45,
                         formatter: '{value}%'
                     }
                 }
@@ -695,7 +724,7 @@ let option = {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
@@ -756,8 +785,8 @@ let option = {
                         rotate: 45,
                         color: '#333333',
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if(v.length>6) {
+                                return v.substr(0,6)+'...';
                             }
                             return v;
                         }
@@ -776,7 +805,13 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 },
                 {
@@ -792,7 +827,13 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],
@@ -830,7 +871,7 @@ let option = {
                 trigger: 'axis',
                 triggerOn: 'click',
                 axisPointer: {
-                    type: 'shadow'
+                    type: 'none'
                 },
                 formatter: v => {
                     return `${v[0].name} <br>
@@ -905,7 +946,13 @@ let option = {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value}'
+                        rotate: 45,
+                        formatter: v => {
+                            if((v+'').length > 5) {
+                                return (v/10000).toFixed(0) + '亿';
+                            }
+                            return v;
+                        }
                     }
                 }
             ],

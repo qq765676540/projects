@@ -142,10 +142,14 @@ export default {
                 this.filterStyleActive = rs[0][2].qText == 'Y' ? '海外' : '整体';
                 this.orgLevel = rs[0][1].qText;
                 this.orgFlag = rs[0][2].qText;
-                this.dataScope = 'T';
-                if (this.orgFlag != 'Y') {
-                    this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
+                
+                if (this.orgFlag == 'Y') {
+                   this.dataScope = 'I';
+                }else {
+                   this.dataScope = 'T';
                 }
+
+                this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
             });
     },
     methods: {
@@ -262,7 +266,7 @@ export default {
                     qWidth: 5,
                     qHeight: 30,
                     orderType: -1,
-                    orderCol: 2
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -278,7 +282,7 @@ export default {
                     qWidth: 6,
                     qHeight: 600,
                     orderType: -1,
-                    orderCol: 3
+                    orderCol: 2
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -294,7 +298,7 @@ export default {
                     qWidth: 3,
                     qHeight: 30,
                     orderType: -1,
-                    orderCol: 2
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -310,7 +314,7 @@ export default {
                     qWidth: 4,
                     qHeight: 600,
                     orderType: -1,
-                    orderCol: 3
+                    orderCol: 2
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -325,7 +329,9 @@ export default {
                         name: "income-branch"
                     },
                     qWidth: 8,
-                    qHeight: 200
+                    qHeight: 200,
+                    orderType: -1,
+                    orderCol: 2
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -355,7 +361,9 @@ export default {
                         name: "gross-bp"
                     },
                     qWidth: 8,
-                    qHeight: 200
+                    qHeight: 200,
+                    orderType: -1,
+                    orderCol: 2
                 },
                 (rs) => {
                     this.cubeCount += 1;

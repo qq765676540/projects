@@ -372,14 +372,14 @@ export default {
                                 ['同比', dataArr[27].qText, '']
                             ];
                             kpiData['U']['kpi_2'] = [
-                                ['毛利额', dataArr[28].qText, ''],
-                                ['完成率', dataArr[29].qText, ''],
-                                ['同比', dataArr[30].qText, '']
+                                ['毛利额', dataArr[31].qText, ''],
+                                ['完成率', dataArr[32].qText, ''],
+                                ['同比', dataArr[33].qText, '']
                             ];
                             kpiData['U']['kpi_3'] = [
-                                ['毛利率', dataArr[31].qText, ''],
-                                ['去年同期', dataArr[32].qText, ''],
-                                ['同比', dataArr[33].qText, '']
+                                ['毛利率', dataArr[34].qText, ''],
+                                ['去年同期', dataArr[35].qText, ''],
+                                ['同比', dataArr[36].qText, '']
                             ];
                             kpiData['U']['kpi_4'] = [
                                 ['', '', 'none'],

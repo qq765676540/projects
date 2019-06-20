@@ -48,9 +48,9 @@ export default {
         this.$nextTick(() => {
             this.echartsIns = echarts.init(document.getElementById(this.id));
             this.setOption(this.option);
-            this.echartsIns.on('click', 'xAxis.category', function (params) {
-                _self.$emit("getDrillVal", params.value);
-                if (_self.drilldown[params.value] != undefined) {
+            this.echartsIns.on('click', 'xAxis.category', function (params) { 
+                if (_self.drilldown[params.value] != undefined && _self.goback == 'none') {
+                    _self.$emit("getDrillVal", params.value);
                     _self.echartsIns.clear();
                     _self.setOption(barMarkLineGetOption(_self.name + '-drill', _self.drilldown[params.value]));
                     _self.goback = params.value;
@@ -70,8 +70,8 @@ export default {
                     this.echartsIns = echarts.init(document.getElementById(this.id));
                     this.setOption(this.option);
                     this.echartsIns.on('click', 'xAxis.category', function (params) {
-                        _self.$emit("getDrillVal", params.value);
-                        if (_self.drilldown[params.value] != undefined) {
+                        if (_self.drilldown[params.value] != undefined && _self.goback == 'none') {
+                            _self.$emit("getDrillVal", params.value);
                             _self.echartsIns.clear();
                             _self.setOption(barMarkLineGetOption(_self.name + '-drill', _self.drilldown[params.value]));
                             _self.goback = params.value;

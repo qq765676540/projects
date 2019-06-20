@@ -114,7 +114,7 @@ export default {
                             if (vi[0].qText == v && vi[1].qText == vo) {
                                 data[v]['seriesData1'].push(vi[2].qNum);
                                 data[v]['seriesData2'].push(vi[3].qNum);
-                                data[v]['seriesData3'].push(vi[4].qNum);
+                                data[v]['seriesData3'].push(vi[4].qNum==-100?'NaN':vi[4].qNum);
                                 data[v]['seriesData4'].push(vi[5].qNum);
                             }
                         });
@@ -132,33 +132,33 @@ export default {
                 let data = {
                     kpi_1: [
                         ['人力成本', dataArr[1].qText, ''],
-                        ['预算消耗', dataArr[2].qText, ''],
-                        ['同比', dataArr[3].qText, '']
+                        ['预算消耗', dataArr[3].qText, ''],
+                        ['同比', dataArr[2].qText, '']
                     ],
                     kpi_2: [
                         ['差旅费用', dataArr[4].qText, ''],
-                        ['预算消耗', dataArr[5].qText, ''],
-                        ['同比', dataArr[6].qText, '']
+                        ['预算消耗', dataArr[6].qText, ''],
+                        ['同比', dataArr[5].qText, '']
                     ],
                     kpi_3: [
                         ['检测认证', dataArr[7].qText, ''],
-                        ['预算消耗', dataArr[8].qText, ''],
-                        ['同比', dataArr[9].qText, '']
+                        ['预算消耗', dataArr[9].qText, ''],
+                        ['同比', dataArr[8].qText, '']
                     ],
                     kpi_4: [
                         ['研发领料', dataArr[10].qText, ''],
-                        ['预算消耗', dataArr[11].qText, ''],
-                        ['同比', dataArr[12].qText, '']
+                        ['预算消耗', dataArr[12].qText, ''],
+                        ['同比', dataArr[11].qText, '']
                     ],
                     kpi_5: [
                         ['退货拆解', dataArr[13].qText, ''],
-                        ['预算消耗', dataArr[14].qText, ''],
-                        ['同比', dataArr[15].qText, '']
+                        ['预算消耗', dataArr[15].qText, ''],
+                        ['同比', dataArr[14].qText, '']
                     ],
                     kpi_6: [
                         ['模具手板', dataArr[16].qText, ''],
-                        ['预算消耗', dataArr[17].qText, ''],
-                        ['同比', dataArr[18].qText, '']
+                        ['预算消耗', dataArr[18].qText, ''],
+                        ['同比', dataArr[17].qText, '']
                     ]
                 };
                 return data;
@@ -194,6 +194,7 @@ export default {
                     data['series'][1]['data'].push(v[2].qNum);
                     data['series'][2]['data'].push(v[3].qNum);
                 });
+                data['xAxis'].sort();
                 // console.log('YCQ日志记录:标识->',data);
                 return data;
             }

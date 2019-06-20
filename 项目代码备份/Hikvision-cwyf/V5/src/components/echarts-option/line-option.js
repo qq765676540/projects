@@ -1,3 +1,5 @@
+import Tools from "../../tools/tools";
+var toolsBean = new Tools();
 let option = {
     'income-trend': (data) => {
         return {
@@ -85,12 +87,44 @@ let option = {
                     lineStyle: {
                         color: '#888888'
                     }
+                },
+                axisLabel: {
+                    rotate: 45
                 }
             },
             series: data.series
         }
     },
     'gross-deduction': (data) => {
+        let arr = toolsBean.deepClone(data);
+        $.each( arr.series , (i,v) => {
+            $.each(v.data, (index,val) => {
+                if(val == '-') {
+                    arr.series[i].data.splice(index,1,50);
+                }
+            });
+        });
+        let temp = data.series.length>2?(((arr.series[0].data).concat(arr.series[1].data)).concat(arr.series[2].data)).concat(arr.series[3].data):(arr.series[0].data).concat(arr.series[1].data);
+        let min = Math.min.apply(null, temp)-10<0?0:Math.min.apply(null, temp)-10;
+        let max = Math.max.apply(null, temp)+10;
+        // console.log(min,max,arr);
+        let legend = data.series.length>2? [
+            '上年毛利率',
+            '本年毛利率',
+            {
+                name: '上年扣费毛利率',
+                icon: "image://" + require("@/assets/images/main/dasheds2.png"),
+                itemHeight: 6
+            },
+            {
+                name: '本年扣费毛利率',
+                icon: "image://" + require("@/assets/images/main/dasheds3.png"),
+                itemHeight: 6
+            }
+        ]:[
+            '上年毛利率',
+            '本年毛利率'
+        ];
         return {
             color: ['#9fd3f7', '#1495EB', '#d391b8', '#ad4584'],
             title: {
@@ -146,20 +180,7 @@ let option = {
                 }
             ],
             legend: {
-                data: [
-                    '上年毛利率',
-                    '本年毛利率',
-                    {
-                        name: '上年扣费毛利率',
-                        icon: "image://" + require("@/assets/images/main/dasheds2.png"),
-                        itemHeight: 6
-                    },
-                    {
-                        name: '本年扣费毛利率',
-                        icon: "image://" + require("@/assets/images/main/dasheds3.png"),
-                        itemHeight: 6
-                    }
-                ],
+                data: legend,
                 left: 'right',
                 itemWidth: 16,
                 itemHeight: 6
@@ -177,8 +198,10 @@ let option = {
                     }
                 }
             },
-            yAxis: {
+            yAxis: [{
                 type: 'value',
+                min: min,
+                max: max,
                 splitLine: {
                     show: false
                 },
@@ -187,7 +210,7 @@ let option = {
                         color: '#888888'
                     }
                 }
-            },
+            }],
             series: data.series
         }
     },
@@ -265,7 +288,7 @@ let option = {
                     }
                 }
             },
-            yAxis: {
+            yAxis: [{
                 type: 'value',
                 splitLine: {
                     show: false
@@ -274,8 +297,17 @@ let option = {
                     lineStyle: {
                         color: '#888888'
                     }
+                },
+                axisLabel: {
+                    rotate: 45,
+                    formatter: v => {
+                        if((v+'').length > 5) {
+                            return (v/10000).toFixed(0) + '亿';
+                        }
+                        return v;
+                    }
                 }
-            },
+            }],
             series: data.series
         }
     },

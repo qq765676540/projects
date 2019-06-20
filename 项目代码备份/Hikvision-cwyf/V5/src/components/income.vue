@@ -210,11 +210,11 @@ export default {
                 };
                 dataArr1.filter(v => {
                     data['R']['bar']['xAxis'].push(v[0].qText);
-                    data['R']['bar']['series'].push(v[1].qNum);
-                    data['R']['bar']['avg'].push(v[2].qNum);
+                    data['R']['bar']['series'].push(v[1].qNum=='NaN'?0:v[1].qNum);
+                    data['R']['bar']['avg'].push(v[2].qNum=='NaN'?0:v[2].qNum);
                     data['U']['bar']['xAxis'].push(v[0].qText);
-                    data['U']['bar']['series'].push(v[1].qNum);
-                    data['U']['bar']['avg'].push(v[2].qNum);
+                    data['U']['bar']['series'].push(v[3].qNum=='NaN'?0:v[3].qNum);
+                    data['U']['bar']['avg'].push(v[4].qNum=='NaN'?0:v[4].qNum);
                 });
                 let Rdrill = {};
                 let Udrill = {};
@@ -230,11 +230,11 @@ export default {
                     dataArr2.filter(vi => {
                         if (vo == vi[0].qText) {
                             Rdrill[vo]['xAxis'].push(vi[1].qText);
-                            Rdrill[vo]['series'].push(vi[2].qNum);
-                            Rdrill[vo]['avg'].push(vi[3].qNum);
+                            Rdrill[vo]['series'].push(vi[2].qNum=='NaN'?0:vi[2].qNum);
+                            Rdrill[vo]['avg'].push(vi[3].qNum=='NaN'?0:vi[3].qNum);
                             Udrill[vo]['xAxis'].push(vi[1].qText);
-                            Udrill[vo]['series'].push(vi[4].qNum);
-                            Udrill[vo]['avg'].push(vi[5].qNum);
+                            Udrill[vo]['series'].push(vi[4].qNum=='NaN'?0:vi[4].qNum);
+                            Udrill[vo]['avg'].push(vi[5].qNum=='NaN'?0:vi[5].qNum);
                         }
                     });
                 });
@@ -299,26 +299,24 @@ export default {
                         xAxisData: [],
                         seriesData1: [],
                         seriesData2: [],
-                        seriesData3: [],
-                        dataZoom: (100 - parseInt(7 / dataArr.length * 100))
+                        seriesData3: []
                     },
                     U: {
                         xAxisData: [],
                         seriesData1: [],
                         seriesData2: [],
-                        seriesData3: [],
-                        dataZoom: (100 - parseInt(7 / dataArr.length * 100))
+                        seriesData3: []
                     }
                 };
                 dataArr.filter(v => {
                     data['R']['xAxisData'].push(v[0].qText);
                     data['R']['seriesData1'].push(v[1].qNum == '-' ? 0 : v[1].qNum);
                     data['R']['seriesData2'].push(v[2].qNum == '-' ? 0 : v[2].qNum);
-                    data['R']['seriesData3'].push(v[3].qNum == '-' ? 0 : v[3].qNum);
+                    data['R']['seriesData3'].push(v[3].qNum == '-' || v[3].qNum == 'NaN'? 0 : v[3].qNum);
                     data['U']['xAxisData'].push(v[0].qText);
                     data['U']['seriesData1'].push(v[4].qNum == '-' ? 0 : v[4].qNum);
                     data['U']['seriesData2'].push(v[5].qNum == '-' ? 0 : v[5].qNum);
-                    data['U']['seriesData3'].push(v[6].qNum == '-' ? 0 : v[6].qNum);
+                    data['U']['seriesData3'].push(v[6].qNum == '-' || v[6].qNum == 'NaN'? 0 : v[6].qNum);
                 });
                 return data[this.$store.state.currency];
             }
@@ -329,37 +327,45 @@ export default {
             if (this.$store.state['income-trend'].length > 0) {
                 let dataArr = this.$store.state['income-trend'];
                 let legend = [];
+                let legendDis = [];
                 let xAxis = [];
                 dataArr.filter(v => {
-                    legend.push(v[1].qText);
+                    legend.push(v[2].qText+'|'+v[1].qText);
                     xAxis.push(v[0].qText);
                 });
                 legend = Array.from(new Set(legend));
                 xAxis = Array.from(new Set(xAxis));
+                legend = legend.sort((a,b) => {
+                    return a.split('|')[0].charCodeAt() - b.split('|')[0].charCodeAt();
+                });
+                xAxis = xAxis.sort();
+                legend.filter(v => {
+                    legendDis.push(v.split('|')[1]);
+                });
                 let data = {
                     qtyR: {
-                        legend: legend,
+                        legend: legendDis,
                         xAxis: xAxis,
                         series: []
                     },
                     qtyU: {
-                        legend: legend,
+                        legend: legendDis,
                         xAxis: xAxis,
                         series: []
                     },
                     amountR: {
-                        legend: legend,
+                        legend: legendDis,
                         xAxis: xAxis,
                         series: []
                     },
                     amountU: {
-                        legend: legend,
+                        legend: legendDis,
                         xAxis: xAxis,
                         series: []
                     }
                 };
 
-                legend.filter(v => {
+                legendDis.filter(v => {
                     let qtyRtemp = {};
                     let qtyUtemp = {};
                     let amountRtemp = {};
@@ -379,10 +385,10 @@ export default {
                     xAxis.filter(vo => {
                         dataArr.filter(vi => {
                             if (vi[0].qText == vo && vi[1].qText == v) {
-                                qtyRtemp.data.push(vi[4].qNum == 0 ? '-' : vi[4].qNum);
-                                qtyUtemp.data.push(vi[4].qNum == 0 ? '-' : vi[4].qNum);
-                                amountRtemp.data.push(vi[2].qNum);
-                                amountUtemp.data.push(vi[3].qNum);
+                                qtyRtemp.data.push(vi[5].qNum == 0 ? '-' : vi[4].qNum);
+                                qtyUtemp.data.push(vi[5].qNum == 0 ? '-' : vi[4].qNum);
+                                amountRtemp.data.push(vi[3].qNum);
+                                amountUtemp.data.push(vi[4].qNum);
                             }
                         });
                     });
@@ -404,7 +410,6 @@ export default {
     methods: {
         getStructureDrillVal(val) {
             this.structureDrillVal = val;
-            // console.log('YCQ日志记录:Drill->', val);
         },
         onRefresh() {
             setTimeout(() => {
