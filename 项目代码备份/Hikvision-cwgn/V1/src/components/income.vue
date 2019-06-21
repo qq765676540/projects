@@ -6,10 +6,10 @@
             <span class="sub-title-name">收入概览</span>
         </div>
         <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
-            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_1']" barBgcolor_i="#1495EB" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="DsOaFaijf"></my-progress>
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_1']" barBgcolor_i="#1495EB" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#1495EB" id="DsOaFaijf"></my-progress>
         </div>
         <div class="content-box flex flex-column flex-1 flex-align-center" style="margin-top: 5px">
-            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_2']" barBgcolor_i="#59D4FF" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="KdafsSIey"></my-progress>
+            <my-progress v-if="incomeViewData" :data="incomeViewData['kpi_2']" barBgcolor_i="#59D4FF" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#59D4FF" id="KdafsSIey"></my-progress>
         </div>
     </div>
     <div class="income-budget border-bottom flex flex-column">
@@ -26,9 +26,8 @@
                     <div class="flex flex-1">
                         <div class="flex flex-1 flex-justify-left">
                             <div class="titleName flex flex-1 flex-align-center">总收入</div>
-                            <div class="titleValue flex flex-1 flex-align-center">{{incomeYear[1]}}</div>
+                            <div class="titleValue flex flex-3 flex-align-center">{{incomeYear[1]}}</div>
                         </div>
-                        <div class="flex-1"></div>
                     </div>
                     <div class="flex flex-1 flex-justify-left">
                         <div class="flex flex-1 flex-justify-left">
@@ -50,9 +49,8 @@
                     <div class="flex flex-1">
                         <div class="flex flex-1 flex-justify-left">
                             <div class="titleName flex flex-1 flex-align-center">自有收入</div>
-                            <div class="titleValue flex flex-1 flex-align-center">{{incomeYear[5]}}</div>
+                            <div class="titleValue flex flex-3 flex-align-center">{{incomeYear[5]}}</div>
                         </div>
-                        <div class="flex-1"></div>
                     </div>
                     <div class="flex flex-1 flex-justify-left">
                         <div class="flex flex-1 flex-justify-left">
@@ -248,12 +246,12 @@ export default {
                 var data = this.$store.state["income-cityz"];
                 data.forEach(i => {
                     arr.push({
-                        value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
-                        name: i[2].qText,
-                        growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
-                        rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
-                        nameTrue: i[2].qText,
-                        level: i[1].qText
+                        value: i[1].qText == "-" ? 0 : parseInt(i[1].qText / 10000),
+                        name: i[0].qText,
+                        growth: i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1),
+                        rate: i[3].qText == "-" ? 0 : (parseFloat(i[3].qText) * 100).toFixed(1),
+                        nameTrue: i[0].qText,
+                        level: i[0].qText
                     });
                 });
                 return arr;
@@ -266,12 +264,12 @@ export default {
                 var data = this.$store.state["income-cityzy"];
                 data.forEach(i => {
                     arr.push({
-                        value: i[3].qText == "-" ? 0 : parseInt(i[3].qText / 10000),
-                        name: i[2].qText,
-                        growth: i[4].qText == "-" ? 0 : (parseFloat(i[4].qText) * 100).toFixed(1),
-                        rate: i[5].qText == "-" ? 0 : (parseFloat(i[5].qText) * 100).toFixed(1),
-                        nameTrue: i[2].qText,
-                        level: i[1].qText
+                        value: i[1].qText == "-" ? 0 : parseInt(i[1].qText / 10000),
+                        name: i[0].qText,
+                        growth: i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1),
+                        rate: i[3].qText == "-" ? 0 : (parseFloat(i[3].qText) * 100).toFixed(1),
+                        nameTrue: i[0].qText,
+                        level: i[0].qText
                     });
                 });
                 return arr;

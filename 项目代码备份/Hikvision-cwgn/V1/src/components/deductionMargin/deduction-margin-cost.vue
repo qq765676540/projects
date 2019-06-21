@@ -90,6 +90,10 @@ export default {
                     value.push(element.value);
                     growth.push(element.growth);
                 });
+                let currDate = new Date();
+                currDate.setDate(currDate.getDate() - 1);
+                let currMonth = currDate.getMonth()+1;
+                let zoomStart = 100-parseInt(6/(currMonth+12)*100);
                 var option = {
                     grid: {
                         left: 0,
@@ -101,7 +105,7 @@ export default {
                     dataZoom: [{
                             type: "inside",
                             xAxisIndex: [0],
-                            start: 50,
+                            start: zoomStart,
                             end: 100
                         },
                         {

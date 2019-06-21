@@ -157,6 +157,7 @@ export default {
     margin-top: 30px;
 }
 .costCardCon {
+    width: 95%;
     height: 280px;
 }
 </style>

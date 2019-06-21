@@ -230,6 +230,9 @@ export default {
                     _this.selectedMsg.grossMargin = params.data;
                     _this.selectedMsg.growth = growth[params.dataIndex];
                 });
+                this.selectedMsg.city = this.data[0] ? this.data[0].name : "";
+                this.selectedMsg.grossMargin = this.data[0] ? this.data[0].value : "";
+                this.selectedMsg.growth = this.data[0] ? this.data[0].growth : "";
             }
         },
         resizeEcharts() {

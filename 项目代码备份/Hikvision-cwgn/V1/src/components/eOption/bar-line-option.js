@@ -11,7 +11,7 @@ let option = {
                 }
             },
             grid: {
-                containLabel: true
+                containLabel: false
             },
             tooltip: {
                 trigger: 'axis',
@@ -49,7 +49,7 @@ let option = {
                     type: 'inside',
                     xAxisIndex: [0],
                     start: 0,
-                    end: 70
+                    end: 60
                 },
                 {
                     type: 'slider',
@@ -95,6 +95,7 @@ let option = {
             ],
             yAxis: [{
                 type: 'value',
+                show: false,
                 splitLine: {
                     show: false
                 },
@@ -109,6 +110,7 @@ let option = {
             },
             {
                 type: 'value',
+                show: false,
                 splitLine: {
                     show: false
                 },

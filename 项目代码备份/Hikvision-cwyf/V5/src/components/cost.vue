@@ -50,6 +50,7 @@
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">人均费用情况</span>
+                <span class="sub-title-unit">单位(元/人)</span>
             </div>
             <div style="margin:0px 15px 0px 15px">
                 <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
@@ -99,7 +100,9 @@ export default {
                 });
                 costType = Array.from(new Set(costType));
                 monthList = Array.from(new Set(monthList));
-                monthList = monthList.sort();
+                monthList = monthList.sort((a,b) => {
+                    return a.replace('月','')/1 - b.replace('月','')/1;
+                });
                 data['title'] = costType;
                 costType.filter(v => {
                     data[v] = {

@@ -147,7 +147,7 @@ export default
             qDimensions: [
                 `=vRole`,
                 `=if(vOrgAdmin='Y',$(vYWB),if(TXTSH_CBX<>'',TXTSH_CBX))`,
-                `=if(vOrgAdmin='Y',$(vYWB),if(ZFI_CBX<>'',ZFI_CBX))`
+                `=if(vOrgAdmin='Y',if(ZFI_YWB<>'',ZFI_YWB),if(ZFI_CBX<>'',ZFI_CBX))`
             ],
             qMeasures: [
                 `=sum(1)`
@@ -164,9 +164,9 @@ export default
                 `=num(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)/sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB001'}>}ZFI_MBZ),'0%')`,
                 `=num((sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY)),'0%')`,
                 //战略产品
-                `=num(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY)+(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'C'}>}ZFI_PJSR)/5000),'#,##0')`,
-                `=num((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY)+(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'C'}>}ZFI_PJSR) /5000))/Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB003'}>}ZFI_MBZ),'0%')`,
-                `=num(((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'C'}>}ZFI_PJSR) /5000))-(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY_LY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'C'}>}ZFI_PJSR_LY) /5000)))/fAbs((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY_LY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZFI_YWB={'C'}>}ZFI_PJSR_LY) /5000))),'0%')`,
+                `=num(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY)+(sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'C'}>}ZFI_PJSR)/5000),'#,##0')`,
+                `=num((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY)+(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'C'}>}ZFI_PJSR) /5000))/Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB003'}>}ZFI_MBZ),'0%')`,
+                `=num(((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'C'}>}ZFI_PJSR) /5000))-(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY_LY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'C'}>}ZFI_PJSR_LY) /5000)))/fAbs((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'A','B','D','E','F','G','H','I'}>}DLV_QTY_LY) +(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZSTRATEGI={'X'},ZGNGM={'国内'},ZFI_YWB={'C'}>}ZFI_PJSR_LY) /5000))),'0%')`,
                 //毛利额
                 `=num(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZFI_XWLX-={"*GN-ML*"}>}ZFI_PJML)/10000,'#,##0')`,
                 `=num(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZFI_XWLX-={"*GN-ML*"}>}ZFI_PJML)/Sum({<CALDAY_NUM={">=${startMonth}<=${budgetMonth}"},${dataScope},${orgStr},ZFI_XWLX={'YF-MB004'}>}ZFI_MBZ),'0%')`,
@@ -261,7 +261,8 @@ export default
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
                 `=round((Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`,
-                `=round((Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`    
+                `=round((Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`,
+                `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)/10000)`    
             ]
         },
         'income-structureDrill-bar': {
@@ -273,7 +274,8 @@ export default
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
                 `=round((Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)-Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))/fAbs(Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_LY))*100)`,
                 `=round((Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`,
-                `=round((Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`     
+                `=round((Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U)-Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))/fAbs(Sum(total <TXTMD_HY> {<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR_U_LY))*100)`,
+                `=round(Sum({<CALDAY_NUM={">=${startMonth}<=${endMonth}"},${dataScope},${orgStr},ZFI_YWB={'A','B','C','D','E','F','G','H','I'}>}ZFI_PJSR)/10000)`
             ]
         },
         'income-structure-pie': {
@@ -353,8 +355,8 @@ export default
             ],
             qMeasures: [
                 `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY)/10000)`,
-                `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)/10000)`,
-                `=round((Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))*100)`,
+                `=round(Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)/10000)`,
+                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))*100)`,
                 `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
             ]
         },
@@ -365,8 +367,8 @@ export default
             ],
             qMeasures: [
                 `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY)/10000)`,
-                `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)/10000)`,
-                `=round((Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))*100)`,
+                `=round(Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)/10000)`,
+                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr}>}ZFI_FY_LY))*100)`,
                 `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
             ]
         },

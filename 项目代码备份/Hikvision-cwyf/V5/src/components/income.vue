@@ -15,7 +15,7 @@
         <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I'">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
-                <span class="sub-title-name">收入构成情况</span>
+                <span class="sub-title-name">行业增长及构成</span>
                 <!-- <span class="sub-title-unit">单位(%)</span> -->
             </div>
             <div class="content-box flex flex-column flex-1">
@@ -210,11 +210,11 @@ export default {
                 };
                 dataArr1.filter(v => {
                     data['R']['bar']['xAxis'].push(v[0].qText);
-                    data['R']['bar']['series'].push(v[1].qNum=='NaN'?0:v[1].qNum);
-                    data['R']['bar']['avg'].push(v[2].qNum=='NaN'?0:v[2].qNum);
+                    data['R']['bar']['series'].push(v[1].qNum == 'NaN' ? 0 : v[1].qNum);
+                    data['R']['bar']['avg'].push(v[2].qNum == 'NaN' ? 0 : v[2].qNum);
                     data['U']['bar']['xAxis'].push(v[0].qText);
-                    data['U']['bar']['series'].push(v[3].qNum=='NaN'?0:v[3].qNum);
-                    data['U']['bar']['avg'].push(v[4].qNum=='NaN'?0:v[4].qNum);
+                    data['U']['bar']['series'].push(v[3].qNum == 'NaN' ? 0 : v[3].qNum);
+                    data['U']['bar']['avg'].push(v[4].qNum == 'NaN' ? 0 : v[4].qNum);
                 });
                 let Rdrill = {};
                 let Udrill = {};
@@ -230,11 +230,11 @@ export default {
                     dataArr2.filter(vi => {
                         if (vo == vi[0].qText) {
                             Rdrill[vo]['xAxis'].push(vi[1].qText);
-                            Rdrill[vo]['series'].push(vi[2].qNum=='NaN'?0:vi[2].qNum);
-                            Rdrill[vo]['avg'].push(vi[3].qNum=='NaN'?0:vi[3].qNum);
+                            Rdrill[vo]['series'].push(vi[2].qNum == 'NaN' ? 0 : vi[2].qNum);
+                            Rdrill[vo]['avg'].push(vi[3].qNum == 'NaN' ? 0 : vi[3].qNum);
                             Udrill[vo]['xAxis'].push(vi[1].qText);
-                            Udrill[vo]['series'].push(vi[4].qNum=='NaN'?0:vi[4].qNum);
-                            Udrill[vo]['avg'].push(vi[5].qNum=='NaN'?0:vi[5].qNum);
+                            Udrill[vo]['series'].push(vi[4].qNum == 'NaN' ? 0 : vi[4].qNum);
+                            Udrill[vo]['avg'].push(vi[5].qNum == 'NaN' ? 0 : vi[5].qNum);
                         }
                     });
                 });
@@ -255,7 +255,8 @@ export default {
                 };
                 let Rarr = [];
                 let Uarr = [];
-                dataArr1.filter(v => {
+
+                dataArr1.filter((v, i) => {
                     let Rtemp = {};
                     let Utemp = {};
                     Rtemp.name = v[0].qText;
@@ -266,6 +267,34 @@ export default {
                     Uarr.push(Utemp);
                     data['xAxis'].push(v[0].qText);
                 });
+
+                if (Rarr.length > 6) {
+                    let oldArrR = [];
+                    let totalNumR = 0;
+                    let oldArrU = [];
+                    let totalNumU = 0;
+                    for (let index = 0; index < Rarr.length; index++) {
+                        if (index < 6) {
+                            oldArrR.push(Rarr[index]);
+                            oldArrU.push(Uarr[index]);
+                        } else {
+                            totalNumR += Rarr[index].value;
+                            totalNumU += Uarr[index].value;
+                        }
+
+                    }
+                    oldArrR.push({
+                        name: '其他',
+                        value: totalNumR
+                    });
+                    oldArrU.push({
+                        name: '其他',
+                        value: totalNumU
+                    });
+                    Rarr = oldArrR;
+                    Uarr = oldArrU;
+                }
+
                 data['R']['none'] = Rarr;
                 data['U']['none'] = Uarr;
 
@@ -284,6 +313,33 @@ export default {
                             Uarr.push(Utemp);
                         }
                     });
+
+                    if (Rarr.length > 6) {
+                        let oldArrR = [];
+                        let totalNumR = 0;
+                        let oldArrU = [];
+                        let totalNumU = 0;
+                        for (let index = 0; index < Rarr.length; index++) {
+                            if (index < 6) {
+                                oldArrR.push(Rarr[index]);
+                                oldArrU.push(Uarr[index]);
+                            } else {
+                                totalNumR += Rarr[index].value;
+                                totalNumU += Uarr[index].value;
+                            }
+
+                        }
+                        oldArrR.push({
+                            name: '其他',
+                            value: totalNumR
+                        });
+                        oldArrU.push({
+                            name: '其他',
+                            value: totalNumU
+                        });
+                        Rarr = oldArrR;
+                        Uarr = oldArrU;
+                    }
                     data['R'][vo] = Rarr;
                     data['U'][vo] = Uarr;
                 });
@@ -312,11 +368,11 @@ export default {
                     data['R']['xAxisData'].push(v[0].qText);
                     data['R']['seriesData1'].push(v[1].qNum == '-' ? 0 : v[1].qNum);
                     data['R']['seriesData2'].push(v[2].qNum == '-' ? 0 : v[2].qNum);
-                    data['R']['seriesData3'].push(v[3].qNum == '-' || v[3].qNum == 'NaN'? 0 : v[3].qNum);
+                    data['R']['seriesData3'].push(v[3].qNum == '-' || v[3].qNum == 'NaN' ? 0 : v[3].qNum);
                     data['U']['xAxisData'].push(v[0].qText);
                     data['U']['seriesData1'].push(v[4].qNum == '-' ? 0 : v[4].qNum);
                     data['U']['seriesData2'].push(v[5].qNum == '-' ? 0 : v[5].qNum);
-                    data['U']['seriesData3'].push(v[6].qNum == '-' || v[6].qNum == 'NaN'? 0 : v[6].qNum);
+                    data['U']['seriesData3'].push(v[6].qNum == '-' || v[6].qNum == 'NaN' ? 0 : v[6].qNum);
                 });
                 return data[this.$store.state.currency];
             }
@@ -330,12 +386,12 @@ export default {
                 let legendDis = [];
                 let xAxis = [];
                 dataArr.filter(v => {
-                    legend.push(v[2].qText+'|'+v[1].qText);
+                    legend.push(v[2].qText + '|' + v[1].qText);
                     xAxis.push(v[0].qText);
                 });
                 legend = Array.from(new Set(legend));
                 xAxis = Array.from(new Set(xAxis));
-                legend = legend.sort((a,b) => {
+                legend = legend.sort((a, b) => {
                     return a.split('|')[0].charCodeAt() - b.split('|')[0].charCodeAt();
                 });
                 xAxis = xAxis.sort();
@@ -385,8 +441,8 @@ export default {
                     xAxis.filter(vo => {
                         dataArr.filter(vi => {
                             if (vi[0].qText == vo && vi[1].qText == v) {
-                                qtyRtemp.data.push(vi[5].qNum == 0 ? '-' : vi[4].qNum);
-                                qtyUtemp.data.push(vi[5].qNum == 0 ? '-' : vi[4].qNum);
+                                qtyRtemp.data.push(vi[5].qNum == 0 ? '-' : vi[5].qNum);
+                                qtyUtemp.data.push(vi[5].qNum == 0 ? '-' : vi[5].qNum);
                                 amountRtemp.data.push(vi[3].qNum);
                                 amountUtemp.data.push(vi[4].qNum);
                             }

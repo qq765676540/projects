@@ -43,8 +43,7 @@
     </div>
     <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
     <div class="appPopstyle">
-        <!-- v-on:click-overlay="closePop()" -->
-        <van-popup v-model="popShow">
+        <van-popup v-model="popShow" :close-on-click-overlay="false">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
@@ -148,14 +147,10 @@ export default {
                 }else {
                    this.dataScope = 'T';
                 }
-
                 this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
             });
     },
     methods: {
-        closePop() {
-            this.cubeCount = this.cubeStop;
-        },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
@@ -266,7 +261,7 @@ export default {
                     qWidth: 5,
                     qHeight: 30,
                     orderType: -1,
-                    orderCol: 1
+                    orderCol: 5
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -282,7 +277,7 @@ export default {
                     qWidth: 6,
                     qHeight: 600,
                     orderType: -1,
-                    orderCol: 2
+                    orderCol: 6
                 },
                 (rs) => {
                     this.cubeCount += 1;

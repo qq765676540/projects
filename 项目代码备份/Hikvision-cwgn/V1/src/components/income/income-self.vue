@@ -232,6 +232,11 @@ export default {
                     _this.selectedMsg.rate = rate[params.dataIndex];
                     _this.selectedMsg.level = level[params.dataIndex];
                 });
+                this.selectedMsg.city = this.data[0] ? this.data[0].name : "";
+                this.selectedMsg.grossMargin = this.data[0] ? this.data[0].value : "";
+                this.selectedMsg.growth = this.data[0] ? this.data[0].growth : "";
+                this.selectedMsg.nameTrue = this.data[0] ? this.data[0].nameTrue : "";
+                this.selectedMsg.level = this.data[0] ? this.data[0].level : "";
             }
         },
         resizeEcharts() {

@@ -40,7 +40,7 @@
     </div>
 
     <div class="appPopstyle">
-        <van-popup v-model="popShow" v-on:click-overlay="closePop()">
+        <van-popup v-model="popShow" :close-on-click-overlay="false">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
@@ -103,9 +103,9 @@ export default {
             curFilter: "current_month",
             selectedTime: {
                 name: "本年",
-                year: 2019,
+                year: new Date().getFullYear(),
                 startMonth: 1,
-                endMonth: 2
+                endMonth: 1
             },
             selectedOrg: "浙江",
             selectorFlag: false
@@ -135,13 +135,11 @@ export default {
         this.cubeInit();
     },
     methods: {
-        closePop() {
-            this.cubeCount = this.cubeStop;
-        },
         cancleSelect() {
             this.selectorFlag = false;
         },
         confirmSelect(data) {
+            this.cubeCount = 0;
             this.selectorFlag = false;
             this.selectedTime = data.time;
             this.selectedOrg = data.org;
@@ -159,7 +157,6 @@ export default {
             this.switchIsOpen = true;
         },
         cubeInit() {
-            this.cubeCount = 0;
             //当前操作人
             Cube.getData(parent.qApp, this, {
                     formulaOpt: {
@@ -289,7 +286,7 @@ export default {
                         name: "income-cityz"
                     },
                     orderType: -1,
-                    orderCol: 3
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -302,7 +299,7 @@ export default {
                         name: "income-cityzy"
                     },
                     orderType: -1,
-                    orderCol: 3
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -324,7 +321,9 @@ export default {
                         time: this.selectedTime,
                         org: this.selectedOrg,
                         name: "margin-city"
-                    }
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -346,7 +345,9 @@ export default {
                         time: this.selectedTime,
                         org: this.selectedOrg,
                         name: "cost-pie"
-                    }
+                    },
+                    orderType: -1,
+                    orderCol: 1
                 },
                 (rs) => {
                     this.cubeCount += 1;
@@ -497,7 +498,6 @@ export default {
             this.selBarFlag = pIndex == 1 ? false : true;
         },
         selectedOrg() {
-            this.cubeInit();
             this.switchIsOpen = false;
         }
     }

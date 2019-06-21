@@ -556,6 +556,11 @@ let option = {
         }
     },
     'cost-rate': (data) => {
+        let myDate = new Date();
+        myDate.setDate(myDate.getDate() - 1);
+        let currMonth = myDate.getMonth()+1;
+        let zoomS = parseInt((currMonth-6)/12*100)<0?0:parseInt((currMonth-6)/12*100);
+        let zoomE = parseInt(currMonth/12*100);
         return {
             color: ['#addaf8', '#1495EB', 'orange', '#ff6666'],
             tooltip: {
@@ -593,8 +598,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 0,
-                    end: 100
+                    start: zoomS,
+                    end: zoomE
                 },
                 {
                     type: 'slider',
@@ -751,7 +756,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 0,
+                    start: 50,
                     end: 100
                 },
                 {
@@ -865,6 +870,7 @@ let option = {
         }
     },
     'order-branch': (data) => {
+        let zoomNum = parseInt(6/data.xAxisData.length*100);
         return {
             color: ['#1495EB'],
             tooltip: {
@@ -892,8 +898,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: data.dataZoom,
-                    end: 100
+                    start: 0,
+                    end: zoomNum
                 },
                 {
                     type: 'slider',

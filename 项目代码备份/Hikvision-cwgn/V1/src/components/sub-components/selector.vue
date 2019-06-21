@@ -130,12 +130,12 @@ export default {
 }
 .selector {
   background-color: white;
-  height: calc(100% - 120px);
+  height: calc(100% - 80px);
   width: 100%;
   position: absolute;
-  top: 120px;
+  top: 80px;
   left: 0;
-  padding: 0 10px 0 10px;
+  padding: 10px 10px 0 10px;
   z-index: 100;
 }
 

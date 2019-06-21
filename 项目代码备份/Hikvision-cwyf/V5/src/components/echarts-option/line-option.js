@@ -34,7 +34,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 0,
+                    start: 50,
                     end: 100
                 },
                 {
@@ -107,7 +107,13 @@ let option = {
         let temp = data.series.length>2?(((arr.series[0].data).concat(arr.series[1].data)).concat(arr.series[2].data)).concat(arr.series[3].data):(arr.series[0].data).concat(arr.series[1].data);
         let min = Math.min.apply(null, temp)-10<0?0:Math.min.apply(null, temp)-10;
         let max = Math.max.apply(null, temp)+10;
-        // console.log(min,max,arr);
+        
+        let myDate = new Date();
+        myDate.setDate(myDate.getDate() - 1);
+        let currMonth = myDate.getMonth()+1;
+        let zoomS = parseInt((currMonth-6)/12*100)<0?0:parseInt((currMonth-6)/12*100);
+        let zoomE = parseInt(currMonth/12*100);
+
         let legend = data.series.length>2? [
             '上年毛利率',
             '本年毛利率',
@@ -154,8 +160,8 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 0,
-                    end: 100
+                    start: zoomS,
+                    end: zoomE
                 },
                 {
                     type: 'slider',
@@ -244,7 +250,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 50,
+                    start: 75,
                     end: 100
                 },
                 {

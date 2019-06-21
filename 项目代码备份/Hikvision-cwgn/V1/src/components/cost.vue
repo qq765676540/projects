@@ -34,7 +34,7 @@
                     <div class="flex-1 conDesc">同&nbsp;&nbsp;&nbsp;比&nbsp;{{costAll[11]}}%</div>
                 </div>
                 <div class="flex flex-1 flex-column con" v-if="costAll">
-                    <div class="flex-1 conTitle">市内交通</div>
+                    <div class="flex-1 conTitle">日常交通</div>
                     <div class="flex-1 conNum">{{costAll[12]}}</div>
                     <div class="flex-1 warning">{{costAll[13]}}</div>
                     <div class="flex-1 conDesc">同&nbsp;&nbsp;&nbsp;比&nbsp;{{costAll[14]}}%</div>
@@ -62,7 +62,10 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">详情页</span>
             <div class="flex flex-1 flex-justify-right">
-                <div class="selection" @click="selectedHandle">{{selected}}</div>
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="selectedHandle">
+                    {{selected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                </button>
             </div>
         </div>
         <div class="content">
@@ -194,12 +197,12 @@
             </div>
             <div v-if="selected == '日常开支'" class="flex flex-column" style="margin-top:10px">
                 <div class="flex margin4">
-                    <div class="flex flex-1" v-if="rckz">本年费用{{rckz[0]}}</div>
-                    <div class="flex flex-1" v-if="rckz">完成率{{rckz[1]}}%</div>
+                    <div class="flex flex-1" v-if="rckz">本年费用&nbsp;&nbsp;{{rckz[0]}}</div>
+                    <div class="flex flex-1" v-if="rckz">完成率&nbsp;&nbsp;{{rckz[1]}}%</div>
                 </div>
                 <div class="flex margin4">
-                    <div class="flex flex-1" v-if="rckz">同比增长{{rckz[2]}}%</div>
-                    <div class="flex flex-1" v-if="rckz">全年预算进度{{rckz[3]}}%</div>
+                    <div class="flex flex-1" v-if="rckz">同比增长&nbsp;&nbsp;{{rckz[2]}}%</div>
+                    <div class="flex flex-1" v-if="rckz">全年预算进度&nbsp;&nbsp;{{rckz[3]}}%</div>
                 </div>
                 <normal-bar :update="update" :data="rckzTable" v-if="rckzTable"></normal-bar>
             </div>
@@ -791,5 +794,9 @@ export default {
 .con>div {
     width: 100%;
     text-align: center;
+}
+
+.van-cell__title {
+    text-align: left;
 }
 </style>

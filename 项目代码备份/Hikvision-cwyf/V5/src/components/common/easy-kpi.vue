@@ -88,9 +88,9 @@ export default {
     margin: 1px;
 }
 .titleunit {
-    font-size: 10px;
+    font-size: 16px;
     color: #444444;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .subtitleunit {

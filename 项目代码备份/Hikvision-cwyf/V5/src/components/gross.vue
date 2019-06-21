@@ -80,6 +80,9 @@ export default {
         deductionData() {
             if (this.$store.state['gross-deduction'].length > 0) {
                 let dataArr = this.$store.state['gross-deduction'];
+                dataArr = dataArr.sort((a,b) => {
+                    return a[0].qText.replace('月','')/1 - b[0].qText.replace('月','')/1;
+                });
                 let flag = this.$store.state['level'][0][2].qText;
                 let data = {
                     totalR: {

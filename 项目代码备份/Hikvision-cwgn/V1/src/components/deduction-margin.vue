@@ -22,7 +22,10 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">人均效能</span>
             <div class="flex flex-1 flex-justify-right">
-                <div class="selection" @click="selectedHandle">{{selected}}</div>
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 140px;margin-right: 10px;margin-top: 3px" @click="selectedHandle">
+                    {{selected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                </button>
             </div>
         </div>
         <div class="content">
@@ -137,6 +140,9 @@ export default {
         chartsData() {
             if (this.$store.state["de-margin-per"].length) {
                 var data = this.$store.state["de-margin-per"];
+                data = data.sort((a,b) => {
+                    return a[0].qText - b[0].qText;
+                });
                 var obj = {
                     perRecive: [],
                     perCost: [],
@@ -179,11 +185,7 @@ export default {
                 });
                 return obj;
             }
-            return [{
-                color: "#666666",
-                size: "32px",
-                value: 0
-            }, 0, 0, 0, 0];
+            return false;
         }
     },
     methods: {
@@ -256,5 +258,9 @@ export default {
     font-size: 40px;
     font-style: normal;
     line-height: 52px;
+}
+
+.van-cell__title {
+    text-align: left;
 }
 </style>

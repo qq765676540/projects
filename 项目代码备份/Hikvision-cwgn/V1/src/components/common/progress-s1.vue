@@ -3,9 +3,8 @@
     <div class="flex flex-1">
         <div class="flex flex-1 flex-justify-left">
             <div class="titleName flex flex-1 flex-align-center">{{data[1]['title']}}</div>
-            <div class="titleValue flex flex-2 flex-align-center">{{data[1]['value']}}</div>
+            <div class="titleValue flex flex-4 flex-align-center">{{data[1]['value']}}</div>
         </div>
-        <div class="flex-1"></div>
     </div>
     <div class="process-bar flex flex-row flex-1 flex-align-center">
         <div :style="Bars" :id="id" class="process-outline flex-3">
