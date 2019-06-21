@@ -6,8 +6,8 @@ Vue.use(Router)
 export default new Router({
     routes: [{
             path: '/',
-            name: 'overallIndex',
-            component: resolve => require(['../components/overall-index.vue'], resolve)
+            redirect: '/overallIndex',
+            name: 'default'
         }, {
             path: '/overallIndex',
             name: 'overallIndex',

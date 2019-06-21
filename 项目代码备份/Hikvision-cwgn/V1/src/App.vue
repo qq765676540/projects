@@ -1,23 +1,23 @@
 <template>
 <div id="app">
-    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
+    <van-tabs v-if="cubeCount>=cubeStop" v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
         <van-tab title="首页">
-            <router-view v-if="active==0" class="view-container flex-container" />
+            <router-view v-if="active==0" class="view-container" />
         </van-tab>
         <van-tab title="收入">
-            <router-view v-if="active==1" class="view-container flex-container" />
+            <router-view v-if="active==1" class="view-container" />
         </van-tab>
         <van-tab title="毛利">
-            <router-view v-if="active==2" class="view-container flex-container" />
+            <router-view v-if="active==2" class="view-container" />
         </van-tab>
         <van-tab title="费用">
-            <router-view v-if="active==3" class="view-container flex-container" />
+            <router-view v-if="active==3" class="view-container" />
         </van-tab>
         <van-tab title="扣费毛利">
-            <router-view v-if="active==4" class="view-container flex-container" />
+            <router-view v-if="active==4" class="view-container" />
         </van-tab>
     </van-tabs>
-    <div class="main-selection flex flex-row">
+    <div class="main-selection flex flex-row"  v-if="cubeCount>=cubeStop">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
         </div>
@@ -35,7 +35,7 @@
             </ul>
         </div>
     </div>
-    <div class="selectCon flex flex-row">
+    <div class="selectCon flex flex-row"  v-if="cubeCount>=cubeStop">
         <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg" :orgData="orgData"></selector>
     </div>
 
@@ -84,7 +84,7 @@ export default {
         return {
             active: 0,
             cubeCount: 0,
-            cubeStop: 29,
+            cubeStop: 27,
             switchIsOpen: false,
             switchStyle: {
                 width: 54,
@@ -113,7 +113,7 @@ export default {
     },
     computed: {
         popShow() {
-            if (this.cubeCount%29 == 0 ) {
+            if (this.cubeCount%this.cubeStop == 0 ) {
                 return false;
             }
             return true;
@@ -132,6 +132,7 @@ export default {
         }
     },
     mounted() {
+        this.cubeCount = 0;
         this.cubeInit();
     },
     methods: {
@@ -304,17 +305,6 @@ export default {
                 (rs) => {
                     this.cubeCount += 1;
                 });
-            //毛利 毛利概览
-            Cube.getData(parent.qApp, this, {
-                    formulaOpt: {
-                        time: this.selectedTime,
-                        org: this.selectedOrg,
-                        name: "margin-all"
-                    }
-                },
-                (rs) => {
-                    this.cubeCount += 1;
-                });
             //毛利 各城市毛利额情况
             Cube.getData(parent.qApp, this, {
                     formulaOpt: {
@@ -326,6 +316,7 @@ export default {
                     orderCol: 1
                 },
                 (rs) => {
+                    // console.log('YCQ日志记录:标识->',rs);
                     this.cubeCount += 1;
                 });
             //费用 重点费用情况
@@ -464,17 +455,6 @@ export default {
                     },
                     orderType: -1,
                     orderCol: 1
-                },
-                (rs) => {
-                    this.cubeCount += 1;
-                });
-            //扣费毛利 概览
-            Cube.getData(parent.qApp, this, {
-                    formulaOpt: {
-                        time: this.selectedTime,
-                        org: this.selectedOrg,
-                        name: "de-margin-all"
-                    }
                 },
                 (rs) => {
                     this.cubeCount += 1;

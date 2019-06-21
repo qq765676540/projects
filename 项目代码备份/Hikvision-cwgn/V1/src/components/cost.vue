@@ -204,7 +204,9 @@
                     <div class="flex flex-1" v-if="rckz">同比增长&nbsp;&nbsp;{{rckz[2]}}%</div>
                     <div class="flex flex-1" v-if="rckz">全年预算进度&nbsp;&nbsp;{{rckz[3]}}%</div>
                 </div>
-                <normal-bar :update="update" :data="rckzTable" v-if="rckzTable"></normal-bar>
+                <div class="flex flex-justify-center">
+                    <normal-bar style="padding-left: 20px" :update="update" :data="rckzTable" v-if="rckzTable"></normal-bar>
+                </div>
             </div>
         </div>
     </div>

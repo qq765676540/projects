@@ -246,10 +246,10 @@ export default {
                 var data = this.$store.state["income-cityz"];
                 data.forEach(i => {
                     arr.push({
-                        value: i[1].qText == "-" ? 0 : parseInt(i[1].qText / 10000),
+                        value: (i[1].qNum/10000).toFixed(0) ,
                         name: i[0].qText,
-                        growth: i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1),
-                        rate: i[3].qText == "-" ? 0 : (parseFloat(i[3].qText) * 100).toFixed(1),
+                        growth: (i[2].qNum * 100).toFixed(1),
+                        rate: (i[3].qNum * 100).toFixed(1),
                         nameTrue: i[0].qText,
                         level: i[0].qText
                     });
@@ -264,10 +264,10 @@ export default {
                 var data = this.$store.state["income-cityzy"];
                 data.forEach(i => {
                     arr.push({
-                        value: i[1].qText == "-" ? 0 : parseInt(i[1].qText / 10000),
+                        value: (i[1].qNum/10000).toFixed(0) ,
                         name: i[0].qText,
-                        growth: i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1),
-                        rate: i[3].qText == "-" ? 0 : (parseFloat(i[3].qText) * 100).toFixed(1),
+                        growth: (i[2].qNum * 100).toFixed(1),
+                        rate: (i[3].qNum * 100).toFixed(1),
                         nameTrue: i[0].qText,
                         level: i[0].qText
                     });

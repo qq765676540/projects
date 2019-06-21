@@ -1,7 +1,5 @@
 <template>
-  <div :id="id+'-box'" class="normalBar">
-    <div :id="id" class="normalBarCon"></div>
-  </div>
+  <div :id="id" class="normalBarCon"></div>
 </template>
 
 <script>
@@ -136,8 +134,7 @@ export default {
 
 <style scoped>
 .normalBarCon {
-  min-width: 100%;
+  min-width: 95%;
   min-height: 160px;
-  margin-left: 20px;
 }
 </style>

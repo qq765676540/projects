@@ -21,7 +21,6 @@ var state = {
     'income-productTotal': [],
     'income-cityz': [],
     'income-cityzy': [],
-    'margin-all': [],
     'margin-city': [],
     'cost-main': [],
     'cost-pie': [],
@@ -35,7 +34,6 @@ var state = {
     'cost-ywzd-chart': [],
     'cost-rckz': [],
     'cost-rckz-chart': [],
-    'de-margin-all': [],
     'de-margin-per': []
 }
 

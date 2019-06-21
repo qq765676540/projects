@@ -7,10 +7,6 @@
             <div class="flex flex-1">城市</div>
             <div class="flex flex-3">{{this.selectedMsg.nameTrue}}</div>
         </div>
-        <!-- <div class="flex flex-row flex-1 content">
-            <div class="flex flex-1">城市分类</div>
-            <div class="flex flex-3">{{this.selectedMsg.level}}</div>
-        </div> -->
         <div class="flex flex-row flex-1 content">
             <div class="flex flex-1">收入</div>
             <div class="flex flex-3">{{this.selectedMsg.grossMargin}}</div>
@@ -75,8 +71,7 @@ export default {
         this.selectedMsg.city = this.data[0] ? this.data[0].name : "";
         this.selectedMsg.grossMargin = this.data[0] ? this.data[0].value : "";
         this.selectedMsg.growth = this.data[0] ? this.data[0].growth : "";
-        this.selectedMsg.nameTrue = this.data[0] ? this.data[0].nameTrue : "";
-        this.selectedMsg.level = this.data[0] ? this.data[0].level : "";
+        this.selectedMsg.rate = this.data[0] ? this.data[0].rate : "";
         window.addEventListener("resize", this.resizeEcharts, false);
     },
     watch: {
@@ -187,6 +182,9 @@ export default {
                             },
                             splitLine: {
                                 show: false
+                            },
+                            axisLabel: {
+                                rotate: 45
                             }
                         },
                         {
@@ -202,6 +200,9 @@ export default {
                             },
                             splitLine: {
                                 show: false
+                            },
+                            axisLabel: {
+                                rotate: 45
                             }
                         }
                     ],
@@ -224,18 +225,16 @@ export default {
                 this.echartsIns.setOption(option, true);
                 var _this = this;
                 this.echartsIns.on("click", function (params) {
-                    _this.selectedMsg.city = params.name;
-                    _this.selectedMsg.grossMargin = params.data;
+                    _this.selectedMsg.city = names[params.dataIndex];
+                    _this.selectedMsg.grossMargin = value[params.dataIndex];
                     _this.selectedMsg.growth = growth[params.dataIndex];
-                    _this.selectedMsg.nameTrue = nameTrue[params.dataIndex];
                     _this.selectedMsg.rate = rate[params.dataIndex];
-                    _this.selectedMsg.level = level[params.dataIndex];
+
                 });
                 this.selectedMsg.city = this.data[0] ? this.data[0].name : "";
                 this.selectedMsg.grossMargin = this.data[0] ? this.data[0].value : "";
                 this.selectedMsg.growth = this.data[0] ? this.data[0].growth : "";
-                this.selectedMsg.nameTrue = this.data[0] ? this.data[0].nameTrue : "";
-                this.selectedMsg.level = this.data[0] ? this.data[0].level : "";
+                this.selectedMsg.rate = this.data[0] ? this.data[0].rate : "";
             }
         },
         resizeEcharts() {

@@ -6,7 +6,6 @@
             <span class="sub-title-name">扣费毛利概览</span>
         </div>
         <div class="content-box flex flex-column flex-1">
-            <!-- <my-progress v-if="grossViewData" :data="grossViewData['kpi_1']" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="gross-view"></my-progress> -->
             <div class="flex flex-1 flex-justify-center flex-align-center" style="margin-left: 5px">
                 <div class="flex-1">
                     <easy-kpi :data="kpiData.kpi_7" v-if="kpiData"></easy-kpi>
@@ -107,36 +106,6 @@ export default {
             return false;
             // return demoData.homeData.overview
         },
-        deMarginAll() {
-            var arr = [{
-                color: "#666666",
-                size: "32px",
-                value: 0
-            }, 0, 0, 0, 0];
-            if (this.$store.state["de-margin-all"].length) {
-                var data = this.$store.state["de-margin-all"][0];
-                arr = [{
-                        color: "#666666",
-                        size: "40px",
-                        value: data[0].qText == "-" ? 0 : parseInt(data[0].qText / 10000)
-                    },
-                    data[1].qText == "-" || parseFloat(data[1].qText) < 0 ?
-                    0 :
-                    (parseFloat(data[1].qText) * 100).toFixed(1),
-                    data[2].qText == "-" ?
-                    0 :
-                    (parseFloat(data[2].qText) * 100).toFixed(1),
-                    data[3].qText == "-" ?
-                    0 :
-                    (parseFloat(data[3].qText) * 100).toFixed(1),
-                    data[4].qText == "-" ?
-                    0 :
-                    (parseFloat(data[4].qText) * 100).toFixed(1)
-                ];
-                return arr;
-            }
-            return arr;
-        },
         chartsData() {
             if (this.$store.state["de-margin-per"].length) {
                 var data = this.$store.state["de-margin-per"];
@@ -153,35 +122,23 @@ export default {
                     obj.perRecive[index] = {};
                     obj.perRecive[index].name = i[0].qText;
                     obj.perRecive[index].value =
-                        i[1].qText == "-" ? 0 : parseFloat(i[1].qText / 10000).toFixed(0) - 0;
-                    obj.perRecive[index].growth =
-                        i[2].qText == "-" ?
-                        0 :
-                        (parseFloat(i[2].qText) * 100).toFixed(1) - 0;
-                    obj.perCost[index] = [];
+                        i[1].qText == "-" ? 0 : parseFloat(i[1].qText / 10000).toFixed(1) - 0;
+                    
+                    obj.perCost[index] = {};
                     obj.perCost[index].name = i[0].qText;
                     obj.perCost[index].value =
-                        i[3].qText == "-" ? 0 : parseFloat(i[3].qText / 10000).toFixed(0) - 0;
-                    obj.perCost[index].growth =
-                        i[4].qText == "-" ?
-                        0 :
-                        (parseFloat(i[4].qText) * 100).toFixed(1) - 0;
-                    obj.deMarginPer[index] = [];
+                        i[2].qText == "-" ? 0 : parseFloat(i[2].qText / 10000).toFixed(1) - 0;
+        
+                    obj.deMarginPer[index] = {};
                     obj.deMarginPer[index].name = i[0].qText;
                     obj.deMarginPer[index].value =
-                        i[5].qText == "-" ? 0 : parseFloat(i[5].qText / 10000).toFixed(0) - 0;
-                    obj.deMarginPer[index].growth =
-                        i[6].qText == "-" ?
-                        0 :
-                        (parseFloat(i[6].qText) * 100).toFixed(1) - 0;
-                    obj.deMarginCost[index] = [];
+                        i[3].qText == "-" ? 0 : parseFloat(i[3].qText / 10000).toFixed(1) - 0;
+
+                    obj.deMarginCost[index] = {};
                     obj.deMarginCost[index].name = i[0].qText;
                     obj.deMarginCost[index].value =
-                        i[7].qText == "-" ? 0 : parseFloat(i[7].qText / 10000).toFixed(0) - 0;
-                    obj.deMarginCost[index].growth =
-                        i[8].qText == "-" ?
-                        0 :
-                        (parseFloat(i[8].qText) * 100).toFixed(1) - 0;
+                        i[4].qText == "-" ? 0 : parseFloat(i[4].qText).toFixed(1) - 0;
+                    
                 });
                 return obj;
             }

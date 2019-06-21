@@ -19,12 +19,12 @@
 import echarts from "echarts";
 
 export default {
-    name: "gross-margin-bar",
+    name: "gross-margin-baraa",
     components: {},
     data() {
         return {
             selectedMsg: {
-                city: "杭州",
+                city: "A-杭州",
                 grossMargin: 1200,
                 growth: 80
             }
@@ -43,41 +43,10 @@ export default {
             type: Array,
             default () {
                 return [{
-                        value: 4154,
-                        name: "杭州",
-                        growth: 40
-                    },
-                    {
-                        value: 3854,
-                        name: "宁波",
-                        growth: 60
-                    },
-                    {
-                        value: 3515,
-                        name: "舟山",
-                        growth: 50
-                    },
-                    {
-                        value: 3515,
-                        name: "台州",
-                        growth: 10
-                    },
-                    {
-                        value: 3054,
-                        name: "绍兴",
-                        growth: 80
-                    },
-                    {
-                        value: 2515,
-                        name: "温州",
-                        growth: 45
-                    },
-                    {
-                        value: 1515,
-                        name: "金华",
-                        growth: 42
-                    }
-                ];
+                    value: 4154,
+                    name: "A-杭州",
+                    growth: 40
+                }];
             }
         }
     },
@@ -141,7 +110,7 @@ export default {
                             type: "inside",
                             xAxisIndex: [0],
                             start: 0,
-                            end: 50
+                            end: 70
                         },
                         {
                             type: "slider",
@@ -192,10 +161,16 @@ export default {
                             },
                             splitLine: {
                                 show: false
+                            },
+                            axisLabel: {
+                                rotate: 45
                             }
                         },
                         {
                             type: "value",
+                            axisLabel: {
+                                formatter: '{value}%'
+                            },
                             axisLine: {
                                 show: false
                             },
@@ -204,6 +179,9 @@ export default {
                             },
                             splitLine: {
                                 show: false
+                            },
+                            axisLabel: {
+                                rotate: 45
                             }
                         }
                     ],
@@ -217,8 +195,8 @@ export default {
                         {
                             name: "同比",
                             type: "line",
-                            color: "orange",
                             yAxisIndex: 1,
+                            color: "orange",
                             data: growth
                         }
                     ]
@@ -226,8 +204,8 @@ export default {
                 this.echartsIns.setOption(option, true);
                 var _this = this;
                 this.echartsIns.on("click", function (params) {
-                    _this.selectedMsg.city = params.name;
-                    _this.selectedMsg.grossMargin = params.data;
+                    _this.selectedMsg.city = names[params.dataIndex];
+                    _this.selectedMsg.grossMargin = value[params.dataIndex];
                     _this.selectedMsg.growth = growth[params.dataIndex];
                 });
                 this.selectedMsg.city = this.data[0] ? this.data[0].name : "";
@@ -254,9 +232,13 @@ export default {
 </script>
 
 <style scoped>
+.normalBar {
+    margin: 10px;
+}
+
 .normalBarCon {
     min-height: 240px;
-    min-width: 100%;
+    min-width: calc(100% - 20px);
     padding: 4px;
     box-shadow: 3px 3px 8px #888888;
 }

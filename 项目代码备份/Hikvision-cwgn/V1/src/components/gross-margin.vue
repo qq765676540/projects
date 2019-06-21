@@ -6,7 +6,6 @@
             <span class="sub-title-name">毛利概览</span>
         </div>
         <div class="content-box flex flex-column flex-1">
-            <!-- <my-progress v-if="grossViewData" :data="grossViewData['kpi_1']" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" id="gross-view"></my-progress> -->
             <div class="flex flex-1 flex-justify-center flex-align-center" style="margin-left: 5px">
                 <div class="flex-1">
                     <easy-kpi :data="kpiData.kpi_3" v-if="kpiData"></easy-kpi>
@@ -22,7 +21,7 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">各城市毛利情况</span>
         </div>
-        <div class="content-box flex flex-1 flex-column" style="margin: 5px 7px 5px 5px;">
+        <div class="content-box flex flex-1 flex-column" style="margin-top: 10px;margin-left: 5px">
             <gross-margin-bar v-if="marginBar" :data="marginBar"></gross-margin-bar>
         </div>
     </div>
@@ -65,44 +64,18 @@ export default {
             return false;
             // return demoData.homeData.overview
         },
-        grossViewData() {
-            if (this.$store.state["margin-all"].length > 0) {
-                let dataArr = this.$store.state["margin-all"][0];
-                let data = {
-                    kpi_1: [{
-                        value: dataArr[2].qText
-                    }, {
-                        title: '毛利额',
-                        value: dataArr[1].qText
-                    }, {
-                        title: '同比',
-                        value: dataArr[3].qText
-                    }, {
-                        title: '',
-                        value: ''
-                    }, {
-                        title: '',
-                        value: ''
-                    }],
-                    kpi_2: [dataArr[4].qText, dataArr[5].qText]
-                };
-                return data
-            }
-            return false;
-        },
         marginBar() {
             var arr = [];
             if (this.$store.state["margin-city"].length>0) {
                 var data = this.$store.state["margin-city"];
                 data.forEach(i => {
                     arr.push({
-                        value: i[1].qText == "-" ?
-                            0 : accounting.formatNumber(parseInt(i[1].qText) / 10000),
+                        value: (i[1].qNum/10000).toFixed(0),
                         name: i[0].qText,
-                        growth: i[2].qText == "-" ?
-                            0 : (parseFloat(i[2].qText) * 100).toFixed(1)
+                        growth: (i[2].qNum*100).toFixed(1)
                     });
                 });
+                // console.log('YCQ日志记录:标识111->',arr);
                 return arr;
             }
             return false;
@@ -122,7 +95,7 @@ export default {
     min-height: 190px;
 }
 
-.income-city {
+.gross-city {
     min-height: 400px;
 }
 
