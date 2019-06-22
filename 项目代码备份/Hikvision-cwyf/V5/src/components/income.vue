@@ -12,7 +12,7 @@
                 <echarts-bar-line name="income-bp" :data="bpData['bp']" :drilldown="bpData['drill']" id="income-bp" v-if="bpData"></echarts-bar-line>
             </div>
         </div>
-        <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I'">
+        <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I' || this.$store.state['hyFlag']">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">行业增长及构成</span>
@@ -387,14 +387,14 @@ export default {
                 let xAxis = [];
                 dataArr.filter(v => {
                     legend.push(v[2].qText + '|' + v[1].qText);
-                    xAxis.push(v[0].qText);
+                    xAxis.push(v[0].qNum);
                 });
                 legend = Array.from(new Set(legend));
                 xAxis = Array.from(new Set(xAxis));
                 legend = legend.sort((a, b) => {
                     return a.split('|')[0].charCodeAt() - b.split('|')[0].charCodeAt();
                 });
-                xAxis = xAxis.sort();
+                xAxis.sort();
                 legend.filter(v => {
                     legendDis.push(v.split('|')[1]);
                 });
@@ -428,23 +428,23 @@ export default {
                     let amountUtemp = {};
                     qtyRtemp.name = v;
                     qtyRtemp.type = 'line';
-                    qtyRtemp.data = [];
+                    qtyRtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
                     qtyUtemp.name = v;
                     qtyUtemp.type = 'line';
-                    qtyUtemp.data = [];
+                    qtyUtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
                     amountRtemp.name = v;
                     amountRtemp.type = 'line';
-                    amountRtemp.data = [];
+                    amountRtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
                     amountUtemp.name = v;
                     amountUtemp.type = 'line';
-                    amountUtemp.data = [];
-                    xAxis.filter(vo => {
+                    amountUtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
+                    xAxis.filter((vo,ii) => {
                         dataArr.filter(vi => {
-                            if (vi[0].qText == vo && vi[1].qText == v) {
-                                qtyRtemp.data.push(vi[5].qNum == 0 ? '-' : vi[5].qNum);
-                                qtyUtemp.data.push(vi[5].qNum == 0 ? '-' : vi[5].qNum);
-                                amountRtemp.data.push(vi[3].qNum);
-                                amountUtemp.data.push(vi[4].qNum);
+                            if (vi[0].qNum == vo && vi[1].qText == v) {
+                                qtyRtemp.data.splice(ii,1,(vi[5].qNum == 0 ? '-' : vi[5].qNum));
+                                qtyUtemp.data.splice(ii,1,(vi[5].qNum == 0 ? '-' : vi[5].qNum));
+                                amountRtemp.data.splice(ii,1,(vi[3].qNum == 0 ? '-' : vi[3].qNum));
+                                amountUtemp.data.splice(ii,1,(vi[4].qNum == 0 ? '-' : vi[4].qNum));
                             }
                         });
                     });

@@ -3,7 +3,7 @@
 <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
     <div class="home">
         <div class="overview flex flex-column">
-            <div class="sub-title">
+            <div class="sub-title" v-if="kpiData">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">整体销售情况</span>
             </div>

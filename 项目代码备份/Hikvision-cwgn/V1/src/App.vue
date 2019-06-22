@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <van-tabs v-if="cubeCount>=cubeStop" v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
         <van-tab title="首页">
             <router-view v-if="active==0" class="view-container" />
         </van-tab>
@@ -17,7 +17,7 @@
             <router-view v-if="active==4" class="view-container" />
         </van-tab>
     </van-tabs>
-    <div class="main-selection flex flex-row"  v-if="cubeCount>=cubeStop">
+    <div class="main-selection flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
         </div>
@@ -35,7 +35,7 @@
             </ul>
         </div>
     </div>
-    <div class="selectCon flex flex-row"  v-if="cubeCount>=cubeStop">
+    <div class="selectCon flex flex-row">
         <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg" :orgData="orgData"></selector>
     </div>
 
@@ -110,6 +110,9 @@ export default {
             selectedOrg: "浙江",
             selectorFlag: false
         };
+    },
+    beforeCreate() {
+        this.cubeCount = 0;
     },
     computed: {
         popShow() {

@@ -584,7 +584,7 @@ let option = {
                     '本年费用', 
                     '同比增长率', 
                     {
-                        name: '平均增长率',
+                        name: '本年累计增长率',
                         icon: "image://" + require("@/assets/images/main/dashed.png"),
                         itemHeight: 6
                     }
@@ -697,7 +697,7 @@ let option = {
                     data: data.seriesData3
                 },
                 {
-                    name: "平均增长率",
+                    name: "本年累计增长率",
                     type: "line",
                     showSymbol: true,
                     symbol: 'circle',

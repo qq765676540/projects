@@ -21,9 +21,9 @@
     </van-tabs>
     <div v-show="selBarFlag" class="selection-tool flex">
         <div class="flex flex-align-center flex-3">
-            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="filterStyleActive='整体'">整体</div>
-            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="filterStyleActive='国内'">国内</div>
-            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="filterStyleActive='海外'">海外</div>
+            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="setDataScope('整体')">整体</div>
+            <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='国内'}" @click="setDataScope('国内')">国内</div>
+            <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="setDataScope('海外')">海外</div>
         </div>
         <div class="selected-bar flex flex-2">
             <ul class="selected-dim-date flex flex-2">
@@ -118,7 +118,9 @@ export default {
             dataScope: ''
         };
     },
-    beforeCreate() {},
+    beforeCreate() {
+        this.cubeCount = 0;
+    },
     created() {},
     mounted() {
         // this.$store.dispatch('updateData', {
@@ -141,11 +143,35 @@ export default {
                 this.filterStyleActive = rs[0][2].qText == 'Y' ? '海外' : '整体';
                 this.orgLevel = rs[0][1].qText;
                 this.orgFlag = rs[0][2].qText;
-                
+
                 if (this.orgFlag == 'Y') {
-                   this.dataScope = 'I';
-                }else {
-                   this.dataScope = 'T';
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'U'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'hyFlag',
+                        data: true
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'O'
+                    });
+                    this.dataScope = 'O';
+                } else {
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'hyFlag',
+                        data: false
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'T'
+                    });
+                    this.dataScope = 'T';
                 }
                 this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
             });
@@ -158,15 +184,21 @@ export default {
             this.selectorFlag = false;
         },
         confirmSelect(data) {
-            this.cubeCount = 0 ;
+            this.cubeCount = 0;
             if (data.org.length > 0) {
                 this.selectedOrg = data.org;
                 this.selectedOrgSetCube = data.org;
-                this.$store.dispatch('updateData', {dataName: 'orgSelFlag',data: true});
+                this.$store.dispatch('updateData', {
+                    dataName: 'orgSelFlag',
+                    data: true
+                });
             } else {
                 this.selectedOrg = [];
                 this.selectedOrgSetCube = [];
-                this.$store.dispatch('updateData', {dataName: 'orgSelFlag',data: false});
+                this.$store.dispatch('updateData', {
+                    dataName: 'orgSelFlag',
+                    data: false
+                });
             }
 
             this.selectorFlag = false;
@@ -182,6 +214,48 @@ export default {
         switchTo() {
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
+        },
+        setDataScope(nVal) {
+            this.cubeCount = 0;
+            this.filterStyleActive = nVal;
+            switch (nVal) {
+                case '整体':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'T'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    this.dataScope = 'T';
+                    break;
+                case '国内':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'I'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    this.dataScope = 'I';
+                    break;
+                case '海外':
+                    this.$store.dispatch('updateData', {
+                        dataName: 'dataScope',
+                        data: 'O'
+                    });
+                    this.$store.dispatch('updateData', {
+                        dataName: 'currency',
+                        data: 'R'
+                    });
+                    this.dataScope = 'O';
+                    break;
+                default:
+                    break;
+            }
+            this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
         },
         cubeInit(orgLevel, orgFlag, dataScope) {
             let orgManager = (orgLevel == 'LV1' || (orgLevel == 'LV2' && orgFlag == 'Y')) ? 'Y' : 'N';
@@ -344,6 +418,7 @@ export default {
                     qHeight: 1000
                 },
                 (rs) => {
+                    // console.log('YCQ日志记录:均价原始数据->',rs);
                     this.cubeCount += 1;
                 });
             //毛利-毛利额BP达成率及增长情况
@@ -486,7 +561,7 @@ export default {
     },
     computed: {
         popShow() {
-            if (this.cubeCount==this.cubeStop) {
+            if (this.cubeCount == this.cubeStop) {
                 return false;
             }
             return true;
@@ -505,55 +580,6 @@ export default {
                 dataName: 'pageActive',
                 data: pIndex
             });
-        },
-        filterStyleActive(nVal) {
-            this.cubeCount = 0 ;
-            this.filterStyleActive = nVal;
-            switch (nVal) {
-                case '整体':
-                    this.$store.dispatch('updateData', {
-                        dataName: 'dataScope',
-                        data: 'T'
-                    });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'currency',
-                        data: 'R'
-                    });
-                    this.dataScope = 'T';
-                    break;
-                case '国内':
-                    this.$store.dispatch('updateData', {
-                        dataName: 'dataScope',
-                        data: 'I'
-                    });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'currency',
-                        data: 'R'
-                    });
-                    this.dataScope = 'I';
-                    break;
-                case '海外':
-                    this.$store.dispatch('updateData', {
-                        dataName: 'dataScope',
-                        data: 'O'
-                    });
-                    if (this.$store.state.pageActive != 3) {
-                        this.$store.dispatch('updateData', {
-                            dataName: 'currency',
-                            data: 'U'
-                        });
-                    } else {
-                        this.$store.dispatch('updateData', {
-                            dataName: 'currency',
-                            data: 'R'
-                        });
-                    }
-                    this.dataScope = 'O';
-                    break;
-                default:
-                    break;
-            }
-            this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
         }
     }
 };

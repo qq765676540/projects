@@ -9,6 +9,7 @@ Vue.use(Vuex)
 var state = {
   pageActive: 0,
   orgSelFlag: false,
+  hyFlag: false,
   dataScope: 'T',
   currency: 'R',
   level: [],

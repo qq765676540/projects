@@ -150,7 +150,7 @@ let option = {
                 formatter: v => {
                     let str = v[0].name+'<br>';
                     for (let i = 0; i < v.length; i++) {
-                        str += v[i].seriesName+': '+v[i].value+'%<br>'                        
+                        str += v[i].seriesName+': '+(v[i].value!='-'?v[i].value.toFixed(1):'-')+'%<br>'                        
                     }
                     return str;
                 },

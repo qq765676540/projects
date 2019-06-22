@@ -1,18 +1,20 @@
 let option = {
     'income-structure': (data) => {
         return {
-            title:{
+            title: {
                 show: true,
-                text: '',
+                text: 'TOP6占比',
                 textStyle: {
                     color: '#777777',
-                    fontSize: 14
+                    fontSize: 12
                 }
             },
             tooltip: {
                 trigger: 'item',
                 triggerOn: 'click',
-                formatter: "{b}: {c} ({d}%)"
+                formatter: v => {
+                    return `${v.name}: ${v.value} (${v.percent.toFixed(0)}%)`;
+                }
             },
             series: [
                 {
@@ -22,7 +24,15 @@ let option = {
                     avoidLabelOverlap: false,
                     color: ["#448DFF", "#59D4FF", "#751DE2", "#BB2B79", "#DB479B", "#F8B9D9", "#D391B8", "#C2A0F7", "#AEEFFE", "#A7D0FF"],
                     label: {
-                        formatter: '{d}%\n{hr|}\n{padding|{b}}\n{c}',
+                        formatter: (params) => {
+                            return (
+                                "{value|" + params.value + "} ({percent|" +
+                                params.percent.toFixed(0) +
+                                "%)}\n{hr|}\n{name|" +
+                                params.name +
+                                "}"
+                            );
+                        },
                         rich: {
                             name: {
                                 color: "#666666",
@@ -33,6 +43,16 @@ let option = {
                             padding: {
                                 padding: [3, 2]
                             },
+                            percent: {
+                                align: "center",
+                                fontSize: 12,
+                                padding: [9, 0]
+                            },
+                            value: {
+                                color: "#666666",
+                                fontSize: 12,
+                                align: "center"
+                            },
                             hr: {
                                 borderColor: "#666666",
                                 width: "100%",
@@ -40,7 +60,7 @@ let option = {
                                 height: 0
                             }
                         }
-    
+
                     },
                     labelLine: {
                         normal: {
@@ -58,7 +78,7 @@ let option = {
     },
     'order-structure': (data) => {
         return {
-            title:{
+            title: {
                 show: true,
                 text: '',
                 textStyle: {
@@ -71,7 +91,7 @@ let option = {
                 triggerOn: 'click',
                 formatter: v => {
                     // console.log('YCQ日志记录:标识->',v);
-                    return `${v.name}<br>未清金额: ${v.value}<br>未清数量: ${v.data.qty}<br>金额占比: ${v.percent}%`;
+                    return `${v.name}<br>未清金额: ${v.value}<br>未清数量: ${v.data.qty}<br>金额占比: ${v.percent.toFixed(0)}%`;
                 },
                 extraCssText: 'text-align:left;'
                 // "{b}: {c} ({d}%)"
@@ -84,7 +104,15 @@ let option = {
                     avoidLabelOverlap: false,
                     color: ["#448DFF", "#59D4FF", "#751DE2", "#BB2B79", "#DB479B", "#F8B9D9", "#D391B8", "#C2A0F7", "#AEEFFE", "#A7D0FF"],
                     label: {
-                        formatter: '{d}%\n{hr|}\n{padding|{b}}\n{c}',
+                        formatter: (params) => {
+                            return (
+                                "{value|" + params.value + "} ({percent|" +
+                                params.percent.toFixed(1) +
+                                "%)}\n{hr|}\n{name|" +
+                                params.name +
+                                "}"
+                            );
+                        },
                         rich: {
                             name: {
                                 color: "#666666",
@@ -95,6 +123,16 @@ let option = {
                             padding: {
                                 padding: [3, 2]
                             },
+                            percent: {
+                                align: "center",
+                                fontSize: 12,
+                                padding: [9, 0]
+                            },
+                            value: {
+                                color: "#666666",
+                                fontSize: 12,
+                                align: "center"
+                            },
                             hr: {
                                 borderColor: "#666666",
                                 width: "100%",
@@ -102,7 +140,7 @@ let option = {
                                 height: 0
                             }
                         }
-    
+
                     },
                     labelLine: {
                         normal: {
@@ -119,7 +157,7 @@ let option = {
         }
     }
 }
-let pieGetOption = (name,data) => {
+let pieGetOption = (name, data) => {
     return option[name](data);
 }
 export default pieGetOption;
