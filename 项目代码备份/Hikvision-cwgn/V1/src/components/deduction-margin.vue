@@ -42,7 +42,7 @@
             </div>
         </div>
     </div>
-    <van-dialog v-model="dialogShow" title="选择细分成本">
+    <van-dialog v-model="dialogShow" title="选项">
         <van-radio-group v-model="selected">
             <template v-for="(item,index) in costList">
                 <van-cell-group :key="index">

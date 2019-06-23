@@ -40,8 +40,10 @@ export default {
     },
     beforeCreate() {},
     mounted() {
-        this.echartsIns = echarts.init(document.getElementById(this.id));
-        this.setOption();
+        this.$nextTick(() => {
+            this.echartsIns = echarts.init(document.getElementById(this.id));
+            this.setOption();
+        });
         window.addEventListener("resize", this.resizeEcharts, false);
     },
     watch: {
@@ -139,7 +141,7 @@ export default {
                 if (this.echartsIns) {
                     this.echartsIns.resize();
                 }
-            }, 300);
+            }, 100);
         }
     },
     destroyed() {

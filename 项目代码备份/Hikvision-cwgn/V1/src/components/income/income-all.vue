@@ -211,7 +211,8 @@ export default {
                             type: "bar",
                             data: value,
                             color: "rgba(20,149,235,0.6)",
-                            itemStyle: itemStyle
+                            itemStyle: itemStyle,
+                            barWidth: '25px'
                         },
                         {
                             name: "同比",

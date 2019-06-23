@@ -40,7 +40,7 @@
     </div>
 
     <div class="appPopstyle">
-        <van-popup v-model="popShow" :close-on-click-overlay="false">
+        <van-popup v-model="popShow" :close-on-click-overlay="false" v-if="popShow">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
@@ -111,12 +111,14 @@ export default {
             selectorFlag: false
         };
     },
-    beforeCreate() {
+    beforeCreate() {},
+    mounted() {
         this.cubeCount = 0;
+        this.cubeInit();
     },
     computed: {
         popShow() {
-            if (this.cubeCount%this.cubeStop == 0 ) {
+            if (this.cubeCount == this.cubeStop) {
                 return false;
             }
             return true;
@@ -133,10 +135,6 @@ export default {
             }
             return false;
         }
-    },
-    mounted() {
-        this.cubeCount = 0;
-        this.cubeInit();
     },
     methods: {
         cancleSelect() {

@@ -1,7 +1,7 @@
 <template>
 <div class="constitute">
     <div class="overview border-bottom flex flex-column">
-        <div class="sub-title">
+        <div class="sub-title" v-if="kpiData">
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">整体情况</span>
         </div>

@@ -1,7 +1,7 @@
 <template>
 <!-- 费用页面 -->
 <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}">
-    <div class="cost flex flex-column">
+    <div class="cost flex flex-column" v-if="this.$store.state['hyFlag']||this.$store.state['dataScope']=='T'||this.$store.state['dataScope']=='I'">
         <div class="cost-rate border-bottom flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>

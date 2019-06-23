@@ -128,12 +128,14 @@ let option = {
             series: [{
                 name: '预算值',
                 data: data.x2,
-                type: 'bar'
+                type: 'bar',
+                barWidth: '25px'
             }, {
                 name: '总收入',
                 data: data.x1,
                 barGap: '-100%',
-                type: 'bar'
+                type: 'bar',
+                barWidth: '25px'
             }, {
                 name: '完成率',
                 data: data.x3,

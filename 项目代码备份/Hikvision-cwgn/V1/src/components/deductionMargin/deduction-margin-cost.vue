@@ -93,7 +93,7 @@ export default {
                 let currDate = new Date();
                 currDate.setDate(currDate.getDate() - 1);
                 let currMonth = currDate.getMonth()+1;
-                let zoomStart = 100-parseInt(6/(currMonth+12)*100);
+                let zoomStart = 100-parseInt(7/(currMonth+12)*100);
                 var option = {
                     grid: {
                         left: 0,
@@ -106,7 +106,7 @@ export default {
                             type: "inside",
                             xAxisIndex: [0],
                             start: zoomStart,
-                            end: 100
+                            end: 92
                         },
                         {
                             type: "slider",

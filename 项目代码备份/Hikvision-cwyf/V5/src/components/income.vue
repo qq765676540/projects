@@ -12,7 +12,7 @@
                 <echarts-bar-line name="income-bp" :data="bpData['bp']" :drilldown="bpData['drill']" id="income-bp" v-if="bpData"></echarts-bar-line>
             </div>
         </div>
-        <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I' || this.$store.state['hyFlag']">
+        <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I'">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">行业增长及构成</span>
@@ -441,10 +441,10 @@ export default {
                     xAxis.filter((vo,ii) => {
                         dataArr.filter(vi => {
                             if (vi[0].qNum == vo && vi[1].qText == v) {
-                                qtyRtemp.data.splice(ii,1,(vi[5].qNum == 0 ? '-' : vi[5].qNum));
-                                qtyUtemp.data.splice(ii,1,(vi[5].qNum == 0 ? '-' : vi[5].qNum));
-                                amountRtemp.data.splice(ii,1,(vi[3].qNum == 0 ? '-' : vi[3].qNum));
-                                amountUtemp.data.splice(ii,1,(vi[4].qNum == 0 ? '-' : vi[4].qNum));
+                                qtyRtemp.data.splice(ii,1,(vi[5].qNum == 0 || vi[5].qNum == 'NaN' ? '--' : vi[5].qNum));
+                                qtyUtemp.data.splice(ii,1,(vi[5].qNum == 0 || vi[5].qNum == 'NaN'  ? '--' : vi[5].qNum));
+                                amountRtemp.data.splice(ii,1,(vi[3].qNum == 0 || vi[3].qNum == 'NaN'  ? '--' : vi[3].qNum));
+                                amountUtemp.data.splice(ii,1,(vi[4].qNum == 0 || vi[4].qNum == 'NaN'  ? '--' : vi[4].qNum));
                             }
                         });
                     });

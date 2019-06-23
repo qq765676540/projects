@@ -54,7 +54,7 @@
             <span class="sub-title-name">费用结构</span>
         </div>
         <div class="content">
-            <cost-card :data="pieData" v-if="pieData"></cost-card>
+            <cost-card id="cost-structure" :data="pieData" v-if="pieData"></cost-card>
         </div>
     </div>
     <div class="cost-detail flex flex-column">
@@ -210,7 +210,7 @@
             </div>
         </div>
     </div>
-    <van-dialog v-model="dialogShow" title="选择细分成本">
+    <van-dialog v-model="dialogShow" title="选项">
         <van-radio-group v-model="selected">
             <template v-for="(item,index) in costList">
                 <van-cell-group :key="index">
@@ -376,7 +376,7 @@ export default {
         },
         pieData() {
             var arr = [];
-            if (this.$store.state["cost-pie"].length) {
+            if (this.$store.state["cost-pie"].length>0) {
                 var data = this.$store.state["cost-pie"];
                 data.forEach(i => {
                     arr.push({
@@ -596,7 +596,7 @@ export default {
                             i[0].qText,
                             i[1].qText == "-" ?
                             0 :
-                            accounting.formatNumber(parseInt(i[1].qText) / 10000),
+                            (i[1].qNum / 10000).toFixed(1),
                             i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1) + '%'
                         ]);
                     }
@@ -657,7 +657,7 @@ export default {
                             i[0].qText,
                             i[1].qText == "-" ?
                             0 :
-                            accounting.formatNumber(parseInt(i[1].qText) / 10000),
+                            (i[1].qNum / 10000).toFixed(1),
                             i[2].qText == "-" ? 0 : (parseFloat(i[2].qText) * 100).toFixed(1) + '%'
                         ]);
                     }
