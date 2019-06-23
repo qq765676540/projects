@@ -248,7 +248,7 @@ export default {
                     });
                     this.$store.dispatch('updateData', {
                         dataName: 'currency',
-                        data: 'R'
+                        data: this.orgFlag=='Y'?'U':'R'
                     });
                     this.dataScope = 'O';
                     break;

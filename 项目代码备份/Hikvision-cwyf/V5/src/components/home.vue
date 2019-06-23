@@ -53,6 +53,7 @@ import {
 
 import easyKpi from "./common/easy-kpi";
 import demoData from "./data/demoData";
+import { log } from 'util';
 
 export default {
     name: "home",
@@ -276,14 +277,14 @@ export default {
                                 ['同比', dataArr[18].qText, '']
                             ];
                             kpiData['R']['kpi_7'] = [
-                                ['人均销售额', dataArr[19].qText, '万元/人'],
-                                ['去年同期', dataArr[20].qText, '万元/人'],
-                                ['同比', dataArr[21].qText, '']
-                            ];
-                            kpiData['R']['kpi_8'] = [
                                 ['人均扣费毛利', dataArr[22].qText, '万元/人'],
                                 ['去年同期', dataArr[23].qText, '万元/人'],
                                 ['同比', dataArr[24].qText, '']
+                            ];
+                            kpiData['R']['kpi_8'] = [
+                                ['', '', 'none'],
+                                ['', '', ''],
+                                ['', '', '']
                             ];
                             kpiData['U']['kpi_1'] = [
                                 ['总收入', dataArr[25].qText, ''],
@@ -306,9 +307,9 @@ export default {
                                 ['同比', dataArr[36].qText, '']
                             ];
                             kpiData['U']['kpi_5'] = [
-                                ['人均销售额', dataArr[43].qText, '万美元/人'],
-                                ['去年同期', dataArr[44].qText, '万美元/人'],
-                                ['同比', dataArr[45].qText, '']
+                                ['', '', 'none'],
+                                ['', '', ''],
+                                ['', '', '']
                             ];
                             kpiData['U']['kpi_6'] = [
                                 ['', '', 'none'],

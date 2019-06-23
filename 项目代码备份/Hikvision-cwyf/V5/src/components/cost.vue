@@ -172,6 +172,9 @@ export default {
         trendData() {
             if (this.$store.state['cost-trend'].length > 0) {
                 let dataArr = this.$store.state['cost-trend'];
+                dataArr.sort((a,b) => {
+                    return a[0].qText/1 - b[0].qText/1;
+                });
                 let data = {
                     xAxis: [],
                     series: [{
@@ -197,7 +200,6 @@ export default {
                     data['series'][1]['data'].push(v[2].qNum);
                     data['series'][2]['data'].push(v[3].qNum);
                 });
-                data['xAxis'].sort();
                 // console.log('YCQ日志记录:标识->',data);
                 return data;
             }
