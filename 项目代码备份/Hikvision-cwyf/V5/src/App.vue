@@ -26,7 +26,7 @@
             <div :class="{filterStyle:true,filterStyleActive:filterStyleActive==='海外'}" @click="setDataScope('海外')">海外</div>
         </div>
         <div class="selected-bar flex flex-2">
-            <ul class="selected-dim-date flex flex-2">
+            <ul class="selected-dim-date flex flex-2" v-show="active!=4">
                 <li class="name">时间:</li>
                 <li class="values flex-1" v-text="selectedTime"></li>
             </ul>
@@ -89,7 +89,7 @@ export default {
         return {
             active: 0,
             cubeCount: 0,
-            cubeStop: 16,
+            cubeStop: 19,
             lang: false,
             selBarFlag: true,
             pageMap: {
@@ -512,51 +512,55 @@ export default {
                 (rs) => {
                     this.cubeCount += 1;
                 });
-            // //订单-订单情况
-            // Cube.getData(parent.qApp, this, {
-            //         formulaOpt: {
-            //             time: this.selectedTime,
-            //             org: this.selectedOrgSetCube,
-            //             orgManager: orgManager,
-            //             dataScope: dataScope,
-            //             name: "order-base"
-            //         },
-            //         qWidth: 8,
-            //         qHeight: 30
-            //     },
-            //     (rs) => {
-            //         this.cubeCount += 1;
-            //     });
-            // //订单-产品线未清情况
-            // Cube.getData(parent.qApp, this, {
-            //         formulaOpt: {
-            //             time: this.selectedTime,
-            //             org: this.selectedOrgSetCube,
-            //             orgManager: orgManager,
-            //             dataScope: dataScope,
-            //             name: "order-structure"
-            //         },
-            //         qWidth: 4,
-            //         qHeight: 100
-            //     },
-            //     (rs) => {
-            //         this.cubeCount += 1;
-            //     });
-            // //订单-分公司未清情况
-            // Cube.getData(parent.qApp, this, {
-            //         formulaOpt: {
-            //             time: this.selectedTime,
-            //             org: this.selectedOrgSetCube,
-            //             orgManager: orgManager,
-            //             dataScope: dataScope,
-            //             name: "order-branch"
-            //         },
-            //         qWidth: 3,
-            //         qHeight: 100
-            //     },
-            //     (rs) => {
-            //         this.cubeCount += 1;
-            //     });
+            //订单-订单情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-base"
+                    },
+                    qWidth: 8,
+                    qHeight: 200
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
+            //订单-产品线未清情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-structure"
+                    },
+                    qWidth: 4,
+                    qHeight: 100,
+                    orderType: -1,
+                    orderCol: 1
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
+            //订单-分公司未清情况
+            Cube.getData(parent.qApp, this, {
+                    formulaOpt: {
+                        time: this.selectedTime,
+                        org: this.selectedOrgSetCube,
+                        orgManager: orgManager,
+                        dataScope: dataScope,
+                        name: "order-branch"
+                    },
+                    qWidth: 3,
+                    qHeight: 100,
+                    orderType: -1,
+                    orderCol: 1
+                },
+                (rs) => {
+                    this.cubeCount += 1;
+                });
         }
     },
     computed: {

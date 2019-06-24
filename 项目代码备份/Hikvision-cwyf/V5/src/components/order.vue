@@ -5,6 +5,7 @@
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">订单情况</span>
+                <!-- <span class="sub-title-unit">单位(万)</span> -->
             </div>
             <div style="margin:0px 15px 0px 15px">
                 <echarts-bar-line name="order-base" :data="baseData" id="order-base" v-if="baseData"></echarts-bar-line>
@@ -13,7 +14,7 @@
         <div class="order-structure border-bottom flex flex-column">
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
-                <span class="sub-title-name">产品线未清情况</span>
+                <span class="sub-title-name" v-if="orderTitle">{{orderTitle}}</span>
             </div>
             <div style="margin:0px 15px 0px 15px">
                 <echarts-pie name="order-structure" :data="structurePieData" id="order-structure" v-if="structurePieData"></echarts-pie>
@@ -59,6 +60,14 @@ export default {
     },
     beforeCreate() {},
     computed: {
+        orderTitle() {
+            if (this.$store.state['level'].length > 0) {
+                let data = this.$store.state['level'][0];
+                let orgManager = (data[1].qText == 'LV1' || (data[1].qText == 'LV2' && data[2].qText == 'Y')) ? 'Y' : 'N';
+                return orgManager == 'Y' ? '业务部未清情况':'产品线未清情况'
+            }
+            return false
+        },
         orderBranchSubtitle() {
             let dataScope = this.$store.state['dataScope'];
             let orderBranchSubtitle = '';
@@ -78,6 +87,9 @@ export default {
         baseData() {
             if (this.$store.state['order-base'].length > 0) {
                 let dataArr = this.$store.state['order-base'];
+                dataArr.sort((a,b) => {
+                    return a[0].qText/1 - b[0].qText/1;
+                });
                 let data = {
                     R: {
                         xAxisData: [],
@@ -107,11 +119,11 @@ export default {
                     data['U']['seriesData4'].push(v[4].qNum);
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                // return data[this.$store.state['currency']];
-                return demoData.orderData.base
+                return data[this.$store.state['currency']];
+                // return demoData.orderData.base
             }
-            // return false;
-            return demoData.orderData.base
+            return false;
+            // return demoData.orderData.base
         },
         structurePieData() {
             if (this.$store.state['order-structure'].length > 0) {
@@ -138,11 +150,11 @@ export default {
                     
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                // return data[this.$store.state['currency']];
-                return demoData.orderData.structure
+                return data[this.$store.state['currency']];
+                // return demoData.orderData.structure
             }
-            // return false;
-            return demoData.orderData.structure
+            return false;
+            // return demoData.orderData.structure
         },
         branchData() {
             if (this.$store.state['order-branch'].length > 0) {
@@ -150,13 +162,11 @@ export default {
                 let data = {
                     R: {
                         xAxisData: [],
-                        seriesData1: [],
-                        dataZoom: (100-parseInt(7/dataArr.length*100))
+                        seriesData1: []
                     },
                     U: {
                         xAxisData: [],
-                        seriesData1: [],
-                        dataZoom: (100-parseInt(7/dataArr.length*100))
+                        seriesData1: []
                     }
                 };
                 dataArr.filter(v => {
@@ -166,11 +176,11 @@ export default {
                     data['U']['seriesData1'].push(v[2].qNum);
                 });
                 // console.log('YCQ日志记录:标识->',data);
-                // return data[this.$store.state['currency']];
-                return demoData.orderData.branch
+                return data[this.$store.state['currency']];
+                // return demoData.orderData.branch
             }
-            // return false;
-            return demoData.orderData.branch
+            return false;
+            // return demoData.orderData.branch
         },
     },
     methods: {

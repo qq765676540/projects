@@ -5,7 +5,13 @@
 export default
     function getFormula(opt) {
     let myDate = new Date();
+    let day1 = new Date();
+    let day60 = new Date();
     myDate.setDate(myDate.getDate() - 1);
+    day1.setDate(day1.getDate() - 1);
+    day60.setDate(day60.getDate() - 61);
+    day1 = day1.Format('yyyyMMdd');
+    day60 = day60.Format('yyyyMMdd');
     let time = opt.time;
     let startMonth = '';
     let endMonth = '';
@@ -409,34 +415,34 @@ export default
         },
         'order-base': {
             qDimensions: [
-                `p5n1dim1`
+                `=if(right(CALDAY,8)>='${day60}' and right(CALDAY,8)<='${day1}',right(CALDAY,6))`
             ],
             qMeasures: [
-                `=sum(p5n1mea1)`,
-                `=sum(p5n1mea2)`,
-                `=sum(p5n1mea3)`,
-                `=sum(p5n1mea4)`,
-                `=sum(p5n1mea5)`,
-                `=sum(p5n1mea6)`
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDJE)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSR)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDSL))`,
+                `=round(Sum({<ZFI_YWB={'A','B','D','E','F','G','H','I'},${orgStr}>}DLV_QTY))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDJEU)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSRU)/10000)`
             ]
         },
         'order-structure': {
             qDimensions: [
-                `p5n2dim1`
+                `=if(vOrgAdmin='Y',if(${orgMatch} and TXTSH_YWB<>'' and TXTSH_YWB<>'网络安全部',TXTSH_YWB),if(TXTSH_CBX<>'' and ${orgMatch},TXTSH_CBX))`,
             ],
             qMeasures: [
-                `=sum(p5n2mea1)`,
-                `=sum(p5n2mea2)`,
-                `=sum(p5n2mea3)`
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJE)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJE))/10000)`,
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQSL)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQSL))/10000)`,
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU))/10000)`
             ]
         },
         'order-branch': {
             qDimensions: [
-                `p5n3dim1`
+                `${branchDim}`
             ],
             qMeasures: [
-                `=sum(p5n3mea1)`,
-                `=sum(p5n3mea2)`
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${orgStr},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJE)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${orgStr},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJE))/10000)`,
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${orgStr},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${orgStr},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU))/10000)`
             ]
         }
     }

@@ -723,8 +723,9 @@ let option = {
         }
     },
     'order-base': (data) => {
+        let zoomNum = 100-parseInt(7/data.xAxisData.length*100);
         return {
-            color: ['#59D4FF', '#448DFF', '#751DE2', '#D391B8'],
+            color: ['#addaf8', '#448DFF', 'orange', '#ff6060'],
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -756,7 +757,7 @@ let option = {
                 {
                     type: 'inside',
                     xAxisIndex: [0],
-                    start: 50,
+                    start: zoomNum,
                     end: 100
                 },
                 {
@@ -835,9 +836,9 @@ let option = {
                         rotate: 45,
                         formatter: v => {
                             if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                                return (v/10000).toFixed(0) + '万台';
                             }
-                            return v;
+                            return v + '台';
                         }
                     }
                 }
@@ -966,7 +967,15 @@ let option = {
                 {
                     name: '未清金额',
                     type: 'bar',
-                    data: data.seriesData1
+                    data: data.seriesData1,
+                    label: {
+                        show: true,
+                        rotate: 45,
+                        offset: [7,-7],
+                        position: 'top',
+                        color: '#666666',
+                        formatter: '{c}'
+                    }
                 }
             ]
         }
