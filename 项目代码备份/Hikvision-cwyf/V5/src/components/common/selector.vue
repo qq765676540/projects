@@ -13,7 +13,7 @@
             <span class="title" style="padding-bottom: 5px;">默认货币</span>
             <div class="flex flex-align-center" style="margin-left: 10px">
                 <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive=='人民币'}" @click="setCurrency('R')">人民币</div>
-                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive=='美元'}" @click="setCurrency('U')" style="margin-left: 15px" v-if="this.$store.state.pageActive!=3">美元</div>
+                <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive=='美元'}" @click="setCurrency('U')" style="margin-left: 15px" v-if="!(this.$store.state.pageActive==3)&&!(this.$store.state.dataScope=='T')&&!(this.$store.state.dataScope=='I')">美元</div>
             </div>
         </div>
         <div class="selector-org-tree flex flex-column flex-1" style="padding-top: 15px;">
@@ -62,7 +62,7 @@ export default {
         };
     },
     created() {
-        this.time = this.selectedTime;
+        // this.time = this.selectedTime;
         this.ids = tool.deepClone(this.selectedOrg);
     },
     mounted() {

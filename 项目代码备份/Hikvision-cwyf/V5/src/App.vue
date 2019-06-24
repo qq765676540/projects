@@ -248,7 +248,7 @@ export default {
                     });
                     this.$store.dispatch('updateData', {
                         dataName: 'currency',
-                        data: this.orgFlag=='Y'?'U':'R'
+                        data: this.orgFlag == 'Y' ? 'U' : 'R'
                     });
                     this.dataScope = 'O';
                     break;
@@ -584,6 +584,12 @@ export default {
                 dataName: 'pageActive',
                 data: pIndex
             });
+            if (pIndex == 3) {
+                this.$store.dispatch('updateData', {
+                    dataName: 'currency',
+                    data: 'R'
+                });
+            }
         }
     }
 };
