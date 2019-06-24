@@ -40,20 +40,18 @@ let option = {
                             name: {
                                 color: "#666666",
                                 fontSize: 12,
-                                padding: [5, 2],
+                                padding: [2, 2],
                                 align: "center"
-                            },
-                            padding: {
-                                padding: [3, 2]
                             },
                             percent: {
                                 align: "center",
                                 fontSize: 12,
-                                padding: [9, 0]
+                                padding: [1, 1]
                             },
                             value: {
                                 color: "#666666",
                                 fontSize: 12,
+                                padding: [1, 1],
                                 align: "center"
                             },
                             hr: {
@@ -97,7 +95,7 @@ let option = {
                 triggerOn: 'click',
                 formatter: v => {
                     // console.log('YCQ日志记录:标识->',v);
-                    return `${v.name}<br>未清金额: ${v.value}<br>未清数量: ${v.data.qty}<br>金额占比: ${v.percent.toFixed(0)}%`;
+                    return `${v.name}<br>未清金额: ${v.value}<br>未清数量: ${v.data.qty}台<br>金额占比: ${v.percent.toFixed(0)}%`;
                 },
                 extraCssText: 'text-align:left;'
                 // "{b}: {c} ({d}%)"
@@ -123,20 +121,18 @@ let option = {
                             name: {
                                 color: "#666666",
                                 fontSize: 12,
-                                padding: [5, 2],
+                                padding: [2, 2],
                                 align: "center"
-                            },
-                            padding: {
-                                padding: [3, 2]
                             },
                             percent: {
                                 align: "center",
                                 fontSize: 12,
-                                padding: [9, 0]
+                                padding: [1, 1]
                             },
                             value: {
                                 color: "#666666",
                                 fontSize: 12,
+                                padding: [1, 1],
                                 align: "center"
                             },
                             hr: {

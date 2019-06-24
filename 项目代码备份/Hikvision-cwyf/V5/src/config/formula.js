@@ -423,7 +423,7 @@ export default
                 `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDSL))`,
                 `=round(Sum({<ZFI_YWB={'A','B','D','E','F','G','H','I'},${orgStr}>}DLV_QTY))`,
                 `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDJEU)/10000)`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSRU)/10000)`
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSR_U)/10000)`
             ]
         },
         'order-structure': {

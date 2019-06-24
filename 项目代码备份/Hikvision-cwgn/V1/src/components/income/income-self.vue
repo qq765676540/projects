@@ -3,14 +3,10 @@
     <div :id="id" class="normalBarCon"></div>
     <div class="flex flex-column desc">
         <div class="flex flex-row flex-1 title">{{this.selectedMsg.city}}详情</div>
-        <div class="flex flex-row flex-1 content">
+        <!-- <div class="flex flex-row flex-1 content">
             <div class="flex flex-1">城市</div>
             <div class="flex flex-3">{{this.selectedMsg.city}}</div>
-        </div>
-        <!-- <div class="flex flex-row flex-1 content">
-            <div class="flex flex-1">城市分类</div>
-            <div class="flex flex-3">{{this.selectedMsg.level}}</div> 
-        </div>-->
+        </div> -->
         <div class="flex flex-row flex-1 content">
             <div class="flex flex-1">收入</div>
             <div class="flex flex-3">{{this.selectedMsg.grossMargin}}</div>
