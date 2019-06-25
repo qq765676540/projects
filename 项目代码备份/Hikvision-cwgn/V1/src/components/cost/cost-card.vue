@@ -57,23 +57,22 @@ export default {
                 var datas = this.data;
                 var rich = {
                     name: {
-                        color: "#666666",
                         fontSize: 12,
-                        padding: [5, 2],
+                        padding: [2, 2],
                         align: "center"
                     },
                     percent: {
                         align: "center",
                         fontSize: 12,
-                        padding: [9, 0]
+                        padding: [1, 1]
                     },
                     value: {
-                        color: "#666666",
                         fontSize: 12,
-                        align: "center"
+                        align: "center",
+                        padding: [1, 1]
                     },
                     hr: {
-                        borderColor: "#111111",
+                        borderColor: "#666666",
                         width: "100%",
                         borderWidth: 1,
                         height: 0
@@ -91,8 +90,8 @@ export default {
                     series: [{
                         name: "在线数量",
                         type: "pie",
-                        radius: ["30%", "45%"],
-                        // hoverAnimation: true,
+                        radius: ["25%", "50%"],
+                        avoidLabelOverlap: true,
                         color: [
                             "#1495EB",
                             "#60CBC1",
@@ -123,10 +122,10 @@ export default {
                         },
                         labelLine: {
                             normal: {
-                                length: 20,
-                                length2: 35,
+                                length: 7,
+                                length2: 7,
                                 lineStyle: {
-                                    color: "#111111"
+                                    color: "#666666"
                                 }
                             }
                         },

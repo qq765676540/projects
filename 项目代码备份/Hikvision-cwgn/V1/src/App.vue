@@ -102,7 +102,7 @@ export default {
             time_bucket: [],
             curFilter: "current_month",
             selectedTime: {
-                name: "本年",
+                name: "本月",
                 year: new Date().getFullYear(),
                 startMonth: 1,
                 endMonth: 1

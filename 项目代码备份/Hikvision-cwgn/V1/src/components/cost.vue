@@ -305,7 +305,7 @@ export default {
                 arr = [
                     data[0].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[0].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[0].qText) / 10000),
                     data[1].qText == "-" || parseFloat(data[1].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -316,7 +316,7 @@ export default {
                     (parseFloat(data[2].qText) * 100).toFixed(1),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" || parseFloat(data[4].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -327,7 +327,7 @@ export default {
                     (parseFloat(data[5].qText) * 100).toFixed(1),
                     data[6].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[6].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[6].qText) / 10000),
                     data[7].qText == "-" || parseFloat(data[7].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -338,7 +338,7 @@ export default {
                     (parseFloat(data[8].qText) * 100).toFixed(1),
                     data[9].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[9].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[9].qText) / 10000),
                     data[10].qText == "-" || parseFloat(data[10].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -349,7 +349,7 @@ export default {
                     (parseFloat(data[11].qText) * 100).toFixed(1),
                     data[12].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[12].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[12].qText) / 10000),
                     data[13].qText == "-" || parseFloat(data[13].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -360,7 +360,7 @@ export default {
                     (parseFloat(data[14].qText) * 100).toFixed(1),
                     data[15].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[15].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[15].qText) / 10000),
                     data[16].qText == "-" || parseFloat(data[16].qText) < 1 ?
                     "" :
                     "超预算 " +
@@ -415,10 +415,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -454,10 +454,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -493,10 +493,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -532,10 +532,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -571,10 +571,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -632,10 +632,10 @@ export default {
                     },
                     data[2].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[2].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[2].qText) / 10000),
                     data[3].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[3].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[3].qText) / 10000),
                     data[4].qText == "-" ?
                     0 :
                     (parseFloat(data[4].qText) * 100).toFixed(1)
@@ -673,7 +673,7 @@ export default {
                 arr = [
                     data[0].qText == "-" ?
                     0 :
-                    accounting.formatNumber(parseInt(data[0].qText) / 10000),
+                    accounting.formatNumber(Math.round(data[0].qText) / 10000),
                     data[1].qText == "-" ?
                     0 :
                     (parseFloat(data[1].qText) * 100).toFixed(1),
@@ -695,7 +695,7 @@ export default {
                 data.forEach(i => {
                     table.push({
                         name: i[0].qText,
-                        value: i[1].qText == "-" ? 0 : parseInt(i[1].qText / 10000),
+                        value: i[1].qText == "-" ? 0 : Math.round(i[1].qText / 10000),
                     });
                 });
                 return table;

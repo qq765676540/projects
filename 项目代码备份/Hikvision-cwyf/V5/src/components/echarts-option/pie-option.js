@@ -38,7 +38,6 @@ let option = {
                         },
                         rich: {
                             name: {
-                                color: "#666666",
                                 fontSize: 12,
                                 padding: [2, 2],
                                 align: "center"
@@ -49,7 +48,6 @@ let option = {
                                 padding: [1, 1]
                             },
                             value: {
-                                color: "#666666",
                                 fontSize: 12,
                                 padding: [1, 1],
                                 align: "center"
@@ -119,7 +117,6 @@ let option = {
                         },
                         rich: {
                             name: {
-                                color: "#666666",
                                 fontSize: 12,
                                 padding: [2, 2],
                                 align: "center"
@@ -130,7 +127,6 @@ let option = {
                                 padding: [1, 1]
                             },
                             value: {
-                                color: "#666666",
                                 fontSize: 12,
                                 padding: [1, 1],
                                 align: "center"

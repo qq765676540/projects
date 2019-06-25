@@ -418,12 +418,12 @@ export default
                 `=if(right(CALDAY,8)>='${day60}' and right(CALDAY,8)<='${day1}',right(CALDAY,6))`
             ],
             qMeasures: [
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDJE)/10000)`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSR)/10000)`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDSL))`,
-                `=round(Sum({<ZFI_YWB={'A','B','D','E','F','G','H','I'},${orgStr}>}DLV_QTY))`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_DDJEU)/10000)`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${orgStr}>}ZFI_PJSR_U)/10000)`
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_DDJE)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_PJSR)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_DDSL))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}DLV_QTY))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_DDJEU)/10000)`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope},${orgStr}>}ZFI_PJSR_U)/10000)`
             ]
         },
         'order-structure': {
@@ -432,7 +432,7 @@ export default
             ],
             qMeasures: [
                 `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJE)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJE))/10000)`,
-                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQSL)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQSL))/10000)`,
+                `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQSL)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQSL))/1)`,
                 `=round((Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'海外'},${opt.dataScope=='T'||opt.dataScope=='O'?'=':"ZGNGM={''}"},ZZFKSTA={'A','B','空'},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU)+Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},ZGNGM={'国内'},${opt.dataScope=='T'||opt.dataScope=='I'?'=':"ZGNGM={''}"},ZDLV_STS={'A','B','空'}>}ZFI_WQJEU))/10000)`
             ]
         },

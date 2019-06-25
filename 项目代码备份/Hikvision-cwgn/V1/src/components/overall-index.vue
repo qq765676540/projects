@@ -170,8 +170,8 @@ export default {
             if (this.$store.state["over-all-ranking"].length) {
                 this.$store.state["over-all-ranking"].forEach(i => {
                     obj.y.push(i[0].qText);
-                    obj.x1.push(i[1].qText == "-" ? 0 : parseInt(parseInt(i[1].qText) / 10000));
-                    obj.x2.push(i[2].qText == "-" ? 0 : parseInt(parseInt(i[2].qText) / 10000));
+                    obj.x1.push(i[1].qText == "-" ? 0 : Math.round(parseInt(i[1].qText) / 10000));
+                    obj.x2.push(i[2].qText == "-" ? 0 : Math.round(parseInt(i[2].qText) / 10000));
                     obj.x3.push(
                         i[3].qText == "-" ? 0 : (parseFloat(i[3].qText) * 100).toFixed(1)
                     );
