@@ -4,7 +4,7 @@
     <!-- <van-nav-bar v-on:click-left="closeView" class="nav-bar-top" title="标题" left-arrow>
         <div id="titleRight" slot="right">222</div>
     </van-nav-bar> -->
-    <div>{{msg}}</div>
+    <!-- <div>{{msg}}</div> -->
 
     <!-- 所有报表页面 -->
     <van-collapse v-model="reportActiveName" accordion v-if="reportList&&pageActive==0&&!reportPageOpenFlag">
@@ -132,13 +132,13 @@ export default {
                 rs.filter(v => {
                     if(v.reportName == reportName) {
                         _this.Mobile.getReportUrl(v.reportId,(data) => {
-                            _this.msg = data.reportUrl;
+                            $('#reportIframe').attr('src', data.reportUrl);
                         });
                     }
                 });
             });
             this.reportPageOpenFlag = true;
-            // $('#reportIframe').attr('src', 'http://localhost:4848/extensions/GNCW/GNCW.html');
+            
             
         },
         //收藏报表
