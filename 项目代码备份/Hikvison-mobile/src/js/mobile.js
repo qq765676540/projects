@@ -1,17 +1,10 @@
 class Mobile {
     constructor(opt) {
         this.vueApp = opt.vueApp;
-        this.closeView = opt.closeView;
         this.id_token = null;
+        this.reportGroupData = [];
         this.language = "zh";
-        this.reportId = "";
-        this.treeData = [];
         this.languageTypeList = [];
-        this.myRootFloderId = "";
-        this.myRootFloderName = "";
-        this.myReportFloderId = ""; //定义当前打开的文件夹id
-        this.html = "";
-        this.childrenHtml = "";
         this.basicUrl = "/portalbasicapi";
         this.ticketApi = "/portalbiapi/BIService/GetBIReportUrlAppendTicket";
     }
@@ -20,20 +13,12 @@ class Mobile {
         this.id_token = this.GetQueryString('id_token');    
         if (this.id_token !== null) {
             this.getDefault();
+            
         } else if (this.id_token == null) {
             window.location = window.location.protocol + '//' + window.location.hostname + '/mobile/login.html';
             return false;
         }
 
-    }
-
-    setLanguage() {
-        var _this = this;
-        $("[lang-code]").each(function (index, el) {
-            var code = $(el).attr('lang-code');
-            var text = _this.getWord(code);
-            $(el).html(text)
-        })
     }
 
     getDefault() {
@@ -55,11 +40,8 @@ class Mobile {
                         }
                     });
                 }
-                // $('.' + _this.language).show();  //ycq
-                // _this.setLanguage()  //ycq
-                // _this.getBackground();   //ycq
+                alert(_this.language);
                 _this.getAllReportList();
-                _this.setEvent();
             }
         })
     }
@@ -73,57 +55,71 @@ class Mobile {
             dataType: "json",
             headers: _this.getHeader(),
             success: function (data) {
+                _this.reportGroupData = data.data.children;
                 _this.vueApp.$store.dispatch('updateData', {
                     dataName: 'reportListData',
                     data: data.data.children
                 });
             },
-            error: function (err) {
-                // var errorFloaderMsg = _this.getWord('errorFloaderMsg');  //ycq
-                // console.log(JSON.stringify(err));    //ycq
-                // alert(errorFloaderMsg);  //ycq
+            error: function (err) {               
+                alert(JSON.stringify(err));
             }
         });
     }
 
-    getWord(word) {
-        let text = ''
-        if (this.language == 'zh') {
-            text = this.lanData.zh[word]
-        } else if (this.language == 'en') {
-            text = this.lanData.en[word]
+    getReportId(reportGroupId,reportName,callback) {
+        var _this = this;
+        var parentId = this.getMaxParentId(this.reportGroupData, reportGroupId)
+        parentId = parentId ? parentId[0] : reportGroupId;
+        var dataParams = {
+            DomainName: window.location.hostname,
+            IsAsc: true,
+            ReportGroupId: reportGroupId,
+            ReportSortColumn: 2,
+            maxParentId: parentId
         }
-        return text
-    }
-
-    getBackground() {
-        let _this = this;
         $.ajax({
-            type: "get",
-            url: this.basicUrl + "/SystemConfig/GetConfig",
+            type: "POST",
             dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            url: this.basicUrl + "/BIServices/ReportGroup/GetReport",
+            data: JSON.stringify(dataParams),
             headers: this.getHeader(),
             success: function (data) {
-                _this.tabTitle.html(data.data.systemName);
-
-                var iconUrl = data.data.pageLogo != null && data.data.pageLogo != "" ? data.data.pageLogo : "../staticFiles/favicon/ico.png";
-                // linkTag = $('<link href="' + iconUrl + '"  rel="icon" type="image/x-icon"" />');
-
-                // $($('head')[0]).append(linkTag);
-
+                _this.vueApp.$store.dispatch('updateData', {
+                    dataName: 'reportIdData',
+                    data: data.data
+                });
+                (callback && typeof (callback) === "function") && callback(data.data);                    
             },
             error: function (err) {
-                alert(_this.getWord('imgError') + JSON.stringify(err));
+                alert(JSON.stringify(err));
             }
         });
     }
 
-    setEvent() {
-        let _this = this;
-        $('.van-icon-arrow-left').on('click', function () {
-            alert('执行退出时间');
-            _this.closeView();
-        })
+    getReportUrl(id,callback) {
+        var _this = this;
+        $.ajax({
+            type: "GET",
+            url: _this.basicUrl + "/BIServices/BIService/GetBIReportMessage/" + id,
+            dataType: "json",
+            headers: _this.getHeader(),
+            success: function (data) {
+                if (data.isSuccess) {
+                    // data.data.isFavorite
+                    // data.data.reportUrl
+                    _this.vueApp.$store.dispatch('updateData', {
+                        dataName: 'reportUrlData',
+                        data: data.data
+                    });
+                    (callback && typeof (callback) === "function") && callback(data.data);
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
     }
 
     getHeader() {
@@ -134,6 +130,34 @@ class Mobile {
             headers.lang = this.language;
         }
         return headers
+    }
+
+    getMaxParentId(arr, targetId) {
+        let c = []
+        arr.forEach(item => {
+            let b = null;
+            if (item.id == targetId) {
+                b = item.id;
+            } else {
+                if (item.children && item.children.length !== 0) {
+                    if (this.getMaxParentId(item.children, targetId).length != 0) {
+                        b = item.id;
+                    } else {
+                        this.getMaxParentId(item.children, targetId)
+                    }
+                }
+            }
+            if (b && b !== undefined) {
+                if (b instanceof Array) {
+                    if (b.length !== 0) {
+                        c = c.concat(b);
+                    }
+                } else {
+                    c.push(b);
+                }
+            }
+        })
+        return c;
     }
 
     GetQueryString(name) {
