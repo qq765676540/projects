@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <van-pull-refresh  class="flex flex-column" v-model="isLoading" @refresh="onRefresh">
+    <van-pull-refresh class="flex flex-column" v-model="isLoading" @refresh="onRefresh">
         <!-- 打开报表页面 -->
         <iframe id="reportIframe" class="reportIframe" src="" frameborder="0" v-show="reportPageOpenFlag"></iframe>
         <!-- 头部标题 -->
@@ -24,7 +24,7 @@
         </div>
 
         <!-- 我的报表页面 -->
-        <div class="flex flex-column flex-1 flex-align-center" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
+        <div class="flex flex-column flex-1 flex-align-center" style="margin-top: 10px" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
             <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
                 <div class="reportImg flex-1"></div>
                 <div class="reportName flex-7">{{childVal.label}}</div>
@@ -116,8 +116,12 @@ export default {
             isLoading: false,
         };
     },
+    created() {
+
+    },
     mounted() {
         let _this = this;
+        this.createLangIcon();
         this.Mobile.init(rs => {
             if (rs) {
                 let __this = _this;
@@ -181,7 +185,7 @@ export default {
             $('#MyHtmlTitle').text(reportName);
             this.reportPageOpenFlag = true;
             $('#reportIframe').attr('src', this.reportUrlList[this.reportIdList[reportName]].reportUrl);
-            
+
         },
         //收藏报表
         favoriteReport(reportName) {
@@ -195,9 +199,37 @@ export default {
             }
         },
         //设置语言
-        setLang() {
-            localStorage.lang = 'en';
-            location.reload();
+        createLangIcon() {
+            moa.ready(function () {
+                moa.setCustomNavigation({
+                    type: 'extend',
+                    menuList: [{
+                            text: '中文',
+                            id: 'setZH',
+                            icon: ''
+                        },
+                        {
+                            text: '英文',
+                            id: 'setEN',
+                            icon: ''
+                        }
+                    ],
+                    success: function (id) {
+                        if (id == 'setZH') {
+                            localStorage.lang = 'zh';
+                            location.reload();
+                        } else {
+                            localStorage.lang = 'en';
+                            location.reload();
+                        }
+                    },
+                    fail: function (error) {
+                        alert('error');
+                    }
+                });
+            });
+
+            
         },
         //刷新页面
         onRefresh() {

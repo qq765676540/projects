@@ -33,10 +33,20 @@ class Mobile {
                 _this.languageTypeList = res.data;
                 if (localStorage.lang && localStorage.lang !== "" && localStorage.lang !== 'undefined') {
                     _this.language = localStorage.lang;
+                    if(_this.language=='zh') {
+                        $('#MyHtmlTitle').text('报表');
+                    }else {
+                        $('#MyHtmlTitle').text('Report');
+                    }
                 } else {
                     _this.languageTypeList.forEach(element => {
                         if (element.default) {
                             _this.language = element.code;
+                            if(_this.language=='zh') {
+                                $('#MyHtmlTitle').text('报表');
+                            }else {
+                                $('#MyHtmlTitle').text('Report');
+                            }
                         }
                     });
                 }
