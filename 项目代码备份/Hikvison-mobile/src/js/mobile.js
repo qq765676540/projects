@@ -9,11 +9,11 @@ class Mobile {
         this.ticketApi = "/portalbiapi/BIService/GetBIReportUrlAppendTicket";
     }
 
-    init() {
+    init(callback) {
         this.id_token = this.GetQueryString('id_token');
         if (this.id_token !== null) {
-            this.getDefault();
-
+            // this.getDefault();
+            (callback && typeof (callback) === "function") && callback(true);
         } else if (this.id_token == null) {
             window.location = window.location.protocol + '//' + window.location.hostname + '/mobile/login.html';
             return false;
@@ -40,12 +40,12 @@ class Mobile {
                         }
                     });
                 }
-                _this.getAllReportList();
+                // _this.getAllReportList();
             }
         })
     }
 
-    getAllReportList() {
+    getAllReportList(callback) {
         var url = this.basicUrl + "/BIServices/BIService/GetCurrentUserHavePermissionReportGroupTree";
         var _this = this;
         $.ajax({
@@ -60,7 +60,11 @@ class Mobile {
                     dataName: 'reportListData',
                     data: myData
                 });
-
+                let count = 0;
+                for (let index = 1; index < myData.length; index++) {
+                    count += myData[index].children.length;
+                }
+                (callback && typeof (callback) === "function") && callback(count);
                 for (let index = 1; index < myData.length; index++) {
                     _this.getReportId(myData[index].id);
                 }
@@ -178,7 +182,7 @@ class Mobile {
             dataType: "json",
             headers: this.getHeader(),
             success: function (res) {
-                
+                // location.reload();
             },
             error: function (err) {
                 alert(JSON.stringify(err));
@@ -194,7 +198,7 @@ class Mobile {
             dataType: "json",
             headers: this.getHeader(),
             success: function (res) {
-                
+                // location.reload();
             },
             error: function (err) {
                 alert(JSON.stringify(err));

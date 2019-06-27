@@ -1,57 +1,66 @@
 <template>
-<div id="app" class="flex flex-column">
-    <!-- 头部标题 -->
-    <!-- <van-nav-bar v-on:click-left="closeView" class="nav-bar-top" title="标题" left-arrow>
-        <div id="titleRight" slot="right">222</div>
-    </van-nav-bar> -->
-    <!-- <div>{{msg}}</div> -->
+<div id="app">
+    <van-pull-refresh  class="flex flex-column" v-model="isLoading" @refresh="onRefresh">
+        <!-- 打开报表页面 -->
+        <iframe id="reportIframe" class="reportIframe" src="" frameborder="0" v-show="reportPageOpenFlag"></iframe>
+        <!-- 头部标题 -->
+        <!-- <van-nav-bar v-on:click-left="closeView" class="nav-bar-top" title="标题" left-arrow>
+                <div id="titleRight" slot="right">222</div>
+            </van-nav-bar> -->
 
-    <!-- 所有报表页面 -->
-    <van-collapse v-model="reportActiveName" accordion v-if="reportList&&pageActive==0&&!reportPageOpenFlag">
-        <van-collapse-item v-for="(val,key) in reportList" :key="key" :title="val.label" :name="key+''">
-            <div v-for="(childVal,clildKey) in reportList[key].children" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,val.id)">
+        <!-- 所有报表页面 -->
+        <div class="flex flex-column flex-1">
+            <van-collapse v-model="reportActiveName" accordion v-if="reportList&&pageActive==0&&!reportPageOpenFlag">
+                <van-collapse-item v-for="(val,key) in reportList" :key="key" :title="val.label" :name="key+''">
+                    <div v-for="(childVal,clildKey) in reportList[key].children" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,val.id)">
+                        <div class="reportImg flex-1"></div>
+                        <div class="reportName flex-7">{{childVal.label}}</div>
+                        <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center">
+                            <van-icon name="star-o" :color="reportUrlList[reportIdList[childVal.label]].isFavorite?'red':'#222'" size="25px" v-on:click.stop="favoriteReport(childVal.label)" />
+                        </div>
+                    </div>
+                </van-collapse-item>
+            </van-collapse>
+        </div>
+
+        <!-- 我的报表页面 -->
+        <div class="flex flex-column flex-1 flex-align-center" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
+            <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
                 <div class="reportImg flex-1"></div>
                 <div class="reportName flex-7">{{childVal.label}}</div>
                 <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center">
                     <van-icon name="star-o" :color="reportUrlList[reportIdList[childVal.label]].isFavorite?'red':'#222'" size="25px" v-on:click.stop="favoriteReport(childVal.label)" />
                 </div>
             </div>
-        </van-collapse-item>
-    </van-collapse>
-
-    <!-- 我的报表页面 -->
-    <div class="myReportPage flex flex-column flex-align-center" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
-        <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
-            <div class="reportImg flex-1"></div>
-            <div class="reportName flex-7">{{childVal.label}}</div>
-            <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center">
-                <van-icon name="star-o" :color="reportUrlList[reportIdList[childVal.label]].isFavorite?'red':'#222'" size="25px" v-on:click.stop="favoriteReport(childVal.label)" />
-            </div>
         </div>
-    </div>
-    <div class="flex flex-column flex-align-center" style="height: 100%; width: 100%" v-if="!favoriteReportList&&pageActive==1">
-        <div class="flex flex-9 empty" style="width: 55%"></div>
-        <div class="flex flex-1" style="font-size: 1.5rem;color: #666666">空空如也,快去收藏</div>
-    </div>
+        <div class="flex flex-column flex-1 flex-align-center" v-if="!favoriteReportList&&pageActive==1">
+            <div class="empty" style="height:300px; width: 100%;margin-left: 47%"></div>
+            <div style="font-size: 1.5rem;color: #666666">空空如也,快去收藏</div>
+        </div>
 
-    <!-- 打开报表页面 -->
-    <iframe id="reportIframe" class="reportIframe" src="" frameborder="0"></iframe>
+        <!-- 页面底部 -->
+        <van-tabbar class="footer" v-model="pageActive" :safe-area-inset-bottom="true" active-color="#05c060" inactive-color="#555555" v-if="!reportPageOpenFlag">
+            <van-tabbar-item>
+                <div class="flex flex-column">
+                    <van-icon name="wap-nav" size="30px" />
+                    <span>所有报表</span>
+                </div>
+            </van-tabbar-item>
+            <van-tabbar-item>
+                <div class="flex flex-column">
+                    <van-icon name="manager" size="30px" />
+                    <span>我的报表</span>
+                </div>
+            </van-tabbar-item>
+        </van-tabbar>
 
-    <!-- 页面底部 -->
-    <van-tabbar class="footer" v-model="pageActive" :safe-area-inset-bottom="true" active-color="#05c060" inactive-color="#555555" v-if="!reportPageOpenFlag">
-        <van-tabbar-item>
-            <div class="flex flex-column">
-                <van-icon name="wap-nav" size="30px" />
-                <span>所有报表</span>
-            </div>
-        </van-tabbar-item>
-        <van-tabbar-item>
-            <div class="flex flex-column">
-                <van-icon name="manager" size="30px" />
-                <span>我的报表</span>
-            </div>
-        </van-tabbar-item>
-    </van-tabbar>
+        <!-- loading页面 -->
+        <div class="appPopstyle">
+            <van-popup v-model="popShow" :close-on-click-overlay="false">
+                <van-loading text-size="20px" size="50px" color="#fff" vertical>加载中...</van-loading>
+            </van-popup>
+        </div>
+    </van-pull-refresh>
 </div>
 </template>
 
@@ -64,7 +73,10 @@ import {
     Collapse,
     CollapseItem,
     Sidebar,
-    SidebarItem
+    SidebarItem,
+    Popup,
+    Loading,
+    PullRefresh
 } from 'vant';
 
 import Mobile from './js/mobile';
@@ -81,7 +93,10 @@ export default {
         [Collapse.name]: Collapse,
         [CollapseItem.name]: CollapseItem,
         [Sidebar.name]: Sidebar,
-        [SidebarItem.name]: SidebarItem
+        [SidebarItem.name]: SidebarItem,
+        [Popup.name]: Popup,
+        [Loading.name]: Loading,
+        [PullRefresh.name]: PullRefresh
     },
     data() {
         return {
@@ -93,16 +108,31 @@ export default {
             Mobile: new Mobile({
                 vueApp: this
             }),
+            reportCount: 0,
             reportIdList: {},
             reportUrlList: {},
+            // reportIdList: demoData[1],
+            // reportUrlList: demoData[2],
+            isLoading: false,
         };
     },
     mounted() {
-        this.Mobile.init();
+        let _this = this;
+        this.Mobile.init(rs => {
+            if (rs) {
+                let __this = _this;
+                _this.Mobile.getDefault();
+                _this.Mobile.getAllReportList(count => {
+                    __this.reportCount = count;
+                });
+            }
+        });
+
         setTimeout(() => {
             this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
             this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
         }, 2000);
+
     },
     computed: {
         reportList() {
@@ -114,7 +144,7 @@ export default {
                 return arr;
             }
             return false;
-            // return demoData;
+            // return demoData[0];
         },
         favoriteReportList() {
             if (this.$store.state['reportListData'].length > 0 &&
@@ -129,7 +159,13 @@ export default {
                 }
             }
             return false;
-            // return demoData[0].children;
+            // return demoData[0][0].children;
+        },
+        popShow() {
+            if (Object.keys(this.reportUrlList).length > 0) {
+                return false;
+            }
+            return true;
         },
     },
     methods: {
@@ -143,8 +179,9 @@ export default {
         openReport(reportName, groupId) {
             let _this = this;
             $('#MyHtmlTitle').text(reportName);
-            $('#reportIframe').attr('src', this.reportUrlList[this.reportIdList[reportName]].reportUrl);
             this.reportPageOpenFlag = true;
+            $('#reportIframe').attr('src', this.reportUrlList[this.reportIdList[reportName]].reportUrl);
+            
         },
         //收藏报表
         favoriteReport(reportName) {
@@ -161,6 +198,13 @@ export default {
         setLang() {
             localStorage.lang = 'en';
             location.reload();
+        },
+        //刷新页面
+        onRefresh() {
+            setTimeout(() => {
+                this.isLoading = false;
+                location.reload();
+            }, 500);
         }
     }
 }
@@ -169,18 +213,23 @@ export default {
 <style>
 @import "./css/common.css";
 
+html,
+body,
+#app,
+.nav-tabs {
+    height: 100%;
+    width: 100%;
+    overflow: hidden !important;
+}
+
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     text-align: center;
     color: #2c3e50;
 }
 
-html,
-body,
-#app {
-    height: 100%;
-    width: 100%;
-    overflow: hidden !important;
+.van-pull-refresh__track {
+    min-height: 40rem;
 }
 
 .nav-bar-top {
@@ -259,18 +308,24 @@ body,
 }
 
 .myReportPage {
-    height: 100%;
+    min-height: 40rem;
     margin-top: 10px;
 }
 
 .reportIframe {
     width: 100%;
-    height: 100%;
+    min-height: 40rem;
+    overflow: hidden !important;
 }
 
 .empty {
     width: 100%;
     height: 100%;
     background: url('./images/empty.png') 2px no-repeat;
+}
+
+.appPopstyle .van-popup {
+    background-color: rgba(255, 255, 255, 0);
+    overflow-y: hidden;
 }
 </style>
