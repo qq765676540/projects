@@ -91,6 +91,7 @@ export default {
                         shadowColor: "rgba(0,0,0,0.5)"
                     }
                 };
+                let zoomNum = parseInt(8/names.length*100);
                 var option = {
                     grid: {
                         left: 0,
@@ -99,6 +100,17 @@ export default {
                         bottom: 0,
                         containLabel: true
                     },
+                    // tooltip: {
+                    //     trigger: 'axis',
+                    //     triggerOn: 'click',
+                    //     axisPointer: {
+                    //         type: 'none'
+                    //     },
+                    //     formatter: v => {
+                    //         return ``;
+                    //     },
+                    //     extraCssText: 'background: rgba(1,1,1,0)'
+                    // },
                     legend: {
                         data: ["毛利额", "同比"],
                         right: 5,
@@ -110,7 +122,7 @@ export default {
                             type: "inside",
                             xAxisIndex: [0],
                             start: 0,
-                            end: 70
+                            end: zoomNum
                         },
                         {
                             type: "slider",

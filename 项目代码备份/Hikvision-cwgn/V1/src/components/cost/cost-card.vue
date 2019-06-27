@@ -155,10 +155,10 @@ export default {
 
 <style scoped>
 .costCard {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 .costCardCon {
     width: 95%;
-    height: 280px;
+    height: 260px;
 }
 </style>

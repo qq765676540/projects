@@ -5,7 +5,7 @@
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">重点费用情况</span>
         </div>
-        <div class="content flex flex-column overall" style="padding: 0px 5px 0px 5px;">
+        <div class="content flex flex-column overall" style="padding: 0px 5px 10px 5px;">
             <div class="flex flex-1 flex-row">
                 <div class="flex flex-1 flex-column con" v-if="costAll">
                     <div class="flex-1 conTitle">人力成本</div>
@@ -306,10 +306,10 @@ export default {
                     data[0].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[0].qText) / 10000),
-                    data[1].qText == "-" || parseFloat(data[1].qText) < 1 ?
+                    data[1].qNum ==0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[1].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[1].qText) * 100).toFixed(1)) +
                     "%",
                     data[2].qText == "-" ?
                     0 :
@@ -317,10 +317,10 @@ export default {
                     data[3].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[3].qText) / 10000),
-                    data[4].qText == "-" || parseFloat(data[4].qText) < 1 ?
+                    data[4].qNum == 0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[4].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[4].qText) * 100).toFixed(1)) +
                     "%",
                     data[5].qText == "-" ?
                     0 :
@@ -328,10 +328,10 @@ export default {
                     data[6].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[6].qText) / 10000),
-                    data[7].qText == "-" || parseFloat(data[7].qText) < 1 ?
+                    data[7].qNum == 0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[7].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[7].qText) * 100).toFixed(1)) +
                     "%",
                     data[8].qText == "-" ?
                     0 :
@@ -339,10 +339,10 @@ export default {
                     data[9].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[9].qText) / 10000),
-                    data[10].qText == "-" || parseFloat(data[10].qText) < 1 ?
+                    data[10].qNum == 0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[10].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[10].qText) * 100).toFixed(1)) +
                     "%",
                     data[11].qText == "-" ?
                     0 :
@@ -350,10 +350,10 @@ export default {
                     data[12].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[12].qText) / 10000),
-                    data[13].qText == "-" || parseFloat(data[13].qText) < 1 ?
+                    data[13].qNum == 0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[13].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[13].qText) * 100).toFixed(1)) +
                     "%",
                     data[14].qText == "-" ?
                     0 :
@@ -361,10 +361,10 @@ export default {
                     data[15].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[15].qText) / 10000),
-                    data[16].qText == "-" || parseFloat(data[16].qText) < 1 ?
+                    data[16].qNum == 0 ?
                     "" :
                     "超预算 " +
-                    ((parseFloat(data[16].qText) * 100).toFixed() - 100) +
+                    ((parseFloat(data[16].qText) * 100).toFixed(1)) +
                     "%",
                     data[17].qText == "-" ?
                     0 :
@@ -721,11 +721,11 @@ export default {
 }
 
 .cost-view {
-    min-height: 240px;
+    min-height: 220px;
 }
 
 .cost-structure {
-    min-height: 220px;
+    min-height: 200px;
 }
 
 .cost-detail {

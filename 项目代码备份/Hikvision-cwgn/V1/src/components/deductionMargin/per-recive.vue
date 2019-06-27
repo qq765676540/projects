@@ -167,6 +167,7 @@ export default {
                     },
                     yAxis: [{
                             type: "value",
+                            show: false,
                             axisLine: {
                                 show: false
                             },
@@ -193,6 +194,7 @@ export default {
                     series: [{
                         name: "人均收入",
                         type: "bar",
+                        barWidth: '25px',
                         color: "rgba(20,149,235,0.6)",
                         data: value,
                         barWidth: 30,

@@ -161,7 +161,7 @@ export default {
                         value: dataArr[3].qText
                     }, {
                         title: '缺口值',
-                        value: dataArr[4].qText/1<0?0:dataArr[4].qText
+                        value: dataArr[4].qText.replace(',','')/1<0?0:dataArr[4].qText
                     }, {
                         title: '同比',
                         value: dataArr[5].qText
@@ -176,7 +176,7 @@ export default {
                         value: dataArr[8].qText
                     }, {
                         title: '缺口值',
-                        value: dataArr[9].qText/1<0?0:dataArr[9].qText
+                        value: dataArr[9].qText.replace(',','')/1<0?0:dataArr[9].qText
                     }, {
                         title: '同比',
                         value: dataArr[10].qText
@@ -195,14 +195,14 @@ export default {
                     },
                     data[1].qText,
                     data[2].qText,
-                    data[3].qText/1<0?0:data[3].qText,
+                    data[3].qText.replace(',','')/1<0?0:data[3].qText,
                     {
                         size: "60px",
                         rate: data[4].qText
                     },
                     data[5].qText,
                     data[6].qText,
-                    data[7].qText/1<0?0:data[7].qText
+                    data[7].qText.replace(',','')/1<0?0:data[7].qText
                 ];
                 return arr;
             }

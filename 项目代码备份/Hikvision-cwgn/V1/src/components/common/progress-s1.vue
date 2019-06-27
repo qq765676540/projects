@@ -115,7 +115,7 @@ export default {
     },
     watch: {
         data: function (nVal) {
-            this.initData = nVal[0]['value'];
+            this.initData = nVal[0]['value'] > 100 ? 100 : nVal[0]['value'];
         }
     },
 };

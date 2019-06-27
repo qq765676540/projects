@@ -11,7 +11,7 @@ function getFormula(opt) {
     let currDate = new Date();
     currDate.setDate(currDate.getDate() - 1);
     let marginStartMonth = currDate.Format('yyyy') / 1 - 1 + "01";
-    let marginEndMonth = currDate.Format('yyyyMM');
+    let marginEndMonth = addMonth(currDate,-1).Format('yyyyMM');
 
     function mGetDate(year, month) {
         var d = new Date(year, month, 0);
@@ -131,7 +131,7 @@ function getFormula(opt) {
         },
         'income-industry': {
             qDimensions: [
-                `=if(TXTMD_HY<>'',TXTMD_HY)`
+                `=if(TXTMD_HY<>'' and match(ZHYHZ,'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23')>0,TXTMD_HY)`
             ],
             qMeasures: [
                 `=num(Sum({<${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
@@ -147,12 +147,12 @@ function getFormula(opt) {
                 `='—合计—'`
             ],
             qMeasures: [
-                `=num(Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
+                `=num(Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
                 `=num(sum(1),'0.0%')`,
-                `=num((Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`,
-                `=num(Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
+                `=num((Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`,
+                `=num(Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)/10000,'#,##0')`,
                 `=num(Sum(1),'0.0%')`,
-                `=num((Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<TXTMD_HY-={''},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`
+                `=num((Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR)-Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY))/fAbs(Sum({<TXTMD_HY-={''},ZHYHZ={'HY20','HY19','HY06','HY03','HY22','HY24','HY07','HY21','HY23'},${timeStr},${orgStr},ZFLAG={'X'},ZSALESORG_FLAG={'分公司'},ZGNGM={'国内'},MATERIAL_FLAG={'收入物料'}>}ZFI_PJSR_LY)),'0.0%')`
             ]
         },
         'income-product': {

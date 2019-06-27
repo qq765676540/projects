@@ -106,7 +106,7 @@ export default {
                             type: "inside",
                             xAxisIndex: [0],
                             start: zoomStart,
-                            end: 92
+                            end: 100
                         },
                         {
                             type: "slider",
@@ -167,6 +167,7 @@ export default {
                     },
                     yAxis: [{
                             type: "value",
+                            show: false,
                             axisLine: {
                                 show: false
                             },
@@ -193,6 +194,7 @@ export default {
                     series: [{
                         name: "扣费毛利/人力成本",
                         type: "bar",
+                        barWidth: '25px',
                         color: "rgba(20,149,235,0.6)",
                         data: value,
                         label: {
