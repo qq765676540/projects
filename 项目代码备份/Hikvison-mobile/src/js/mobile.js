@@ -10,10 +10,10 @@ class Mobile {
     }
 
     init() {
-        this.id_token = this.GetQueryString('id_token');    
+        this.id_token = this.GetQueryString('id_token');
         if (this.id_token !== null) {
             this.getDefault();
-            
+
         } else if (this.id_token == null) {
             window.location = window.location.protocol + '//' + window.location.hostname + '/mobile/login.html';
             return false;
@@ -40,13 +40,12 @@ class Mobile {
                         }
                     });
                 }
-                alert(_this.language);
                 _this.getAllReportList();
             }
         })
     }
 
-    getAllReportList() {             
+    getAllReportList() {
         var url = this.basicUrl + "/BIServices/BIService/GetCurrentUserHavePermissionReportGroupTree";
         var _this = this;
         $.ajax({
@@ -55,19 +54,24 @@ class Mobile {
             dataType: "json",
             headers: _this.getHeader(),
             success: function (data) {
+                let myData = data.data.children;
                 _this.reportGroupData = data.data.children;
                 _this.vueApp.$store.dispatch('updateData', {
                     dataName: 'reportListData',
-                    data: data.data.children
+                    data: myData
                 });
+
+                for (let index = 1; index < myData.length; index++) {
+                    _this.getReportId(myData[index].id);
+                }
             },
-            error: function (err) {               
+            error: function (err) {
                 alert(JSON.stringify(err));
             }
         });
     }
 
-    getReportId(reportGroupId,reportName,callback) {
+    getReportId(reportGroupId, reportName, callback) {
         var _this = this;
         var parentId = this.getMaxParentId(this.reportGroupData, reportGroupId)
         parentId = parentId ? parentId[0] : reportGroupId;
@@ -86,11 +90,16 @@ class Mobile {
             data: JSON.stringify(dataParams),
             headers: this.getHeader(),
             success: function (data) {
-                _this.vueApp.$store.dispatch('updateData', {
-                    dataName: 'reportIdData',
-                    data: data.data
+                let myData = data.data;
+                myData.filter(v => {
+                    _this.vueApp.$store.dispatch('updateData', {
+                        dataName: 'reportIdData.' + v.reportName,
+                        data: v.reportId
+                    });
+                    _this.getReportUrl(v.reportId);
                 });
-                (callback && typeof (callback) === "function") && callback(data.data);                    
+
+                (callback && typeof (callback) === "function") && callback(data.data);
             },
             error: function (err) {
                 alert(JSON.stringify(err));
@@ -98,7 +107,7 @@ class Mobile {
         });
     }
 
-    getReportUrl(id,callback) {
+    getReportUrl(id, callback) {
         var _this = this;
         $.ajax({
             type: "GET",
@@ -107,11 +116,11 @@ class Mobile {
             headers: _this.getHeader(),
             success: function (data) {
                 if (data.isSuccess) {
-                    // data.data.isFavorite
-                    // data.data.reportUrl
+                    let myData = data.data;
+                    let temp = { reportUrl: myData.reportUrl, isFavorite: myData.isFavorite };
                     _this.vueApp.$store.dispatch('updateData', {
-                        dataName: 'reportUrlData',
-                        data: data.data
+                        dataName: 'reportUrlData.' + id,
+                        data: temp
                     });
                     (callback && typeof (callback) === "function") && callback(data.data);
                 }
@@ -160,6 +169,39 @@ class Mobile {
         return c;
     }
 
+
+    addFavorite(id) {
+        var _this = this;
+        $.ajax({
+            url: this.basicUrl + "/Product/ProductReportFavorite/ProductReportFavorite/AddFavorite/" + id,
+            type: "POST",
+            dataType: "json",
+            headers: this.getHeader(),
+            success: function (res) {
+                
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    removeFavorite(id) {
+        var _this = this;
+        $.ajax({
+            url: this.basicUrl + "/Product/ProductReportFavorite/ProductReportFavorite/CancelFavorite/" + id,
+            type: "DELETE",
+            dataType: "json",
+            headers: this.getHeader(),
+            success: function (res) {
+                
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
     GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
@@ -167,7 +209,7 @@ class Mobile {
         return null;
     }
 
-    
+
 }
 
 export default Mobile;

@@ -9,8 +9,8 @@ Vue.use(Vuex)
 var state = {
   helloVue: false,
   reportListData: [],
-  reportIdData: [],
-  reportUrlData: []
+  reportIdData: {},
+  reportUrlData: {}
 }
 
 const store = new Vuex.Store({

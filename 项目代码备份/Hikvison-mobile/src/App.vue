@@ -13,7 +13,7 @@
                 <div class="reportImg flex-1"></div>
                 <div class="reportName flex-7">{{childVal.label}}</div>
                 <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center">
-                    <van-icon name="star-o" color="#222" size="25px" v-on:click.stop="favoriteReport" />
+                    <van-icon name="star-o" :color="reportUrlList[reportIdList[childVal.label]].isFavorite?'red':'#222'" size="25px" v-on:click.stop="favoriteReport(childVal.label)" />
                 </div>
             </div>
         </van-collapse-item>
@@ -25,9 +25,13 @@
             <div class="reportImg flex-1"></div>
             <div class="reportName flex-7">{{childVal.label}}</div>
             <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center">
-                <van-icon name="star-o" color="#222" size="25px" v-on:click.stop="favoriteReport" />
+                <van-icon name="star-o" :color="reportUrlList[reportIdList[childVal.label]].isFavorite?'red':'#222'" size="25px" v-on:click.stop="favoriteReport(childVal.label)" />
             </div>
         </div>
+    </div>
+    <div class="flex flex-column flex-align-center" style="height: 100%; width: 100%" v-if="!favoriteReportList&&pageActive==1">
+        <div class="flex flex-9 empty" style="width: 55%"></div>
+        <div class="flex flex-1" style="font-size: 1.5rem;color: #666666">空空如也,快去收藏</div>
     </div>
 
     <!-- 打开报表页面 -->
@@ -89,61 +93,72 @@ export default {
             Mobile: new Mobile({
                 vueApp: this
             }),
+            reportIdList: {},
+            reportUrlList: {},
         };
     },
     mounted() {
         this.Mobile.init();
-        // this.Mobile.setEvent();
+        setTimeout(() => {
+            this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
+            this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
+        }, 2000);
     },
     computed: {
         reportList() {
-            if (this.$store.state['reportListData'].length > 0) {
+            if (this.$store.state['reportListData'].length > 0 &&
+                Object.keys(this.reportIdList).length > 0 &&
+                Object.keys(this.reportUrlList).length > 0) {
                 let arr = Tools.deepClone(this.$store.state['reportListData']);
                 arr.splice(0, 1);
                 return arr;
             }
             return false;
-            // demoData.splice(0, 1);
             // return demoData;
         },
         favoriteReportList() {
-            if (this.$store.state['reportListData'].length > 0) {
+            if (this.$store.state['reportListData'].length > 0 &&
+                Object.keys(this.reportIdList).length > 0 &&
+                Object.keys(this.reportUrlList).length > 0) {
                 let arr = Tools.deepClone(this.$store.state['reportListData']);
-                return arr[0].children;
+                if (arr[0].children.length > 0) {
+                    this.pageActive = 1;
+                    return arr[0].children;
+                } else {
+                    return false;
+                }
             }
             return false;
             // return demoData[0].children;
         },
     },
-    methods: {  
+    methods: {
         // 返回MOA
         closeView() {
-            
             // moa.ready(function () {
             //     moa.closeWebView();
             // });
         },
         //打开报表
-        openReport(reportName,groupId) {
+        openReport(reportName, groupId) {
             let _this = this;
-            alert('123');
-            $('#MyHtmlTitle').text(name);
-            this.Mobile.getReportId(groupId,reportName,(rs) => {
-                rs.filter(v => {
-                    if(v.reportName == reportName) {
-                        _this.Mobile.getReportUrl(v.reportId,(data) => {
-                            $('#reportIframe').attr('src', data.reportUrl);
-                        });
-                    }
-                });
-            });
+            $('#MyHtmlTitle').text(reportName);
+            $('#reportIframe').attr('src', this.reportUrlList[this.reportIdList[reportName]].reportUrl);
             this.reportPageOpenFlag = true;
-            
-            
         },
         //收藏报表
-        favoriteReport() {
-            alert('456');
+        favoriteReport(reportName) {
+            let id = this.reportIdList[reportName];
+            let flag = this.reportUrlList[this.reportIdList[reportName]].isFavorite;
+            this.reportUrlList[this.reportIdList[reportName]].isFavorite = !flag;
+            if (flag) {
+                this.Mobile.removeFavorite(id);
+            } else {
+                this.Mobile.addFavorite(id);
+            }
+        },
+        //设置语言
+        setLang() {
             localStorage.lang = 'en';
             location.reload();
         }
@@ -251,5 +266,11 @@ body,
 .reportIframe {
     width: 100%;
     height: 100%;
+}
+
+.empty {
+    width: 100%;
+    height: 100%;
+    background: url('./images/empty.png') 2px no-repeat;
 }
 </style>
