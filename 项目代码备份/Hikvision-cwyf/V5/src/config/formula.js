@@ -22,6 +22,7 @@ export default
     let l12eMonth = '';
     let l24sMonth = '';
     let l24eMonth = '';
+    let lastMonth = '';
 
     switch (time) {
         case '本月':
@@ -33,7 +34,8 @@ export default
             l12sMonth = addMonth(myDate,-11).Format('yyyyMM');
             l12eMonth = myDate.Format('yyyyMM');
             l24sMonth = addMonth(myDate,-23).Format('yyyyMM');
-            l24eMonth = myDate.Format('yyyyMM');
+            l24eMonth = addMonth(myDate,-1).Format('yyyyMM');
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
         case '上月':
             startMonth = addMonth(myDate,-1).Format('yyyyMM')+'01';
@@ -44,7 +46,8 @@ export default
             l12sMonth = addMonth(myDate,-11).Format('yyyyMM');
             l12eMonth = myDate.Format('yyyyMM');
             l24sMonth = addMonth(myDate,-23).Format('yyyyMM');
-            l24eMonth = myDate.Format('yyyyMM');
+            l24eMonth = addMonth(myDate,-1).Format('yyyyMM');
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
         case '本季':
             startMonth = myDate.Format('yyyy')+('00'+(parseInt((myDate.Format('MM')/1+2)/3)*3-2)).slice(-2)+'01';
@@ -55,7 +58,8 @@ export default
             l12sMonth = addMonth(myDate,-11).Format('yyyyMM');
             l12eMonth = myDate.Format('yyyyMM');
             l24sMonth = addMonth(myDate,-23).Format('yyyyMM');
-            l24eMonth = myDate.Format('yyyyMM');
+            l24eMonth = addMonth(myDate,-1).Format('yyyyMM');
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
         case '上季':
             if(parseInt((myDate.Format('MM')/1+2)/3)==1) {
@@ -74,7 +78,8 @@ export default
             l12sMonth = addMonth(myDate,-11).Format('yyyyMM');
             l12eMonth = myDate.Format('yyyyMM');
             l24sMonth = addMonth(myDate,-23).Format('yyyyMM');
-            l24eMonth = myDate.Format('yyyyMM');
+            l24eMonth = addMonth(myDate,-1).Format('yyyyMM');
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
         case '本年':
             startMonth = myDate.Format('yyyy')+'0101';
@@ -85,7 +90,8 @@ export default
             l12sMonth = addMonth(myDate,-11).Format('yyyyMM');
             l12eMonth = myDate.Format('yyyyMM');
             l24sMonth = addMonth(myDate,-23).Format('yyyyMM');
-            l24eMonth = myDate.Format('yyyyMM');
+            l24eMonth = addMonth(myDate,-1).Format('yyyyMM');
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
         case '上年':
             startMonth = (myDate.Format('yyyy')-1)+'0101';
@@ -97,6 +103,7 @@ export default
             l12eMonth = (myDate.Format('yyyy')-1)+'12';
             l24sMonth = (myDate.Format('yyyy')-2)+'01';
             l24eMonth = (myDate.Format('yyyy')-1)+'12';
+            lastMonth = addMonth(myDate,-12).Format('yyyy')+'1231';
             break;
         default:
             startMonth = time.split('年')[0]+('00'+time.split('年')[1].split('-')[0]).slice(-2)+'01';
@@ -108,6 +115,7 @@ export default
             l12eMonth = time.split('年')[0]+('00'+time.split('年')[1].split('-')[1].replace('月','')).slice(-2);
             l24sMonth = time.split('年')[0]+('00'+time.split('年')[1].split('-')[0]).slice(-2);
             l24eMonth = time.split('年')[0]+('00'+time.split('年')[1].split('-')[1].replace('月','')).slice(-2);
+            lastMonth = addMonth(myDate,-1).Format('yyyyMM')+'31';
             break;
     }
 
@@ -323,9 +331,9 @@ export default
                 `=if(vOrgAdmin='Y',if(ZFI_YWB<>'',ZFI_YWB),if(ZFI_CBX<>'',ZFI_CBX))`
             ],
             qMeasures: [
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope}>}ZFI_PJSR)/Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope}>}DLV_QTY))`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope}>}ZFI_PJSR_U)/Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope}>}DLV_QTY))`,
-                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},${dataScope}>}DLV_QTY))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},TXTSH_CPXL-={'RFID产品'},${dataScope}>}ZFI_PJSR)/Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},TXTSH_CPXL-={'RFID产品'},${dataScope}>}DLV_QTY))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},TXTSH_CPXL-={'RFID产品'},${dataScope}>}ZFI_PJSR_U)/Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},TXTSH_CPXL-={'RFID产品'},${dataScope}>}DLV_QTY))`,
+                `=round(Sum({<ZFI_YWB={'A','B','C','D','E','F','G','H','I'},TXTSH_CPXL-={'RFID产品'},${dataScope}>}DLV_QTY))`,
             ]
         },
         'gross-bp': {
@@ -362,8 +370,8 @@ export default
             qMeasures: [
                 `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY)/10000)`,
                 `=round(Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)/10000)`,
-                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))*100)`,
-                `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
+                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},CALDAY_NUM={"<=${lastMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))*100)`,
+                `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
             ]
         },
         'cost-rateTotal': {
@@ -374,8 +382,8 @@ export default
             qMeasures: [
                 `=round(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY)/10000)`,
                 `=round(Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)/10000)`,
-                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))*100)`,
-                `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
+                `=round((Sum({<CALDAY_NUM={"<=${endMonth}"},CALDAY_NUM={"<=${lastMonth}"},ZYJBM={'产品研发中心'},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY)-Sum({<ZYJBM={'产品研发中心'},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))/fAbs(Sum({<ZYJBM={'产品研发中心'},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"}>}ZFI_FY_LY))*100)`,
+                `=round((Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY)-Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))/fAbs(Sum(total {<CALYEAR={"${startMonth.substr(0,4)}"},CALDAY_NUM={"<=${lastMonth}"},${dataScope},${orgStr},ZGNGM={"$(vOrgFlagName)"},ZYJBM={'产品研发中心'}>}ZFI_FY_LY))*100)`
             ]
         },
         'cost-structure': {

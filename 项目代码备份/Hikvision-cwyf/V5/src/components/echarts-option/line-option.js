@@ -13,7 +13,10 @@ let option = {
                 }
             },
             grid: {
-                left: '11%'
+                left: '1%',
+                right: '10%',
+                bottom: '1%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'axis',
@@ -22,9 +25,9 @@ let option = {
                     type: 'shadow'
                 },
                 formatter: v => {
-                    let str = v[0].name+'<br>';
+                    let str = v[0].name + '<br>';
                     for (let i = 0; i < v.length; i++) {
-                        str += v[i].seriesName+': '+v[i].value+'<br>'                        
+                        str += v[i].seriesName + ': ' + v[i].value + '<br>'
                     }
                     return str;
                 },
@@ -60,19 +63,19 @@ let option = {
                 }
             ],
             legend: {
-                data: data.legend,
+                data: data[0].legend,
                 left: 'right',
                 itemWidth: 16,
                 itemHeight: 6
             },
             xAxis: {
                 type: 'category',
-                data: data.xAxis,
+                data: data[0].xAxis,
                 axisLabel: {
                     rotate: 45,
                     formatter: v => {
-                        if(v.length>6) {
-                            return v.substr(0,6)+'...';
+                        if (v.length > 6) {
+                            return v.substr(0, 6) + '...';
                         }
                         return v;
                     }
@@ -89,37 +92,47 @@ let option = {
                     }
                 },
                 axisLabel: {
-                    rotate: 45
+                    rotate: 45,
+                    formatter: v => {
+                        if (data[1] == 'qty') {
+                            if ((v + '').length > 4) {
+                                return (v / 10000).toFixed(0) + '万台';
+                            } else {
+                                return v + '台';
+                            }
+                        }
+                        return v;
+                    }
                 }
             },
-            series: data.series
+            series: data[0].series
         }
     },
     'gross-deduction': (data) => {
         let arr = toolsBean.deepClone(data);
-        $.each( arr.series , (i,v) => {
-            $.each(v.data, (index,val) => {
-                if(val == '-') {
-                    arr.series[i].data.splice(index,1,50);
+        $.each(arr.series, (i, v) => {
+            $.each(v.data, (index, val) => {
+                if (val == '-') {
+                    arr.series[i].data.splice(index, 1, 50);
                 }
             });
         });
-        let temp = data.series.length>2?(((arr.series[0].data).concat(arr.series[1].data)).concat(arr.series[2].data)).concat(arr.series[3].data):(arr.series[0].data).concat(arr.series[1].data);
-        let min = Math.min.apply(null, temp)-10<0?0:Math.min.apply(null, temp)-10;
-        let max = Math.max.apply(null, temp)+10;
-        
+        let temp = data.series.length > 2 ? (((arr.series[0].data).concat(arr.series[1].data)).concat(arr.series[2].data)).concat(arr.series[3].data) : (arr.series[0].data).concat(arr.series[1].data);
+        let min = Math.min.apply(null, temp) - 10 < 0 ? 0 : Math.min.apply(null, temp) - 10;
+        let max = Math.max.apply(null, temp) + 10;
+
         let myDate = new Date();
         myDate.setDate(myDate.getDate() - 1);
-        let currMonth = myDate.getMonth()+1;
-        let zoomS = parseInt((currMonth-6)/12*100)<0?0:parseInt((currMonth-6)/12*100);
-        let zoomE = parseInt(currMonth/12*100);
+        let currMonth = myDate.getMonth() + 1;
+        let zoomS = parseInt((currMonth - 6) / 12 * 100) < 0 ? 0 : parseInt((currMonth - 6) / 12 * 100);
+        let zoomE = parseInt(currMonth / 12 * 100);
 
-        let legend = data.series.length>2? [
+        let legend = data.series.length > 2 ? [
             '上年毛利率',
             '本年毛利率',
             {
                 name: '上年扣费毛利率',
-                icon: "image://" + require("@/assets/images/main/dasheds2.png"),
+                icon: "image://" + require("@/assets/images/main/dasheds1.png"),
                 itemHeight: 6
             },
             {
@@ -127,12 +140,16 @@ let option = {
                 icon: "image://" + require("@/assets/images/main/dasheds3.png"),
                 itemHeight: 6
             }
-        ]:[
-            '上年毛利率',
-            '本年毛利率'
-        ];
+        ] : [
+                '上年毛利率',
+                '本年毛利率'
+            ];
         return {
-            color: ['#9fd3f7', '#1495EB', '#d391b8', '#ad4584'],
+            color: ['#1495EB','#ad4584', '#9fd3f7', '#d391b8'],
+            grid: {
+                left: '9%',
+                // containLabel: true
+            },
             title: {
                 show: true,
                 text: '',
@@ -148,9 +165,9 @@ let option = {
                     type: 'shadow'
                 },
                 formatter: v => {
-                    let str = v[0].name+'<br>';
+                    let str = v[0].name + '<br>';
                     for (let i = 0; i < v.length; i++) {
-                        str += v[i].seriesName+': '+(v[i].value!='-'?v[i].value.toFixed(1):'-')+'%<br>'                        
+                        str += v[i].seriesName + ': ' + (v[i].value != '-' ? v[i].value.toFixed(1) : '-') + '%<br>'
                     }
                     return str;
                 },
@@ -197,8 +214,8 @@ let option = {
                 axisLabel: {
                     rotate: 45,
                     formatter: v => {
-                        if(v.length>6) {
-                            return v.substr(0,6)+'...';
+                        if (v.length > 6) {
+                            return v.substr(0, 6) + '...';
                         }
                         return v;
                     }
@@ -214,6 +231,12 @@ let option = {
                 axisLine: {
                     lineStyle: {
                         color: '#888888'
+                    }
+                },
+                axisLabel: {
+                    rotate: 45,
+                    formatter: v => {
+                        return v + '%';
                     }
                 }
             }],
@@ -231,6 +254,12 @@ let option = {
                     fontSize: 14
                 }
             },
+            grid: {
+                left: '1%',
+                right: '10%',
+                bottom: '1%',
+                containLabel: true
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -238,9 +267,9 @@ let option = {
                     type: 'shadow'
                 },
                 formatter: v => {
-                    let str = v[0].name+'<br>';
+                    let str = v[0].name + '<br>';
                     for (let i = 0; i < v.length; i++) {
-                        str += v[i].seriesName+': '+v[i].value+'<br>'                        
+                        str += v[i].seriesName + ': ' + v[i].value + '<br>'
                     }
                     return str;
                 },
@@ -287,8 +316,8 @@ let option = {
                 axisLabel: {
                     rotate: 45,
                     formatter: v => {
-                        if(v.length>6) {
-                            return v.substr(0,6)+'...';
+                        if (v.length > 6) {
+                            return v.substr(0, 6) + '...';
                         }
                         return v;
                     }
@@ -307,8 +336,8 @@ let option = {
                 axisLabel: {
                     rotate: 45,
                     formatter: v => {
-                        if((v+'').length > 5) {
-                            return (v/10000).toFixed(0) + '亿';
+                        if ((v + '').length > 5) {
+                            return (v / 10000).toFixed(0) + '亿';
                         }
                         return v;
                     }

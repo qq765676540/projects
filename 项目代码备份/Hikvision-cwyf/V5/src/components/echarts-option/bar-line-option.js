@@ -1,11 +1,13 @@
 let option = {
     'income-bp': (data) => {
-        let zoomNum = parseInt(6/data.xAxisData.length*100);
+        let zoomNum = parseInt(6 / data.xAxisData.length * 100);
         return {
             color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
-                containLabel: false,
-                left: '12%'
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'axis',
@@ -17,7 +19,7 @@ let option = {
                     return `${v[0].name} <br>
                 ${v[1].seriesName + ': ' + v[1].value}<br>
                 ${v[0].seriesName + ': ' + v[0].value}<br>
-                ${'达成率: ' + (v[0].value==0?0:(v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
+                ${'达成率: ' + (v[0].value == 0 ? 0 : (v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
                 ${v[2].seriesName + ': ' + v[2].value + '%'}`;
                 },
                 extraCssText: 'text-align:left;'
@@ -66,8 +68,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if(v.length>5) {
-                                return `{name|${v.substr(0,5)+'...'}}`;
+                            if (v.length > 5) {
+                                return `{name|${v.substr(0, 5) + '...'}}`;
                             }
                             return `{name|${v}}`;
                         },
@@ -97,8 +99,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -144,11 +146,14 @@ let option = {
         }
     },
     'income-bp-drill': (data) => {
-        let zoomNum = parseInt(6/data.xAxisData.length*100);
+        let zoomNum = parseInt(6 / data.xAxisData.length * 100);
         return {
             color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
-                left: '13%'
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'axis',
@@ -160,7 +165,7 @@ let option = {
                     return `${v[0].name} <br>
                 ${v[1].seriesName + ': ' + v[1].value}<br>
                 ${v[0].seriesName + ': ' + v[0].value}<br>
-                ${'达成率: ' + (v[0].value==0?0:(v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
+                ${'达成率: ' + (v[0].value == 0 ? 0 : (v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
                 ${v[2].seriesName + ': ' + v[2].value + '%'}`;
                 },
                 extraCssText: 'text-align:left;'
@@ -213,8 +218,8 @@ let option = {
                             type: 'shadow'
                         },
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if (v.length > 5) {
+                                return v.substr(0, 5) + '...';
                             }
                             return v;
                         }
@@ -235,8 +240,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -282,11 +287,14 @@ let option = {
         }
     },
     'income-branch': (data) => {
-        let zoomNum = parseInt(6/data.xAxisData.length*100);
+        let zoomNum = parseInt(6 / data.xAxisData.length * 100);
         return {
             color: ['#addaf8', '#1495EB', '#ff6666'],
             grid: {
-                containLabel: false
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'axis',
@@ -347,8 +355,8 @@ let option = {
                         rotate: 45,
                         color: '#333333',
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if (v.length > 5) {
+                                return v.substr(0, 5) + '...';
                             }
                             return v;
                         }
@@ -368,10 +376,9 @@ let option = {
                     },
                     axisLabel: {
                         rotate: 45,
-                        formatter: '{value}',
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -417,11 +424,14 @@ let option = {
         }
     },
     'gross-bp': (data) => {
-        let zoomNum = parseInt(6/data.xAxisData.length*100);
+        let zoomNum = parseInt(6 / data.xAxisData.length * 100);
         return {
             color: ['rgba(110,110,110,0.3)', '#1495EB', '#ff6666'],
             grid: {
-                left: '12%'
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'axis',
@@ -433,7 +443,7 @@ let option = {
                     return `${v[0].name} <br>
                 ${v[1].seriesName + ': ' + v[1].value}<br>
                 ${v[0].seriesName + ': ' + v[0].value}<br>
-                ${'达成率: ' + (v[0].value == 0 ? 0:(v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
+                ${'达成率: ' + (v[0].value == 0 ? 0 : (v[1].value / v[0].value * 100).toFixed(0)) + '%'}<br>
                 ${v[2].seriesName + ': ' + v[2].value + '%'}`;
                 },
                 extraCssText: 'text-align:left;'
@@ -486,8 +496,8 @@ let option = {
                             type: 'shadow'
                         },
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if (v.length > 5) {
+                                return v.substr(0, 5) + '...';
                             }
                             return v;
                         }
@@ -507,10 +517,9 @@ let option = {
                     },
                     axisLabel: {
                         rotate: 45,
-                        formatter: '{value}',
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -558,11 +567,17 @@ let option = {
     'cost-rate': (data) => {
         let myDate = new Date();
         myDate.setDate(myDate.getDate() - 1);
-        let currMonth = myDate.getMonth()+1;
-        let zoomS = parseInt((currMonth-6)/12*100)<0?0:parseInt((currMonth-6)/12*100);
-        let zoomE = parseInt(currMonth/12*100);
+        let currMonth = myDate.getMonth() + 1;
+        let zoomS = parseInt((currMonth - 6) / 12 * 100) < 0 ? 0 : parseInt((currMonth - 6) / 12 * 100);
+        let zoomE = parseInt(currMonth / 12 * 100);
         return {
             color: ['#addaf8', '#1495EB', 'orange', '#ff6666'],
+            grid: {
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -580,9 +595,9 @@ let option = {
             },
             legend: {
                 data: [
-                    '上年费用', 
-                    '本年费用', 
-                    '同比增长率', 
+                    '上年费用',
+                    '本年费用',
+                    '月度同比增长',
                     {
                         name: '本年累计增长率',
                         icon: "image://" + require("@/assets/images/main/dashed.png"),
@@ -632,8 +647,8 @@ let option = {
                         rotate: 45,
                         color: '#333333',
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if (v.length > 5) {
+                                return v.substr(0, 5) + '...';
                             }
                             return v;
                         }
@@ -653,10 +668,9 @@ let option = {
                     },
                     axisLabel: {
                         rotate: 45,
-                        formatter: '{value}',
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -691,7 +705,7 @@ let option = {
                     data: data.seriesData2
                 },
                 {
-                    name: '同比增长率',
+                    name: '月度同比增长',
                     type: 'line',
                     yAxisIndex: 1,
                     data: data.seriesData3
@@ -723,9 +737,15 @@ let option = {
         }
     },
     'order-base': (data) => {
-        let zoomNum = 100-parseInt(7/data.xAxisData.length*100);
+        let zoomNum = 100 - parseInt(7 / data.xAxisData.length * 100);
         return {
             color: ['#addaf8', '#448DFF', 'orange', '#ff6060'],
+            grid: {
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -743,9 +763,9 @@ let option = {
             },
             legend: {
                 data: [
-                    '订单金额', 
-                    '出货金额', 
-                    '订单数量', 
+                    '订单金额',
+                    '出货金额',
+                    '订单数量',
                     '出货数量'
                 ],
                 left: 'right',
@@ -791,8 +811,8 @@ let option = {
                         rotate: 45,
                         color: '#333333',
                         formatter: v => {
-                            if(v.length>6) {
-                                return v.substr(0,6)+'...';
+                            if (v.length > 6) {
+                                return v.substr(0, 6) + '...';
                             }
                             return v;
                         }
@@ -813,8 +833,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -835,8 +855,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '万台';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '万台';
                             }
                             return v + '台';
                         }
@@ -871,9 +891,16 @@ let option = {
         }
     },
     'order-branch': (data) => {
-        let zoomNum = parseInt(6/data.xAxisData.length*100);
+        let zoomNum = parseInt(6 / data.xAxisData.length * 100);
         return {
             color: ['#1495EB'],
+            grid: {
+                left: '1%',
+                right: '10%',
+                top: '3%',
+                bottom: '1%',
+                containLabel: true
+            },
             tooltip: {
                 trigger: 'axis',
                 triggerOn: 'click',
@@ -890,6 +917,7 @@ let option = {
                 data: [
                     '未清金额'
                 ],
+                show: false,
                 left: 'right',
                 itemWidth: 16,
                 itemHeight: 6,
@@ -933,8 +961,8 @@ let option = {
                         rotate: 45,
                         color: '#333333',
                         formatter: v => {
-                            if(v.length>5) {
-                                return v.substr(0,5)+'...';
+                            if (v.length > 5) {
+                                return v.substr(0, 5) + '...';
                             }
                             return v;
                         }
@@ -955,8 +983,8 @@ let option = {
                     axisLabel: {
                         rotate: 45,
                         formatter: v => {
-                            if((v+'').length > 5) {
-                                return (v/10000).toFixed(0) + '亿';
+                            if ((v + '').length > 5) {
+                                return (v / 10000).toFixed(0) + '亿';
                             }
                             return v;
                         }
@@ -967,22 +995,14 @@ let option = {
                 {
                     name: '未清金额',
                     type: 'bar',
-                    data: data.seriesData1,
-                    label: {
-                        show: true,
-                        rotate: 45,
-                        offset: [7,-7],
-                        position: 'top',
-                        color: '#666666',
-                        formatter: '{c}'
-                    }
+                    data: data.seriesData1
                 }
             ]
         }
     }
 };
 
-let barLineGetOption = (name,data) => {
+let barLineGetOption = (name, data) => {
     return option[name](data);
 }
 

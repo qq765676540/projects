@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="selector-org-tree flex flex-column flex-1" style="padding-top: 15px;">
-            <span class="title">组织架构</span>
+            <span class="title">产品细分</span>
             <vue-tree :tree-data="orgTreeData" v-model="ids" :options="options" class="org-tree" v-if="orgTreeData" />
         </div>
         <div class="selector-btn flex">
@@ -57,7 +57,7 @@ export default {
                 其他: false
             },
             ids: [],
-            options: {},
+            options: {depthOpen:1,idsWithParent:false},
             treeData: treeData
         };
     },

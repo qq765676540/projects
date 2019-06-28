@@ -3,6 +3,12 @@ let option = {
         let zoomNum = parseInt(6/data.xAxis.length*100);
         return {
             color: ['#1495EB'],
+            grid: {
+                left: '1%',
+                right: '10%',
+                bottom: '1%',
+                containLabel: true
+            },
             title:{
                 show: true,
                 text: '',
@@ -164,6 +170,12 @@ let option = {
         let zoomNum = parseInt(6/data.xAxis.length*100);
         return {
             color: ['#1495EB'],
+            grid: {
+                left: '1%',
+                right: '10%',
+                bottom: '1%',
+                containLabel: true
+            },
             title:{
                 show: true,
                 text: '',

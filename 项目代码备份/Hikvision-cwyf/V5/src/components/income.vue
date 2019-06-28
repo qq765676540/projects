@@ -45,7 +45,7 @@
             <div class="sub-title">
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">均价&数量趋势</span>
-                <!-- <span class="sub-title-unit">单位(万)</span> -->
+                <span class="sub-title-unit">{{trendTabAtive==0?'单位(元/台)':'单位(台)'}}</span>
                 <div class="flex flex-1 flex-justify-right">
                     <van-tabs class="trendTabs" type="card" v-model="trendTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
                         <van-tab title="均价"></van-tab>
@@ -456,7 +456,7 @@ export default {
                 });
 
                 // console.log('YCQ日志记录:标识->', data);
-                return data[(this.trendTabAtive == 0 ? 'amount' : 'qty') + this.$store.state.currency];
+                return [data[(this.trendTabAtive == 0 ? 'amount' : 'qty') + this.$store.state.currency],(this.trendTabAtive == 0 ? 'amount' : 'qty')];
             }
             return false;
             //demoData.incomeData.trend
@@ -505,7 +505,7 @@ export default {
 }
 
 .income .income-branch {
-    min-height: 390px;
+    min-height: 370px;
 }
 
 .income .income-trend {

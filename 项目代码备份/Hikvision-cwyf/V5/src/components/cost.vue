@@ -7,10 +7,10 @@
                 <div class="sub-title-icon"></div>
                 <span class="sub-title-name">费用增长</span>
                 <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
-                    <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
+                    <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px',height: '30px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
                 </div>
             </div>
-            <div style="margin:0px 15px 0px 15px">
+            <div style="margin:10px 15px 0px 15px">
                 <echarts-bar-line name="cost-rate" :data="rateData[rateScroll]" id="cost-rate" v-if="rateData"></echarts-bar-line>
             </div>
         </div>
@@ -52,7 +52,7 @@
                 <span class="sub-title-name">人均费用情况</span>
                 <span class="sub-title-unit">单位(元/人)</span>
             </div>
-            <div style="margin:0px 15px 0px 15px">
+            <div style="margin:0px 5px 0px 5px">
                 <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
             </div>
         </div>
@@ -103,7 +103,13 @@ export default {
                 monthList = monthList.sort((a,b) => {
                     return a.replace('月','')/1 - b.replace('月','')/1;
                 });
-                data['title'] = costType;
+                let fyxz = [];
+                costType.filter(v => {
+                    if(v!='费用剔除项'){
+                        fyxz.push(v);
+                    }
+                });
+                data['title'] = fyxz;
                 costType.filter(v => {
                     data[v] = {
                         xAxisData: monthList,

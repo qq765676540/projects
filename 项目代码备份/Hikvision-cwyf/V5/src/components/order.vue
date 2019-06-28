@@ -64,7 +64,7 @@ export default {
             if (this.$store.state['level'].length > 0) {
                 let data = this.$store.state['level'][0];
                 let orgManager = (data[1].qText == 'LV1' || (data[1].qText == 'LV2' && data[2].qText == 'Y')) ? 'Y' : 'N';
-                return orgManager == 'Y' ? '业务部未清情况':'产品线未清情况'
+                return orgManager == 'Y' ? '业务部未清金额':'产品线未清金额'
             }
             return false
         },
@@ -73,10 +73,10 @@ export default {
             let orderBranchSubtitle = '';
             switch (dataScope) {
                 case 'I':
-                    orderBranchSubtitle = '业务中心未清情况';
+                    orderBranchSubtitle = '业务中心未清金额';
                     break;
                 case 'O':
-                    orderBranchSubtitle = '销售办公室未清情况';
+                    orderBranchSubtitle = '销售办公室未清金额';
                     break;
                 default:
                     orderBranchSubtitle = 'T';
@@ -107,12 +107,12 @@ export default {
                     }
                 };
                 dataArr.filter(v => {
-                    data['R']['xAxisData'].push(v[0].qText);
+                    data['R']['xAxisData'].push(v[0].qText.substr(2,2)+'.'+v[0].qText.substr(4,2));
                     data['R']['seriesData1'].push(v[1].qNum);
                     data['R']['seriesData2'].push(v[2].qNum);
                     data['R']['seriesData3'].push(v[3].qNum);
                     data['R']['seriesData4'].push(v[4].qNum);
-                    data['U']['xAxisData'].push(v[0].qText);
+                    data['U']['xAxisData'].push(v[0].qText.substr(2,2)+'.'+v[0].qText.substr(4,2));
                     data['U']['seriesData1'].push(v[5].qNum);
                     data['U']['seriesData2'].push(v[6].qNum);
                     data['U']['seriesData3'].push(v[3].qNum);
