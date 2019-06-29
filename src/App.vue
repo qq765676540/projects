@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <div class="flex flex-column flex-1 flex-align-center" v-if="!favoriteReportList&&pageActive==1">
-                    <div class="empty" style="height:300px; width: 100%;margin-left: 47%"></div>
-                    <div style="font-size: 1.5rem;color: #666666">空空如也,快去收藏</div>
+                    <img src="./images/empty.png" sizes="" />
+                    <div style="font-size: 1.3rem;color: #888888">空空如也,快去收藏</div>
                 </div>
     </van-pull-refresh>
     <!-- loading页面 -->
@@ -49,17 +49,19 @@
         </van-popup>
     </div>
     <!-- 页面底部 -->
-    <van-tabbar class="footer" v-model="pageActive" :safe-area-inset-bottom="true" active-color="#05c060" inactive-color="#555555" v-if="!reportPageOpenFlag">
+    <van-tabbar class="footer" v-model="pageActive" :safe-area-inset-bottom="true" active-color="#F02C38" inactive-color="#888888" v-if="!reportPageOpenFlag">
         <van-tabbar-item>
-            <div class="flex flex-column">
-                <van-icon name="wap-nav" size="30px" />
-                <span>所有报表</span>
+            <div class="flex flex-column flex-align-center">
+                <img v-if="pageActive==0" src="./images/allReportTrue.png" width="50%" slot="icon">
+                <img v-if="!pageActive==0" src="./images/allReportFalse.png" width="50%" slot="icon">
+                <span style="padding-top:5px">所有报表</span>
             </div>
         </van-tabbar-item>
         <van-tabbar-item>
-            <div class="flex flex-column">
-                <van-icon name="manager" size="30px" />
-                <span>我的报表</span>
+            <div class="flex flex-column flex-align-center">
+                <img v-if="pageActive==1" src="./images/myReportTrue.png" width="50%" slot="icon">
+                <img v-if="!pageActive==1" src="./images/myReportFalse.png" width="50%" slot="icon">
+                <span style="padding-top:5px">我的报表</span>
             </div>
         </van-tabbar-item>
     </van-tabbar>
@@ -281,7 +283,7 @@ body,
 }
 
 .footer {
-    height: 3rem;
+    height: 3.5rem;
     background: rgba(245, 245, 245, 0.8);
 }
 
