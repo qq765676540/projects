@@ -27,7 +27,7 @@
         </div>
 
         <!-- 我的报表页面 -->
-        <div class="flex flex-column flex-1 flex-align-center" style="margin-top: 10px" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
+        <div class="flex flex-column flex-1 flex-align-center" style="margin-top: 2px" v-if="favoriteReportList&&pageActive==1&&!reportPageOpenFlag">
             <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, active:false, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
                 <div class="flex flex-1 flex-justify-center flex-align-center"><img src="./images/reportIcon.png" /></div>
                     <div class="reportName flex-7">{{childVal.label}}</div>
@@ -80,7 +80,8 @@ import {
     SidebarItem,
     Popup,
     Loading,
-    PullRefresh
+    PullRefresh,
+    Toast
 } from 'vant';
 
 import Mobile from './js/mobile';
@@ -100,7 +101,8 @@ export default {
         [SidebarItem.name]: SidebarItem,
         [Popup.name]: Popup,
         [Loading.name]: Loading,
-        [PullRefresh.name]: PullRefresh
+        [PullRefresh.name]: PullRefresh,
+        [Toast.name]: Toast
     },
     data() {
         return {
@@ -113,10 +115,10 @@ export default {
                 vueApp: this
             }),
             reportCount: 0,
-            // reportIdList: {},
-            // reportUrlList: {},
-            reportIdList: demoData[1],
-            reportUrlList: demoData[2],
+            reportIdList: {},
+            reportUrlList: {},
+            // reportIdList: demoData[1],
+            // reportUrlList: demoData[2],
             isLoading: false,
         };
     },
@@ -125,21 +127,21 @@ export default {
     },
     mounted() {
         let _this = this;
-        // this.createLangIcon();
-        // this.Mobile.init(rs => {
-        //     if (rs) {
-        //         let __this = _this;
-        //         _this.Mobile.getDefault();
-        //         _this.Mobile.getAllReportList(count => {
-        //             __this.reportCount = count;
-        //         });
-        //     }
-        // });
+        this.createLangIcon();
+        this.Mobile.init(rs => {
+            if (rs) {
+                let __this = _this;
+                _this.Mobile.getDefault();
+                _this.Mobile.getAllReportList(count => {
+                    __this.reportCount = count;
+                });
+            }
+        });
 
-        // setTimeout(() => {
-        //     this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
-        //     this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
-        // }, 3000);
+        setTimeout(() => {
+            this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
+            this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
+        }, 3000);
 
     },
     computed: {
@@ -151,8 +153,8 @@ export default {
                 arr.splice(0, 1);
                 return arr;
             }
-            // return false;
-            return demoData[0];
+            return false;
+            // return demoData[0];
         },
         favoriteReportList() {
             if (this.$store.state['reportListData'].length > 0 &&
@@ -167,7 +169,7 @@ export default {
                 }
             }
             return false;
-            // return demoData[0][0].children;
+            // return demoData[0][1].children;
         },
         popShow() {
             if (Object.keys(this.reportUrlList).length > 0) {
@@ -196,11 +198,13 @@ export default {
             let id = this.reportIdList[reportName];
             let flag = this.reportUrlList[this.reportIdList[reportName]].isFavorite;
             this.reportUrlList[this.reportIdList[reportName]].isFavorite = !flag;
-            // if (flag) {
-            //     this.Mobile.removeFavorite(id);
-            // } else {
-            //     this.Mobile.addFavorite(id);
-            // }
+            if (flag) {
+                Toast({message: '取消收藏',duration:1000});
+                this.Mobile.removeFavorite(id);
+            } else {
+                Toast({message: '收藏成功',duration:1000, icon: 'passed'});
+                this.Mobile.addFavorite(id);
+            }
         },
         //设置语言
         createLangIcon() {
@@ -364,5 +368,20 @@ body,
 .appPopstyle .van-popup {
     background-color: rgba(255, 255, 255, 0);
     overflow-y: hidden;
+}
+
+.van-toast {
+    width: 6rem;
+    border-radius: 0.3rem;
+}
+
+.van-toast__text {
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1rem;
+}
+
+.van-icon-passed {
+    font-size: 3rem;
 }
 </style>
