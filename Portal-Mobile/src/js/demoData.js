@@ -15,8 +15,8 @@ let demoData = {
     },
     2: {
         '1':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},
-        '2':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},
-        '3':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},
+        '2':{reportUrl:'http://localhost:4848/extensions/GNCW/GNCW.html',isFavorite:false},
+        '3':{reportUrl:'http://localhost:4848/extensions/YFCW/YFCW.html',isFavorite:false},
         '4':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},
         '5':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},
         '6':{reportUrl:'http://localhost:4848/extensions/GN/GN.html',isFavorite:false},

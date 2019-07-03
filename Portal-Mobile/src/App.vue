@@ -54,14 +54,14 @@
             <div class="flex flex-column flex-align-center">
                 <img v-if="pageActive==0" src="./images/allReportTrue.png" width="50%" slot="icon">
                 <img v-if="!pageActive==0" src="./images/allReportFalse.png" width="50%" slot="icon">
-                <span style="padding-top:5px">所有报表</span>
+                <span class="footerTitle">所有报表</span>
             </div>
         </van-tabbar-item>
         <van-tabbar-item>
             <div class="flex flex-column flex-align-center">
                 <img v-if="pageActive==1" src="./images/myReportTrue.png" width="50%" slot="icon">
                 <img v-if="!pageActive==1" src="./images/myReportFalse.png" width="50%" slot="icon">
-                <span style="padding-top:5px">我的报表</span>
+                <span class="footerTitle">我的报表</span>
             </div>
         </van-tabbar-item>
     </van-tabbar>
@@ -141,7 +141,7 @@ export default {
         setTimeout(() => {
             this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
             this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
-        }, 3000);
+        }, 2500);
 
     },
     computed: {
@@ -289,6 +289,12 @@ body,
 .footer {
     height: 3.5rem;
     background: rgba(245, 245, 245, 0.8);
+}
+
+.footer .footerTitle {
+    padding-top: 5px;
+    font-size: 10px;
+    font-family: 'PingFangSC-Regular';
 }
 
 .van-cell {
