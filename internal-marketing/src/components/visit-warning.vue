@@ -1,6 +1,5 @@
 <template>
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-<div class="vist-warning flex flex-column"  id="vist-warning">
+<div class="vist-warning flex flex-column" id="vist-warning">
     <div class="customer-distribution border-bottom">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
@@ -104,7 +103,6 @@
         </van-radio-group>
     </van-dialog>
 </div>
-</van-pull-refresh>
 </template>
 
 <script>
@@ -112,7 +110,6 @@ import table from "./common/datatables";
 import progress from "./common/progress";
 import horkpi from "./common/horizontal-kpi-ext";
 import {
-    PullRefresh,
     Dialog,
     RadioGroup,
     Radio,
@@ -124,7 +121,6 @@ import vantCollapse from "./common/vant-collapse";
 export default {
     name: "visit-warning",
     components: {
-        [PullRefresh.name]: PullRefresh,
         [Dialog.Component.name]: Dialog.Component,
         [RadioGroup.name]: RadioGroup,
         [Radio.name]: Radio,
@@ -138,7 +134,6 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             Ashow: false,
             Bshow: false,
             Aselected: "全部",
@@ -247,28 +242,17 @@ export default {
         }
     },
     methods: {
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 500);
-        },
         onClickA() {
             this.Ashow = true;
             this.$nextTick(() => {
-                let top = 300 + $("#routerPage").scrollTop()/1 + 'px';
+                let top = 300 + $("#routerPage").scrollTop() / 1 + 'px';
                 $('#ashow.van-dialog').css('top', top);
             });
         },
         onClickB() {
             this.Bshow = true;
             this.$nextTick(() => {
-                let top = 300 + $("#routerPage").scrollTop()/1 + 'px';
+                let top = 300 + $("#routerPage").scrollTop() / 1 + 'px';
                 $('#bshow.van-dialog').css('top', top);
             });
         },

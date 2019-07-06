@@ -8,9 +8,11 @@
         <van-tab title="拜访对象"></van-tab>
         <van-tab title="拜访构成"></van-tab>
     </van-tabs>
-    <div class="view-container" id="routerPage">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
+
         <router-view />
-    </div>
+
+    </van-pull-refresh>
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -44,7 +46,8 @@ import {
     Switch,
     Popup,
     Loading,
-    Toast
+    Toast,
+    PullRefresh
 } from "vant";
 import animate from "animate.css";
 import vueSwitch from "./components/common/vue-switch";
@@ -59,6 +62,7 @@ import Cube from "./tools/cube";
 export default {
     name: "App",
     components: {
+        [PullRefresh.name]: PullRefresh,
         [NavBar.name]: NavBar,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
@@ -72,6 +76,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             myStartTime: new Date(),
             active: 0,
             lang: false,
@@ -168,6 +173,17 @@ export default {
         }
     },
     methods: {
+        onRefresh() {
+            setTimeout(() => {
+                this.isLoading = false;
+                this.$router.replace({
+                    path: "/refresh",
+                    query: {
+                        t: Date.now()
+                    }
+                });
+            }, 500);
+        },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
