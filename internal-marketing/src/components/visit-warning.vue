@@ -93,7 +93,6 @@
 <script>
 import table from "./common/datatables";
 import progress from "./common/progress";
-import actionsheet from "./common/actionsheet";
 import horkpi from "./common/horizontal-kpi-ext";
 import {
     PullRefresh,
@@ -107,7 +106,6 @@ export default {
         [Dialog.Component.name]: Dialog.Component,
         MyTable: table,
         MyProgress: progress,
-        MyActionsheet: actionsheet,
         MyHorkpi: horkpi,
         vantCollapse
     },
