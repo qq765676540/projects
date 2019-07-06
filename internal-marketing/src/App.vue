@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <!-- <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" /> -->
+    <!-- 整体导航 -->
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" line-width="63" line-height="2">
         <van-tab title="总体情况"></van-tab>
         <van-tab title="计划执行"></van-tab>
@@ -8,11 +8,11 @@
         <van-tab title="拜访对象"></van-tab>
         <van-tab title="拜访构成"></van-tab>
     </van-tabs>
+    <!-- 路由页面 -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
-
         <router-view />
-
     </van-pull-refresh>
+    <!-- 过滤栏 -->
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -28,19 +28,22 @@
             </ul>
         </div>
     </div>
+    <!-- 过滤器页面 -->
     <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
+    <!-- 弹出Loading... -->
     <div class="appPopstyle">
         <van-popup v-model="popShow" :close-on-click-overlay="false">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
+    <!-- 水印页面 -->
     <waterMark :userName="userName" v-if="userName"></waterMark>
 </div>
 </template>
 
 <script>
+
 import {
-    NavBar,
     Tab,
     Tabs,
     Switch,
@@ -53,17 +56,14 @@ import animate from "animate.css";
 import vueSwitch from "./components/common/vue-switch";
 import selector from "./components/common/selector";
 import waterMark from "./components/common/water-mark";
-
 import Tools from "./tools/tools";
 var tool = new Tools();
-
 import Cube from "./tools/cube";
 
 export default {
     name: "App",
     components: {
         [PullRefresh.name]: PullRefresh,
-        [NavBar.name]: NavBar,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
@@ -474,8 +474,6 @@ export default {
 <style>
 @import "./assets/css/common.css";
 
-
-
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     text-align: center;
@@ -500,25 +498,6 @@ body,
 
 .view-container.no-padding {
     padding-top: 0 !important;
-}
-
-.nav-bar-top {
-    height: 40px;
-    line-height: 40px;
-    background-color: #3876cd;
-}
-
-.van-nav-bar__title {
-    color: white;
-    font-size: 18px;
-}
-
-.van-nav-bar .van-icon {
-    color: white;
-}
-
-.van-nav-bar__arrow {
-    font-size: 32px;
 }
 
 .van-tabs__nav,
