@@ -1,93 +1,100 @@
 <template>
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-    <div class="vist-warning flex flex-column" id="vist-warning-box">
-        <div class="customer-distribution border-bottom">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">客用户拜访覆盖</span>
-            </div>
-            <div style="margin:0px 15px 0px 12px">
-                <div style="min-height:60px;margin:10px 0px 0px 0px">
-                    <my-progress :data="progressData[0]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="分级客户覆盖率"></my-progress>
-                </div>
-                <div style="min-height:40px;margin-left: -12px">
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="战略客户" :data="progressData[2]"></my-horkpi>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="核心客户" :data="progressData[3]"></my-horkpi>
-                    </div>
-                </div>
-                <div style="min-height:40px;margin-left: -12px">
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="认证客户" :data="progressData[5]"></my-horkpi>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="潜力客户" :data="progressData[4]"></my-horkpi>
-                    </div>
-                </div>
-                <div style="min-height:60px;margin:0px 0px 0px 0px">
-                    <my-progress :data="progressData[1]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="锁定用户覆盖率"></my-progress>
-                </div>
-                <div style="min-height:40px;margin-left: -12px">
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="战略锁定" :data="progressData[6]"></my-horkpi>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="核心锁定" :data="progressData[7]"></my-horkpi>
-                    </div>
-                </div>
-                <div style="min-height:40px;margin-left: -12px">
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="重要锁定" :data="progressData[9]"></my-horkpi>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 text-center">
-                        <my-horkpi iconBgColor="#d2eaf5" title="市场锁定" :data="progressData[8]"></my-horkpi>
-                    </div>
-                </div>
-            </div>
+<!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh" id="vist-warning"> -->
+<div class="vist-warning flex flex-column" id="vist-warning">
+    <div class="customer-distribution border-bottom">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">客用户拜访覆盖</span>
         </div>
-        <div class="covered-customer-detail border-bottom" v-show="true">
-            <div class="sub-title">
-                <div class="sub-title col-xs-6 col-sm-6 padding-empty">
-                    <div class="sub-title-icon"></div>
-                    <span class="sub-title-name">拜访未覆盖客户名单</span>
-                </div>
-                <div class="flex flex-1 flex-justify-right">
-                    <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
-                    {{Aselected}}
-                    <span class="caret" style="float: right;margin-top:8px"></span>
-                    </button>
-                </div>
+        <div style="margin:0px 15px 0px 12px">
+            <div style="min-height:60px;margin:10px 0px 0px 0px">
+                <my-progress :data="progressData[0]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="分级客户覆盖率"></my-progress>
             </div>
-            <div style="margin:15px 15px 20px 15px;min-height:200px">
-                <vant-collapse :id="'plan-collapse-3'" :data="CollapseADataSet[Aselected]" :isDefaultTitle="false" v-if="CollapseADataSet"></vant-collapse>
-            </div>
-        </div>
-        <div class="uncovered-customer-detail" v-show="true">
-            <div class="sub-title">
-                <div class="sub-title col-xs-6 col-sm-6 padding-empty">
-                    <div class="sub-title-icon"></div>
-                    <span class="sub-title-name">拜访未覆盖用户名单</span>
+            <div style="min-height:40px;margin-left: -12px">
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="战略客户" :data="progressData[2]"></my-horkpi>
                 </div>
-                <div class="flex flex-1 flex-justify-right">
-                    <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
-                    {{Bselected}}
-                    <span class="caret" style="float: right;margin-top:8px"></span>
-                    </button>
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="核心客户" :data="progressData[3]"></my-horkpi>
                 </div>
             </div>
-            <div style="margin:15px 15px 20px 15px;min-height:200px">
-                <vant-collapse :id="'plan-collapse-4'" :data="CollapseBDataSet[Bselected]" :isDefaultTitle="false" v-if="CollapseBDataSet"></vant-collapse>
+            <div style="min-height:40px;margin-left: -12px">
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="认证客户" :data="progressData[5]"></my-horkpi>
+                </div>
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="潜力客户" :data="progressData[4]"></my-horkpi>
+                </div>
             </div>
-        </div>
-        <div class="footer-empty">
+            <div style="min-height:60px;margin:0px 0px 0px 0px">
+                <my-progress :data="progressData[1]" barBgcolor_i="#1495EB" barWidth="100%" barHeight="10px" barRadius="7px 7px 7px 7px" fontColor="#85a7ff" title="锁定用户覆盖率"></my-progress>
+            </div>
+            <div style="min-height:40px;margin-left: -12px">
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="战略锁定" :data="progressData[6]"></my-horkpi>
+                </div>
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="核心锁定" :data="progressData[7]"></my-horkpi>
+                </div>
+            </div>
+            <div style="min-height:40px;margin-left: -12px">
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="重要锁定" :data="progressData[9]"></my-horkpi>
+                </div>
+                <div class="col-xs-6 col-sm-6 text-center">
+                    <my-horkpi iconBgColor="#d2eaf5" title="市场锁定" :data="progressData[8]"></my-horkpi>
+                </div>
+            </div>
         </div>
     </div>
-    <van-dialog v-model="Ashow" title="选项" show-cancel-button>
-        <p>123123</p>
+    <div class="covered-customer-detail border-bottom" v-show="true">
+        <div class="sub-title">
+            <div class="sub-title col-xs-6 col-sm-6 padding-empty">
+                <div class="sub-title-icon"></div>
+                <span class="sub-title-name">拜访未覆盖客户名单</span>
+            </div>
+            <div class="flex flex-1 flex-justify-right">
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="onClickA">
+                    {{Aselected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                </button>
+            </div>
+        </div>
+        <div style="margin:15px 15px 20px 15px;min-height:200px">
+            <vant-collapse :id="'plan-collapse-3'" :data="CollapseADataSet[Aselected]" :isDefaultTitle="false" v-if="CollapseADataSet"></vant-collapse>
+        </div>
+    </div>
+    <div class="uncovered-customer-detail" v-show="true">
+        <div class="sub-title">
+            <div class="sub-title col-xs-6 col-sm-6 padding-empty">
+                <div class="sub-title-icon"></div>
+                <span class="sub-title-name">拜访未覆盖用户名单</span>
+            </div>
+            <div class="flex flex-1 flex-justify-right">
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
+                    {{Bselected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                </button>
+            </div>
+        </div>
+        <div style="margin:15px 15px 20px 15px;min-height:200px">
+            <vant-collapse :id="'plan-collapse-4'" :data="CollapseBDataSet[Bselected]" :isDefaultTitle="false" v-if="CollapseBDataSet"></vant-collapse>
+        </div>
+    </div>
+    <div class="footer-empty">
+    </div>
+
+    <van-dialog v-model="Ashow" title="选项" id="ashow" :lock-scroll="true">
+        <van-radio-group v-model="Aselected">
+            <van-cell-group>
+                <van-cell v-for="(item,index) in ['全部','战略客户','核心客户','认证客户','潜力客户']" :key="index" :title="item" clickable @click="Aselected = item">
+                    <van-radio slot="right-icon" :name="item" />
+                </van-cell>
+            </van-cell-group>
+        </van-radio-group>
     </van-dialog>
-</van-pull-refresh>
+</div>
+<!-- </van-pull-refresh> -->
 </template>
 
 <script>
@@ -96,7 +103,12 @@ import progress from "./common/progress";
 import horkpi from "./common/horizontal-kpi-ext";
 import {
     PullRefresh,
-    Dialog
+    Dialog,
+    RadioGroup,
+    Radio,
+    CellGroup,
+    Cell,
+    Popup
 } from "vant";
 import vantCollapse from "./common/vant-collapse";
 export default {
@@ -104,6 +116,11 @@ export default {
     components: {
         [PullRefresh.name]: PullRefresh,
         [Dialog.Component.name]: Dialog.Component,
+        [RadioGroup.name]: RadioGroup,
+        [Radio.name]: Radio,
+        [CellGroup.name]: CellGroup,
+        [Cell.name]: Cell,
+        [Popup.name]: Popup,
         MyTable: table,
         MyProgress: progress,
         MyHorkpi: horkpi,
@@ -113,10 +130,6 @@ export default {
         return {
             isLoading: false,
             Ashow: false,
-            asshow1: false,
-            asshow2: false,
-            ash1: "0px",
-            ash2: "0px",
             Aselected: "全部",
             Bselected: "全部"
         };
@@ -234,6 +247,13 @@ export default {
                 });
             }, 500);
         },
+        onClickA() {
+            this.Ashow = true;
+            this.$nextTick(() => {
+                let top = 8 + ($("#vist-warning").scrollTop() / 100).toFixed(0) / 1 + 'rem';
+                $('#ashow.van-dialog').css('top', top);
+            });
+        },
         onASelect(selected) {
             this.Aselected = selected;
         },
@@ -302,6 +322,7 @@ export default {
     width: 100%;
     overflow-y: scroll !important;
     overflow-x: hidden !important;
+    position: relative;
 }
 
 .border-bottom {
@@ -310,5 +331,10 @@ export default {
 
 .van-dialog {
     position: absolute;
+    border-radius: 5px;
+}
+
+.van-cell__title {
+    text-align: left;
 }
 </style>

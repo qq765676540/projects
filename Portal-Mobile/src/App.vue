@@ -115,10 +115,10 @@ export default {
                 vueApp: this
             }),
             reportCount: 0,
-            reportIdList: {},
-            reportUrlList: {},
-            // reportIdList: demoData[1],
-            // reportUrlList: demoData[2],
+            // reportIdList: {},
+            // reportUrlList: {},
+            reportIdList: demoData[1],
+            reportUrlList: demoData[2],
             isLoading: false,
         };
     },
@@ -126,22 +126,22 @@ export default {
 
     },
     mounted() {
-        let _this = this;
-        this.createLangIcon();
-        this.Mobile.init(rs => {
-            if (rs) {
-                let __this = _this;
-                _this.Mobile.getDefault();
-                _this.Mobile.getAllReportList(count => {
-                    __this.reportCount = count;
-                });
-            }
-        });
+        // let _this = this;
+        // this.createLangIcon();
+        // this.Mobile.init(rs => {
+        //     if (rs) {
+        //         let __this = _this;
+        //         _this.Mobile.getDefault();
+        //         _this.Mobile.getAllReportList(count => {
+        //             __this.reportCount = count;
+        //         });
+        //     }
+        // });
 
-        setTimeout(() => {
-            this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
-            this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
-        }, 2500);
+        // setTimeout(() => {
+        //     this.reportIdList = Tools.deepClone(this.$store.state['reportIdData']);
+        //     this.reportUrlList = Tools.deepClone(this.$store.state['reportUrlData']);
+        // }, 2500);
 
     },
     computed: {
@@ -153,8 +153,8 @@ export default {
                 arr.splice(0, 1);
                 return arr;
             }
-            return false;
-            // return demoData[0];
+            // return false;
+            return demoData[0];
         },
         favoriteReportList() {
             if (this.$store.state['reportListData'].length > 0 &&
@@ -200,10 +200,10 @@ export default {
             this.reportUrlList[this.reportIdList[reportName]].isFavorite = !flag;
             if (flag) {
                 Toast({message: '取消收藏',duration:1000});
-                this.Mobile.removeFavorite(id);
+                // this.Mobile.removeFavorite(id);
             } else {
                 Toast({message: '收藏成功',duration:1000, icon: 'passed'});
-                this.Mobile.addFavorite(id);
+                // this.Mobile.addFavorite(id);
             }
         },
         //设置语言

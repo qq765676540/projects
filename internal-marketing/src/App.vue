@@ -34,12 +34,12 @@
         </div>
     </div>
     <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
-    <div class="appPopstyle">
+    <!-- <div class="appPopstyle">
         <van-popup v-model="popShow" :close-on-click-overlay="false">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
-    <waterMark :userName="userName" v-if="userName"></waterMark>
+    <waterMark :userName="userName" v-if="userName"></waterMark> -->
 </div>
 </template>
 
@@ -468,10 +468,10 @@ export default {
 /* * {
   touch-action: none;
 } */
-.van-pull-refresh {
+/* .van-pull-refresh {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
-}
+} */
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
