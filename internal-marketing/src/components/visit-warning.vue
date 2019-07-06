@@ -1,6 +1,6 @@
 <template>
-<!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh" id="vist-warning"> -->
-<div class="vist-warning flex flex-column" id="vist-warning">
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+<div class="vist-warning flex flex-column"  id="vist-warning">
     <div class="customer-distribution border-bottom">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
@@ -94,7 +94,7 @@
         </van-radio-group>
     </van-dialog>
 </div>
-<!-- </van-pull-refresh> -->
+</van-pull-refresh>
 </template>
 
 <script>
@@ -250,7 +250,8 @@ export default {
         onClickA() {
             this.Ashow = true;
             this.$nextTick(() => {
-                let top = 8 + ($("#vist-warning").scrollTop() / 100).toFixed(0) / 1 + 'rem';
+                let top = 30 + '%';
+                console.log('YCQ日志记录:标识->',$("#routerPage"));
                 $('#ashow.van-dialog').css('top', top);
             });
         },
@@ -320,8 +321,6 @@ export default {
 
 .vist-warning {
     width: 100%;
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
     position: relative;
 }
 

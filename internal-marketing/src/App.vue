@@ -2,22 +2,15 @@
 <div id="app">
     <!-- <van-nav-bar class="nav-bar-top" title="工作计划与日志看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" /> -->
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" line-width="63" line-height="2">
-        <van-tab title="总体情况">
-            <router-view v-if="active==0" class="view-container" />
-        </van-tab>
-        <van-tab title="计划执行">
-            <router-view v-if="active==1" class="view-container" />
-        </van-tab>
-        <van-tab title="拜访预警">
-            <router-view v-if="active==2" class="view-container" />
-        </van-tab>
-        <van-tab title="拜访对象">
-            <router-view v-if="active==3" class="view-container" />
-        </van-tab>
-        <van-tab title="拜访构成">
-            <router-view v-if="active==4" class="view-container" />
-        </van-tab>
+        <van-tab title="总体情况"></van-tab>
+        <van-tab title="计划执行"></van-tab>
+        <van-tab title="拜访预警"></van-tab>
+        <van-tab title="拜访对象"></van-tab>
+        <van-tab title="拜访构成"></van-tab>
     </van-tabs>
+    <div class="view-container" id="routerPage">
+        <router-view />
+    </div>
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -34,12 +27,12 @@
         </div>
     </div>
     <selector v-show="selectorFlag" :show="selectorFlag" @cancle="cancleSelect" @confirm="confirmSelect" :selectedTime="selectedTime" :selectedOrg="selectedOrg"></selector>
-    <!-- <div class="appPopstyle">
+    <div class="appPopstyle">
         <van-popup v-model="popShow" :close-on-click-overlay="false">
             <van-loading type="spinner" size="30px" color="white" />
         </van-popup>
     </div>
-    <waterMark :userName="userName" v-if="userName"></waterMark> -->
+    <waterMark :userName="userName" v-if="userName"></waterMark>
 </div>
 </template>
 
@@ -70,10 +63,10 @@ export default {
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
-        selector,
         [Popup.name]: Popup,
         [Loading.name]: Loading,
         [Toast.name]: Toast,
+        selector,
         waterMark,
         vueSwitch
     },
@@ -465,13 +458,7 @@ export default {
 <style>
 @import "./assets/css/common.css";
 
-/* * {
-  touch-action: none;
-} */
-/* .van-pull-refresh {
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
-} */
+
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -481,29 +468,18 @@ export default {
 
 html,
 body,
-#app,
-.nav-tabs {
+#app {
     height: 100%;
     width: 100%;
     overflow: hidden !important;
-}
-
-.van-tabs__content,
-.van-tab__pane {
-    height: 100%;
-}
-
-.lang-switch {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
 }
 
 .view-container {
     padding-top: 40px;
     height: calc(100% - 20px);
     max-height: calc(100% -20px);
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 
 .view-container.no-padding {
@@ -513,8 +489,6 @@ body,
 .nav-bar-top {
     height: 40px;
     line-height: 40px;
-    /* background: url("./assets/image/top-tab-bg.png") center no-repeat; */
-    /* background-size: 100%; */
     background-color: #3876cd;
 }
 
@@ -574,11 +548,6 @@ body,
     background: #1D71F0;
     margin-left: 10px;
     margin-top: 8px;
-    /* 
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center; 
-    */
 }
 
 .sub-title-unit {
