@@ -71,7 +71,7 @@
                 <span class="sub-title-name">拜访未覆盖用户名单</span>
             </div>
             <div class="flex flex-1 flex-justify-right">
-                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="onClickB">
                     {{Bselected}}
                     <span class="caret" style="float: right;margin-top:8px"></span>
                 </button>
@@ -84,10 +84,20 @@
     <div class="footer-empty">
     </div>
 
-    <van-dialog v-model="Ashow" title="选项" id="ashow" :lock-scroll="true">
+    <van-dialog v-model="Ashow" title="选项" id="ashow">
         <van-radio-group v-model="Aselected">
             <van-cell-group>
                 <van-cell v-for="(item,index) in ['全部','战略客户','核心客户','认证客户','潜力客户']" :key="index" :title="item" clickable @click="Aselected = item">
+                    <van-radio slot="right-icon" :name="item" />
+                </van-cell>
+            </van-cell-group>
+        </van-radio-group>
+    </van-dialog>
+
+    <van-dialog v-model="Bshow" title="选项" id="bshow">
+        <van-radio-group v-model="Bselected">
+            <van-cell-group>
+                <van-cell v-for="(item,index) in ['全部','战略锁定','核心锁定','重要锁定','市场锁定']" :key="index" :title="item" clickable @click="Bselected = item">
                     <van-radio slot="right-icon" :name="item" />
                 </van-cell>
             </van-cell-group>
@@ -130,6 +140,7 @@ export default {
         return {
             isLoading: false,
             Ashow: false,
+            Bshow: false,
             Aselected: "全部",
             Bselected: "全部"
         };
@@ -250,16 +261,21 @@ export default {
         onClickA() {
             this.Ashow = true;
             this.$nextTick(() => {
-                let top = 30 + '%';
-                console.log('YCQ日志记录:标识->',$("#routerPage"));
+                let top = 300 + $("#routerPage").scrollTop()/1 + 'px';
                 $('#ashow.van-dialog').css('top', top);
+            });
+        },
+        onClickB() {
+            this.Bshow = true;
+            this.$nextTick(() => {
+                let top = 300 + $("#routerPage").scrollTop()/1 + 'px';
+                $('#bshow.van-dialog').css('top', top);
             });
         },
         onASelect(selected) {
             this.Aselected = selected;
         },
-        setScrollStyleB(style, selected) {
-            this.scroll = style;
+        onBSelect(selected) {
             this.Bselected = selected;
         },
         getData(a, b, c) {
