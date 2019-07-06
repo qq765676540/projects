@@ -47,15 +47,13 @@
 import {
     NavBar,
     Tab,
+    Tabs,
     Switch,
     Popup,
     Loading,
     Toast
 } from "vant";
 import animate from "animate.css";
-
-import Tabs from "./components/common/vant-tabs/index";
-
 import vueSwitch from "./components/common/vue-switch";
 import selector from "./components/common/selector";
 import waterMark from "./components/common/water-mark";
@@ -161,14 +159,11 @@ export default {
             this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;
-            this.cubeInit();
+            setTimeout(() => {
+                this.cubeInit();
+            }, 500);
+            // this.cubeInit();
         },
-        // selectedTime(nVal) {
-        //     this.$store.dispatch('updateData', {
-        //         dataName: 'selectedTime',
-        //         data: nVal
-        //     });
-        // },
         cubeCount(nVal) {
             if (nVal == this.cubeStop[this.active]) {
                 let myEndTime = new Date();
@@ -469,7 +464,6 @@ export default {
 
 <style>
 @import "./assets/css/common.css";
-@import "./components/common/vant-tabs/index.css";
 
 /* * {
   touch-action: none;

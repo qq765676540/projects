@@ -1,5 +1,5 @@
 <template>
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}" id="vist-warning">
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
     <div class="vist-warning flex flex-column" id="vist-warning-box">
         <div class="customer-distribution border-bottom">
             <div class="sub-title">
@@ -53,8 +53,11 @@
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">拜访未覆盖客户名单</span>
                 </div>
-                <div class="col-xs-6 col-sm-6 text-right padding-empty" style="margin:5px 15px 0px 0px">
-                    <my-actionsheet defSelected="全部" :data="['全部','战略客户','核心客户','认证客户','潜力客户']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '90px'}" @setScroll="setScrollStyleA"></my-actionsheet>
+                <div class="flex flex-1 flex-justify-right">
+                    <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
+                    {{Aselected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                    </button>
                 </div>
             </div>
             <div style="margin:15px 15px 20px 15px;min-height:200px">
@@ -67,8 +70,11 @@
                     <div class="sub-title-icon"></div>
                     <span class="sub-title-name">拜访未覆盖用户名单</span>
                 </div>
-                <div class="col-xs-6 col-sm-6 padding-empty text-right" style="margin:5px 15px 0px 0px">
-                    <my-actionsheet defSelected="全部" :data="['全部','战略锁定','核心锁定','重要锁定','市场锁定']" :myStyle="{background:'rgba(239, 239, 239, 0.5)', width: '90px'}" @setScroll="setScrollStyleB"></my-actionsheet>
+                <div class="flex flex-1 flex-justify-right">
+                    <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="Ashow=true">
+                    {{Bselected}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                    </button>
                 </div>
             </div>
             <div style="margin:15px 15px 20px 15px;min-height:200px">
@@ -78,6 +84,9 @@
         <div class="footer-empty">
         </div>
     </div>
+    <van-dialog v-model="Ashow" title="选项" show-cancel-button>
+        <p>123123</p>
+    </van-dialog>
 </van-pull-refresh>
 </template>
 
@@ -87,13 +96,15 @@ import progress from "./common/progress";
 import actionsheet from "./common/actionsheet";
 import horkpi from "./common/horizontal-kpi-ext";
 import {
-    PullRefresh
+    PullRefresh,
+    Dialog
 } from "vant";
 import vantCollapse from "./common/vant-collapse";
 export default {
     name: "visit-warning",
     components: {
         [PullRefresh.name]: PullRefresh,
+        [Dialog.Component.name]: Dialog.Component,
         MyTable: table,
         MyProgress: progress,
         MyActionsheet: actionsheet,
@@ -103,11 +114,11 @@ export default {
     data() {
         return {
             isLoading: false,
+            Ashow: false,
             asshow1: false,
             asshow2: false,
             ash1: "0px",
             ash2: "0px",
-            scroll: "scroll !important",
             Aselected: "全部",
             Bselected: "全部"
         };
@@ -225,8 +236,7 @@ export default {
                 });
             }, 500);
         },
-        setScrollStyleA(style, selected) {
-            this.scroll = style;
+        onASelect(selected) {
             this.Aselected = selected;
         },
         setScrollStyleB(style, selected) {
@@ -269,12 +279,12 @@ export default {
                         e.push([vi[1].qText, vi[2].qText, vi[3].qNum]);
                     }
                 });
-                let f = e.sort((a,b)=>{
-                    return b[2]-a[2];
+                let f = e.sort((a, b) => {
+                    return b[2] - a[2];
                 });
                 let g = [];
                 f.filter(v => {
-                    g.push([v[0],v[1]]);
+                    g.push([v[0], v[1]]);
                 });
                 vo.subData = g;
             });
@@ -298,5 +308,9 @@ export default {
 
 .border-bottom {
     border-bottom: 5px solid #e6e9f0;
+}
+
+.van-dialog {
+    position: absolute;
 }
 </style>
