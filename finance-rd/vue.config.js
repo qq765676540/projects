@@ -5,13 +5,10 @@ const path = require('path')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 
 module.exports = {
-  // outputDir: 'C:/Users/Darcy/Documents/Qlik/Sense/Extensions/Hikvision/public',//WYG
-  outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/YFCW/YFCW',//YCQ
-  // outputDir: 'public/package',
-  // publicPath: process.env.VUE_APP_PUBLICK_PATH,
+  outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/YFCW/YFCW',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   configureWebpack: { // webpack 配置
-    output: { // 输出重构  打包编译后的 文件名称  【模块名称.版本号.时间戳】
+    output: {
       filename: `js/[name].[hash].js`,
       chunkFilename: `js/[name].[hash].js`
     },
@@ -21,13 +18,13 @@ module.exports = {
           filename: "css/[name].css",
           chunkFilename: "css/[name].css",
         }
-    ),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default']
-    })
+      ),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']
+      })
     ]
   },
   css: {
@@ -42,7 +39,7 @@ module.exports = {
           pxtorem({
             rootValue: 40,
             propList: ['*'],
-            selectorBlackList:['van-circle__layer']
+            selectorBlackList: ['van-circle__layer']
           })
         ]
       }

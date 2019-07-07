@@ -8,7 +8,7 @@ module.exports = {
   outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/GNCW/GNCW',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   configureWebpack: { // webpack 配置
-    output: { 
+    output: {
       filename: `js/[name].[hash].js`,
       chunkFilename: `js/[name].[hash].js`
     },
@@ -26,16 +26,6 @@ module.exports = {
         Popper: ['popper.js', 'default']
       })
     ]
-  },
-  devServer: {
-    open: true,
-    // host: 'localhost',
-    port: 8080,
-    https: false,
-    hotOnly: false,
-    proxy: null,
-    before: app => {
-    }
   },
   css: {
     loaderOptions: {
