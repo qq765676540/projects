@@ -378,7 +378,6 @@ export default {
 <style scoped>
 .summary {
     width: 100%;
-    overflow-y: scroll !important;
 }
 
 .summary .sales-plan {

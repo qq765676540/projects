@@ -227,9 +227,6 @@ export default {
 <style scoped>
 .plan-execution {
     width: 100%;
-    height: calc(100% - 40px);
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
 }
 
 .plan-execution .sub-title-unit {

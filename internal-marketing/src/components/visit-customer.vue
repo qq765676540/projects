@@ -203,8 +203,6 @@ export default {
 <style scoped>
 .vist-customer {
     width: 100%;
-    height: calc(100% - 10px);
-    overflow: hidden;
 }
 
 .vist-customer .partner-distribution {
