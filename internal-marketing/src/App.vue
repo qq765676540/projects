@@ -159,7 +159,7 @@ export default {
             this.cubeCount = 0;
             setTimeout(() => {
                 this.cubeInit();
-            }, 500);
+            }, 300);
             // this.cubeInit();
         },
         cubeCount(nVal) {
