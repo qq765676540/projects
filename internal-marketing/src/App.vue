@@ -154,6 +154,7 @@ export default {
     },
     watch: {
         active(pIndex) {
+            $("#routerPage").scrollTop(0);
             this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;

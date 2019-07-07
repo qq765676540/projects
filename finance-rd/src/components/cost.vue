@@ -5,8 +5,11 @@
         <div class="sub-title">
             <div class="sub-title-icon"></div>
             <span class="sub-title-name">费用增长</span>
-            <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
-                <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px',height: '30px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
+            <div class="flex flex-1 flex-justify-right">
+                <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 140px;height: 30px;margin-right: 10px;margin-top: 3px" @click="onClickRate">
+                    {{rateScroll}}
+                    <span class="caret" style="float: right;margin-top:8px"></span>
+                </button>
             </div>
         </div>
         <div style="margin:10px 3px 0px 3px">
@@ -55,11 +58,26 @@
             <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
         </div>
     </div>
+    <van-dialog v-model="show" title="选项" id="rateshow">
+        <van-radio-group v-model="rateScroll">
+            <van-cell-group>
+                <van-cell v-for="(item,index) in rateData['title']" :key="index" :title="item" clickable @click="rateScroll = item">
+                    <van-radio slot="right-icon" :name="item" />
+                </van-cell>
+            </van-cell-group>
+        </van-radio-group>
+    </van-dialog>
 </div>
 </template>
 
 <script scoped>
-import actionsheet from "./common/actionsheet";
+import {
+    Dialog,
+    RadioGroup,
+    Radio,
+    CellGroup,
+    Cell
+} from "vant";
 import echartsBarLine from "./common/echarts-bar-line";
 import easyKpi from "./common/easy-kpi";
 import echartsLine from "./common/echarts-line";
@@ -68,14 +86,18 @@ import demoData from "./data/demoData";
 export default {
     name: "cost",
     components: {
-        MyActionsheet: actionsheet,
+        [Dialog.Component.name]: Dialog.Component,
+        [RadioGroup.name]: RadioGroup,
+        [Radio.name]: Radio,
+        [CellGroup.name]: CellGroup,
+        [Cell.name]: Cell,
         echartsBarLine,
         easyKpi,
         echartsLine
     },
     data() {
         return {
-            scroll: "scroll !important",
+            show: false,
             rateScroll: '费用合计'
         }
     },
@@ -208,9 +230,11 @@ export default {
     },
     mounted() {},
     methods: {
-        setRateScrollStyle(style, selected) {
-            this.scroll = style;
-            this.rateScroll = selected;
+        onClickRate() {
+            this.show = true;
+            this.$nextTick(() => {
+                $('#rateshow.van-dialog').css('top', '20%');
+            });
         }
     }
 };
@@ -223,6 +247,7 @@ export default {
 
 .cost .cost-rate {
     min-height: 370px;
+    position: relative;
 }
 
 .cost .cost-structure {
@@ -231,5 +256,14 @@ export default {
 
 .cost .cost-trend {
     min-height: 400px;
+}
+
+.van-dialog {
+    position: absolute;
+    border-radius: 5px;
+}
+
+.van-cell__title {
+    text-align: left;
 }
 </style>

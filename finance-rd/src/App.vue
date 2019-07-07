@@ -8,7 +8,7 @@
         <van-tab title="费用"></van-tab>
         <van-tab title="订单"></van-tab>
     </van-tabs>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
         <router-view />
     </van-pull-refresh>
     <div v-show="selBarFlag" class="selection-tool flex">
@@ -588,9 +588,10 @@ export default {
     },
     watch: {
         active(pIndex) {
+            $("#routerPage").scrollTop(0);
+            this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;
-            this.$router.push(this.pageMap[pIndex]);
             this.$store.dispatch('updateData', {
                 dataName: 'pageActive',
                 data: pIndex

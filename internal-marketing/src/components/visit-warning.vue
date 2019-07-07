@@ -256,12 +256,6 @@ export default {
                 $('#bshow.van-dialog').css('top', top);
             });
         },
-        onASelect(selected) {
-            this.Aselected = selected;
-        },
-        onBSelect(selected) {
-            this.Bselected = selected;
-        },
         getData(a, b, c) {
             let data = [];
             let tempdb = "";
