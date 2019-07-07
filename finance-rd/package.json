@@ -1,0 +1,69 @@
+{
+  "name": "Hikvision",
+  "version": "1.0.0",
+  "description": "HikVision project.",
+  "author": "wangyonggang",
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "animate.css": "^3.7.0",
+    "autoprefixer": "^9.5.1",
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "datatables.net-fixedheader": "^3.1.5",
+    "datatables.net-fixedheader-dt": "^3.1.5",
+    "echarts": "^4.2.1",
+    "extract-css-chunks-webpack-plugin": "^4.3.1",
+    "jquery": "^3.4.0",
+    "lib-flexible": "^0.3.2",
+    "path": "^0.12.7",
+    "postcss-pxtorem": "^4.0.1",
+    "vant": "^1.6.14",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.10.0",
+    "vue-router": "^3.0.1",
+    "vue-simple-tree": "^2.3.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "babel-plugin-import": "^1.8.0",
+    "bootstrap": "^3.4.1",
+    "el-tree-select": "^3.1.1",
+    "font-awesome": "^4.7.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "vue-template-compiler": "^2.6.2",
+    "vuex": "^3.1.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential"
+    ],
+    "rules": {
+      "no-console": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "Android >= 4.0",
+    "iOS >= 7"
+  ]
+}
