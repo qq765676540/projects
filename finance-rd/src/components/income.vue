@@ -1,65 +1,62 @@
 <template>
 <!-- 收入页面 -->
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-    <div class="income">
-        <div class="income-bp border-bottom flex flex-column">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">收入BP达成率及增长情况</span>
-                <!-- <span class="sub-title-unit">单位(%)</span> -->
-            </div>
-            <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
-                <echarts-bar-line name="income-bp" :data="bpData['bp']" :drilldown="bpData['drill']" id="income-bp" v-if="bpData"></echarts-bar-line>
-            </div>
+<div class="income">
+    <div class="income-bp border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">收入BP达成率及增长情况</span>
+            <!-- <span class="sub-title-unit">单位(%)</span> -->
         </div>
-        <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I'">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">行业增长及构成</span>
-                <!-- <span class="sub-title-unit">单位(%)</span> -->
-            </div>
-            <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
-                <div style="margin-top: 10px">
-                    <echarts-bar-markline name="income-structure" :data="structureBarData['bar']" :drilldown="structureBarData['drill']" @getDrillVal="getStructureDrillVal" id="structureBar" v-if="structureBarData"></echarts-bar-markline>
-                </div>
-                <div style="margin-top: 10px">
-                    <echarts-pie name="income-structure" :data="structurePieData" id="structurePie" v-if="structurePieData"></echarts-pie>
-                </div>
-            </div>
+        <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
+            <echarts-bar-line name="income-bp" :data="bpData['bp']" :drilldown="bpData['drill']" id="income-bp" v-if="bpData"></echarts-bar-line>
         </div>
-        <div class="income-branch border-bottom flex flex-column" v-if="incomeBranchSubtitle!='T'">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">{{ incomeBranchSubtitle }}</span>
-                <!-- <span class="sub-title-unit">单位(万)</span> -->
-            </div>
-            <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
-                <echarts-bar-line name="income-branch" :data="branchData" id="income-branch" v-if="branchData"></echarts-bar-line>
-            </div>
+    </div>
+    <div class="income-structure border-bottom flex flex-column" v-if="this.$store.state['dataScope']=='I'">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">行业增长及构成</span>
+            <!-- <span class="sub-title-unit">单位(%)</span> -->
         </div>
-        <div class="income-trend flex flex-column">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">均价&数量趋势</span>
-                <span class="sub-title-unit">{{trendTabAtive==0?'单位(元/台)':''}}</span>
-                <div class="flex flex-1 flex-justify-right">
-                    <van-tabs class="trendTabs" type="card" v-model="trendTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
-                        <van-tab title="均价"></van-tab>
-                        <van-tab title="数量"></van-tab>
-                    </van-tabs>
-                </div>
+        <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
+            <div style="margin-top: 10px">
+                <echarts-bar-markline name="income-structure" :data="structureBarData['bar']" :drilldown="structureBarData['drill']" @getDrillVal="getStructureDrillVal" id="structureBar" v-if="structureBarData"></echarts-bar-markline>
             </div>
-            <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
-                <echarts-line style="margin-top: 10px" name="income-trend" :data="trendData" id="income-trend" v-if="trendData"></echarts-line>
+            <div style="margin-top: 10px">
+                <echarts-pie name="income-structure" :data="structurePieData" id="structurePie" v-if="structurePieData"></echarts-pie>
             </div>
         </div>
     </div>
-</van-pull-refresh>
+    <div class="income-branch border-bottom flex flex-column" v-if="incomeBranchSubtitle!='T'">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">{{ incomeBranchSubtitle }}</span>
+            <!-- <span class="sub-title-unit">单位(万)</span> -->
+        </div>
+        <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
+            <echarts-bar-line name="income-branch" :data="branchData" id="income-branch" v-if="branchData"></echarts-bar-line>
+        </div>
+    </div>
+    <div class="income-trend flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">均价&数量趋势</span>
+            <span class="sub-title-unit">{{trendTabAtive==0?'单位(元/台)':''}}</span>
+            <div class="flex flex-1 flex-justify-right">
+                <van-tabs class="trendTabs" type="card" v-model="trendTabAtive" animated color="#0F8EE9" title-active-color="#FFFFFF" title-inactive-color="#0F8EE9">
+                    <van-tab title="均价"></van-tab>
+                    <van-tab title="数量"></van-tab>
+                </van-tabs>
+            </div>
+        </div>
+        <div class="content-box flex flex-column flex-1" style="margin:0px 3px 0px 3px">
+            <echarts-line style="margin-top: 10px" name="income-trend" :data="trendData" id="income-trend" v-if="trendData"></echarts-line>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 import {
-    PullRefresh,
     Tabs,
     Tab
 } from "vant";
@@ -75,7 +72,6 @@ import {
 export default {
     name: "income",
     components: {
-        [PullRefresh.name]: PullRefresh,
         [Tabs.name]: Tabs,
         [Tab.name]: Tab,
         echartsBarLine,
@@ -85,7 +81,6 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             structureTabAtive: 0,
             trendTabAtive: 0,
             structureDrillVal: 'none'
@@ -424,23 +419,23 @@ export default {
                     let amountUtemp = {};
                     qtyRtemp.name = v;
                     qtyRtemp.type = 'line';
-                    qtyRtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
+                    qtyRtemp.data = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
                     qtyUtemp.name = v;
                     qtyUtemp.type = 'line';
-                    qtyUtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
+                    qtyUtemp.data = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
                     amountRtemp.name = v;
                     amountRtemp.type = 'line';
-                    amountRtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
+                    amountRtemp.data = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
                     amountUtemp.name = v;
                     amountUtemp.type = 'line';
-                    amountUtemp.data = ['-','-','-','-','-','-','-','-','-','-','-','-'];
-                    xAxis.filter((vo,ii) => {
+                    amountUtemp.data = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
+                    xAxis.filter((vo, ii) => {
                         dataArr.filter(vi => {
                             if (vi[0].qNum == vo && vi[1].qText == v) {
-                                qtyRtemp.data.splice(ii,1,(vi[5].qNum == 0 || vi[5].qNum == 'NaN' ? '--' : vi[5].qNum));
-                                qtyUtemp.data.splice(ii,1,(vi[5].qNum == 0 || vi[5].qNum == 'NaN'  ? '--' : vi[5].qNum));
-                                amountRtemp.data.splice(ii,1,(vi[3].qNum == 0 || vi[3].qNum == 'NaN'  ? '--' : vi[3].qNum));
-                                amountUtemp.data.splice(ii,1,(vi[4].qNum == 0 || vi[4].qNum == 'NaN'  ? '--' : vi[4].qNum));
+                                qtyRtemp.data.splice(ii, 1, (vi[5].qNum == 0 || vi[5].qNum == 'NaN' ? '--' : vi[5].qNum));
+                                qtyUtemp.data.splice(ii, 1, (vi[5].qNum == 0 || vi[5].qNum == 'NaN' ? '--' : vi[5].qNum));
+                                amountRtemp.data.splice(ii, 1, (vi[3].qNum == 0 || vi[3].qNum == 'NaN' ? '--' : vi[3].qNum));
+                                amountUtemp.data.splice(ii, 1, (vi[4].qNum == 0 || vi[4].qNum == 'NaN' ? '--' : vi[4].qNum));
                             }
                         });
                     });
@@ -452,7 +447,7 @@ export default {
                 });
 
                 // console.log('YCQ日志记录:标识->', data);
-                return [data[(this.trendTabAtive == 0 ? 'amount' : 'qty') + this.$store.state.currency],(this.trendTabAtive == 0 ? 'amount' : 'qty')];
+                return [data[(this.trendTabAtive == 0 ? 'amount' : 'qty') + this.$store.state.currency], (this.trendTabAtive == 0 ? 'amount' : 'qty')];
             }
             return false;
             //demoData.incomeData.trend
@@ -462,17 +457,6 @@ export default {
     methods: {
         getStructureDrillVal(val) {
             this.structureDrillVal = val;
-        },
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 300);
         }
     }
 };

@@ -1,69 +1,64 @@
 <template>
 <!-- 费用页面 -->
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh" :style="{'overflow-y': scroll}">
-    <div class="cost flex flex-column" v-if="this.$store.state['hyFlag']||this.$store.state['dataScope']=='T'||this.$store.state['dataScope']=='I'">
-        <div class="cost-rate border-bottom flex flex-column">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">费用增长</span>
-                <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
-                    <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px',height: '30px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
-                </div>
-            </div>
-            <div style="margin:10px 3px 0px 3px">
-                <echarts-bar-line name="cost-rate" :data="rateData[rateScroll]" id="cost-rate" v-if="rateData"></echarts-bar-line>
+<div class="cost flex flex-column" v-if="this.$store.state['hyFlag']||this.$store.state['dataScope']=='T'||this.$store.state['dataScope']=='I'">
+    <div class="cost-rate border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">费用增长</span>
+            <div class="flex-1 flex-justify-right" style="margin:5px 15px 0px 0px;">
+                <my-actionsheet defSelected="费用合计" :data="rateData['title']" :myStyle="{background:'rgba(239, 239, 239, 0.5)' ,width: '140px',height: '30px'}" @setScroll="setRateScrollStyle" v-if="rateData"></my-actionsheet>
             </div>
         </div>
-        <div class="cost-structure border-bottom flex flex-column">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">费用构成</span>
-            </div>
-            <div style="margin:0px 15px 0px 8px">
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_1" v-if="structureData"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_2" v-if="structureData"></easy-kpi>
-                    </div>
-                </div>
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_3" v-if="structureData"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_4" v-if="structureData"></easy-kpi>
-                    </div>
-                </div>
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_5" v-if="structureData"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="structureData.kpi_6" v-if="structureData"></easy-kpi>
-                    </div>
-                </div>
-            </div>
+        <div style="margin:10px 3px 0px 3px">
+            <echarts-bar-line name="cost-rate" :data="rateData[rateScroll]" id="cost-rate" v-if="rateData"></echarts-bar-line>
         </div>
-        <div class="cost-trend flex flex-column">
-            <div class="sub-title">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">人均费用情况</span>
-                <span class="sub-title-unit">单位(元/人)</span>
+    </div>
+    <div class="cost-structure border-bottom flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">费用构成</span>
+        </div>
+        <div style="margin:0px 15px 0px 8px">
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_1" v-if="structureData"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_2" v-if="structureData"></easy-kpi>
+                </div>
             </div>
-            <div style="margin:0px 3px 0px 3px">
-                <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_3" v-if="structureData"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_4" v-if="structureData"></easy-kpi>
+                </div>
+            </div>
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_5" v-if="structureData"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="structureData.kpi_6" v-if="structureData"></easy-kpi>
+                </div>
             </div>
         </div>
     </div>
-</van-pull-refresh>
+    <div class="cost-trend flex flex-column">
+        <div class="sub-title">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">人均费用情况</span>
+            <span class="sub-title-unit">单位(元/人)</span>
+        </div>
+        <div style="margin:0px 3px 0px 3px">
+            <echarts-line name="cost-trend" :data="trendData" id="cost-trend" v-if="trendData"></echarts-line>
+        </div>
+    </div>
+</div>
 </template>
 
 <script scoped>
-import {
-    PullRefresh
-} from "vant";
 import actionsheet from "./common/actionsheet";
 import echartsBarLine from "./common/echarts-bar-line";
 import easyKpi from "./common/easy-kpi";
@@ -73,7 +68,6 @@ import demoData from "./data/demoData";
 export default {
     name: "cost",
     components: {
-        [PullRefresh.name]: PullRefresh,
         MyActionsheet: actionsheet,
         echartsBarLine,
         easyKpi,
@@ -81,7 +75,6 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             scroll: "scroll !important",
             rateScroll: '费用合计'
         }
@@ -100,12 +93,12 @@ export default {
                 });
                 costType = Array.from(new Set(costType));
                 monthList = Array.from(new Set(monthList));
-                monthList = monthList.sort((a,b) => {
-                    return a.replace('月','')/1 - b.replace('月','')/1;
+                monthList = monthList.sort((a, b) => {
+                    return a.replace('月', '') / 1 - b.replace('月', '') / 1;
                 });
                 let fyxz = [];
                 costType.filter(v => {
-                    if(v!='费用剔除项'){
+                    if (v != '费用剔除项') {
                         fyxz.push(v);
                     }
                 });
@@ -123,7 +116,7 @@ export default {
                             if (vi[0].qText == v && vi[1].qText == vo) {
                                 data[v]['seriesData1'].push(vi[2].qNum);
                                 data[v]['seriesData2'].push(vi[3].qNum);
-                                data[v]['seriesData3'].push(vi[4].qNum==-100||vi[4].qNum=='NaN'?'--':vi[4].qNum);
+                                data[v]['seriesData3'].push(vi[4].qNum == -100 || vi[4].qNum == 'NaN' ? '--' : vi[4].qNum);
                                 data[v]['seriesData4'].push(vi[5].qNum);
                             }
                         });
@@ -178,8 +171,8 @@ export default {
         trendData() {
             if (this.$store.state['cost-trend'].length > 0) {
                 let dataArr = this.$store.state['cost-trend'];
-                dataArr.sort((a,b) => {
-                    return a[0].qText/1 - b[0].qText/1;
+                dataArr.sort((a, b) => {
+                    return a[0].qText / 1 - b[0].qText / 1;
                 });
                 let data = {
                     xAxis: [],
@@ -202,9 +195,9 @@ export default {
                 };
                 dataArr.filter(v => {
                     data['xAxis'].push(v[0].qText);
-                    data['series'][0]['data'].push(v[1].qNum=='NaN'?'--':v[1].qNum);
-                    data['series'][1]['data'].push(v[2].qNum=='NaN'?'--':v[2].qNum);
-                    data['series'][2]['data'].push(v[3].qNum=='NaN'?'--':v[3].qNum);
+                    data['series'][0]['data'].push(v[1].qNum == 'NaN' ? '--' : v[1].qNum);
+                    data['series'][1]['data'].push(v[2].qNum == 'NaN' ? '--' : v[2].qNum);
+                    data['series'][2]['data'].push(v[3].qNum == 'NaN' ? '--' : v[3].qNum);
                 });
                 // console.log('YCQ日志记录:标识->',data);
                 return data;
@@ -218,17 +211,6 @@ export default {
         setRateScrollStyle(style, selected) {
             this.scroll = style;
             this.rateScroll = selected;
-        },
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 500);
         }
     }
 };

@@ -5,7 +5,7 @@
             <span class="caret" style="float: right;margin-top:8px"></span>
         </button>
 
-        <van-actionsheet v-model="show" :title="selTitle" :style="actionStyle">
+        <van-action-sheet v-model="show" :title="selTitle" :style="actionStyle">
             <van-list
                 v-model="loading"
                 :finished="finished"
@@ -20,15 +20,15 @@
                     @click="onSelect(index)"
                 />
             </van-list>
-        </van-actionsheet>
+        </van-action-sheet>
     </div>
 </template>
 <script>
-import { Actionsheet, Icon, List, Cell } from "vant";
+import { ActionSheet, Icon, List, Cell } from "vant";
 import { truncate } from "fs";
 export default {
     components: {
-        [Actionsheet.name]: Actionsheet,
+        [ActionSheet.name]: ActionSheet,
         [Icon.name]: Icon,
         [List.name]: List,
         [Cell.name]: Cell

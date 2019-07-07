@@ -1,69 +1,64 @@
 <template>
 <!-- 首页 -->
-<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-    <div class="home">
-        <div class="overview flex flex-column">
-            <div class="sub-title" v-if="kpiData">
-                <div class="sub-title-icon"></div>
-                <span class="sub-title-name">整体销售情况</span>
+<div class="home">
+    <div class="overview flex flex-column">
+        <div class="sub-title" v-if="kpiData">
+            <div class="sub-title-icon"></div>
+            <span class="sub-title-name">整体销售情况</span>
+        </div>
+        <div class="content-box flex flex-column">
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_1" v-if="kpiData&&kpiData.kpi_1[0][2]!='none'"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_2" v-if="kpiData&&kpiData.kpi_2[0][2]!='none'"></easy-kpi>
+                </div>
             </div>
-            <div class="content-box flex flex-column">
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_1" v-if="kpiData&&kpiData.kpi_1[0][2]!='none'"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_2" v-if="kpiData&&kpiData.kpi_2[0][2]!='none'"></easy-kpi>
-                    </div>
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_3" v-if="kpiData&&kpiData.kpi_3[0][2]!='none'"></easy-kpi>
                 </div>
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_3" v-if="kpiData&&kpiData.kpi_3[0][2]!='none'"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_4" v-if="kpiData&&kpiData.kpi_4[0][2]!='none'"></easy-kpi>
-                    </div>
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_4" v-if="kpiData&&kpiData.kpi_4[0][2]!='none'"></easy-kpi>
                 </div>
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_5" v-if="kpiData&&kpiData.kpi_5[0][2]!='none'"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_6" v-if="kpiData&&kpiData.kpi_6[0][2]!='none'"></easy-kpi>
-                    </div>
+            </div>
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_5" v-if="kpiData&&kpiData.kpi_5[0][2]!='none'"></easy-kpi>
                 </div>
-                <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_7" v-if="kpiData&&kpiData.kpi_7[0][2]!='none'"></easy-kpi>
-                    </div>
-                    <div class="flex-1">
-                        <easy-kpi :data="kpiData.kpi_8" v-if="kpiData&&kpiData.kpi_8[0][2]!='none'"></easy-kpi>
-                    </div>
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_6" v-if="kpiData&&kpiData.kpi_6[0][2]!='none'"></easy-kpi>
+                </div>
+            </div>
+            <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_7" v-if="kpiData&&kpiData.kpi_7[0][2]!='none'"></easy-kpi>
+                </div>
+                <div class="flex-1">
+                    <easy-kpi :data="kpiData.kpi_8" v-if="kpiData&&kpiData.kpi_8[0][2]!='none'"></easy-kpi>
                 </div>
             </div>
         </div>
     </div>
-</van-pull-refresh>
+</div>
 </template>
 
 <script>
-import {
-    PullRefresh
-} from "vant";
-
 import easyKpi from "./common/easy-kpi";
 import demoData from "./data/demoData";
-import { log } from 'util';
+import {
+    log
+} from 'util';
 
 export default {
     name: "home",
     components: {
-        easyKpi,
-        [PullRefresh.name]: PullRefresh
+        easyKpi
     },
     data() {
         return {
-            isLoading: false
+
         };
     },
     mounted() {
@@ -423,17 +418,7 @@ export default {
 
     },
     methods: {
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 300);
-        }
+
     },
     beforeDestroy() {},
     destroyed() {}

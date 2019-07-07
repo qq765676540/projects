@@ -1,24 +1,16 @@
 <template>
 <!-- 页面挂载入口 -->
 <div id="app">
-    <!-- <van-nav-bar class="nav-bar-top" title="研发财务看板" left-text left-arrow @click-left="onClickLeft" :sticky="true" /> -->
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="true" :sticky="true" :line-width="63" :line-height="2">
-        <van-tab title="首页">
-            <router-view v-if="active==0" class="view-container" />
-        </van-tab>
-        <van-tab title="收入">
-            <router-view v-if="active==1" class="view-container" />
-        </van-tab>
-        <van-tab title="毛利">
-            <router-view v-if="active==2" class="view-container" />
-        </van-tab>
-        <van-tab title="费用">
-            <router-view v-if="active==3" class="view-container" />
-        </van-tab>
-        <van-tab title="订单">
-            <router-view v-if="active==4" class="view-container" />
-        </van-tab>
+        <van-tab title="首页"></van-tab>
+        <van-tab title="收入"></van-tab>
+        <van-tab title="毛利"></van-tab>
+        <van-tab title="费用"></van-tab>
+        <van-tab title="订单"></van-tab>
     </van-tabs>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container">
+        <router-view />
+    </van-pull-refresh>
     <div v-show="selBarFlag" class="selection-tool flex">
         <div class="flex flex-align-center flex-3">
             <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="setDataScope('整体')">整体</div>
@@ -30,12 +22,6 @@
                 <li class="name">时间:</li>
                 <li class="values flex-1" v-text="selectedTime"></li>
             </ul>
-            <!-- 
-            <ul class="selected-dim-org flex flex-row flex-5">
-                <li class="name">组织:</li>
-                <li class="values flex-3" v-text="selectedOrg.toString()"></li>
-            </ul>
-            -->
         </div>
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -53,30 +39,27 @@
 
 <script>
 import {
-    NavBar,
+    PullRefresh,
     Tab,
+    Tabs,
     Switch,
     Popup,
     Loading,
     Toast
 } from "vant";
 import animate from "animate.css";
-
-import Tabs from "./components/common/vant-tabs/index";
-
 import vueSwitch from "./components/common/vue-switch";
 import selector from "./components/common/selector";
 import waterMark from "./components/common/water-mark";
 
 import Tools from "./tools/tools";
 var tool = new Tools();
-
 import Cube from "./tools/cube";
 
 export default {
     name: "App",
     components: {
-        [NavBar.name]: NavBar,
+        [PullRefresh.name]: PullRefresh,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
@@ -89,10 +72,11 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             myStartTime: new Date(),
             active: 0,
             cubeCount: 0,
-            cubeStop: [2,8,2,4,3],
+            cubeStop: [2, 8, 2, 4, 3],
             lang: false,
             selBarFlag: true,
             pageMap: {
@@ -203,7 +187,7 @@ export default {
 
             this.selectorFlag = false;
             this.selectedTime = data.time.year ? (data.time.year + '年' + data.time.startMonth + '-' + data.time.endMonth + '月') : data.time;
-            
+
             this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
 
             $(".selected-dim-org > .values").css({
@@ -575,6 +559,17 @@ export default {
                     break;
             }
 
+        },
+        onRefresh() {
+            setTimeout(() => {
+                this.isLoading = false;
+                this.$router.replace({
+                    path: "/refresh",
+                    query: {
+                        t: Date.now()
+                    }
+                });
+            }, 300);
         }
     },
     computed: {
@@ -623,15 +618,6 @@ export default {
 
 <style>
 @import "./assets/css/common.css";
-@import "./components/common/vant-tabs/index.css";
-
-/* * {
-  touch-action: none;
-} */
-.van-pull-refresh {
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
-}
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -641,52 +627,22 @@ export default {
 
 html,
 body,
-#app,
-.nav-tabs {
+#app {
     height: 100%;
     width: 100%;
     overflow: hidden !important;
-}
-
-.van-tabs__content,
-.van-tab__pane {
-    height: 100%;
-}
-
-.lang-switch {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
 }
 
 .view-container {
     padding-top: 40px;
     height: calc(100% - 20px);
     max-height: calc(100% -20px);
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 
 .view-container.no-padding {
     padding-top: 0 !important;
-}
-
-.nav-bar-top {
-    height: 40px;
-    line-height: 40px;
-    background-color: #3876cd;
-}
-
-.van-nav-bar__title {
-    color: white;
-    font-size: 18px;
-}
-
-.van-nav-bar .van-icon {
-    color: white;
-}
-
-.van-nav-bar__arrow {
-    font-size: 32px;
 }
 
 .van-tabs__nav,
