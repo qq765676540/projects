@@ -1,0 +1,63 @@
+{
+  "name": "mashup-hikvison",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "core-js": "^2.6.5",
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "datatables.net-fixedheader": "^3.1.5",
+    "datatables.net-fixedheader-dt": "^3.1.5",
+    "jquery": "^3.4.1",
+    "vue": "^2.6.10",
+    "vue-simple-tree": "^2.3.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "autoprefixer": "^9.5.1",
+    "babel-eslint": "^10.0.1",
+    "echarts": "^4.2.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "extract-css-chunks-webpack-plugin": "^4.3.2",
+    "flexible": "^0.1.20",
+    "lib-flexible": "^0.3.2",
+    "path": "^0.12.7",
+    "postcss-pxtorem": "^4.0.1",
+    "vant": "^1.6.17",
+    "vue-router": "^3.0.6",
+    "vue-template-compiler": "^2.5.21",
+    "vuex": "^3.1.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
