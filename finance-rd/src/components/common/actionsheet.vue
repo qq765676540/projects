@@ -100,13 +100,6 @@ export default {
             }, 500);
         },
         clickBtn() {
-            var scrollHeight =
-                $("#vist-warning").height() -
-                $("#vist-warning").scrollTop() + 20 +
-                "px";
-            this.actionStyle = {
-                height: scrollHeight
-            };
             this.$emit("setScroll", "hidden !important",this.selected);
             this.show = true;
             this.$nextTick(() => {

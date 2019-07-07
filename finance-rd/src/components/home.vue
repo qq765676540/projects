@@ -428,7 +428,6 @@ export default {
 <style scoped>
 .home {
     width: 100%;
-    overflow-y: scroll !important;
 }
 
 .overview {

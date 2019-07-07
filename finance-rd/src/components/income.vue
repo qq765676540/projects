@@ -465,9 +465,6 @@ export default {
 <style scoped>
 .income {
     width: 100%;
-    height: calc(100% - 20px);
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
 }
 
 .income .income-bp {

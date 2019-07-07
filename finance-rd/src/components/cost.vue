@@ -219,8 +219,6 @@ export default {
 <style scoped>
 .cost {
     width: 100%;
-    height: calc(100% - 120px);
-    overflow: hidden;
 }
 
 .cost .cost-rate {

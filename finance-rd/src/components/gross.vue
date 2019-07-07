@@ -187,8 +187,6 @@ export default {
 
 .gross {
     width: 100%;
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
 }
 
 .gross .gross-bp {
