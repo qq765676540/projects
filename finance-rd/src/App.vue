@@ -602,7 +602,10 @@ export default {
                     data: 'R'
                 });
             }
-            this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
+            setTimeout(() => {
+                this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
+            }, 300);
+            // this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
         },
         cubeCount(nVal) {
             if (nVal == this.cubeStop[this.active]) {
