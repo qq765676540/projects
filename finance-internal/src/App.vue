@@ -568,16 +568,6 @@ body,
     overflow-x: hidden !important;
 }
 
-.van-tabs__nav,
-.van-tab {
-    height: 40px;
-    line-height: 40px;
-}
-
-.van-tabs__nav .van-ellipsis {
-    font-size: 15px;
-}
-
 .main-title {
     min-height: 40px;
     border: 1px #ff0000 solid;
