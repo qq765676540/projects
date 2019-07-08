@@ -67,9 +67,6 @@ import deductionMarginPer from "./deductionMargin/deduction-margin-per";
 import deductionMarginCost from "./deductionMargin/deduction-margin-cost";
 import perCost from "./deductionMargin/per-cost";
 import perRecive from "./deductionMargin/per-recive";
-import {
-    Progress
-} from "vant";
 import accounting from "accounting";
 export default {
     components: {
@@ -82,8 +79,7 @@ export default {
         deductionMarginPer,
         deductionMarginCost,
         perCost,
-        perRecive,
-        Progress
+        perRecive
     },
     data() {
         return {

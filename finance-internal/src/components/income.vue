@@ -132,8 +132,8 @@ export default {
         myProgress,
         myDatatable,
         vantPie,
-        Tab,
-        Tabs,
+        [Tab.name]: Tab,
+        [Tabs.name]: Tabs,
         incomeAll,
         incomeSelf
     },

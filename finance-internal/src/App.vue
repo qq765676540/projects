@@ -516,7 +516,10 @@ export default {
             this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;
-            this.cubeInit();
+            setTimeout(() => {
+                this.cubeInit();
+            }, 300);
+            // this.cubeInit();
         },
         selectedOrg() {
             this.switchIsOpen = false;

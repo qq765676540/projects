@@ -29,13 +29,11 @@
 </template>
 
 <script>
-// import myProgress from "./common/progress-s1";
 import easyKpi from "./common/easy-kpi-ext";
 import grossMarginBar from "./grossMargin/gross-margin-bar";
 import accounting from "accounting";
 export default {
     components: {
-        // myProgress,
         grossMarginBar,
         easyKpi
     },
