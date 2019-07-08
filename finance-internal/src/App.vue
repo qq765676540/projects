@@ -1,22 +1,15 @@
 <template>
 <div id="app">
     <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
-        <van-tab title="首页">
-            <router-view v-if="active==0" class="view-container" />
-        </van-tab>
-        <van-tab title="收入">
-            <router-view v-if="active==1" class="view-container" />
-        </van-tab>
-        <van-tab title="毛利">
-            <router-view v-if="active==2" class="view-container" />
-        </van-tab>
-        <van-tab title="费用">
-            <router-view v-if="active==3" class="view-container" />
-        </van-tab>
-        <van-tab title="扣费毛利">
-            <router-view v-if="active==4" class="view-container" />
-        </van-tab>
+        <van-tab title="首页"></van-tab>
+        <van-tab title="收入"></van-tab>
+        <van-tab title="毛利"></van-tab>
+        <van-tab title="费用"></van-tab>
+        <van-tab title="扣费毛利"></van-tab>
     </van-tabs>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
+        <router-view />
+    </van-pull-refresh>
     <div class="main-selection flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -51,7 +44,7 @@
 
 <script>
 import {
-    NavBar,
+    PullRefresh,
     Tab,
     Tabs,
     Popup,
@@ -67,7 +60,7 @@ import vueSwitch from "./components/common/vue-switch";
 export default {
     name: "app",
     components: {
-        [NavBar.name]: NavBar,
+        [PullRefresh.name]: PullRefresh,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Popup.name]: Popup,
@@ -135,6 +128,17 @@ export default {
         }
     },
     methods: {
+        onRefresh() {
+            setTimeout(() => {
+                this.isLoading = false;
+                this.$router.replace({
+                    path: "/refresh",
+                    query: {
+                        t: Date.now()
+                    }
+                });
+            }, 500);
+        },
         cancleSelect() {
             this.selectorFlag = false;
         },
@@ -538,10 +542,7 @@ export default {
 
 html,
 body,
-body>div,
-#app,
-.nav-tabs,
-.van-tabs__content {
+#app {
     height: 100%;
     width: 100%;
     overflow: hidden !important;
@@ -556,23 +557,22 @@ body>div,
     height: 100%;
 }
 
-.nav-bar-top {
-    color: white;
-    height: 40px;
-    line-height: 40px;
-    background-color: #1d71f0;
-    font-size: 16px;
-}
-
-.nav-bar-top_left {
-    font-size: 36px;
-    padding-top: 2px;
-}
-
 .view-container {
     padding-top: 40px;
     height: calc(100% - 40px);
     max-height: calc(100% - 40px);
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+
+.van-tabs__nav,
+.van-tab {
+    height: 40px;
+    line-height: 40px;
+}
+
+.van-tabs__nav .van-ellipsis {
+    font-size: 15px;
 }
 
 .main-title {
@@ -588,10 +588,6 @@ body>div,
     width: 100vw;
     background-color: #eeeff3;
     padding-left: 6px;
-}
-
-.van-tabs__nav--line {
-    padding-bottom: 8px !important;
 }
 
 .sub-title {
@@ -623,27 +619,6 @@ body>div,
     background: #1d71f0;
     margin-left: 10px;
     margin-top: 8px;
-}
-
-.van-actionsheet {
-    overflow-y: auto !important;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 240px;
-    background-color: white;
-    padding-top: 10px;
-    padding-bottom: 30px;
-}
-
-.van-actionsheet__item {
-    line-height: 40px;
-    border-bottom: 2px solid rgba(182, 174, 174, 0.1);
-}
-
-.van-actionsheet__cancel {
-    line-height: 40px;
-    color: #1d71f0;
 }
 
 .filter_active {
