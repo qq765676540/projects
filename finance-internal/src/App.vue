@@ -532,7 +532,6 @@ export default {
 </script>
 
 <style>
-@import "./assets/css/font-awesome.min.css";
 @import "./assets/css/common.css";
 
 #app {
