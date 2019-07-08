@@ -12,7 +12,7 @@ import Tools from "../../tools/tools";
 var toolsBean = new Tools();
 
 export default {
-    name: "echarts-pie",
+    name: "echarts-bar-line",
     components: {},
     props: {
         id: {
