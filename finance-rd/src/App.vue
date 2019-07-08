@@ -646,16 +646,6 @@ body,
     padding-top: 0 !important;
 }
 
-.van-tabs__nav,
-.van-tab {
-    height: 40px;
-    line-height: 40px;
-}
-
-.van-tabs__nav .van-ellipsis {
-    font-size: 15px;
-}
-
 .selection-tool {
     position: absolute;
     top: 44px;
