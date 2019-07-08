@@ -233,7 +233,6 @@ import {
 import costCard from "./cost/cost-card";
 import normalBar from "./cost/normal-bar";
 import vantPie from "./common/vant-pie";
-import costTable from "./cost/cost-table";
 import myDatatable from "./common/datatables";
 import accounting from "accounting";
 export default {
@@ -246,7 +245,6 @@ export default {
         costCard,
         normalBar,
         vantPie,
-        costTable,
         myDatatable
     },
     data() {

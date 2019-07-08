@@ -100,12 +100,12 @@ export default {
 </script>
 
 <style scoped>
+@import '../../assets/css/jquery.dataTables.min.css';
+@import '../../assets/css/fixedHeader.dataTables.min.css';
+
 * {
     padding: 0;
 }
-
-@import '../../assets/css/jquery.dataTables.min.css';
-@import '../../assets/css/fixedHeader.dataTables.min.css';
 
 table.dataTable thead th,
 table.dataTable thead td {
@@ -157,11 +157,6 @@ table.dataTable thead th {
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
     border-bottom: none !important;
 }
-
-/* .dataTables_scrollBody::-webkit-scrollbar-thumb {
-    background-color: #d5cbcb6b;
-    height: 20px;
-} */
 
 .theadStyle {
     font-size: 14px;

@@ -117,16 +117,15 @@
 </template>
 
 <script>
-import vantPie from "./common/vant-pie";
 import {
     Tab,
     Tabs
 } from "vant";
+import vantPie from "./common/vant-pie";
 import incomeAll from "./income/income-all";
 import incomeSelf from "./income/income-self";
 import myProgress from "./common/progress-s1";
 import myDatatable from "./common/datatables";
-import costTable from "./cost/cost-table";
 import accounting from "accounting";
 export default {
     components: {
@@ -136,8 +135,7 @@ export default {
         Tab,
         Tabs,
         incomeAll,
-        incomeSelf,
-        costTable
+        incomeSelf
     },
     data() {
         return {
