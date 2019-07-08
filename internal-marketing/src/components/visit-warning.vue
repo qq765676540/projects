@@ -114,8 +114,7 @@ import {
     RadioGroup,
     Radio,
     CellGroup,
-    Cell,
-    Popup
+    Cell
 } from "vant";
 import vantCollapse from "./common/vant-collapse";
 export default {
@@ -126,7 +125,6 @@ export default {
         [Radio.name]: Radio,
         [CellGroup.name]: CellGroup,
         [Cell.name]: Cell,
-        [Popup.name]: Popup,
         MyTable: table,
         MyProgress: progress,
         MyHorkpi: horkpi,
