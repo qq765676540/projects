@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="6" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" :line-width="50">
+    <van-tabs v-model="active" class="nav-tabs" :color="'#29A6FF'" :swipe-threshold="5" title-active-color="#0066FF" title-inactive-color="black" :animated="true" :swipeable="false" :sticky="true" line-width="63" line-height="2">
         <van-tab title="首页"></van-tab>
         <van-tab title="收入"></van-tab>
         <van-tab title="毛利"></van-tab>
