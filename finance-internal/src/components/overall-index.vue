@@ -191,7 +191,6 @@ export default {
 <style scoped>
 .constitute {
     width: 100%;
-    overflow-y: scroll !important;
 }
 
 .overview {

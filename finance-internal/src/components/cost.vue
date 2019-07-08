@@ -119,14 +119,14 @@
                         <vant-pie :id="'pie-32'" :data="wlcb[1]" v-if="wlcb"></vant-pie>
                         <div class="center">全年预算进度</div>
                     </div>
-                <div class="flex flex-column flex-1">
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
-                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{wlcb[2]}}</div>
+                    <div class="flex flex-column flex-1">
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{wlcb[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{wlcb[4]}}%</div>
+                        </div>
                     </div>
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="wlcb">
-                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{wlcb[4]}}%</div>
-                    </div>
-                </div>
                 </div>
             </div>
             <div v-if="selected == '营销成本'" class="flex flex-column" style="margin-top:10px">
@@ -139,14 +139,14 @@
                         <vant-pie :id="'pie-42'" :data="yxcb[1]" v-if="yxcb"></vant-pie>
                         <div class="center">全年预算进度</div>
                     </div>
-                <div class="flex flex-column flex-1">
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
-                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{yxcb[2]}}</div>
+                    <div class="flex flex-column flex-1">
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{yxcb[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{yxcb[4]}}%</div>
+                        </div>
                     </div>
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="yxcb">
-                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{yxcb[4]}}%</div>
-                    </div>
-                </div>
                 </div>
             </div>
             <div v-if="selected == '差旅费用'" class="flex flex-column" style="margin-top:10px">
@@ -159,14 +159,14 @@
                         <vant-pie :id="'pie-52'" :data="clfy[1]" v-if="clfy"></vant-pie>
                         <div class="center">全年预算进度</div>
                     </div>
-                <div class="flex flex-column flex-1">
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
-                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{clfy[2]}}</div>
+                    <div class="flex flex-column flex-1">
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{clfy[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{clfy[4]}}%</div>
+                        </div>
                     </div>
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="clfy">
-                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{clfy[4]}}%</div>
-                    </div>
-                </div>
                 </div>
                 <div class="flex flex-1 flex-column" style="margin: 10px">
                     <my-datatable v-if="clfyTable" id="table1" :data="clfyTable.row" :title="clfyTable.title"></my-datatable>
@@ -182,14 +182,14 @@
                         <vant-pie :id="'pie-62'" :data="ywzd[1]" v-if="ywzd"></vant-pie>
                         <div class="center">全年预算进度</div>
                     </div>
-                <div class="flex flex-column flex-1">
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
-                        <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{ywzd[2]}}</div>
+                    <div class="flex flex-column flex-1">
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
+                            <div class="flex flex-justify-left">本期费用&nbsp;&nbsp;{{ywzd[2]}}</div>
+                        </div>
+                        <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
+                            <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{ywzd[4]}}%</div>
+                        </div>
                     </div>
-                    <div class="flex flex-1 flex-justify-left flex-align-bottom" v-if="ywzd">
-                        <div class="flex flex-justify-left" style="margin-left:1px">同&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比&nbsp;&nbsp;{{ywzd[4]}}%</div>
-                    </div>
-                </div>
                 </div>
                 <div class="flex flex-1 flex-column" style="margin: 10px">
                     <my-datatable v-if="ywzdTable" id="table2" :data="ywzdTable.row" :title="ywzdTable.title"></my-datatable>
@@ -212,19 +212,24 @@
     </div>
     <van-dialog v-model="dialogShow" title="选项">
         <van-radio-group v-model="selected">
-            <template v-for="(item,index) in costList">
-                <van-cell-group :key="index">
-                    <van-cell :title="item" clickable @click="selected = item;update++">
-                        <van-radio :name="item" />
-                    </van-cell>
-                </van-cell-group>
-            </template>
+            <van-cell-group>
+                <van-cell v-for="(item,index) in costList" :key="index" :title="item" clickable @click="selected = item">
+                    <van-radio slot="right-icon" :name="item" />
+                </van-cell>
+            </van-cell-group>
         </van-radio-group>
     </van-dialog>
 </div>
 </template>
 
 <script>
+import {
+    Dialog,
+    RadioGroup,
+    Radio,
+    CellGroup,
+    Cell
+} from "vant";
 import costCard from "./cost/cost-card";
 import normalBar from "./cost/normal-bar";
 import vantPie from "./common/vant-pie";
@@ -233,6 +238,11 @@ import myDatatable from "./common/datatables";
 import accounting from "accounting";
 export default {
     components: {
+        [Dialog.Component.name]: Dialog.Component,
+        [RadioGroup.name]: RadioGroup,
+        [Radio.name]: Radio,
+        [CellGroup.name]: CellGroup,
+        [Cell.name]: Cell,
         costCard,
         normalBar,
         vantPie,
@@ -306,7 +316,7 @@ export default {
                     data[0].qText == "-" ?
                     0 :
                     accounting.formatNumber(Math.round(data[0].qText) / 10000),
-                    data[1].qNum ==0 ?
+                    data[1].qNum == 0 ?
                     "" :
                     "超预算 " +
                     ((parseFloat(data[1].qText) * 100).toFixed(1)) +
@@ -376,7 +386,7 @@ export default {
         },
         pieData() {
             var arr = [];
-            if (this.$store.state["cost-pie"].length>0) {
+            if (this.$store.state["cost-pie"].length > 0) {
                 var data = this.$store.state["cost-pie"];
                 data.forEach(i => {
                     arr.push({
@@ -717,7 +727,7 @@ export default {
 <style scoped>
 .constitute {
     width: 100%;
-    overflow-y: scroll !important;
+    position: relative;
 }
 
 .cost-view {
@@ -797,6 +807,11 @@ export default {
 .con>div {
     width: 100%;
     text-align: center;
+}
+
+.van-dialog {
+    position: absolute;
+    border-radius: 5px;
 }
 
 .van-cell__title {

@@ -44,19 +44,24 @@
     </div>
     <van-dialog v-model="dialogShow" title="选项">
         <van-radio-group v-model="selected">
-            <template v-for="(item,index) in costList">
-                <van-cell-group :key="index">
-                    <van-cell :title="item" clickable @click="selected = item;update++">
-                        <van-radio :name="item" />
-                    </van-cell>
-                </van-cell-group>
-            </template>
+            <van-cell-group>
+                <van-cell v-for="(item,index) in costList" :key="index" :title="item" clickable @click="selected = item;update++">
+                    <van-radio slot="right-icon" :name="item" />
+                </van-cell>
+            </van-cell-group>
         </van-radio-group>
     </van-dialog>
 </div>
 </template>
 
 <script>
+import {
+    Dialog,
+    RadioGroup,
+    Radio,
+    CellGroup,
+    Cell
+} from "vant";
 import easyKpi from "./common/easy-kpi-ext";
 import deductionMarginPer from "./deductionMargin/deduction-margin-per";
 import deductionMarginCost from "./deductionMargin/deduction-margin-cost";
@@ -68,6 +73,11 @@ import {
 import accounting from "accounting";
 export default {
     components: {
+        [Dialog.Component.name]: Dialog.Component,
+        [RadioGroup.name]: RadioGroup,
+        [Radio.name]: Radio,
+        [CellGroup.name]: CellGroup,
+        [Cell.name]: Cell,
         easyKpi,
         deductionMarginPer,
         deductionMarginCost,
@@ -107,9 +117,9 @@ export default {
             // return demoData.homeData.overview
         },
         chartsData() {
-            if (this.$store.state["de-margin-per"].length>0) {
+            if (this.$store.state["de-margin-per"].length > 0) {
                 var data = this.$store.state["de-margin-per"];
-                data = data.sort((a,b) => {
+                data = data.sort((a, b) => {
                     return a[0].qText - b[0].qText;
                 });
                 var obj = {
@@ -123,12 +133,12 @@ export default {
                     obj.perRecive[index].name = i[0].qText;
                     obj.perRecive[index].value =
                         i[1].qText == "-" ? 0 : parseFloat(i[1].qText / 10000).toFixed(1) - 0;
-                    
+
                     obj.perCost[index] = {};
                     obj.perCost[index].name = i[0].qText;
                     obj.perCost[index].value =
                         i[2].qText == "-" ? 0 : parseFloat(i[2].qText / 10000).toFixed(1) - 0;
-        
+
                     obj.deMarginPer[index] = {};
                     obj.deMarginPer[index].name = i[0].qText;
                     obj.deMarginPer[index].value =
@@ -138,7 +148,7 @@ export default {
                     obj.deMarginCost[index].name = i[0].qText;
                     obj.deMarginCost[index].value =
                         i[4].qText == "-" ? 0 : parseFloat(i[4].qText).toFixed(1) - 0;
-                    
+
                 });
                 return obj;
             }
@@ -156,7 +166,7 @@ export default {
 <style scoped>
 .constitute {
     width: 100%;
-    overflow-y: scroll !important;
+    position: relative;
 }
 
 .margin-view {
@@ -215,6 +225,11 @@ export default {
     font-size: 40px;
     font-style: normal;
     line-height: 52px;
+}
+
+.van-dialog {
+    position: absolute;
+    border-radius: 5px;
 }
 
 .van-cell__title {
