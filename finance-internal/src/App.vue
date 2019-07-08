@@ -53,23 +53,16 @@
 import {
     NavBar,
     Tab,
-    Actionsheet,
+    Tabs,
     Popup,
     Loading,
     Toast
 } from "vant";
-import Tabs from "./components/common/vant-tabs/index";
+
 import Cube from "./tools/cube.js";
 import waterMark from "./components/common/water-mark";
 import selector from "./components/sub-components/selector";
 import vueSwitch from "./components/common/vue-switch";
-import $ from "jquery";
-import {
-    setInterval
-} from 'timers';
-// import Tools from "./tools/tools";
-// var tool = new Tools();
-// var cube = new Cube();
 
 export default {
     name: "app",
@@ -77,7 +70,6 @@ export default {
         [NavBar.name]: NavBar,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
-        [Actionsheet.name]: Actionsheet,
         [Popup.name]: Popup,
         [Loading.name]: Loading,
         [Toast.name]: Toast,
@@ -517,7 +509,6 @@ export default {
     watch: {
         active(pIndex) {
             this.$router.push(this.pageMap[pIndex]);
-            this.selBarFlag = pIndex == 1 ? false : true;
             this.myStartTime = new Date();
             this.cubeCount = 0;
             this.cubeInit();
@@ -538,7 +529,6 @@ export default {
 <style>
 @import "./assets/css/font-awesome.min.css";
 @import "./assets/css/common.css";
-@import "./components/common/vant-tabs/index.css";
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;

@@ -1,7 +1,9 @@
 {
-  "name": "mashup-hikvison",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vueapp",
+  "version": "1.0.0",
+  "description": "vueapp project.",
+  "author": "ebi",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,33 +11,36 @@
   },
   "dependencies": {
     "accounting": "^0.4.1",
-    "core-js": "^2.6.5",
+    "animate.css": "^3.7.0",
+    "autoprefixer": "^9.5.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "datatables.net-fixedheader": "^3.1.5",
     "datatables.net-fixedheader-dt": "^3.1.5",
-    "jquery": "^3.4.1",
-    "vue": "^2.6.10",
-    "vue-simple-tree": "^2.3.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "autoprefixer": "^9.5.1",
-    "babel-eslint": "^10.0.1",
     "echarts": "^4.2.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "extract-css-chunks-webpack-plugin": "^4.3.2",
-    "flexible": "^0.1.20",
+    "extract-css-chunks-webpack-plugin": "^4.3.1",
+    "jquery": "^3.4.0",
     "lib-flexible": "^0.3.2",
     "path": "^0.12.7",
     "postcss-pxtorem": "^4.0.1",
-    "vant": "^1.6.17",
-    "vue-router": "^3.0.6",
-    "vue-template-compiler": "^2.5.21",
-    "vuex": "^3.1.1"
+    "vant": "^2.0.6",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.10.0",
+    "vue-router": "^3.0.1",
+    "vue-simple-tree": "^2.3.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "babel-plugin-import": "^1.8.0",
+    "bootstrap": "^3.4.1",
+    "el-tree-select": "^3.1.1",
+    "font-awesome": "^4.7.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "vue-template-compiler": "^2.6.2",
+    "vuex": "^3.1.0"
   },
   "eslintConfig": {
     "root": true,
@@ -43,10 +48,11 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
+      "plugin:vue/essential"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
@@ -57,7 +63,7 @@
     }
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions"
+    "Android >= 4.0",
+    "iOS >= 7"
   ]
 }
