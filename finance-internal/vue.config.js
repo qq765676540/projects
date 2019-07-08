@@ -7,7 +7,7 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 module.exports = {
   outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/GNCW/GNCW',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
-  configureWebpack: { // webpack 配置
+  configureWebpack: {
     output: {
       filename: `js/[name].[hash].js`,
       chunkFilename: `js/[name].[hash].js`
