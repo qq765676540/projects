@@ -75,7 +75,7 @@ export default {
                         name: "在线数量",
                         type: "pie",
                         radius: ["25%", "50%"],
-                        startAngle: 135,
+                        startAngle: 75,
                         avoidLabelOverlap: true,
                         color: [
                             "#1495EB",
