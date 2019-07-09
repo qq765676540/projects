@@ -9,7 +9,7 @@
             <van-collapse-item v-for="(val,key) in reportList" :key="key" :title="val.label" :name="key+''">
                 <div v-for="(childVal,clildKey) in reportList[key].children" :key="clildKey" :class="{report: true, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,val.id)">
                     <div class="flex flex-1 flex-justify-center flex-align-center">
-                        <img width="15" src="./images/reportIcon.png" style="margin-left: 3px"/>
+                        <img width="15" src="./images/reportIcon.png" style="margin-left: 3px" />
                     </div>
                     <div class="reportName flex-7">{{childVal.label}}</div>
                     <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label)">
@@ -25,7 +25,7 @@
     <div class="flex flex-column flex-1 flex-align-center" style="margin-top: 2px" v-if="favoriteReportList.length > 0&&pageActive==1&&!reportPageOpenFlag">
         <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
             <div class="flex flex-1 flex-justify-center flex-align-center">
-                <img width="15" src="./images/reportIcon.png" style="margin-left: 3px"/>
+                <img width="15" src="./images/reportIcon.png" style="margin-left: 3px" />
             </div>
             <div class="reportName flex-7">{{childVal.label}}</div>
             <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label)">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="flex flex-column flex-1 flex-align-center" v-if="!favoriteReportList.length > 0&&pageActive==1">
-        <img width="220" src="./images/empty.png" style="margin-top: 8rem"/>
+        <img width="220" src="./images/empty.png" style="margin-top: 8rem" />
         <div style="font-size: 0.9rem;color: #333333;font-family: 'PingFangSC-Regula'">还没有任何收藏</div>
     </div>
     <!-- loading页面 -->
@@ -139,9 +139,7 @@ export default {
         //         _this.Mobile.getAllReportList();
         //     }
         // });
-        this.$nextTick(() => {
-          // $('.van-cell__right-icon').css('font-size','1rem');
-        });
+
     },
     watch: {
         reportList: {
@@ -364,17 +362,21 @@ body,
 }
 
 .van-toast {
+    background: rgba(0,0,0,0.8);
     width: 6rem;
     border-radius: 0.3rem;
 }
 
 .van-toast__text {
-    height: 2rem;
-    line-height: 2rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
     font-size: 1rem;
+    font-family: "PingFangSC-Regular";
+    color: #ffffff;
 }
 
 .van-icon-passed {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin-top: 0.7rem;
 }
 </style>
