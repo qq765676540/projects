@@ -3,6 +3,7 @@ let option = {
         let zoomNum = parseInt(8/data.y.length*100);
         return {
             color: ['#1495EB', '#c4f0ff', 'orange', '#ff6666'],
+            animation: false,
             title: {
                 show: true,
                 text: '',
