@@ -35,8 +35,8 @@
         </div>
     </div>
     <div class="flex flex-column flex-1 flex-align-center" v-if="!favoriteReportList.length > 0&&pageActive==1">
-        <div class="empty"></div>
-        <div style="font-size: 18px;color: #333333;font-family: 'PingFangSC-Regula'">还没有任何收藏</div>
+        <img width="220" src="./images/empty.png" style="margin-top: 8rem"/>
+        <div style="font-size: 0.9rem;color: #333333;font-family: 'PingFangSC-Regula'">还没有任何收藏</div>
     </div>
     <!-- loading页面 -->
     <div class="appPopstyle">
@@ -356,14 +356,6 @@ body,
     width: 100%;
     min-height: 42rem;
     overflow: hidden !important;
-}
-
-.empty {
-    width: 820px;
-    height: 820px;
-    background: url("./images/empty.png") center no-repeat;
-    background-size: 100% 100%;
-    margin-top: 200px;
 }
 
 .appPopstyle .van-popup {
