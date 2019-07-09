@@ -71,10 +71,6 @@ class Mobile {
             success: function (data) {
                 let myData = data.data.children;
                 _this.reportGroupData = data.data.children;
-                // _this.vueApp.$store.dispatch('updateData', {
-                //     dataName: 'reportListData',
-                //     data: myData
-                // });
                 let tmp = myData[0].children;
                 for (var j in tmp) {
                     _this.vueApp.favoriteReportList.push(tmp[j]);
@@ -94,7 +90,7 @@ class Mobile {
     }
 
     getReportId(reportGroupId) {
-        // return new Promise((resolve, reject) => {
+
         var _this = this;
         var parentId = this.getMaxParentId(this.reportGroupData, reportGroupId)
         parentId = parentId ? parentId[0] : reportGroupId;
@@ -115,10 +111,6 @@ class Mobile {
             success: function (data) {
                 let myData = data.data;
                 myData.filter(v => {
-                    // _this.vueApp.$store.dispatch('updateData', {
-                    //     dataName: 'reportIdData.' + v.reportName,
-                    //     data: v.reportId
-                    // });
                     _this.vueApp.$set(_this.vueApp.reportIdList, v.reportName, v.reportId);
                     _this.getReportUrl(v.reportId);
                 });
@@ -127,11 +119,10 @@ class Mobile {
                 // alert(JSON.stringify(err));
             }
         });
-        // })
+
     }
 
     getReportUrl(id) {
-        // return new Promise((resolve, reject) => {
         var _this = this;
         $.ajax({
             type: "GET",
@@ -142,26 +133,14 @@ class Mobile {
                 if (data.isSuccess) {
                     let myData = data.data;
                     let temp = { reportUrl: myData.reportUrl, isFavorite: myData.isFavorite };
-                    // _this.vueApp.$store.dispatch('updateData', {
-                    //     dataName: 'reportUrlData.' + id,
-                    //     data: temp
-                    // });
-                    // (callback && typeof (callback) === "function") && callback(data.data);
-
-                    // if (!_this.vueApp.reportUrlList[id]) {
-                    //     _this.vueApp.reportUrlList[id] = {};
-                    // }
-                    // _this.vueApp.loadUrlList.push(id);
                     _this.vueApp.$set(_this.vueApp.reportUrlList, id, temp);
-                    // _this.vueApp.reportUrlList[id] = temp;
-                    // resolve(temp);
+
                 }
             },
             error: function (err) {
                 // alert(JSON.stringify(err));
             }
         });
-        // });
     }
 
     getHeader() {
