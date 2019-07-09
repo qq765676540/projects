@@ -13,6 +13,7 @@
                     </div>
                     <div class="reportName flex-7">{{childVal.label}}</div>
                     <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label)">
+                        <van-loading size="23px" color="rgba(0,0,0,0.125)" v-if="!reportUrlList[reportIdList[childVal.label]]"></van-loading>
                         <img style="margin-right: 3px" src="./images/scTrue.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?reportUrlList[reportIdList[childVal.label]].isFavorite:false" />
                         <img style="margin-right: 3px" src="./images/scFalse.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?!reportUrlList[reportIdList[childVal.label]].isFavorite:false" />
                     </div>
@@ -29,6 +30,7 @@
             </div>
             <div class="reportName flex-7">{{childVal.label}}</div>
             <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label)">
+                <van-loading size="23px" color="rgba(0,0,0,0.125)" v-if="!reportUrlList[reportIdList[childVal.label]]"></van-loading>
                 <img style="margin-right: 3px" src="./images/scTrue.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?reportUrlList[reportIdList[childVal.label]].isFavorite : false" />
                 <img style="margin-right: 3px" src="./images/scFalse.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?!reportUrlList[reportIdList[childVal.label]].isFavorite:false" />
             </div>
@@ -109,12 +111,17 @@ export default {
                 vueApp: this
             }),
             reportCount: 0,
+
+            // 打包生产时放开下面3个注释
             // reportIdList: {},
             // reportUrlList: {},
             // reportList: [],
+
+            // 测试样式时放开下面3个注释
             reportIdList: demoData[1],
-            reportUrlList: demoData[2],
+            reportUrlList: {},
             reportList: demoData[0],
+
             isLoading: false,
             popShow: false,
             loadText: [],
@@ -139,6 +146,11 @@ export default {
         //         _this.Mobile.getAllReportList();
         //     }
         // });
+
+        // 测试时放开下面的注释
+        setTimeout(() => {
+          this.reportUrlList = demoData[2];
+        }, 2000);
 
     },
     watch: {
@@ -226,13 +238,6 @@ export default {
                     }
                 });
             });
-        },
-        //刷新页面
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                location.reload();
-            }, 500);
         }
     }
 };
@@ -362,7 +367,7 @@ body,
 }
 
 .van-toast {
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     width: 6rem;
     border-radius: 0.3rem;
 }
