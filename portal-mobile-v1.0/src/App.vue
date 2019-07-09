@@ -113,14 +113,14 @@ export default {
             reportCount: 0,
 
             // 打包生产时放开下面3个注释
-            // reportIdList: {},
-            // reportUrlList: {},
-            // reportList: [],
+            reportIdList: {},
+            reportUrlList: {},
+            reportList: [],
 
             // 测试样式时放开下面3个注释
-            reportIdList: demoData[1],
-            reportUrlList: {},
-            reportList: demoData[0],
+            // reportIdList: demoData[1],
+            // reportUrlList: {},
+            // reportList: demoData[0],
 
             isLoading: false,
             popShow: false,
@@ -132,36 +132,36 @@ export default {
     },
     mounted() {
         let _this = this;
-        // this.createLangIcon();
-        // let lang = localStorage.lang;
-        // if (lang == "zh") {
-        //     $("#MyHtmlTitle").text("报表");
-        // } else {
-        //     $("#MyHtmlTitle").text("Report");
-        // }
-        // this.Mobile.init(rs => {
-        //     if (rs) {
-        //         let __this = _this;
-        //         _this.Mobile.getDefault();
-        //         _this.Mobile.getAllReportList();
-        //     }
-        // });
+        this.createLangIcon();
+        let lang = localStorage.lang;
+        if (lang == "zh") {
+            $("#MyHtmlTitle").text("报表");
+        } else {
+            $("#MyHtmlTitle").text("Report");
+        }
+        this.Mobile.init(rs => {
+            if (rs) {
+                let __this = _this;
+                _this.Mobile.getDefault();
+                _this.Mobile.getAllReportList();
+            }
+        });
 
         // 测试时放开下面的注释
-        setTimeout(() => {
-          this.reportUrlList = demoData[2];
-        }, 2000);
+        // setTimeout(() => {
+        //   this.reportUrlList = demoData[2];
+        // }, 2000);
 
     },
     watch: {
-        reportList: {
-            deep: true,
-            handler(nData, oData) {
-                if (nData && nData.length > 0) {
-                    this.popShow = false;
-                }
-            }
-        },
+        // reportList: {
+        //     deep: true,
+        //     handler(nData, oData) {
+        //         if (nData && nData.length > 0) {
+        //             this.popShow = false;
+        //         }
+        //     }
+        // },
         pageActive: {
             deep: true,
             handler(nData, oData) {
