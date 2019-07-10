@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="content-box flex-11">
-            <vant-collapse :id="'plan-collapse-1'" :data="CollapseADataSet" :isDefaultTitle="false" v-if="CollapseADataSet"></vant-collapse>
+            <vant-collapse :id="'plan-collapse-1'" :data="CollapseADataSet" :isDefaultTitle="false" v-show="CollapseADataSet"></vant-collapse>
         </div>
     </div>
     <div class="last-week-unexecution flex flex-column">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="content-box flex-11">
-            <vant-collapse :id="'plan-collapse-2'" :data="CollapseBDataSet" :isDefaultTitle="false" v-if="CollapseBDataSet"></vant-collapse>
+            <vant-collapse :id="'plan-collapse-2'" :data="CollapseBDataSet" :isDefaultTitle="false" v-show="CollapseBDataSet"></vant-collapse>
         </div>
     </div>
     <div class="footer-empty">

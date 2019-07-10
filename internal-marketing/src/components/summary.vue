@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="content-box">
-            <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-if="orgListDataSet"></vant-collapse>
+            <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-show="orgListDataSet"></vant-collapse>
         </div>
     </div>
     <div class="vist-num-trend border-bottom flex flex-column">
@@ -292,7 +292,7 @@ export default {
                 orgData = this.getOrgData(deptNameArr, arr1[1].qText);
 
                 // 修改子部门数据
-                if (arr1[2].qText == 'Y') {
+                if (arr1[0].qText != '-') {
                     let sp = [];
                     orgData.filter((v, i) => {
                         v.children.filter((cv, ci) => {

@@ -60,7 +60,7 @@
             </div>
         </div>
         <div style="margin:15px 15px 20px 15px;min-height:200px">
-            <vant-collapse :id="'plan-collapse-3'" :data="CollapseADataSet[Aselected]" :isDefaultTitle="false" v-if="CollapseADataSet"></vant-collapse>
+            <vant-collapse :id="'plan-collapse-3'" :data="CollapseADataSet[Aselected]" :isDefaultTitle="false" v-show="CollapseADataSet"></vant-collapse>
         </div>
     </div>
     <div class="uncovered-customer-detail" v-show="true">
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div style="margin:15px 15px 20px 15px;min-height:200px">
-            <vant-collapse :id="'plan-collapse-4'" :data="CollapseBDataSet[Bselected]" :isDefaultTitle="false" v-if="CollapseBDataSet"></vant-collapse>
+            <vant-collapse :id="'plan-collapse-4'" :data="CollapseBDataSet[Bselected]" :isDefaultTitle="false" v-show="CollapseBDataSet"></vant-collapse>
         </div>
     </div>
     <div class="footer-empty">

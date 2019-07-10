@@ -74,7 +74,8 @@ export default
         summaryOrgListA: {
             qDimensions: [
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'$(DomainName)')",
-                "='$(DeptID)'"
+                "='$(DeptID)'",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'Y','N')",
             ],
             qMeasures: [
                 `=if(isnull(count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)),sum(0),count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID))`,
@@ -88,7 +89,9 @@ export default
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',Parent_DeptID),'-')",
                 "=DeptSort",
                 "=DeptName",
-                "=DomainName"
+                "=DomainName",
+                "=OADAccount",
+                "=Flag"
             ],
             qMeasures: [
                 `=if(isnull(count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)),sum(0),count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID))`,
@@ -97,6 +100,17 @@ export default
                 `=if(isnull(count(total <DeptName> {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count(total <DeptName> {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)),sum(0),count(total <DeptName> {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count(total <DeptName> {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID))`,
                 `=if(isnull(count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)),sum(0),count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID))`,
                 `=if(isnull(count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)),sum(0),count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(total <DeptName> distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID))`
+            ]
+        },
+        summaryOrgListC: {
+            qDimensions: [    
+                "=ACCOUNT_EXT"
+            ],
+            qMeasures: [
+                `=count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)`,
+                `=count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)`,
+                `=count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)`,
+                "=sum(1)"
             ]
         },
         summaryLineA: {
