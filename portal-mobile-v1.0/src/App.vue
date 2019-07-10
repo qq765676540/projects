@@ -12,7 +12,7 @@
                         <img width="15" src="./images/reportIcon.png" style="margin-left: 3px" />
                     </div>
                     <div class="reportName flex-7">{{childVal.label}}</div>
-                    <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label)">
+                    <div class="reportFavorite flex flex-1 flex-justify-center flex-align-center" @click.stop="favoriteReport(childVal.label,key,clildKey)">
                         <van-loading size="23px" color="rgba(0,0,0,0.125)" v-if="!reportUrlList[reportIdList[childVal.label]]"></van-loading>
                         <img style="margin-right: 3px" src="./images/scTrue.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?reportUrlList[reportIdList[childVal.label]].isFavorite:false" />
                         <img style="margin-right: 3px" src="./images/scFalse.png" width="18" v-show="reportUrlList[reportIdList[childVal.label]]?!reportUrlList[reportIdList[childVal.label]].isFavorite:false" />
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-column flex-1 flex-align-center" v-if="!favoriteReportList.length > 0&&pageActive==1">
+    <div class="flex flex-column flex-1 flex-align-center" v-show="!favoriteReportList.length > 0&&pageActive==1">
         <img width="220" src="./images/empty.png" style="margin-top: 8rem" />
         <div style="font-size: 0.9rem;color: #333333;font-family: 'PingFangSC-Regula'">还没有任何收藏</div>
     </div>
@@ -186,10 +186,10 @@ export default {
                 isHeader: true,
                 isThirdH5: false
             };
-            moa.openWebView(openJSONParam);
+            // moa.openWebView(openJSONParam);
         },
         //收藏报表
-        favoriteReport(reportName) {
+        favoriteReport(reportName,key,childKey) {
             let id = this.reportIdList[reportName];
             let flag = this.reportUrlList[this.reportIdList[reportName]].isFavorite;
             this.$set(this.reportUrlList[this.reportIdList[reportName]], 'isFavorite', !flag);
@@ -198,6 +198,11 @@ export default {
                     message: "取消收藏",
                     duration: 1000
                 });
+                this.favoriteReportList.filter((v,i) => {
+                    if(v.label == reportName) {
+                        this.favoriteReportList.splice(i,1);
+                    }
+                });
                 this.Mobile.removeFavorite(id);
             } else {
                 Toast({
@@ -205,6 +210,12 @@ export default {
                     duration: 1000,
                     icon: "passed"
                 });
+                this.favoriteReportList.filter((v,i) => {
+                    if(v.label == reportName) {
+                        this.favoriteReportList.splice(i,1);
+                    }
+                });
+                this.favoriteReportList.push(this.reportList[key].children[childKey]);
                 this.Mobile.addFavorite(id);
             }
         },
