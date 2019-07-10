@@ -81,7 +81,7 @@ export default {
             active: 0,
             lang: false,
             cubeCount: 0,
-            cubeStop: [6, 3, 5, 2, 1],
+            cubeStop: [7, 3, 5, 2, 1],
             selBarFlag: true,
             pageMap: {
                 0: "summary",
@@ -432,9 +432,24 @@ export default {
                                 org: this.selectedOrgSetCube,
                                 name: "summaryOrgListB"
                             },
-                            qWidth: 11,
-                            qHeight: 900,
+                            qWidth: 13,
+                            qHeight: 700,
                             filtNull: false
+                        },
+                        (rs) => {
+                            this.cubeCount += 1;
+                        });
+                    Cube.getData(parent.qApp, this, {
+                            formulaOpt: {
+                                time: this.selectedTime,
+                                org: this.selectedOrgSetCube,
+                                name: "summaryOrgListC"
+                            },
+                            qWidth: 5,
+                            qHeight: 2000,
+                            filtNull: false,
+                            orderType: -1,
+                            orderCol: 4
                         },
                         (rs) => {
                             this.cubeCount += 1;

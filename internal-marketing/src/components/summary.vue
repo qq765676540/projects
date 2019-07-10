@@ -244,25 +244,26 @@ export default {
             return false;
         },
         orgListDataSet() {
-            if (this.$store.state.summaryOrgListA.length > 0 && this.$store.state.summaryOrgListB.length > 0) {
+            if (this.$store.state.summaryOrgListA.length > 0 && this.$store.state.summaryOrgListB.length > 0 && this.$store.state.summaryOrgListC.length > 0) {
                 let arr1 = this.$store.state.summaryOrgListA[0];
                 let arr2 = this.$store.state.summaryOrgListB;
+                let arr3 = this.$store.state.summaryOrgListC;
 
                 arr2.sort((a, b) => {
                     return a[2].qText / 1 - b[2].qText / 1;
                 });
 
-                let deptName = '';
                 let deptNameArr = [];
 
                 arr2.filter((v) => {
                     let temp = {};
-                    if (deptName != v[3].qText) {
-                        deptName = v[3].qText;
+                    if (v[6].qText == '1') {
                         temp.id = v[0].qText;
-                        temp.label = deptName;
+                        temp.label = v[3].qText;
+                        temp.oad = v[5].qText;
+                        temp.flag = v[6].qText
                         temp.pid = v[1].qText;
-                        temp.data = [Math.round((v[8].qNum === 'NaN' ? 0 : v[8].qNum) * 100) + '%', Math.round((v[9].qNum === 'NaN' ? 0 : v[9].qNum)), Math.round((v[10].qNum === 'NaN' ? 0 : v[10].qNum) * 100) + '%'];
+                        temp.data = [Math.round((v[10].qNum === 'NaN' ? 0 : v[10].qNum) * 100) + '%', Math.round((v[11].qNum === 'NaN' ? 0 : v[11].qNum)), Math.round((v[12].qNum === 'NaN' ? 0 : v[12].qNum) * 100) + '%'];
                         temp.children = []
                         deptNameArr.push(temp);
                     }
@@ -275,7 +276,9 @@ export default {
                         if (vo.id == vi[0].qText) {
                             temp.id = vi[1].qText;
                             temp.label = vi[4].qText;
-                            temp.data = [Math.round((vi[5].qNum === 'NaN' ? 0 : vi[5].qNum) * 100) + '%', Math.round((vi[6].qNum === 'NaN' ? 0 : vi[6].qNum)), Math.round((vi[7].qNum === 'NaN' ? 0 : vi[7].qNum) * 100) + '%'];
+                            temp.oad = vi[5].qText;
+                            temp.flag = vi[6].qText;
+                            temp.data = [Math.round((vi[7].qNum === 'NaN' ? 0 : vi[7].qNum) * 100) + '%', Math.round((vi[8].qNum === 'NaN' ? 0 : vi[8].qNum)), Math.round((vi[9].qNum === 'NaN' ? 0 : vi[9].qNum) * 100) + '%'];
                             vo.children.push(temp);
                         }
                     });
@@ -288,11 +291,39 @@ export default {
                 let orgData = [];
                 orgData = this.getOrgData(deptNameArr, arr1[1].qText);
 
+                // 修改子部门数据
+                if (arr1[2].qText == 'Y') {
+                    let sp = [];
+                    orgData.filter((v, i) => {
+                        v.children.filter((cv, ci) => {
+                            if(typeof cv.children != 'undefined') {
+                                sp.push([i,ci]);
+                            }
+                        });
+                    });
+                    sp.filter(v => {
+                        arr3.filter(cv => {
+                            if(cv[0].qText == orgData[v[0]].oad) {
+                                orgData[v[0]].data = [Math.round((cv[1].qNum === 'NaN' ? 0 : cv[1].qNum) * 100) + '%', Math.round((cv[2].qNum === 'NaN' ? 0 : cv[2].qNum)), Math.round((cv[3].qNum === 'NaN' ? 0 : cv[3].qNum) * 100) + '%'];
+                            }
+
+                            if(cv[0].qText == orgData[v[0]].children[v[1]].oad) {
+                                orgData[v[0]].children[v[1]].data = [Math.round((cv[1].qNum === 'NaN' ? 0 : cv[1].qNum) * 100) + '%', Math.round((cv[2].qNum === 'NaN' ? 0 : cv[2].qNum)), Math.round((cv[3].qNum === 'NaN' ? 0 : cv[3].qNum) * 100) + '%'];
+                            }
+                        });
+                    });
+                    orgData.filter(v => {
+                        v.children.sort((a,b) => {
+                            return a.data[0].replace('%', '') / 1 - b.data[0].replace('%', '') / 1;
+                        });
+                    });
+                }
+
                 // 拼接数据
                 let self = [{
                     name: arr1[0].qText,
                     title: arr1[0].qText,
-                    data: [Math.round((arr1[2].qNum === 'NaN' ? 0 : arr1[2].qNum) * 100) + '%', Math.round((arr1[3].qNum === 'NaN' ? 0 : arr1[3].qNum)), Math.round((arr1[4].qNum === 'NaN' ? 0 : arr1[4].qNum) * 100) + '%'],
+                    data: [Math.round((arr1[3].qNum === 'NaN' ? 0 : arr1[3].qNum) * 100) + '%', Math.round((arr1[4].qNum === 'NaN' ? 0 : arr1[4].qNum)), Math.round((arr1[5].qNum === 'NaN' ? 0 : arr1[5].qNum) * 100) + '%'],
                     subData: []
                 }];
                 let others = [];
@@ -311,7 +342,6 @@ export default {
                     others.push(temp);
                 });
                 let data = self.concat(others);
-                // console.log('YCQ日志记录:标识->',data);
                 return data;
             }
             return false;
@@ -332,6 +362,8 @@ export default {
                     var obj = {
                         label: data[i].label,
                         id: data[i].id,
+                        oad: data[i].oad,
+                        flag: data[i].flag,
                         data: data[i].data,
                         children: data[i].children
                     };

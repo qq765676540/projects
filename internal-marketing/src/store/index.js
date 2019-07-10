@@ -16,6 +16,7 @@ var state = {
   summaryLineB:[],
   summaryOrgListA: [],
   summaryOrgListB: [],
+  summaryOrgListC: [],
   planExecutionLine:[],
   planExecutionCollapseA: [],
   planExecutionCollapseB: [],

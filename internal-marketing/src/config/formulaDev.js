@@ -51,7 +51,8 @@ export default
         summaryOrgListA: {
             qDimensions: [
                 "='$(DomainName)'",
-                "='$(DeptID)'"
+                "='$(DeptID)'",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'Y','N')",
             ],
             qMeasures: [
                 "=sum(0.55)",
@@ -65,7 +66,9 @@ export default
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',Parent_DeptID),'-')",
                 "=DeptSort",
                 "=DeptName",
-                "=DomainName"
+                "=DomainName",
+                "=OADAccount",
+                "=Flag"
             ],
             qMeasures: [
                 "=sum(mea1)",
@@ -74,6 +77,17 @@ export default
                 "=sum(total <DeptName> mea1)",
                 "=sum(total <DeptName> mea1)",
                 "=sum(total <DeptName> mea1)",
+            ]
+        },
+        summaryOrgListC: {
+            qDimensions: [    
+                "=ACCOUNT_EXT"
+            ],
+            qMeasures: [
+                "=sum(p01mea1)",
+                "=sum(p01mea2)",
+                "=sum(p01mea3)",
+                "=sum(1)"
             ]
         },
         summaryLineA: {
