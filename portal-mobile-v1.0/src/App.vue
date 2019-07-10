@@ -186,7 +186,7 @@ export default {
                 isHeader: true,
                 isThirdH5: false
             };
-            // moa.openWebView(openJSONParam);
+            moa.openWebView(openJSONParam);
         },
         //收藏报表
         favoriteReport(reportName,key,childKey) {

@@ -1,24 +1,40 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <script type="text/javascript" src="https://moa.hikvision.com:92/webapps/libs/jmoa-1.0.0.js"></script>
+    <script
+      type="text/javascript"
+      src="https://moa.hikvision.com:92/webapps/libs/jmoa-1.0.0.js"
+    ></script>
     <script type="text/javascript" src="./jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-        $("title").html(localStorage.lang === "zh" ? '报表' : 'Report');
-        moa.ready(function () {
-            var userName = moa.getUserInfo().shortName;
-            var sessionId = moa.getSessionId();
-            if (userName != null && sessionId != null) {
-                var urlData = "userName=" + userName + "&sessionId=" + sessionId + "&isMobile=true"
-                window.location.replace("http://qlikepd2.hikvision.com.cn/portalbasicapi/sso/LoginSsoUri?" + urlData);
-            } else {
-                alert("无法获取MOA信息，请联系管理员！");
-            }
-        });
+      moa.ready(function() {
+        if (navigator.userAgent.toLowerCase().indexOf("hiklinkintl", 0) != -1) {
+          localStorage.lang = "en";
+          $("title").html("Report");
+        } else {
+          localStorage.lang = "zh";
+          $("title").html("报表");
+        }
+        var userName = moa.getUserInfo().shortName;
+        var sessionId = moa.getSessionId();
+        if (userName != null && sessionId != null) {
+          var urlData =
+            "userName=" +
+            userName +
+            "&sessionId=" +
+            sessionId +
+            "&isMobile=true";
+          window.location.replace(
+            "http://qlikepd2.hikvision.com.cn/portalbasicapi/sso/LoginSsoUri?" +
+              urlData
+          );
+        } else {
+          alert("无法获取MOA信息，请联系管理员！");
+        }
+      });
     </script>
-</head>
-<body>
-</body>
+  </head>
+  <body></body>
 </html>
