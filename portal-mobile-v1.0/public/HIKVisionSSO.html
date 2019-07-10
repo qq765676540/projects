@@ -10,7 +10,7 @@
     <script type="text/javascript" src="./jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
       moa.ready(function() {
-        if(localStorage.setLangFlag == undefined) {
+        if(typeof localStorage.lang == 'undefined') {
           if (navigator.userAgent.toLowerCase().indexOf("hiklinkintl", 0) != -1) {
             localStorage.lang = "en";
             $("title").html("Report");
@@ -18,8 +18,6 @@
             localStorage.lang = "zh";
             $("title").html("报表");
           }
-        }else {
-          localStorage.setLangFlag = '已设置过语言';
         }
         var userName = moa.getUserInfo().shortName;
         var sessionId = moa.getSessionId();
