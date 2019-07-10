@@ -94,26 +94,23 @@ export default {
   },
   beforeCreate() {},
   mounted() {
-    this.currentData.forEach(e => {
-      if (e.name) {
-        e.subData.forEach(q => {
-          if (q.context) {
-            let tmp = q.context;
-            this.wholeContext[q.subTitle] = tmp;
-            let context = q.context;
-            let maxLen = 96;
-            if (context.length > maxLen) {
-              context = context.substring(0, maxLen) + "...";
-            }
-            q.context = context;
-          }
-        });
-      }
-    });
-    // $(".title-name-icon").each((index, ele) => {
-    //   // $(ele).css({ backgroundColor: this.getRandomColor() });
-    //   $(ele).css({ backgroundColor: "rgb(96, 203, 193)" });
+    // this.currentData.forEach(e => {
+    //   if (e.name) {
+    //     e.subData.forEach(q => {
+    //       if (q.context) {
+    //         let tmp = q.context;
+    //         this.wholeContext[q.subTitle] = tmp;
+    //         let context = q.context;
+    //         let maxLen = 96;
+    //         if (context.length > maxLen) {
+    //           context = context.substring(0, maxLen) + "...";
+    //         }
+    //         q.context = context;
+    //       }
+    //     });
+    //   }
     // });
+
   },
   watch: {
     data(nVal){
