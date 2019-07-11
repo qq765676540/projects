@@ -1,37 +1,22 @@
 <template>
-    <transition
-        v-show="show"
-        enter-active-class="animated faster fadeInUp"
-        leave-active-class="animated faster fadeOutDown"
-    >
-        <div class="selector flex flex-column flex-1">
-            <div class="selector-time flex flex-column flex-1">
-                <span class="title flex-1">时间范围</span>
-                <ul class="selections flex-3">
-                    <li
-                        v-for="(value, key) in timeItems"
-                        :key="key"
-                        class="time-item"
-                        :class="{active: value}"
-                        @click="selectTime(key)"
-                    >{{key}}</li>
-                </ul>
-            </div>
-            <div class="selector-org-tree flex flex-column flex-6">
-                <span class="title flex-1">组织架构</span>
-                <vue-tree
-                    :tree-data="realTreeData"
-                    v-model="ids"
-                    :options="options"
-                    class="org-tree flex-9"
-                />
-            </div>
-            <div class="selector-btn flex flex-justify-center flex-2">
-                <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
-                <div class="selector-btn-confirm active" @click="confirm">确定</div>
-            </div>
+<transition v-show="show" enter-active-class="animated faster fadeInUp" leave-active-class="animated faster fadeOutDown">
+    <div class="selector flex flex-column flex-1">
+        <div class="selector-time flex flex-column flex-1">
+            <span class="title flex-1">时间范围</span>
+            <ul class="selections flex-3">
+                <li v-for="(value, key) in timeItems" :key="key" class="time-item" :class="{active: value}" @click="selectTime(key)">{{key}}</li>
+            </ul>
         </div>
-    </transition>
+        <div class="selector-org-tree flex flex-column flex-6">
+            <span class="title flex-1">组织架构</span>
+            <vue-tree :tree-data="realTreeData" v-model="ids" :options="options" class="org-tree flex-9" />
+        </div>
+        <div class="selector-btn flex flex-justify-center flex-2">
+            <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
+            <div class="selector-btn-confirm active" @click="confirm">确定</div>
+        </div>
+    </div>
+</transition>
 </template>
 
 <script>
@@ -83,59 +68,59 @@ export default {
                 let a = this.$store.state.currentLevel;
                 let b = this.$store.state.organization;
                 let c = [];
-                if(a[0][0].qText==='-') {
+                if (a[0][0].qText === '-') {
                     c = b;
                 } else {
                     c = a.concat(b);
                 }
-                c.sort((a,b) => {
-                    return a[6].qText/1 - b[6].qText/1;
+                c.sort((a, b) => {
+                    return a[6].qText / 1 - b[6].qText / 1;
                 });
 
-                c.filter((v)=>{
-                  let tmp = {};
-                  if(deptName!=v[5].qText) {
-                    deptName = v[5].qText;
-                    tmp.id = v[0].qText;
-                    tmp.label = deptName;
-                    tmp.pid = v[1].qText;
-                    tmp.sortflag = parseInt(v[6].qText);
-                    tmp.children = []
-                    deptNameArr.push(tmp);
-                  }
+                c.filter((v) => {
+                    let tmp = {};
+                    if (deptName != v[5].qText) {
+                        deptName = v[5].qText;
+                        tmp.id = v[0].qText;
+                        tmp.label = deptName;
+                        tmp.pid = v[1].qText;
+                        tmp.sortflag = parseInt(v[6].qText);
+                        tmp.children = []
+                        deptNameArr.push(tmp);
+                    }
                 });
-                
-                deptNameArr = deptNameArr.sort((a,b) => {
-                    return a.sortflag-b.sortflag;
+
+                deptNameArr = deptNameArr.sort((a, b) => {
+                    return a.sortflag - b.sortflag;
                 });
                 //遍历销售人员
-                deptNameArr.filter((vo)=>{
-                    c.filter((vi)=>{
+                deptNameArr.filter((vo) => {
+                    c.filter((vi) => {
                         let tmp = {};
-                        if(vo.id === vi[0].qText){
-                            tmp.id = vi[2].qText+':'+vi[3].qText; //过滤值：显示值
+                        if (vo.id === vi[0].qText) {
+                            tmp.id = vi[2].qText + ':' + vi[3].qText; //过滤值：显示值
                             tmp.label = vi[3].qText;
-                            tmp.flag = vi[4].qText; 
+                            tmp.flag = vi[4].qText;
                             vo.children.push(tmp);
                         }
                     });
-                    vo.children = vo.children.sort((first,next)=>{
+                    vo.children = vo.children.sort((first, next) => {
                         return next.flag - first.flag;
                     });
                 });
 
                 // 递归组织架构树
                 let orgTreeData = [];
-                orgTreeData = this.getOrgData(deptNameArr,'-');
+                orgTreeData = this.getOrgData(deptNameArr, '-');
 
-                
                 return orgTreeData;
             }
             //默认数据
             return this.treeData;
         }
     },
-    watch: {},
+    watch: {
+    },
     methods: {
         selectTime(name) {
             for (var key in this.timeItems) {
@@ -155,10 +140,15 @@ export default {
             });
         },
         getOrgData(data, pid) {
-            var result = [],temp;            
+            var result = [],
+                temp;
             for (var i = 0; i < data.length; i++) {
                 if (data[i].pid == pid) {
-                    var obj = { label: data[i].label, id: data[i].id, children: data[i].children};
+                    var obj = {
+                        label: data[i].label,
+                        id: data[i].id,
+                        children: data[i].children
+                    };
                     temp = this.getOrgData(data, data[i].id);
                     if (temp.length > 0) {
                         obj.children = obj.children.concat(temp);
@@ -287,7 +277,7 @@ export default {
 }
 
 .vue-tree-list .item-wrapper,
-.vue-tree-list .item-wrapper > span {
+.vue-tree-list .item-wrapper>span {
     display: flex;
     align-items: center;
 }
