@@ -105,6 +105,7 @@ import {
     Button,
     Loading
 } from "vant";
+
 import vantPie from "./common/vant-pie";
 import vantCollapse from "./common/org-vant-collapse";
 import easyKpi from "./common/easy-kpi";
@@ -318,14 +319,13 @@ export default {
                         });
                     });
                 }
-
-                orgData.filter((v,i) => {
-                    if(i>0) {
-                        if(v.data[1] == 0) {
-                            orgData.splice(i,1);
-                        }
+                // 清除拜访率为0的数据
+                for (var i = orgData.length-1;i >= 0 ;i--) {
+                    if(orgData[i].data[1] == 0) {
+                        orgData.splice(i,1);
                     }
-                });
+                }
+                
 
                 // 拼接数据
                 let self = [{
