@@ -319,6 +319,14 @@ export default {
                     });
                 }
 
+                orgData.filter((v,i) => {
+                    if(i>0) {
+                        if(v.data[1] == 0) {
+                            orgData.splice(i,1);
+                        }
+                    }
+                });
+
                 // 拼接数据
                 let self = [{
                     name: arr1[0].qText,
