@@ -9,7 +9,10 @@
         </div>
         <div class="selector-org-tree flex flex-column flex-6">
             <span class="title flex-1">组织架构</span>
-            <vue-tree :tree-data="realTreeData" v-model="ids" :options="options" class="org-tree flex-9" />
+            <div class="org-tree">
+                <el-tree :data="realTreeData.data" ref="orgTree" :props="defaultProps" node-key="id" :default-expanded-keys="realTreeData.dek" show-checkbox v-if="realTreeData"></el-tree>
+            </div>
+            <!-- <vue-tree :tree-data="realTreeData" v-model="ids" :options="options" class="org-tree flex-9" /> -->
         </div>
         <div class="selector-btn flex flex-justify-center flex-2">
             <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
@@ -20,8 +23,6 @@
 </template>
 
 <script>
-import treeData from "../data/tree";
-
 import Tools from "../../tools/tools";
 var tool = new Tools();
 
@@ -38,20 +39,14 @@ export default {
                 上月: false,
                 上季: false
             },
-            ids: [],
-            options: {
-                idsWithParent: false,
-                depthOpen: 1,
-                openIcon: "fa fa-angle-right",
-                closeIcon: "fa fa-angle-down"
-            },
-            treeData: treeData,
-            orgLevelNum: 0
+            defaultProps: {
+                children: 'children',
+                label: 'label'
+            }
         };
     },
     created() {
         this.time = this.selectedTime;
-        this.ids = tool.deepClone(this.selectedOrg);
     },
     mounted() {
         this.tmpArr = [];
@@ -113,14 +108,16 @@ export default {
                 let orgTreeData = [];
                 orgTreeData = this.getOrgData(deptNameArr, '-');
 
-                return orgTreeData;
+                return {
+                    data: orgTreeData,
+                    dek: [orgTreeData[0].id, orgTreeData[0].children[0].id]
+                };
             }
             //默认数据
-            return this.treeData;
+            return false;
         }
     },
-    watch: {
-    },
+    watch: {},
     methods: {
         selectTime(name) {
             for (var key in this.timeItems) {
@@ -133,10 +130,16 @@ export default {
             this.$emit("cancle");
         },
         confirm() {
-            // console.log("2019-04-27 17:15:29->大门日志记录:this.ids", this.ids);
+            let selOrgArr = this.$refs.orgTree.getCheckedKeys();
+            for (var i = selOrgArr.length - 1; i >= 0; i--) {
+                if (selOrgArr[i].indexOf(':', 0) == -1) {
+                    selOrgArr.splice(i, 1);
+                }
+            }
+            // console.log('YCQ日志记录:标识->',selOrgArr);
             this.$emit("confirm", {
                 time: this.time,
-                org: this.ids
+                org: selOrgArr
             });
         },
         getOrgData(data, pid) {
@@ -152,7 +155,6 @@ export default {
                     temp = this.getOrgData(data, data[i].id);
                     if (temp.length > 0) {
                         obj.children = obj.children.concat(temp);
-                        this.orgLevelNum += 1;
                     }
                     result.push(obj);
                 }
@@ -219,13 +221,13 @@ export default {
 .selector .selector-org-tree {
     max-width: 100%;
     min-width: 100%;
-    max-height: 8.2rem;
 }
 
-.selector .vue-tree-list {
-    overflow-y: auto;
-    text-align: left;
-    padding-left: 10px;
+.selector .selector-org-tree .org-tree {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 8.2rem;
+    overflow-y: scroll !important;
 }
 
 .selector .selector-btn {
@@ -270,51 +272,17 @@ export default {
     color: black;
 }
 
-.vue-tree-list .item-checkbox,
-.vue-tree-list .item-label {
-    font-size: 14px !important;
-    color: rgb(90, 92, 90);
+.el-tree-node__expand-icon::before {
+    font-size: 0.4rem;
 }
 
-.vue-tree-list .item-wrapper,
-.vue-tree-list .item-wrapper>span {
-    display: flex;
-    align-items: center;
+.el-checkbox__inner {
+    border: 0.035rem solid #949191 !important;
+    width: 0.4rem !important;
+    height: 0.4rem !important;
 }
 
-.vue-tree-list .fa-square-o:before,
-.vue-tree-list .fa-check-square-o:before,
-.vue-tree-list .fa-minus-square-o:before {
-    font-size: 18px;
-}
-
-.vue-tree-list .fa-angle-right:before {
-    font-size: 26px;
-    color: #949191;
-}
-
-.vue-tree-list .fa-angle-down:before {
-    font-size: 26px;
-    color: #949191;
-}
-
-.vue-tree-list .fa-square-o:before,
-.vue-tree-list .fa-check-square-o:before,
-.vue-tree-list .fa-minus-square-o:before {
-    color: #949191;
-    font-size: 20px;
-}
-
-.vue-tree-list .fa-check-square-o:before {
-    color: #03a9f4;
-}
-
-.vue-tree-list .item-label {
-    text-indent: 5px;
-}
-
-.vue-tree-list .item-label.item-bold {
-    font-weight: 500;
-    color: black;
+.el-checkbox__input {
+    margin-top: 0.18rem;
 }
 </style>

@@ -6,8 +6,9 @@ import store from './store/index.js'
 import 'lib-flexible/flexible.js'
 import "./assets/js/jquery.extends.js"
 
-import Vuetree from 'vue-simple-tree'
-Vue.use(Vuetree)
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
