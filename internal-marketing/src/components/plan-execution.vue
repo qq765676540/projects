@@ -220,6 +220,24 @@ export default {
     },
     methods: {
 
+    },
+    destroyed() {
+        this.$store.dispatch('updateData', {
+            dataName: 'visitWarningCollapseA1',
+            data: []
+        });
+        this.$store.dispatch('updateData', {
+            dataName: 'visitWarningCollapseA2',
+            data: []
+        });
+        this.$store.dispatch('updateData', {
+            dataName: 'visitWarningCollapseB1',
+            data: []
+        });
+        this.$store.dispatch('updateData', {
+            dataName: 'visitWarningCollapseB2',
+            data: []
+        });
     }
 };
 </script>

@@ -305,19 +305,11 @@ export default {
     },
     destroyed() {
         this.$store.dispatch('updateData', {
-            dataName: 'visitWarningCollapseA1',
+            dataName: 'planExecutionCollapseA',
             data: []
         });
         this.$store.dispatch('updateData', {
-            dataName: 'visitWarningCollapseA2',
-            data: []
-        });
-        this.$store.dispatch('updateData', {
-            dataName: 'visitWarningCollapseB1',
-            data: []
-        });
-        this.$store.dispatch('updateData', {
-            dataName: 'visitWarningCollapseB2',
+            dataName: 'planExecutionCollapseB',
             data: []
         });
     }

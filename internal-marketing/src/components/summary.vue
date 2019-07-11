@@ -403,7 +403,20 @@ export default {
     beforeDestroy() {
         window.removeEventListener("resize", this.calcWidth, false);
     },
-    destroyed() {}
+    destroyed() {
+        this.$store.dispatch('updateData', {
+            dataName: 'summaryOrgListA',
+            data: []
+        });
+        this.$store.dispatch('updateData', {
+            dataName: 'summaryOrgListB',
+            data: []
+        });
+        this.$store.dispatch('updateData', {
+            dataName: 'summaryOrgListC',
+            data: []
+        });
+    }
 };
 </script>
 
