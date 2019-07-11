@@ -2,8 +2,8 @@
  * 向qliksense的APP请求数据
  **/ 
 
-// import getFormula from '../config/formulaDev'
-import getFormula from '../config/formula'
+import getFormula from '../config/formulaDev'
+// import getFormula from '../config/formula'
 
 class Cube {
     constructor() {

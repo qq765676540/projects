@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="content-box">
-            <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-show="orgListDataSet"></vant-collapse>
+            <vant-collapse :id="'collapse-1'" :col2LegendColor="col2LegendColor" :data="orgListDataSet" :isDefaultTitle="true" v-if="orgListDataSet"></vant-collapse>
         </div>
     </div>
     <div class="vist-num-trend border-bottom flex flex-column">

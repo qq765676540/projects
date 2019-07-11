@@ -158,9 +158,9 @@ export default {
             this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;
-            setTimeout(() => {
+            this.$nextTick(()=>{
                 this.cubeInit();
-            }, 300);
+            });
             // this.cubeInit();
         },
         cubeCount(nVal) {
