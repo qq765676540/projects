@@ -177,17 +177,6 @@ export default {
         }
     },
     methods: {
-        // onRefresh() {
-        //     setTimeout(() => {
-        //         this.isLoading = false;
-        //         this.$router.replace({
-        //             path: "/refresh",
-        //             query: {
-        //                 t: Date.now()
-        //             }
-        //         });
-        //     }, 500);
-        // },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },

@@ -12,10 +12,10 @@
             <div class="org-tree">
                 <el-tree :data="realTreeData.data" ref="orgTree" :props="defaultProps" node-key="id" :default-expanded-keys="realTreeData.dek" show-checkbox v-if="realTreeData"></el-tree>
             </div>
-            <!-- <vue-tree :tree-data="realTreeData" v-model="ids" :options="options" class="org-tree flex-9" /> -->
         </div>
-        <div class="selector-btn flex flex-justify-center flex-2">
+        <div class="selector-btn flex flex-2 flex-justify-center">
             <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
+            <div style="width: 15px"></div>
             <div class="selector-btn-confirm active" @click="confirm">确定</div>
         </div>
     </div>
@@ -230,46 +230,25 @@ export default {
     overflow-y: scroll !important;
 }
 
-.selector .selector-btn {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    padding: 0;
-    height: 30px;
-    width: 100%;
-    font-size: 14px;
-}
-
-.selector .selector-btn .selector-btn-cancle {
-    position: absolute;
-    bottom: 10px;
-    height: 30px;
-    line-height: 30px;
-    width: 70px;
-    left: calc(50% - 70px);
-    border-radius: 0px;
-}
-
-.selector .selector-btn .selector-btn-confirm {
-    position: absolute;
-    bottom: 10px;
-    height: 30px;
-    line-height: 30px;
-    width: 70px;
-    left: 50%;
-    border-radius: 0px;
+.selector .selector-btn .selector-btn-cancle,.selector-btn-confirm {
+    font-size: 16px;
+    font-family: 'PingFangSC-Regular';
+    height: 40px;
+    line-height: 40px;
+    width: 165px;
+    border-radius: 4px;
 }
 
 .selector .selector-btn-cancle.active,
 .selector .selector-btn-confirm.active {
-    background-color: #039ce3;
+    background-color: #1495EB;
     color: white;
 }
 
 .selector .selector-btn-cancle.inactive,
 .selector .selector-btn-confirm.inactive {
-    border: 1px solid rgba(128, 128, 128, 0.521);
-    color: black;
+    border: 1px solid #1495EB;
+    color: #1495EB;
 }
 
 .el-tree-node__expand-icon::before {
