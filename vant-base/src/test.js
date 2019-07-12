@@ -1,5 +1,5 @@
-let arr = [1,2,3];
-arr.splice(0,1);
-arr.splice(0,1);
-arr.splice(0,1);
+let arr = ['EB','EC','EA','EE','ED'];
+arr.sort((a,b) => {
+    return a.substr(2,-1).charCodeAt() - b.substr(2,-1).charCodeAt();
+});
 console.log(arr);

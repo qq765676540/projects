@@ -57,7 +57,10 @@ export default {
                 其他: false
             },
             ids: [],
-            options: {depthOpen:1,idsWithParent:false},
+            options: {
+                depthOpen: 1,
+                idsWithParent: false
+            },
             treeData: treeData
         };
     },
@@ -78,8 +81,10 @@ export default {
         orgTreeData() {
             if (this.$store.state.org.length > 0) {
                 let orgData = this.$store.state.org;
-                orgData = orgData.sort((a,b) => {
-                    return a[2].qText.charCodeAt() - b[2].qText.charCodeAt();
+                orgData = orgData.sort((a, b) => {
+                    let av = a[2].qText.length > 1 ? a[2].qText.substr(1, 1) : a[2].qText;
+                    let bv = b[2].qText.length > 1 ? b[2].qText.substr(1, 1) : b[2].qText;
+                    return av.charCodeAt() - bv.charCodeAt();
                 });
                 let treeData = [{
                     label: orgData[0][0].qText,
