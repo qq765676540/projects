@@ -150,8 +150,8 @@ let option = {
                     },
                     labelLine: {
                         normal: {
-                            length: 5,
-                            length2: 10,
+                            length: 10,
+                            length2: 15,
                             lineStyle: {
                                 color: "#666666"
                             }
