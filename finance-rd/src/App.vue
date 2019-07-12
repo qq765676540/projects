@@ -8,9 +8,9 @@
         <van-tab title="费用"></van-tab>
         <van-tab title="订单"></van-tab>
     </van-tabs>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
+    <div class="view-container" id="routerPage">
         <router-view />
-    </van-pull-refresh>
+    </div>
     <div v-show="selBarFlag" class="selection-tool flex">
         <div class="flex flex-align-center flex-3">
             <div v-if="orgFlag=='N'" :class="{filterStyle:true,filterStyleActive:filterStyleActive==='整体'}" @click="setDataScope('整体')">整体</div>
@@ -39,7 +39,6 @@
 
 <script>
 import {
-    PullRefresh,
     Tab,
     Tabs,
     Switch,
@@ -59,7 +58,6 @@ import Cube from "./tools/cube";
 export default {
     name: "App",
     components: {
-        [PullRefresh.name]: PullRefresh,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
@@ -559,17 +557,6 @@ export default {
                     break;
             }
 
-        },
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 300);
         }
     },
     computed: {
