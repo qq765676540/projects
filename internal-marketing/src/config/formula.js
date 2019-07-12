@@ -42,7 +42,7 @@ export default
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',DeptID),'maxlevel')",
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID<>'$(DeptID)',Parent_DeptID),'-')",
                 "OADAccount",
-                "DomainName",
+                "=if(isnull(DomainName),OADAccount,DomainName)",
                 "='0'&Flag",
                 "DeptName",
                 "DeptSort"
