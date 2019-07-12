@@ -9,9 +9,12 @@
         <van-tab title="拜访构成"></van-tab>
     </van-tabs>
     <!-- 路由页面 -->
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
+    <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
         <router-view />
-    </van-pull-refresh>
+    </van-pull-refresh> -->
+    <div class="view-container" id="routerPage">
+        <router-view />
+    </div>
     <!-- 过滤栏 -->
     <div v-show="selBarFlag" class="selection-tool flex flex-row">
         <div class="selector-switch-box relative">
@@ -49,8 +52,8 @@ import {
     Switch,
     Popup,
     Loading,
-    Toast,
-    PullRefresh
+    Toast//,
+    //PullRefresh
 } from "vant";
 import animate from "animate.css";
 import vueSwitch from "./components/common/vue-switch";
@@ -63,7 +66,7 @@ import Cube from "./tools/cube";
 export default {
     name: "App",
     components: {
-        [PullRefresh.name]: PullRefresh,
+        //[PullRefresh.name]: PullRefresh,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Switch.name]: Switch,
@@ -174,17 +177,17 @@ export default {
         }
     },
     methods: {
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 500);
-        },
+        // onRefresh() {
+        //     setTimeout(() => {
+        //         this.isLoading = false;
+        //         this.$router.replace({
+        //             path: "/refresh",
+        //             query: {
+        //                 t: Date.now()
+        //             }
+        //         });
+        //     }, 500);
+        // },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
         },
