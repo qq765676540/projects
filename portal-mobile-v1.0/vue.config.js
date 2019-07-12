@@ -5,6 +5,7 @@ const pxtorem = require('postcss-pxtorem');
 module.exports = {
   outputDir: './mobile',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  productionSourceMap: false,
   css: {
     loaderOptions: {
       postcss: {
