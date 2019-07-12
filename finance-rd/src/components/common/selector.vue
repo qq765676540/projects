@@ -16,11 +16,11 @@
                 <div :class="{currencyStyle:true,currencyStyleActive:currencyStyleActive=='美元'}" @click="setCurrency('U')" style="margin-left: 15px" v-if="!(this.$store.state.pageActive==3)&&!(this.$store.state.dataScope=='T')&&!(this.$store.state.dataScope=='I')">美元</div>
             </div>
         </div>
-        <div class="selector-org-tree flex flex-column flex-6" style="padding-top: 15px;">
+        <div class="selector-org-tree flex flex-column flex-6">
             <span class="title">产品细分</span>
-            <vue-tree :tree-data="orgTreeData" v-model="ids" :options="options" class="org-tree" v-if="orgTreeData" />
+            <vue-tree :tree-data="orgTreeData" v-model="ids" :options="options" class="org-tree" v-show="orgTreeData" />
         </div>
-        <div class="selector-btn flex flex-2">
+        <div class="selector-btn flex flex-2 flex-justify-center">
             <div class="selector-btn-cancle inactive" @click="cancle">取消</div>
             <div class="selector-btn-confirm active" @click="confirm">确定</div>
         </div>
@@ -201,9 +201,16 @@ export default {
 }
 
 .selector .selector-org-tree {
+    margin-top: 15px;
     max-width: 100%;
     min-width: 100%;
-    max-height: 260px;
+}
+
+.selector .selector-org-tree .org-tree {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 6.5rem;
+    overflow-y: scroll !important;
 }
 
 .selector .vue-tree-list {
@@ -213,32 +220,22 @@ export default {
 }
 
 .selector .selector-btn {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    padding: 0;
     height: 30px;
     width: 100%;
     font-size: 14px;
 }
 
 .selector .selector-btn .selector-btn-cancle {
-    position: absolute;
-    bottom: 10px;
     height: 30px;
     line-height: 30px;
     width: 70px;
-    left: calc(50% - 70px);
     border-radius: 0px;
 }
 
 .selector .selector-btn .selector-btn-confirm {
-    position: absolute;
-    bottom: 10px;
     height: 30px;
     line-height: 30px;
     width: 70px;
-    left: 50%;
     border-radius: 0px;
 }
 
