@@ -4,7 +4,7 @@
     <iframe id="reportIframe" class="reportIframe" src frameborder="0" v-show="reportPageOpenFlag"></iframe>
 
     <!-- 所有报表页面 -->
-    <div class="flex flex-column flex-1">
+    <div class="reportbox flex flex-column flex-1">
         <van-collapse v-model="reportActiveName" accordion v-if="reportList&&pageActive==0&&!reportPageOpenFlag">
             <van-collapse-item v-for="(val,key) in reportList" :key="key" :title="val.label" :name="key+''">
                 <div v-for="(childVal,clildKey) in reportList[key].children" :key="clildKey" :class="{report: true, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,val.id)">
@@ -23,7 +23,7 @@
     </div>
 
     <!-- 我的报表页面 -->
-    <div class="flex flex-column flex-1 flex-align-center" style="margin-top: 2px" v-if="favoriteReportList.length > 0&&pageActive==1&&!reportPageOpenFlag">
+    <div class="reportbox flex flex-column flex-1 flex-align-center" style="margin-top: 2px" v-if="favoriteReportList.length > 0&&pageActive==1&&!reportPageOpenFlag">
         <div v-for="(childVal,clildKey) in favoriteReportList" :key="clildKey" :class="{report: true, flex:true, 'flex-justify-center':true, 'flex-align-center':true}" @click.enter="openReport(childVal.label,-1)">
             <div class="flex flex-1 flex-justify-center flex-align-center">
                 <img width="15" src="./images/reportIcon.png" style="margin-left: 3px" />
@@ -113,11 +113,13 @@ export default {
             reportCount: 0,
 
             // 打包生产时放开下面3个注释
+
             reportIdList: {},
             reportUrlList: {},
             reportList: [],
 
             // 测试样式时放开下面3个注释
+
             // reportIdList: demoData[1],
             // reportUrlList: {},
             // reportList: demoData[0],
@@ -154,14 +156,6 @@ export default {
 
     },
     watch: {
-        // reportList: {
-        //     deep: true,
-        //     handler(nData, oData) {
-        //         if (nData && nData.length > 0) {
-        //             this.popShow = false;
-        //         }
-        //     }
-        // },
         pageActive: {
             deep: true,
             handler(nData, oData) {
@@ -394,5 +388,10 @@ body,
 .van-icon-passed {
     font-size: 2.5rem;
     margin-top: 0.7rem;
+}
+
+.reportbox {
+    max-height: 39.5rem;
+    overflow-y: scroll !important;
 }
 </style>

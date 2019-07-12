@@ -1,6 +1,23 @@
 let demoData = {
     0: [
         { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
+        { id: 0, label: '财务', children: [{ id: 0, label: '报表7' }, { id: 1, label: '报表8' }] },
         { id: 1, label: '国际', children: [{ id: 0, label: '报表1' }, { id: 1, label: '报表2' }, { id: 1, label: '报表3' }, { id: 1, label: '报表4' }, { id: 1, label: '报表5' }, { id: 1, label: '报表6' }] }
     ],
     1: {
