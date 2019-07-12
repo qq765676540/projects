@@ -7,9 +7,9 @@
         <van-tab title="费用"></van-tab>
         <van-tab title="扣费毛利"></van-tab>
     </van-tabs>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="view-container" id="routerPage">
+    <div class="view-container" id="routerPage">
         <router-view />
-    </van-pull-refresh>
+    </div>
     <div class="main-selection flex flex-row">
         <div class="selector-switch-box relative">
             <vue-switch id="switch-1" class="selector-switch" :open="switchIsOpen" :switch-style="switchStyle" @switch-to="switchTo"></vue-switch>
@@ -44,7 +44,6 @@
 
 <script>
 import {
-    PullRefresh,
     Tab,
     Tabs,
     Popup,
@@ -60,7 +59,6 @@ import vueSwitch from "./components/common/vue-switch";
 export default {
     name: "app",
     components: {
-        [PullRefresh.name]: PullRefresh,
         [Tab.name]: Tab,
         [Tabs.name]: Tabs,
         [Popup.name]: Popup,
@@ -128,17 +126,6 @@ export default {
         }
     },
     methods: {
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.$router.replace({
-                    path: "/refresh",
-                    query: {
-                        t: Date.now()
-                    }
-                });
-            }, 500);
-        },
         cancleSelect() {
             this.selectorFlag = false;
         },

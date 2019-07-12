@@ -7,6 +7,7 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 module.exports = {
   outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/GNCW/GNCW',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  productionSourceMap: false,
   configureWebpack: {
     output: {
       filename: `js/[name].[hash].js`,
