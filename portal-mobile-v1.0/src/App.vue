@@ -391,7 +391,8 @@ body,
 }
 
 .reportbox {
-    max-height: 39.5rem;
+    max-height: 38.125rem;
+    overflow-x: hidden !important;
     overflow-y: scroll !important;
 }
 </style>
