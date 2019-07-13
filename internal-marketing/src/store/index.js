@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 var state = {
   isPopShow:false,
+  username:[],
   currentLevel:[],
   organization:[],
   summaryCircle:[],

@@ -23,15 +23,22 @@ export default
         orgMatch = "[OADAccount]=[OADAccount]";
     }
     var formula = {
+        //水印
+        username: {
+            qDimensions: [
+                "='$(DomainName)'"
+            ],
+            qMeasures: ["=sum(1)"]
+        },
         //当前层级
         currentLevel: {
             qDimensions: [
-                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'$(DeptID)')",
+                "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,if(DeptID='$(DeptID)',DeptID))",
                 "='-'",
-                "='$(Account)'",
-                "='$(DomainName)'",
-                "='-'",
-                "='$(DeptName)'",
+                "=if(DeptID='$(DeptID)',OADAccount)",
+                "=if(DeptID='$(DeptID)',DomainName)",
+                "='0'&Flag",
+                "=if(DeptID='$(DeptID)',DeptName)",
                 "='0000'"
             ],
             qMeasures: ["=sum(1)"]

@@ -110,6 +110,19 @@ export default {
     },
     beforeCreate() {},
     created() {
+        //水印
+        Cube.getData(parent.qApp, this, {
+                formulaOpt: {
+                    time: this.selectedTime,
+                    org: this.selectedOrgSetCube,
+                    name: "username"
+                },
+                qWidth: 3,
+                qHeight: 1
+            },
+            (rs) => {
+                // this.cubeCount += 1;
+            });
         //筛选：组织机构树
         Cube.getData(parent.qApp, this, {
                 formulaOpt: {
@@ -118,7 +131,7 @@ export default {
                     name: "currentLevel"
                 },
                 qWidth: 10,
-                qHeight: 1
+                qHeight: 10
             },
             (rs) => {
                 // this.cubeCount += 1;
@@ -148,9 +161,9 @@ export default {
             return true;
         },
         userName() {
-            if (this.$store.state.currentLevel.length > 0) {
-                let a = this.$store.state.currentLevel;
-                return a[0][3].qText;
+            if (this.$store.state.username.length > 0) {
+                let a = this.$store.state.username;
+                return a[0][0].qText;
             }
             return false
         }
