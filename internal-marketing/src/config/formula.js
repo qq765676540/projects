@@ -85,9 +85,9 @@ export default
                 "=if(match(mid('$(DeptID)',1,3),'1-1','1-2')>0,'Y','N')",
             ],
             qMeasures: [
-                `=if(isnull(count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)),sum(0),count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID))`,
-                `=if(isnull(count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)),sum(0),count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID))`,
-                `=if(isnull(count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID)),sum(0),count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},[RZTX/JH]={'J'}>}PlanID))`
+                `=if(isnull(count({<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID)),sum(0),count({<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},Is_Sign={'Y'},LogMode={'拜访'}>}LogID)/count({<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},LogMode={'拜访'}>}LogID))`,
+                `=if(isnull(count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID)),sum(0),count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'T'},LogMode={'拜访'}>} LogID))`,
+                `=if(isnull(count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'J'}>}PlanID)),sum(0),count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'J'},Is_Excute={'Y'}>}PlanID)/count(distinct {<[DimensionName]={'${time}'},${orgStr},DomainName={'$(DomainName)'},[RZTX/JH]={'J'}>}PlanID))`
             ]
         },
         summaryOrgListB: {

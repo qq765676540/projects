@@ -326,6 +326,9 @@ export default {
                     }
                 }
                 
+                orgData.sort((first, next) => {
+                    return first.data[0].replace('%', '') / 1 - next.data[0].replace('%', '') / 1;
+                });
 
                 // 拼接数据
                 let self = [{
