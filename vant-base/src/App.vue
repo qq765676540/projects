@@ -1,54 +1,83 @@
 <template>
 <div id="app">
-    <div class="vist-warning flex flex-column" id="vist-warning">
-        <div class="flex flex-1 flex-justify-right">
-            <button class="btn btn-default btn-xs" type="button" style="background: rgba(239, 239, 239, 0.5);width: 90px;margin-right: 10px;margin-top: 3px" @click="onClickA">
-                {{Aselected}}
-                <span class="caret" style="float: right;margin-top:8px"></span>
-            </button>
-        </div>
-        <van-dialog v-model="Ashow" title="选项" id="ashow" :lock-scroll="true">
-            <van-radio-group v-model="Aselected">
-                <van-cell-group>
-                    <van-cell v-for="(item,index) in ['全部','战略客户','核心客户','认证客户','潜力客户']" :key="index" :title="item" clickable @click="Aselected = item">
-                        <van-radio slot="right-icon" :name="item" />
-                    </van-cell>
-                </van-cell-group>
-            </van-radio-group>
-        </van-dialog>
-    </div>
+    {{msg}}
 </div>
 </template>
 
 <script>
-import {
-    Dialog,
-    RadioGroup,
-    Radio,
-    CellGroup,
-    Cell,
-    Popup
-} from 'vant';
 export default {
     name: "vant",
-    components: {
-        [Dialog.Component.name]: Dialog.Component,
-        [RadioGroup.name]: RadioGroup,
-        [Radio.name]: Radio,
-        [CellGroup.name]: CellGroup,
-        [Cell.name]: Cell,
-        [Popup.name]: Popup,
-    },
+    components: {},
     data() {
         return {
-            Ashow: false,
-            Aselected: '全部',
+            msg: 'Hello Vue',
+            qApp: {},
         };
     },
+    mounted() {
+        var interval = setInterval(() => {
+            if (window.qApp) {
+                this.qApp = window.qApp;
+                this.cubeInit(this.qApp);
+                clearInterval(interval);
+            }
+        }, 1000);
+
+    },
     methods: {
-        onClickA() {
-            this.Ashow = true;
+        cubeInit(app) {
+            // console.log('YCQ日志记录:标识->',app);
+            let _this = this;
+            app.createCube({
+                "qInitialDataFetch": [{
+                    "qHeight": 200,
+                    "qWidth": 2
+                }],
+                "qDimensions": [{
+                    "qDef": {
+                        "qFieldDefs": [
+                            "DeptName"
+                        ]
+                    },
+                    "qNullSuppression": true,
+                    "qOtherTotalSpec": {
+                        "qOtherMode": "OTHER_OFF",
+                        "qSuppressOther": true,
+                        "qOtherSortMode": "OTHER_SORT_DESCENDING",
+                        "qOtherCounted": {
+                            "qv": "5"
+                        },
+                        "qOtherLimitMode": "OTHER_GE_LIMIT"
+                    }
+                }],
+                "qMeasures": [{
+                    "qDef": {
+                        "qDef": "Sum(mea1)"
+                    },
+                    "qLabel": "Sum(mea1)",
+                    "qLibraryId": null,
+                    "qSortBy": {
+                        "qSortByState": 0,
+                        "qSortByFrequency": 0,
+                        "qSortByNumeric": 0,
+                        "qSortByAscii": 1,
+                        "qSortByLoadOrder": 0,
+                        "qSortByExpression": 0,
+                        "qExpression": {
+                            "qv": " "
+                        }
+                    }
+                }],
+                "qSuppressZero": false,
+                "qSuppressMissing": false,
+                "qMode": "S",
+                "qInterColumnSortOrder": [],
+                "qStateName": "$"
+            }, function(reply){ _this.Test(reply)});
         },
+        Test(reply) {
+            console.log(reply.qHyperCube.qDataPages[0].qMatrix);
+        }
     }
 }
 </script>
@@ -60,5 +89,4 @@ export default {
     overflow-x: hidden !important;
     position: relative;
 }
-
 </style>
