@@ -71,6 +71,7 @@ export default {
     data() {
         return {
             myStartTime: new Date(),
+            qApp: {},
             active: 0,
             cubeCount: 0,
             cubeStop: [5,8,2,12,2],
@@ -102,8 +103,16 @@ export default {
     },
     beforeCreate() {},
     mounted() {
-        this.cubeCount = 0;
-        this.cubeInit();
+        var interval = setInterval(() => {
+            if (window.qApp) {
+                this.qApp = window.qApp;
+                this.cubeCount = 0;
+                this.cubeInit(this.qApp);
+                clearInterval(interval);
+            }
+        }, 1000);
+        // this.cubeCount = 0;
+        // this.cubeInit();
     },
     computed: {
         popShow() {
@@ -139,7 +148,7 @@ export default {
             });
             this.switchIsOpen = false;
             this.myStartTime = new Date();
-            this.cubeInit();
+            this.cubeInit(this.qApp);
         },
         showSelector() {
             this.selectorFlag = this.selectorFlag ? false : true;
@@ -148,11 +157,11 @@ export default {
             this.selectorFlag = !this.selectorFlag;
             this.switchIsOpen = true;
         },
-        cubeInit() {
+        cubeInit(qApp) {
             switch (this.active) {
                 case 1:
                     //收入 收入概览
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -163,7 +172,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入 全年预算进度
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -174,7 +183,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入 行业总收入
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -184,7 +193,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -195,7 +204,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入 产品总收入
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -205,7 +214,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -216,7 +225,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入 城市总收入
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -229,7 +238,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入 城市自有收入
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -244,7 +253,7 @@ export default {
                     break;
                 case 2:
                     //毛利 各城市毛利额情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -258,7 +267,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页-总体情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -271,7 +280,7 @@ export default {
                     break;
                 case 3:
                     //费用 重点费用情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -282,7 +291,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 费用结构
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -295,7 +304,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 人力成本
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -306,7 +315,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 广宣费用
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -317,7 +326,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 物流成本
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -328,7 +337,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 营销成本
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -339,7 +348,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 差旅费用
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -350,7 +359,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 差旅费用表格
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -363,7 +372,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 业务招待
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -374,7 +383,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 业务招待表格
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -387,7 +396,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 日常开支
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -398,7 +407,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用 日常开支图标
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -413,7 +422,7 @@ export default {
                     break;
                 case 4:
                     //扣费毛利 人均效能
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -424,7 +433,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页-总体情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -437,7 +446,7 @@ export default {
                     break;
                 default:
                     //当前操作人
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -448,7 +457,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //业务中心
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -459,7 +468,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页-总体情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -470,7 +479,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页进度
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -481,7 +490,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页业绩排名
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrg,
@@ -504,7 +513,7 @@ export default {
             this.myStartTime = new Date();
             this.cubeCount = 0;
             setTimeout(() => {
-                this.cubeInit();
+                this.cubeInit(this.qApp);
             }, 300);
             // this.cubeInit();
         },
