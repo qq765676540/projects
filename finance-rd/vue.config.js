@@ -5,7 +5,7 @@ const path = require('path')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 
 module.exports = {
-  outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/YFCW/YFCW',
+  outputDir: 'C:/Users/EBI/Documents/Qlik/Sense/Extensions/Finance_RD',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   productionSourceMap: false,
   configureWebpack: { // webpack 配置

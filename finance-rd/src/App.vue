@@ -70,6 +70,7 @@ export default {
     },
     data() {
         return {
+            qApp: {},
             isLoading: false,
             myStartTime: new Date(),
             active: 0,
@@ -108,54 +109,61 @@ export default {
     },
     created() {},
     mounted() {
-        Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    orgManager: "",
-                    dataScope: "",
-                    name: "level"
-                },
-                qWidth: 5,
-                qHeight: 1,
-                dataName: "level"
-            },
-            (rs) => {
-                this.filterStyleActive = rs[0][2].qText == 'Y' ? '海外' : '整体';
-                this.orgLevel = rs[0][1].qText;
-                this.orgFlag = rs[0][2].qText;
+        var interval = setInterval(() => {
+            if (window.qApp) {
+                this.qApp = window.qApp;
+                Cube.getData(this.qApp, this, {
+                        formulaOpt: {
+                            time: this.selectedTime,
+                            org: this.selectedOrgSetCube,
+                            orgManager: "",
+                            dataScope: "",
+                            name: "level"
+                        },
+                        qWidth: 5,
+                        qHeight: 1,
+                        dataName: "level"
+                    },
+                    (rs) => {
+                        this.filterStyleActive = rs[0][2].qText == 'Y' ? '海外' : '整体';
+                        this.orgLevel = rs[0][1].qText;
+                        this.orgFlag = rs[0][2].qText;
 
-                if (this.orgFlag == 'Y') {
-                    this.$store.dispatch('updateData', {
-                        dataName: 'currency',
-                        data: 'U'
+                        if (this.orgFlag == 'Y') {
+                            this.$store.dispatch('updateData', {
+                                dataName: 'currency',
+                                data: 'U'
+                            });
+                            this.$store.dispatch('updateData', {
+                                dataName: 'hyFlag',
+                                data: true
+                            });
+                            this.$store.dispatch('updateData', {
+                                dataName: 'dataScope',
+                                data: 'O'
+                            });
+                            this.dataScope = 'O';
+                        } else {
+                            this.$store.dispatch('updateData', {
+                                dataName: 'currency',
+                                data: 'R'
+                            });
+                            this.$store.dispatch('updateData', {
+                                dataName: 'hyFlag',
+                                data: false
+                            });
+                            this.$store.dispatch('updateData', {
+                                dataName: 'dataScope',
+                                data: 'T'
+                            });
+                            this.dataScope = 'T';
+                        }
+                        this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
                     });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'hyFlag',
-                        data: true
-                    });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'dataScope',
-                        data: 'O'
-                    });
-                    this.dataScope = 'O';
-                } else {
-                    this.$store.dispatch('updateData', {
-                        dataName: 'currency',
-                        data: 'R'
-                    });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'hyFlag',
-                        data: false
-                    });
-                    this.$store.dispatch('updateData', {
-                        dataName: 'dataScope',
-                        data: 'T'
-                    });
-                    this.dataScope = 'T';
-                }
-                this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
-            });
+                clearInterval(interval);
+            }
+        }, 1000);
+
     },
     methods: {
         showSelector() {
@@ -245,7 +253,7 @@ export default {
             switch (this.active) {
                 case 1:
                     //收入-BP
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -261,7 +269,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -278,7 +286,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入-构成
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -294,7 +302,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -310,7 +318,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -326,7 +334,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -343,7 +351,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入-分公司
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -360,7 +368,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //收入-均价&数量
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -378,7 +386,7 @@ export default {
                     break;
                 case 2:
                     //毛利-毛利额BP达成率及增长情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -395,7 +403,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //毛利-毛利率&扣费毛利率
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -412,7 +420,7 @@ export default {
                     break;
                 case 3:
                     //费用-费用增长
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -426,7 +434,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -441,7 +449,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用-费用构成
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -456,7 +464,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //费用-人均费用情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -473,7 +481,7 @@ export default {
                     break;
                 case 4:
                     //订单-订单情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -488,7 +496,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //订单-产品线未清情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -505,7 +513,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //订单-分公司未清情况
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -524,7 +532,7 @@ export default {
                     break;
                 default:
                     //组织机构
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -540,7 +548,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //首页
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,

@@ -233,7 +233,7 @@ export default {
         onClickRate() {
             this.show = true;
             this.$nextTick(() => {
-                $('#rateshow.van-dialog').css('top', '20%');
+                $('#rateshow.van-dialog').css('top', '40%');
             });
         }
     }
