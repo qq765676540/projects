@@ -45,14 +45,13 @@
 </template>
 
 <script>
-
 import {
     Tab,
     Tabs,
     Switch,
     Popup,
     Loading,
-    Toast//,
+    Toast //,
     //PullRefresh
 } from "vant";
 import animate from "animate.css";
@@ -79,6 +78,7 @@ export default {
     },
     data() {
         return {
+            qApp: {},
             isLoading: false,
             myStartTime: new Date(),
             active: 0,
@@ -109,49 +109,55 @@ export default {
         };
     },
     beforeCreate() {},
-    created() {
-        //水印
-        Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    name: "username"
-                },
-                qWidth: 3,
-                qHeight: 1
-            },
-            (rs) => {
-                // this.cubeCount += 1;
-            });
-        //筛选：组织机构树
-        Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    name: "currentLevel"
-                },
-                qWidth: 10,
-                qHeight: 10
-            },
-            (rs) => {
-                // this.cubeCount += 1;
-            });
-        Cube.getData(parent.qApp, this, {
-                formulaOpt: {
-                    time: this.selectedTime,
-                    org: this.selectedOrgSetCube,
-                    name: "organization"
-                },
-                qWidth: 10,
-                qHeight: 1000
-            },
-            (rs) => {
-                // this.cubeCount += 1;
-            });
-    },
+    created() {},
     mounted() {
-        this.cubeCount = 0;
-        this.cubeInit();
+        var interval = setInterval(() => {
+            if (window.qApp) {
+                this.qApp = window.qApp;
+                this.cubeCount = 0;
+                //水印
+                Cube.getData(this.qApp, this, {
+                        formulaOpt: {
+                            time: this.selectedTime,
+                            org: this.selectedOrgSetCube,
+                            name: "username"
+                        },
+                        qWidth: 3,
+                        qHeight: 1
+                    },
+                    (rs) => {
+                        // this.cubeCount += 1;
+                    });
+                //筛选：组织机构树
+                Cube.getData(this.qApp, this, {
+                        formulaOpt: {
+                            time: this.selectedTime,
+                            org: this.selectedOrgSetCube,
+                            name: "currentLevel"
+                        },
+                        qWidth: 10,
+                        qHeight: 10
+                    },
+                    (rs) => {
+                        // this.cubeCount += 1;
+                    });
+                Cube.getData(this.qApp, this, {
+                        formulaOpt: {
+                            time: this.selectedTime,
+                            org: this.selectedOrgSetCube,
+                            name: "organization"
+                        },
+                        qWidth: 10,
+                        qHeight: 1000
+                    },
+                    (rs) => {
+                        // this.cubeCount += 1;
+                    });
+                this.cubeInit();
+                clearInterval(interval);
+            }
+        }, 1000);
+
     },
     computed: {
         popShow() {
@@ -174,7 +180,7 @@ export default {
             this.$router.push(this.pageMap[pIndex]);
             this.myStartTime = new Date();
             this.cubeCount = 0;
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 this.cubeInit();
             });
             // this.cubeInit();
@@ -233,7 +239,7 @@ export default {
             switch (this.active) {
                 case 1:
                     //执行计划 - 近五周
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -246,7 +252,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //执行计划 - Collapse
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -260,7 +266,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -277,7 +283,7 @@ export default {
                     break;
                 case 2:
                     //拜访预警 - 客用户拜访覆盖
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -290,7 +296,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //拜访预警 - 未覆盖客用户
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -304,7 +310,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -318,7 +324,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -332,7 +338,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -349,7 +355,7 @@ export default {
                     break;
                 case 3:
                     //拜访对象
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -361,7 +367,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -376,7 +382,7 @@ export default {
                     break;
                 case 4:
                     //拜访构成
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -393,7 +399,7 @@ export default {
                     break;
                 default:
                     //总体情况 - 销售日志 - 环形进图条 - 联动KPI
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -406,7 +412,7 @@ export default {
                             // console.log('YCQ日志记录:标识->',rs);
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -419,7 +425,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //总体情况 - 组织架构
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -431,7 +437,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -444,7 +450,7 @@ export default {
                         (rs) => {
                             this.cubeCount += 1;
                         });
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -460,7 +466,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //总体情况 - 拜访次数周趋势
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
@@ -473,7 +479,7 @@ export default {
                             this.cubeCount += 1;
                         });
                     //总体情况 - 拜访客用户周趋势
-                    Cube.getData(parent.qApp, this, {
+                    Cube.getData(this.qApp, this, {
                             formulaOpt: {
                                 time: this.selectedTime,
                                 org: this.selectedOrgSetCube,
