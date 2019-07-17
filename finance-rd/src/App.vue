@@ -757,4 +757,8 @@ body,
     color: white;
     border: none;
 }
+
+.footer-empty {
+    min-height: 100px;
+}
 </style>
