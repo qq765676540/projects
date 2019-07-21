@@ -1,0 +1,13 @@
+<div id="{{layout.qInfo.qId}}">
+	<div id="{{layout.qInfo.qId+'header'}}">
+		123123123
+	</div>
+	<div id="{{layout.qInfo.qId+'content'}}">
+		<table id="{{layout.qInfo.qId+'table'}}">
+			<tr ng-repeat="item in data">
+				<td style="border: 1px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
+			</tr>
+		</table>
+	</div>
+	<input type="button" ng-click="exportExcel()" value="导出报表"></input>
+</div>

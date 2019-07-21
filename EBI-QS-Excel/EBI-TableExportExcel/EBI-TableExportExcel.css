@@ -1,0 +1,227 @@
+.qv-object-EBI-TableExportExcel .css_bars_row {
+	transition: all 0.3s ease;
+	float: left;
+	width: 98%;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f0f0f0;
+	margin-bottom: 2px;
+	border-radius: 0 10px 10px 0;
+	-moz-border-radius: 0 10px 10px 0;
+	cursor: pointer;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_bar {
+	float: left;
+	clear: left;
+	height: 30px;
+	background-color: #5f5f5f;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_bar span {
+	font-weight: bold;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 7px;
+	color: #f0f0f0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 90%;
+	white-space: nowrap;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_per {
+	position: relative;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_per span {
+	font-weight: bold;
+	float: left;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_per span.over {
+	position: absolute;
+	right: 15px;
+	color: #f0f0f0;
+}
+
+.qv-object-EBI-TableExportExcel .css_bars_row:hover, .qv-object-EBI-TableExportExcel .css_bars_row.selected {
+	border: 1px solid #000;
+}
+
+/* ---块分区--- */
+
+.flex {
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.flex-5 {
+    flex: 5;
+}
+
+.flex-6 {
+    flex: 6;
+}
+
+.flex-7 {
+    flex: 7;
+}
+
+.flex-8 {
+    flex: 8;
+}
+
+.flex-9 {
+    flex: 9;
+}
+
+.flex-10 {
+    flex: 10;
+}
+
+.flex-11 {
+    flex: 11;
+}
+
+.flex-12 {
+    flex: 12
+}
+
+.flex-13 {
+    flex: 13
+}
+
+.flex-14 {
+    flex: 14
+}
+
+.flex-15 {
+    flex: 15
+}
+
+.flex-16 {
+    flex: 16
+}
+
+.flex-17 {
+    flex: 17
+}
+
+.flex-18 {
+    flex: 18
+}
+
+.flex-19 {
+    flex: 19
+}
+
+.flex-20 {
+    flex: 20;
+}
+
+/* ---块的对齐方式--- */
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-align-top {
+    align-items: flex-start;
+}
+
+.flex-align-bottom {
+    align-items: flex-end
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.flex-justify-left {
+    justify-content: flex-start;
+}
+
+.flex-justify-right {
+    justify-content: flex-end;
+    display: flex;
+}
+
+.flex-justify-between {
+    justify-content: space-between;
+}
+
+.flex-justify-around {
+    justify-content: space-around;
+}
+
+.box-sizing {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.margin-bottom {
+    margin-bottom: 0.1rem;
+}
+
+.margin-right {
+    margin-right: 0.32rem;
+}
+
+.cancel-margin-bottom {
+    margin-bottom: 0;
+}
+
+.cancel-margin-right {
+    margin-right: 0;
+}
+
+.padding-l-r {
+    padding: 0 0.3%;
+}
+
+.padding-bottom {
+    padding-bottom: 0.1rem;
+}
+
+/* ---文字对齐方式--- */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.nowrap{
+    white-space: nowrap;
+}
