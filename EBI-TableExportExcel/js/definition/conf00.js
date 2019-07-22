@@ -42,7 +42,7 @@ define(["./../config"], function (config) {
         ref: config.refDefs['0-04'].ref,
         defaultValue: "#333333"
       },
-      'text-weight': {
+      'font-weight': {
         type: "string",
         component: "buttongroup",
         label: "字体样式",

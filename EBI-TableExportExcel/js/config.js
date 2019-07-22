@@ -10,8 +10,10 @@ define([], function () {
         '1-01': { "comments": "字体大小", "ref": `${name}.selector.fontsize` },
         '1-02': { "comments": "字体颜色", "ref": `${name}.selector.fontcolor` },
         '1-03': { "comments": "字体样式", "ref": `${name}.selector.fontweight` },
-        '1-04': { "comments": "筛选", "ref": `${name}.selector.content` },
-        '2': { "comments": "表头", "ref": `${name}.thead` },
+        '1-04': { "comments": "筛选设置", "ref": `${name}.selector.content` },
+        '2-01': { "comments": "字段名称", "ref": `${name}.thead.name` },
+        '2-02': { "comments": "展现顺序", "ref": `${name}.thead.sort` },
+        '3-01': { "comments": "查询", "ref": `${name}.query` },
     },
     HrDefs: ["—————————————————————"]
   };

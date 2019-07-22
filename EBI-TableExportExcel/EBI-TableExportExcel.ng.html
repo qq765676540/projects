@@ -1,24 +1,39 @@
 <div id="{{layout.qInfo.qId}}" class="flex flex-column">
+	<!-- 标题 -->
 	<table id="{{layout.qInfo.qId+'title'}}">
 		<tr>
 			<td colspan="5" ng-style="titleStyle">{{title}}</td>
 		</tr>
 	</table>
+	<!-- 筛选 -->
 	<table id="{{layout.qInfo.qId+'selector'}}" style="width: 20%">
 		<tr ng-repeat="item in selectorData">
 			<td ng-style="selectorKeyStyle">{{item.key}}</td>
 			<td ng-style="selectorValueStyle" colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
-		</tr>
+		</tr>	
+	</table>
+	<!-- 导出按钮 -->
+	<table id="{{layout.qInfo.qId+'exportButton'}}">
 		<tr>
-			<td colspan="5"></td>
+			<td colspan="5" style="text-align: left">
+				<input type="button" style="width: 90px" ng-click="exportExcel()" value="导出报表"></input>
+			</td>
 		</tr>
 	</table>
+	<!-- 表格 -->
 	<div id="{{layout.qInfo.qId+'content'}}">
 		<table id="{{layout.qInfo.qId+'table'}}">
-			<tr ng-repeat="item in data">
-				<td style="border: 0.5px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
-			</tr>
+			<thead id="{{layout.qInfo.qId+'thead'}}">
+				<tr>
+					<th style="border: 0.5px solid #333333" ng-repeat="th in theadData">{{th}}</th>
+				</tr>
+			</thead>
+			<tbody id="{{layout.qInfo.qId+'tbody'}}">
+				<tr ng-repeat="item in data">
+					<td style="border: 0.5px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
-	<input type="button" ng-click="exportExcel()" value="导出报表"></input>
+	
 </div>

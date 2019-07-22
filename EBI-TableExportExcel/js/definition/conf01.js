@@ -15,7 +15,7 @@ define(["./../config"], function (config) {
         ref: config.refDefs['1-02'].ref,
         defaultValue: "#333333"
       },
-      'text-weight': {
+      'font-weight': {
         type: "string",
         component: "buttongroup",
         label: "字体样式",
@@ -30,7 +30,7 @@ define(["./../config"], function (config) {
             label: "加粗"
           }
         ],
-        defaultValue: "bold"
+        defaultValue: "normal"
       },
       selector: {
         type: "array",
