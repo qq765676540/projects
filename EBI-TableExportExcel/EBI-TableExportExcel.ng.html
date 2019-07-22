@@ -29,8 +29,8 @@
 				</tr>
 			</thead>
 			<tbody id="{{layout.qInfo.qId+'tbody'}}">
-				<tr ng-repeat="item in data">
-					<td style="border: 0.5px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
+				<tr ng-repeat="item in tableData">
+					<td style="border: 0.5px solid #333333" ng-repeat="val in item.arr track by $index">{{val}}</td>
 				</tr>
 			</tbody>
 		</table>

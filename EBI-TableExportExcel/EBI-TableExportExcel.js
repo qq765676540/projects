@@ -82,6 +82,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 				});
 				
 				let data = [];
+				let tableData = [];
 				let interval = setInterval(() => {
 					if (queryRef.length == dataArr.length) {
 						dataArr.filter(v => {
@@ -90,8 +91,21 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 						data.sort((a,b) => {
 							return a[0].qText.localeCompare(b[0].qText,'zh-CN');
 						});
-						console.log(data);
-						// this.$scope.data = data;
+
+						data.filter(v => {
+							let temp = {
+								colspan: v[0].qText.split('|')[3],
+								arr: (v[1].qText + '|' + v[2].qText).split('|')	
+							};
+							let arrtemp = [];
+							theadSort.filter(v => {
+								arrtemp.push(temp.arr[v*1-1]);
+							});
+							temp.arr = arrtemp;
+							tableData.push(temp);
+						});
+						
+						this.$scope.tableData = tableData;
 						clearInterval(interval);
 					}
 				}, 300);
