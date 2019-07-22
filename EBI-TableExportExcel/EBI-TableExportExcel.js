@@ -54,27 +54,58 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 				theadSort.filter(v => {
 					theadData.push(theadName[v*1-1]);
 				});
-				
-				// console.log(theadData);
-				
-				let opt = {
-					formulaOpt: {
-						qDimensions: ["=日期"],
-						qMeasures: ["=Sum([本币-余额合计])"]
-					}
-				};
-
-				cube(myapp, opt, (rs) => {
-					this.$scope.theadData = theadData;
-					this.$scope.data = rs;
-					var interval = setInterval(() => {
-						if (rs.length == $('#' + id + 'tbody tr').length) {
-							$('#' + id + 'tbody tr:eq(1) > td:eq(0)').attr('colspan', '2');
-							$('#' + id + 'tbody tr:eq(1) > td:eq(1)').remove();
-							clearInterval(interval);
+				this.$scope.theadData = theadData;
+				//查询
+				let queryRef = eval(`layout.${config.refDefs['3-01'].ref}`);
+				let queryArr = [];
+				queryRef.filter((v,i) => {
+					let opt = {
+						formulaOpt: {
+							qDimensions: [
+								`='${v.sort=='&'?((i-1)<10?('0'+(i-1)):(i-1)):(i<10?('0'+i):i)}'&'|'&${v.group=='-'?"'-'":(v.sort=='&'?(v.group+"&'追加'"):v.group)}&'|'&${v.sort=='-'?"'-'":v.sort}&'|'&'${v.colspan}'`,
+								`${v.dim}`
+							],
+							qMeasures: [
+								`${v.mea}`
+							]
 						}
-					}, 300);
+					};
+					queryArr.push(opt);
 				});
+				
+				let dataArr = [];
+				
+				queryArr.filter((v,i) => {
+					cube(myapp, v, (rs) => {
+						dataArr.push(rs);
+					});
+				});
+				
+				let data = [];
+				let interval = setInterval(() => {
+					if (queryRef.length == dataArr.length) {
+						dataArr.filter(v => {
+							data = data.concat(v);
+						});
+						data.sort((a,b) => {
+							return a[0].qText.localeCompare(b[0].qText,'zh-CN');
+						});
+						console.log(data);
+						// this.$scope.data = data;
+						clearInterval(interval);
+					}
+				}, 300);
+				
+				
+				
+
+				// var interval = setInterval(() => {
+				// 	if (rs.length == $('#' + id + 'tbody tr').length) {
+				// 		$('#' + id + 'tbody tr:eq(1) > td:eq(0)').attr('colspan', '2');
+				// 		$('#' + id + 'tbody tr:eq(1) > td:eq(1)').remove();
+				// 		clearInterval(interval);
+				// 	}
+				// }, 300);
 
 				this.$scope.exportExcel = function () {
 					let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById(id).outerHTML + "</body></html>";

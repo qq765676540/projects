@@ -13,7 +13,7 @@ define([], function () {
         '1-04': { "comments": "筛选设置", "ref": `${name}.selector.content` },
         '2-01': { "comments": "字段名称", "ref": `${name}.thead.name` },
         '2-02': { "comments": "展现顺序", "ref": `${name}.thead.sort` },
-        '3-01': { "comments": "查询", "ref": `${name}.query` },
+        '3-01': { "comments": "查询公式", "ref": `${name}.query` },
     },
     HrDefs: ["—————————————————————"]
   };

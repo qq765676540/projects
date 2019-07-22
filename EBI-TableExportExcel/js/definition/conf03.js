@@ -17,14 +17,30 @@ define(["./../config"], function (config) {
       dim: {
         type: "string",
         ref: "dim",
-        label: "维度表达式",
-        expression: "optional"
+        label: "维度表达式"
       },
       mea: {
         type: "string",
         ref: "mea",
-        label: "指标表达式",
-        expression: "optional"
+        label: "指标表达式"
+      },
+      group: {
+        type: "string",
+        ref: "group",
+        label: "分组",
+        defaultValue: "-"
+      },
+      sort: {
+        type: "string",
+        ref: "sort",
+        label: "排序(汇总追加用&标识)",
+        defaultValue: "-"
+      },
+      colspan: {
+        type: "string",
+        ref: "colspan",
+        label: "列单元格合并(开始位置-结束位置)",
+        defaultValue: "-"
       }
     }
   };
