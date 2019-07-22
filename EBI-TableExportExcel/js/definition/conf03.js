@@ -1,7 +1,7 @@
 define(["./../config"], function (config) {
   return {
     type: "array",
-    ref: config.refDefs[2].ref,
+    ref: config.refDefs['2'].ref,
     label: "查询设置",
     itemTitleRef: "queryname",
     allowAdd: true,

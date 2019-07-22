@@ -1,11 +1,22 @@
-<div id="{{layout.qInfo.qId}}">
-	<div id="{{layout.qInfo.qId+'header'}}">
-		123123123
-	</div>
+<div id="{{layout.qInfo.qId}}" class="flex flex-column">
+	<table id="{{layout.qInfo.qId+'title'}}">
+		<tr>
+			<td colspan="5" ng-style="titleStyle">{{title}}</td>
+		</tr>
+	</table>
+	<table id="{{layout.qInfo.qId+'selector'}}" style="width: 20%">
+		<tr ng-repeat="item in selectorData">
+			<td ng-style="selectorKeyStyle">{{item.key}}</td>
+			<td ng-style="selectorValueStyle" colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
+		</tr>
+		<tr>
+			<td colspan="5"></td>
+		</tr>
+	</table>
 	<div id="{{layout.qInfo.qId+'content'}}">
 		<table id="{{layout.qInfo.qId+'table'}}">
 			<tr ng-repeat="item in data">
-				<td style="border: 1px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
+				<td style="border: 0.5px solid #333333" ng-repeat="val in item">{{val.qText}}</td>
 			</tr>
 		</table>
 	</div>
