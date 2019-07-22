@@ -2,21 +2,21 @@
 	<!-- 标题 -->
 	<table id="{{layout.qInfo.qId+'title'}}">
 		<tr>
-			<td colspan="5" ng-style="titleStyle">{{title}}</td>
+			<td colspan="{{theadData.length}}" ng-style="titleStyle">{{title}}</td>
 		</tr>
 	</table>
 	<!-- 筛选 -->
 	<table id="{{layout.qInfo.qId+'selector'}}" style="width: 20%">
 		<tr ng-repeat="item in selectorData">
 			<td ng-style="selectorKeyStyle">{{item.key}}</td>
-			<td ng-style="selectorValueStyle" colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
+			<td ng-style="selectorValueStyle" colspan="{{theadData.length-1}}">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
 		</tr>	
 	</table>
 	<!-- 导出按钮 -->
 	<table id="{{layout.qInfo.qId+'exportButton'}}">
 		<tr>
-			<td colspan="5" style="text-align: left">
-				<input type="button" style="width: 90px" ng-click="exportExcel()" value="导出报表"></input>
+			<td colspan="{{theadData.length}}" style="text-align: right">
+				<input type="button" style="width: 120px;height: 30px" ng-click="exportExcel()" value="导出报表"></input>
 			</td>
 		</tr>
 	</table>
@@ -30,7 +30,12 @@
 			</thead>
 			<tbody id="{{layout.qInfo.qId+'tbody'}}">
 				<tr ng-repeat="item in tableData">
-					<td style="border: 0.5px solid #333333" ng-repeat="val in item.arr track by $index">{{val}}</td>
+					<td style="border: 0.5px solid #333333;text-align: center" 
+						ng-repeat="val in item.arr track by $index"
+						ng-if="item.colspan!='-' && $index > item.colspan.split('-')[0]-1 && $index < item.colspan.split('-')[1]?false:true" 
+						colspan="{{item.colspan!='-' && $index == item.colspan.split('-')[0]-1?(item.colspan.split('-')[1]-item.colspan.split('-')[0]+1):1}}">
+						{{val}}
+					</td>
 				</tr>
 			</tbody>
 		</table>

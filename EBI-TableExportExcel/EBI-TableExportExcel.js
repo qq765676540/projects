@@ -106,20 +106,25 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 						});
 						
 						this.$scope.tableData = tableData;
+
+						// let interval2 = setInterval(() => {
+						// 	if (tableData.length == $('#' + id + 'tbody tr').length) {
+						// 		tableData.filter((v,i) => {
+						// 			if(v.colspan!='-') {
+						// 				$('#' + id + 'tbody tr:eq('+i+') > td:eq('+(v.colspan.split('-')[0]*1-1)+')').attr('colspan', (v.colspan.split('-')[1]*1-v.colspan.split('-')[0]*1)+1+'');
+						// 				$('#' + id + 'tbody tr:eq('+i+') > td:gt('+(v.colspan.split('-')[0]*1-1)+'):lt('+(v.colspan.split('-')[1]*1-1)+')').remove();
+						// 			}
+						// 		});
+						// 		clearInterval(interval2);
+						// 	}
+						// }, 100);
+						
+
 						clearInterval(interval);
 					}
 				}, 300);
-				
-				
-				
 
-				// var interval = setInterval(() => {
-				// 	if (rs.length == $('#' + id + 'tbody tr').length) {
-				// 		$('#' + id + 'tbody tr:eq(1) > td:eq(0)').attr('colspan', '2');
-				// 		$('#' + id + 'tbody tr:eq(1) > td:eq(1)').remove();
-				// 		clearInterval(interval);
-				// 	}
-				// }, 300);
+				
 
 				this.$scope.exportExcel = function () {
 					let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById(id).outerHTML + "</body></html>";
