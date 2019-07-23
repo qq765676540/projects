@@ -14,7 +14,9 @@ define([], function () {
         '2-01': { "comments": "字段名称", "ref": `${name}.thead.name` },
         '2-02': { "comments": "展现顺序", "ref": `${name}.thead.sort` },
         '3-01': { "comments": "查询公式", "ref": `${name}.query` },
-    },
-    HrDefs: ["—————————————————————"]
+        '3-02': { "comments": "APPID", "ref": `${name}.appid` },
+        '4-01': { "comments": "最大高度", "ref": `${name}.style.maxheight` },
+        '4-02': { "comments": "表头背景", "ref": `${name}.style.background` },
+    }
   };
 });

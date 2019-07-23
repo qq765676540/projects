@@ -51,8 +51,8 @@ define([], function () {
             orderType: opt.orderType || -1,
             orderCol: opt.orderCol || 0,
             filtNull: opt.filtNull && true,
-            qHeight: opt.qHeight || 100,
-            qWidth: opt.qWidth || 10
+            qHeight: opt.qHeight || 3000,
+            qWidth: opt.qWidth || 3
         }
 
         if (qApp) {
