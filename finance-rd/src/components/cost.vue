@@ -19,7 +19,7 @@
     <div class="cost-structure border-bottom flex flex-column">
         <div class="sub-title">
             <div class="sub-title-icon"></div>
-            <span class="sub-title-name">费用构成</span>
+            <span class="sub-title-name">重点费用</span>
         </div>
         <div style="margin:0px 15px 0px 8px">
             <div class="flex flex-1 flex-justify-center flex-align-center" style="margin: 5px 0px 0px 5px">
