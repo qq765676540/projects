@@ -75,7 +75,7 @@ export default {
             myStartTime: new Date(),
             active: 0,
             cubeCount: 0,
-            cubeStop: [2, 8, 2, 4, 3],
+            cubeStop: [1, 8, 2, 4, 3],
             lang: false,
             selBarFlag: true,
             pageMap: {
@@ -160,9 +160,25 @@ export default {
                         }
                         this.cubeInit(this.orgLevel, this.orgFlag, this.dataScope);
                     });
+                //组织机构
+                Cube.getData(this.qApp, this, {
+                        formulaOpt: {
+                            time: this.selectedTime,
+                            org: this.selectedOrgSetCube,
+                            orgManager: "",
+                            dataScope: "",
+                            name: "org"
+                        },
+                        dataName: "org",
+                        qWidth: 5,
+                        qHeight: 30
+                    },
+                    (rs) => {
+                        // this.cubeCount += 1;
+                    });
                 clearInterval(interval);
             }
-        }, 1000);
+        }, 100);
 
     },
     methods: {
@@ -531,22 +547,6 @@ export default {
                         });
                     break;
                 default:
-                    //组织机构
-                    Cube.getData(this.qApp, this, {
-                            formulaOpt: {
-                                time: this.selectedTime,
-                                org: this.selectedOrgSetCube,
-                                orgManager: orgManager,
-                                dataScope: dataScope,
-                                name: "org"
-                            },
-                            dataName: "org",
-                            qWidth: 5,
-                            qHeight: 30
-                        },
-                        (rs) => {
-                            this.cubeCount += 1;
-                        });
                     //首页
                     Cube.getData(this.qApp, this, {
                             formulaOpt: {

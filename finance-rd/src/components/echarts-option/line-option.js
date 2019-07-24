@@ -15,7 +15,6 @@ let option = {
             grid: {
                 left: '1%',
                 right: '5%',
-                bottom: '1%',
                 containLabel: true
             },
             tooltip: {
