@@ -24,12 +24,16 @@ define(["./../config"], function (config) {
             defaultValue: "查询1"
           },
           dim: {
-            type: "string",
+            // type: "string",
+            component: "textarea",
+            rows: 5,
             ref: "dim",
             label: "维度表达式"
           },
           mea: {
-            type: "string",
+            // type: "string",
+            component: "textarea",
+            rows: 5,
             ref: "mea",
             label: "指标表达式"
           },
