@@ -3,11 +3,13 @@ define(["./../config"], function (config) {
     type: "items",
     label: "查询设置",
     items: {
-      appid: {
-        type: "string",
-        ref: config.refDefs['3-02'].ref,
-        label: "*APPID (数据源-必填)"
-      },
+      // MyButton: {
+      //   label:"My Button",
+      //   component: "button",
+      //   action: function(data){
+      //     console.log(data);         
+      //   }
+      // },
       query: {
         type: "array",
         ref: config.refDefs['3-01'].ref,
@@ -31,11 +33,25 @@ define(["./../config"], function (config) {
             label: "维度表达式"
           },
           mea: {
-            // type: "string",
-            component: "textarea",
-            rows: 5,
-            ref: "mea",
-            label: "指标表达式"
+            type: "array",
+            ref: 'mea',
+            label: "指标设置",
+            itemTitleRef: "meaname",
+            allowAdd: true,
+            allowRemove: true,
+            addTranslation: "添加指标",
+            items: {
+              name: {
+                type: "string",
+                ref: "meaname",
+                label: "名称"
+              },
+              exp: {
+                type: "string",
+                ref: "meaexp",
+                label: "表达式"
+              }
+            }
           },
           group: {
             type: "string",

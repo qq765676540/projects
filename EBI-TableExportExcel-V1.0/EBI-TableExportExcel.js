@@ -1,5 +1,5 @@
-define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/config", "text!./EBI-TableExportExcel.ng.html", "css!./EBI-TableExportExcel.css"],
-	function (qlik, $, cube, definition, config, template) {
+define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definition/index", "./js/config", "text!./EBI-TableExportExcel.ng.html", "css!./EBI-TableExportExcel.css"],
+	function (qlik, $, cube, todo, definition, config, template) {
 		"use strict";
 
 		return {
@@ -55,14 +55,26 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 					theadData.push(theadName[v * 1 - 1]);
 				});
 				this.$scope.theadData = theadData;
+
 				//查询设置
-				qlik.setOnError( function ( error ) {
-					alert(error);
-				} );
-				let myapp = qlik.openApp(eval(`layout.${config.refDefs['3-02'].ref}`));
+				// qlik.setOnError( function ( error ) {
+				// 	alert(error);
+				// } );
+
+				let myapp = qlik.currApp();
 				let queryRef = eval(`layout.${config.refDefs['3-01'].ref}`);
+				
 				let queryArr = [];
 				queryRef.filter((v, i) => {
+					let meaArr = v.mea;
+					let meastr = '=';
+					meaArr.filter((v,i) => {
+						if(i == meaArr.length-1) {
+							meastr += v.meaexp;
+						}else {
+							meastr += v.meaexp+"&'|'&";
+						}
+					});
 					let opt = {
 						formulaOpt: {
 							qDimensions: [
@@ -70,7 +82,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 								`${v.dim}`
 							],
 							qMeasures: [
-								`${v.mea}`
+								`${meastr}`
 							]
 						}
 					};
@@ -109,15 +121,17 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 								temp.arr = arrtemp;
 								tableData.push(temp);
 							});
-							this.$scope.tableData = tableData;
+							layout.tableDataExport = tableData;
+							// window.localStorage.removeItem("tableData");
+							// window.localStorage.setItem("tableData", JSON.stringify(tableData));
+							let displayData = todo('deepClone',tableData);
+							this.$scope.tableData = displayData.slice(0,30);
 						} catch (error) {
 							clearInterval(interval);
 						}
-						
 						clearInterval(interval);
 					}
 				}, 100);
-
 
 				//样式设置
 				this.$scope.divbody = {
@@ -128,19 +142,31 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/definition/index", "./js/conf
 					"border": "0.5px solid #333333",
 					"background": eval(`layout.${config.refDefs['4-02'].ref}`)
 				};
-
-				//导出Excel
-				this.$scope.exportExcel = function () {
-					let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById(id).outerHTML + "</body></html>";
-					let blob = new Blob([html], { type: "application/vnd.ms-excel" });
-					window.open(URL.createObjectURL(blob));
-				}
-
+								
 				return qlik.Promise.resolve();
 
 			},
 			controller: ["$scope", "$element", function ($scope) {
-
+				//导出Excel
+				$scope.exportExcel = function () {
+					$scope.loading = '正在加载导出的数据，请稍等......';
+					// $scope.tableDataExport = JSON.parse(window.localStorage.tableData);
+					$scope.tableDataExport = [];
+					$scope.tableDataExport = $scope.layout.tableDataExport;
+					let interval = setInterval(() => {
+						if ($scope.tableDataExport.length == $('#'+$scope.layout.qInfo.qId+'tableexport tr').length-1) {
+							try {
+								let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById($scope.layout.qInfo.qId+'export').outerHTML + "</body></html>";
+								let blob = new Blob([html], { type: "application/vnd.ms-excel" });
+								window.open(URL.createObjectURL(blob));
+								$scope.loading = '';
+							} catch (error) {
+								clearInterval(interval);
+							}
+							clearInterval(interval);
+						}
+					}, 300); 
+				}
 			}]
 		};
 
