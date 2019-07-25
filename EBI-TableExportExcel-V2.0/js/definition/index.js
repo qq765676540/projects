@@ -9,6 +9,10 @@ define([
     type: "items",
     component: "accordion",
     items: {
+      // dimensions: {
+      //   uses: "dimensions",
+      //   min: 1
+      // },
       conf00: conf00,
       conf01: conf01,
       conf02: conf02,
