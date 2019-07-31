@@ -48,6 +48,9 @@
 	<!-- 导出按钮 -->
 	<table id="{{layout.qInfo.qId+'exportButton'}}">
 		<tr>
+			<td colspan="{{theadData.length}}" style="text-align: left">
+				<input type="button" style="width: 120px;height: 30px" ng-click="displayExcel()" value="显示数据(30行)"></input>{{querying}}
+			</td>
 			<td colspan="{{theadData.length}}" style="text-align: right">
 				{{loading}}<input type="button" style="width: 120px;height: 30px" ng-click="exportExcel()" value="导出报表"></input>
 			</td>

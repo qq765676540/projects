@@ -22,7 +22,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 			},
 			paint: function ($element, layout) {
 				this.$scope.help = eval(`layout.${config.refDefs['2-01'].ref}`);
-				
+
 				let id = layout.qInfo.qId;
 				//标题设置
 				this.$scope.title = eval(`layout.${config.refDefs['0-01'].ref}`);
@@ -57,80 +57,6 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 				});
 				this.$scope.theadData = theadData;
 
-				//查询设置
-				// qlik.setOnError( function ( error ) {
-				// 	alert(error);
-				// } );
-
-				
-				let queryRef = eval(`layout.${config.refDefs['3-01'].ref}`);
-				
-				layout.queryArr = [];
-				queryRef.filter((v, i) => {
-					let meaArr = v.mea;
-					let meastr = '=';
-					meaArr.filter((v,i) => {
-						if(i == meaArr.length-1) {
-							meastr += v.meaexp;
-						}else {
-							meastr += v.meaexp+"&'|'&";
-						}
-					});
-					let opt = {
-						formulaOpt: {
-							qDimensions: [
-								`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`,
-								`${v.dim}`
-							],
-							qMeasures: [
-								`${meastr}`
-							]
-						}
-					};
-					layout.queryArr.push(opt);
-				});
-
-				let dataArr = [];
-
-				layout.queryArr.filter((v, i) => {
-					cube(myapp, v, (rs) => {
-						dataArr.push(rs.rows);
-					});
-				});
-
-				let data = [];
-				let tableData = [];
-
-				let interval = setInterval(() => {
-					if (queryRef.length == dataArr.length) {
-						try {
-							dataArr.filter(v => {
-								data = data.concat(v);
-							});
-							data.sort((a, b) => {
-								return a[0].qText.localeCompare(b[0].qText, 'zh-CN');
-							});
-							data.filter(v => {
-								let temp = {
-									colspan: v[0].qText.split('|')[3],
-									arr: (v[1].qText + '|' + v[2].qText).split('|')
-								};
-								let arrtemp = [];
-								theadSort.filter(v => {
-									arrtemp.push(temp.arr[v * 1 - 1]);
-								});
-								temp.arr = arrtemp;
-								tableData.push(temp);
-							});
-							layout.tableDataExport = tableData;
-							let displayData = todo('deepClone',tableData);
-							this.$scope.tableData = displayData.slice(0,30);
-						} catch (error) {
-							clearInterval(interval);
-						}
-						clearInterval(interval);
-					}
-				}, 100);
 
 				//样式设置
 				this.$scope.divbody = {
@@ -141,26 +67,132 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					"border": "0.5px solid #333333",
 					"background": eval(`layout.${config.refDefs['4-02'].ref}`)
 				};
-								
+
 				return qlik.Promise.resolve();
 
 			},
 			controller: ["$scope", "$element", function ($scope) {
+				//显示数据
+				$scope.displayExcel = function () {
+					$scope.querying = "正在查询数据，请稍等...";
+					let queryRef = eval(`$scope.layout.${config.refDefs['3-01'].ref}`);
+					let theadSort = eval(`$scope.layout.${config.refDefs['2-02'].ref}.split('|')`);
+					$scope.layout.queryArr = [];
+					queryRef.filter((v, i) => {
+						let meaArr = v.mea;
+						let meastr = '=';
+						meaArr.filter((v, i) => {
+							if (i == meaArr.length - 1) {
+								meastr += v.meaexp;
+							} else {
+								meastr += v.meaexp + "&'|'&";
+							}
+						});
+						let opt = {
+							formulaOpt: {
+								qDimensions: [
+									`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`,
+									`${v.dim}`
+								],
+								qMeasures: [
+									`${meastr}`
+								]
+							}
+						};
+						$scope.layout.queryArr.push(opt);
+					});
+
+					let dataArr = [];
+
+					$scope.layout.queryArr.filter((v, i) => {
+						cube(myapp, v, (rs) => {
+							dataArr.push(rs.rows);
+						});
+					});
+					
+					let data = [];
+					let tableData = [];
+
+					let interval0 = setInterval(() => {
+						if (queryRef.length == dataArr.length && dataArr.length > 0) {
+							try {
+								dataArr.filter(v => {
+									data = data.concat(v);
+								});
+								data.sort((a, b) => {
+									return a[0].qText.localeCompare(b[0].qText, 'zh-CN');
+								});
+								data.filter(v => {
+									let temp = {
+										colspan: v[0].qText.split('|')[3],
+										arr: (v[1].qText + '|' + v[2].qText).split('|')
+									};
+									let arrtemp = [];
+									theadSort.filter(v => {
+										arrtemp.push(temp.arr[v * 1 - 1]);
+									});
+									temp.arr = arrtemp;
+									tableData.push(temp);
+								});
+								$scope.layout.tableDataExport = tableData;
+								
+								let displayData = todo('deepClone', tableData);
+								$scope.tableData = displayData.slice(0, 30);
+								// console.log(displayData);
+								$scope.querying = "";
+								
+							} catch (error) {
+								clearInterval(interval0);
+							}
+							clearInterval(interval0);
+						}
+					}, 100);
+
+				}
+
 				//导出Excel
 				$scope.exportExcel = function () {
+
+					let queryRef = eval(`$scope.layout.${config.refDefs['3-01'].ref}`);
+					// console.log(queryRef);
+					$scope.layout.queryArr = [];
+					queryRef.filter((v, i) => {
+						let meaArr = v.mea;
+						let meastr = '=';
+						meaArr.filter((v, i) => {
+							if (i == meaArr.length - 1) {
+								meastr += v.meaexp;
+							} else {
+								meastr += v.meaexp + "&'|'&";
+							}
+						});
+						let opt = {
+							formulaOpt: {
+								qDimensions: [
+									`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`,
+									`${v.dim}`
+								],
+								qMeasures: [
+									`${meastr}`
+								]
+							}
+						};
+						$scope.layout.queryArr.push(opt);
+					});
+					//-----------------------------------------------------------------------
 					let totalcount = eval(`$scope.layout.${config.refDefs['3-02'].ref}`);
 					let dataArr = [];
 					let data = [];
 					let tableData = [];
 					let count = 0;
-					$scope.layout.queryArr.filter((v,i) => {
+					$scope.layout.queryArr.filter((v, i) => {
 						$scope.layout.queryArr[i].qTop = 0;
 						$scope.layout.queryArr[i].qHeight = 1000;
-						for (let index = 0; index < parseInt((totalcount<1000?1000:totalcount)/1000); index++) {
+						for (let index = 0; index < parseInt((totalcount < 1000 ? 1000 : totalcount) / 1000); index++) {
 							cube(myapp, v, (rs) => {
-								dataArr.push(rs.rows);	
+								dataArr.push(rs.rows);
 							});
-							setTimeout(() => {}, 300);
+							setTimeout(() => { }, 300);
 							count += 1;
 							$scope.layout.queryArr[i].qTop += 1000;
 						}
@@ -198,9 +230,9 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 
 					$scope.loading = '正在加载导出的数据，请稍等......';
 					let interval2 = setInterval(() => {
-						if ($scope.tableDataExport.length == $('#'+$scope.layout.qInfo.qId+'tableexport tr').length-1) {
+						if ($scope.tableDataExport && $scope.tableDataExport.length == $('#' + $scope.layout.qInfo.qId + 'tableexport tr').length - 1) {
 							try {
-								let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById($scope.layout.qInfo.qId+'export').outerHTML + "</body></html>";
+								let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById($scope.layout.qInfo.qId + 'export').outerHTML + "</body></html>";
 								let blob = new Blob([html], { type: "application/vnd.ms-excel" });
 								window.open(URL.createObjectURL(blob));
 								$scope.loading = '';
@@ -209,7 +241,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 							}
 							clearInterval(interval2);
 						}
-					}, 300); 
+					}, 300);
 				}
 			}]
 		};
