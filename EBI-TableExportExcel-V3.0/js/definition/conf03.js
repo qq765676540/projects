@@ -6,7 +6,7 @@ define(["./../config"], function (config) {
       exportmaxcount: {
         type: "string",
         ref: config.refDefs['3-02'].ref,
-        label: "导出数据的最大行数(500*n)",
+        label: "导出数据的最大行数(200*n)",
         defaultValue: "2000"
       },
       query: {
