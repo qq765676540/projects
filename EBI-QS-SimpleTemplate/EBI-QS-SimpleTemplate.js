@@ -1,4 +1,4 @@
-define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definition/index", "./js/config", "text!./EBI-TableExportExcel.ng.html", "css!./EBI-TableExportExcel.css"],
+define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definition/index", "./js/config", "text!./EBI-QS-SimpleTemplate.html", "css!./EBI-QS-SimpleTemplate.css"],
 	function (qlik, $, cube, todo, definition, config, template) {
 		"use strict";
 		let myapp = qlik.currApp();
