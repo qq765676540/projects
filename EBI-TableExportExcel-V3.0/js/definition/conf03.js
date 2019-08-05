@@ -46,20 +46,26 @@ define(["./../config"], function (config) {
                 label: "名称"
               },
               exp: {
-                type: "string",
+                // type: "string",
+                component: "textarea",
+                rows: 1,
                 ref: "meaexp",
                 label: "表达式"
               }
             }
           },
           group: {
-            type: "string",
+            // type: "string",
+            component: "textarea",
+            rows: 1,
             ref: "group",
             label: "分组",
             defaultValue: "-"
           },
           sort: {
-            type: "string",
+            // type: "string",
+            component: "textarea",
+            rows: 1,
             ref: "sort",
             label: "排序(汇总追加用&标识)",
             defaultValue: "-"
