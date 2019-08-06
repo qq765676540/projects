@@ -1,15 +1,17 @@
 define([], function () {
 
     let _initParam = function (arr, type, orderType, qNullSuppression) {
-        if (qNullSuppression === undefined) {
-            qNullSuppression = true;
-        }
         if (arr.length === 0) {
             return [];
         } else {
             var list = [];
             var item = {};
             arr.forEach(function (name, i) {
+                let qNull = false;
+                // console.log('YCQ日志记录:标识->',i,qNullSuppression);
+                if (qNullSuppression.indexOf(i+'')>-1) {
+                    qNull = true;
+                }
                 if (type === "measure") {
                     item = {
                         qDef: {
@@ -27,7 +29,7 @@ define([], function () {
                                 { "qSortByAscii": 1 }
                             ]
                         },
-                        "qNullSuppression": qNullSuppression,
+                        "qNullSuppression": qNull,
                         "qOtherTotalSpec": {
                             "qOtherMode": "OTHER_OFF",
                             "qSuppressOther": true,
@@ -50,7 +52,7 @@ define([], function () {
             formulaOpt: opt.formulaOpt,
             orderType: opt.orderType || -1,
             orderCol: opt.orderCol || 0,
-            filtNull: false,
+            filtNull: opt.filtNull || [],
             qHeight: opt.qHeight || 20,
             qWidth: opt.qWidth || 50,
             qTop: opt.qTop || 0
@@ -71,8 +73,8 @@ define([], function () {
 
             params.qDimensions = _initParam(qDimensions, "dimension", cf.orderType, cf.filtNull);
             params.qMeasures = _initParam(qMeasures, "measure", cf.orderType, cf.filtNull);
-            params.qInterColumnSortOrder = [0,1];
-
+            params.qInterColumnSortOrder = [0, 1];
+            console.log(params);     
             qApp.createCube(params, function (reply) {
                 let rows = reply.qHyperCube.qDataPages[0].qMatrix;
                 let obj = {

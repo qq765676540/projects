@@ -87,7 +87,8 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 									`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`
 								],
 								qMeasures: []
-							}
+							},
+							filtNull: v.qNull.split('|')
 						};
 						dimArr.filter(v => {
 							opt.formulaOpt.qDimensions.push('='+v);
@@ -97,7 +98,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 						});
 						$scope.layout.queryArr.push(opt);
 					});
-
+					// console.log($scope.layout.queryArr);
 					let dataArr = [];
 
 					$scope.layout.queryArr.filter((v, i) => {
@@ -166,7 +167,8 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 									`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`
 								],
 								qMeasures: [
-								]
+								],
+								filtNull: v.qNull.split('|')
 							}
 						};
 						dimArr.filter(v => {

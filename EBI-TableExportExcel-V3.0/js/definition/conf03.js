@@ -31,6 +31,11 @@ define(["./../config"], function (config) {
             ref: "dim",
             label: "维度表达式"
           },
+          qNull: {
+            type: "string",
+            ref: "qNull",
+            label: "过滤空值(2|3|5)"
+          },
           mea: {
             type: "array",
             ref: 'mea',
