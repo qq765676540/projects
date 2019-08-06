@@ -88,7 +88,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 								],
 								qMeasures: []
 							},
-							filtNull: v.qNull.split('|')
+							filtNull: v.qNull
 						};
 						dimArr.filter(v => {
 							opt.formulaOpt.qDimensions.push('='+v);
@@ -98,7 +98,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 						});
 						$scope.layout.queryArr.push(opt);
 					});
-					// console.log($scope.layout.queryArr);
+
 					let dataArr = [];
 
 					$scope.layout.queryArr.filter((v, i) => {
@@ -167,9 +167,9 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 									`='${v.sort == '&' ? ((i - 1) < 10 ? ('0' + (i - 1)) : (i - 1)) : (i < 10 ? ('0' + i) : i)}'&'|'&${v.group == '-' ? "'-'" : (v.sort == '&' ? (v.group + "&'追加'") : v.group)}&'|'&${v.sort == '-' ? "'-'" : v.sort}&'|'&'${v.colspan}'`
 								],
 								qMeasures: [
-								],
-								filtNull: v.qNull.split('|')
-							}
+								]
+							},
+							filtNull: v.qNull
 						};
 						dimArr.filter(v => {
 							opt.formulaOpt.qDimensions.push('='+v);
@@ -187,14 +187,14 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					let count = 0;
 					$scope.layout.queryArr.filter((v, i) => {
 						$scope.layout.queryArr[i].qTop = 0;
-						$scope.layout.queryArr[i].qHeight = 200;
-						for (let index = 0; index < parseInt((totalcount < 200 ? 200 : totalcount) / 200); index++) {
+						$scope.layout.queryArr[i].qHeight = 500;
+						for (let index = 0; index < parseInt((totalcount < 500 ? 500 : totalcount) / 500); index++) {
 							cube(myapp, v, (rs) => {
 								dataArr.push(rs.rows);
 							});
 							setTimeout(() => { }, 300);
 							count += 1;
-							$scope.layout.queryArr[i].qTop += 200;
+							$scope.layout.queryArr[i].qTop += 500;
 						}
 					});
 
@@ -233,7 +233,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					}, 100);
 
 					$scope.loading = '正在加载导出的数据，请稍等......';
-					let interval2 = setInterval(() => {
+					let interval2 = setInterval(() => {				
 						if ($scope.tableDataExport.length >0 && $scope.tableDataExport.length == $('#' + $scope.layout.qInfo.qId + 'tableexport tr').length - 1) {
 							try {
 								let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById($scope.layout.qInfo.qId + 'export').outerHTML + "</body></html>";

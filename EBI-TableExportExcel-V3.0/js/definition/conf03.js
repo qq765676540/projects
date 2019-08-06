@@ -6,7 +6,7 @@ define(["./../config"], function (config) {
       exportmaxcount: {
         type: "string",
         ref: config.refDefs['3-02'].ref,
-        label: "导出数据的最大行数(200*n)",
+        label: "导出数据的最大行数(500*n)",
         defaultValue: "2000"
       },
       query: {
@@ -34,7 +34,7 @@ define(["./../config"], function (config) {
           qNull: {
             type: "string",
             ref: "qNull",
-            label: "过滤空值(2|3|5)"
+            label: "空值过滤"
           },
           mea: {
             type: "array",
@@ -51,26 +51,20 @@ define(["./../config"], function (config) {
                 label: "名称"
               },
               exp: {
-                // type: "string",
-                component: "textarea",
-                rows: 1,
+                type: "string",
                 ref: "meaexp",
                 label: "表达式"
               }
             }
           },
           group: {
-            // type: "string",
-            component: "textarea",
-            rows: 1,
+            type: "string",
             ref: "group",
             label: "分组",
             defaultValue: "-"
           },
           sort: {
-            // type: "string",
-            component: "textarea",
-            rows: 1,
+            type: "string",
             ref: "sort",
             label: "排序(汇总追加用&标识)",
             defaultValue: "-"

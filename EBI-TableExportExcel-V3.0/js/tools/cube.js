@@ -7,11 +7,7 @@ define([], function () {
             var list = [];
             var item = {};
             arr.forEach(function (name, i) {
-                let qNull = false;
-                // console.log('YCQ日志记录:标识->',i,qNullSuppression);
-                if (qNullSuppression.indexOf(i+'')>-1) {
-                    qNull = true;
-                }
+
                 if (type === "measure") {
                     item = {
                         qDef: {
@@ -29,7 +25,7 @@ define([], function () {
                                 { "qSortByAscii": 1 }
                             ]
                         },
-                        "qNullSuppression": qNull,
+                        "qNullSuppression": qNullSuppression.split('|').indexOf(i+'')>-1?true:false,
                         "qOtherTotalSpec": {
                             "qOtherMode": "OTHER_OFF",
                             "qSuppressOther": true,
@@ -52,9 +48,9 @@ define([], function () {
             formulaOpt: opt.formulaOpt,
             orderType: opt.orderType || -1,
             orderCol: opt.orderCol || 0,
-            filtNull: opt.filtNull || [],
+            filtNull: opt.filtNull || '0',
             qHeight: opt.qHeight || 20,
-            qWidth: opt.qWidth || 50,
+            qWidth: opt.qWidth || 20,
             qTop: opt.qTop || 0
         }
 
@@ -73,8 +69,8 @@ define([], function () {
 
             params.qDimensions = _initParam(qDimensions, "dimension", cf.orderType, cf.filtNull);
             params.qMeasures = _initParam(qMeasures, "measure", cf.orderType, cf.filtNull);
-            params.qInterColumnSortOrder = [0, 1];
-            console.log(params);     
+            params.qInterColumnSortOrder = [0,1];
+
             qApp.createCube(params, function (reply) {
                 let rows = reply.qHyperCube.qDataPages[0].qMatrix;
                 let obj = {
@@ -82,7 +78,7 @@ define([], function () {
                     qcy: reply.qHyperCube.qSize.qcy
                 };
                 qApp.destroySessionObject(reply.qInfo.qId);
-                // console.log(reply.qHyperCube);
+                // console.log(123);
                 (callback && typeof (callback) === "function") && callback(obj);
             });
         }
