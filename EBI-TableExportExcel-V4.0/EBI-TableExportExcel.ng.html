@@ -1,0 +1,117 @@
+<!-- 使用说明 -->
+<div id="{{layout.qInfo.qId+'help'}}" ng-if="help.length==0">
+	<h1>使用说明  (此插件支持的字段个数小于等于50个)</h1>
+	<hr>
+	<br>
+	<br>
+	<h3>查询设计思路</h3>
+	<ul>
+		<li>1.先用excel设计好要导出的报表格式</li>
+		<li>2.按照从上到下的顺序设计查询，每个查询可以为1行数据，或多行数据</li>
+		<li>3.考虑到性能问题，查询个数建议小于6个</li>
+	</ul>
+	<br>
+	<br>
+	<h3>表头设置</h3>
+	<ul>
+		<li>1.字段名称: 按照查询设置中的维度集合、指标集合的顺序命名，用|分割开</li>
+		<li>2.展现顺序: 以字段名称的顺序为基准，将实际展现的顺序以对应的列数写成表达式，用|分割开</li>
+	</ul>
+	<br>
+	<br>
+	<h3>查询设置</h3>
+	<ul>
+		<li>1.设置导出数据量的峰值，参数为500*n</li>
+		<li>2.维度表达式: 将所有维度用|分割开，不要加=号，例如：[维度1]|[维度2]|[维度3]|if(1=1,[维度4])</li>
+		<li>3.指标表达式: 每个指标一个表达式，不要加=号，例如：sum([指标1])</li>
+		<li>4.分组: 只能按一个字段分组，可以写表达式(表达式前不要加=号)，不需要分组填-</li>
+		<li>5.排序: 只能按一个字段排序，可以写表达式(表达式前不要加=号)，不需要排序填-，追加分组汇总填&</li>
+		<li>6.列单元格合并: 每列只能合并一次，表达式为：开始位置-结束位置，例如：1-9，不合并填-</li>
+	</ul>
+
+</div>
+
+<div id="{{layout.qInfo.qId}}" class="flex flex-column"  ng-style="divbody" ng-if="help.length>0">
+	<!-- 标题 -->
+	<table id="{{layout.qInfo.qId+'title'}}">
+		<tr>
+			<td colspan="{{theadData.length}}" ng-style="titleStyle">{{title}}</td>
+		</tr>
+	</table>
+	<!-- 筛选 -->
+	<table id="{{layout.qInfo.qId+'selector'}}" style="width: 20%">
+		<tr ng-repeat="item in selectorData">
+			<td ng-style="selectorKeyStyle">{{item.key}}</td>
+			<td ng-style="selectorValueStyle" colspan="{{theadData.length-1}}">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
+		</tr>	
+	</table>
+	<!-- 导出按钮 -->
+	<table id="{{layout.qInfo.qId+'exportButton'}}">
+		<tr>
+			<td colspan="{{theadData.length}}" style="text-align: right">
+				{{querying}}{{loading}}&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" style="width: 120px;height: 30px" ng-click="displayExcel()" value="显示数据(前50行)"></input>
+				<input type="button" style="width: 120px;height: 30px" ng-click="exportExcel()" value="导出报表"></input>
+			</td>
+		</tr>
+	</table>
+	<!-- 表格 -->
+	<div id="{{layout.qInfo.qId+'content'}}">
+		<table id="{{layout.qInfo.qId+'table'}}">
+			<thead id="{{layout.qInfo.qId+'thead'}}">
+				<tr>
+					<th ng-style="theadstyle" ng-repeat="th in theadData">{{th}}</th>
+				</tr>
+			</thead>
+			<tbody id="{{layout.qInfo.qId+'tbody'}}">
+				<tr ng-repeat="item in tableData">
+					<td style="border: 0.5px solid #333333;text-align: center" 
+						ng-repeat="val in item.arr track by $index"
+						ng-if="item.colspan!='-' && $index > item.colspan.split('-')[0]-1 && $index < item.colspan.split('-')[1]?false:true" 
+						colspan="{{item.colspan!='-' && $index == item.colspan.split('-')[0]-1?(item.colspan.split('-')[1]-item.colspan.split('-')[0]+1):1}}">
+						{{val}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+</div>
+
+<!-- 导出时调用 -->
+<div id="{{layout.qInfo.qId+'export'}}" class="flex flex-column" style="display: none">
+	<!-- 标题 -->
+	<table id="{{layout.qInfo.qId+'title'}}">
+		<tr>
+			<td colspan="{{theadData.length}}" ng-style="titleStyle">{{title}}</td>
+		</tr>
+	</table>
+	<!-- 筛选 -->
+	<table id="{{layout.qInfo.qId+'selector'}}" style="width: 20%">
+		<tr ng-repeat="item in selectorData">
+			<td ng-style="selectorKeyStyle">{{item.key}}</td>
+			<td ng-style="selectorValueStyle" colspan="{{theadData.length-1}}">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</td>
+		</tr>	
+	</table>
+	<!-- 表格 -->
+	<div id="{{layout.qInfo.qId+'content'}}">
+		<table id="{{layout.qInfo.qId+'tableexport'}}">
+			<thead id="{{layout.qInfo.qId+'thead'}}">
+				<tr>
+					<th ng-style="theadstyle" ng-repeat="th in theadData">{{th}}</th>
+				</tr>
+			</thead>
+			<tbody id="{{layout.qInfo.qId+'tbody'}}">
+				<tr ng-repeat="item in tableDataExport">
+					<td style="border: 0.5px solid #333333;text-align: center" 
+						ng-repeat="val in item.arr track by $index"
+						ng-if="item.colspan!='-' && $index > item.colspan.split('-')[0]-1 && $index < item.colspan.split('-')[1]?false:true" 
+						colspan="{{item.colspan!='-' && $index == item.colspan.split('-')[0]-1?(item.colspan.split('-')[1]-item.colspan.split('-')[0]+1):1}}">
+						{{val}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+</div>
