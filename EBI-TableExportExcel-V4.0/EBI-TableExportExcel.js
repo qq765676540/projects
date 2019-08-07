@@ -153,9 +153,10 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					}, 100);
 
 				}
-				setTimeout(() => {
-					$('#'+$scope.layout.qInfo.qId+'displayButton').click();
-				}, 500);
+
+				// setTimeout(() => {
+				// 	$('#' + $scope.layout.qInfo.qId + 'displayButton').click();
+				// }, 500);
 
 				//导出Excel
 				$scope.exportExcel = function () {
@@ -190,27 +191,24 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					let tableData = [];
 					let count = 0;
 					$scope.layout.queryArr.filter((v, i) => {
-						cube(myapp, v, (rs) => {
-							let qcy = rs.qcy;
-							totalcount = Math.min(totalcount, qcy);
-							let qWidth = (v.formulaOpt.qDimensions.length + v.formulaOpt.qMeasures.length) * 1;
-							let qHeight = Math.floor(10000 / Math.min(10000, qWidth));
-							$scope.layout.queryArr[i].qTop = 0;
-							$scope.layout.queryArr[i].qWidth = qWidth;
-							$scope.layout.queryArr[i].qHeight = qHeight;
-							let exitQuery = Math.max(parseInt(totalcount < 200 ? 200 : totalcount), qHeight);
-							// console.log(qcy,qWidth,qHeight,exitQuery);
-							for (let index = 0; index < parseInt(exitQuery / qHeight); index++) {
-								cube(myapp, v, (rs) => {
-									dataArr.push(rs.rows);
-								});
-								setTimeout(() => { }, 300);
-								count += 1;
-								$scope.layout.queryArr[i].qTop += qHeight;
+						// let qcy = rs.qcy;
+						// totalcount = Math.min(totalcount, qcy);
+						let qWidth = (v.formulaOpt.qDimensions.length + v.formulaOpt.qMeasures.length) * 1;
+						let qHeight = Math.floor(10000 / Math.min(10000, qWidth));
+						$scope.layout.queryArr[i].qTop = 0;
+						$scope.layout.queryArr[i].qWidth = qWidth;
+						$scope.layout.queryArr[i].qHeight = qHeight;
+						let exitQuery = Math.max(parseInt(totalcount < 200 ? 200 : totalcount), qHeight);
+						// console.log(qcy,qWidth,qHeight,exitQuery);
+						for (let index = 0; index < parseInt(exitQuery / qHeight); index++) {
+							cube(myapp, v, (rs) => {
+								dataArr.push(rs.rows);
+							});
+							setTimeout(() => { }, 300);
+							count += 1;
+							$scope.layout.queryArr[i].qTop += qHeight;
 
-							}
-
-						});
+						}
 
 					});
 
