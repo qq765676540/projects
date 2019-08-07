@@ -50,7 +50,7 @@ define([], function () {
             orderCol: opt.orderCol || 0,
             filtNull: opt.filtNull || '0',
             qHeight: opt.qHeight || 20,
-            qWidth: opt.qWidth || 20,
+            qWidth: opt.qWidth || 50,
             qTop: opt.qTop || 0
         }
 

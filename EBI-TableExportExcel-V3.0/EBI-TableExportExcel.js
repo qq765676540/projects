@@ -187,14 +187,14 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					let count = 0;
 					$scope.layout.queryArr.filter((v, i) => {
 						$scope.layout.queryArr[i].qTop = 0;
-						$scope.layout.queryArr[i].qHeight = 500;
-						for (let index = 0; index < parseInt((totalcount < 500 ? 500 : totalcount) / 500); index++) {
+						$scope.layout.queryArr[i].qHeight = 200;
+						for (let index = 0; index < parseInt((totalcount < 200 ? 200 : totalcount) / 200); index++) {
 							cube(myapp, v, (rs) => {
 								dataArr.push(rs.rows);
 							});
 							setTimeout(() => { }, 300);
 							count += 1;
-							$scope.layout.queryArr[i].qTop += 500;
+							$scope.layout.queryArr[i].qTop += 200;
 						}
 					});
 
