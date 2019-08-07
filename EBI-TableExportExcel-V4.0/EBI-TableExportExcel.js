@@ -72,6 +72,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 
 			},
 			controller: ["$scope", "$element", function ($scope) {
+
 				//显示数据
 				$scope.displayExcel = function () {
 					$scope.querying = "正在查询数据，请稍等......";
@@ -91,10 +92,10 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 							filtNull: v.qNull
 						};
 						dimArr.filter(v => {
-							opt.formulaOpt.qDimensions.push('='+v);
+							opt.formulaOpt.qDimensions.push('=' + v);
 						});
 						meaArr.filter(v => {
-							opt.formulaOpt.qMeasures.push('='+v.meaexp);
+							opt.formulaOpt.qMeasures.push('=' + v.meaexp);
 						});
 						$scope.layout.queryArr.push(opt);
 					});
@@ -106,7 +107,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 							dataArr.push(rs.rows);
 						});
 					});
-					
+
 					let data = [];
 					let tableData = [];
 
@@ -126,9 +127,9 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 										arr: []
 									};
 									for (let index = 1; index < v.length; index++) {
-										temp.arr.push(v[index].qText);	
+										temp.arr.push(v[index].qText);
 									}
-									
+
 									let arrtemp = [];
 									theadSort.filter(v => {
 										arrtemp.push(temp.arr[v * 1 - 1]);
@@ -136,14 +137,14 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 									temp.arr = arrtemp;
 									tableData.push(temp);
 								});
-								
+
 								$scope.layout.tableDataExport = tableData;
-								
+
 								let displayData = todo('deepClone', tableData);
 								$scope.tableData = displayData.slice(0, 50);
 								// console.log(displayData);
 								$scope.querying = "";
-								
+
 							} catch (error) {
 								clearInterval(interval0);
 							}
@@ -152,6 +153,9 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					}, 100);
 
 				}
+				setTimeout(() => {
+					$('#'+$scope.layout.qInfo.qId+'displayButton').click();
+				}, 500);
 
 				//导出Excel
 				$scope.exportExcel = function () {
@@ -172,10 +176,10 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 							filtNull: v.qNull
 						};
 						dimArr.filter(v => {
-							opt.formulaOpt.qDimensions.push('='+v);
+							opt.formulaOpt.qDimensions.push('=' + v);
 						});
 						meaArr.filter(v => {
-							opt.formulaOpt.qMeasures.push('='+v.meaexp);
+							opt.formulaOpt.qMeasures.push('=' + v.meaexp);
 						});
 						$scope.layout.queryArr.push(opt);
 					});
@@ -186,23 +190,24 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					let tableData = [];
 					let count = 0;
 					$scope.layout.queryArr.filter((v, i) => {
-						let _self = v;
 						cube(myapp, v, (rs) => {
 							let qcy = rs.qcy;
-							totalcount = Math.min(totalcount,qcy);
-							let qWidth = (_self.formulaOpt.qDimensions.length + _self.formulaOpt.qMeasures.length)*1;
+							totalcount = Math.min(totalcount, qcy);
+							let qWidth = (v.formulaOpt.qDimensions.length + v.formulaOpt.qMeasures.length) * 1;
 							let qHeight = Math.floor(10000 / Math.min(10000, qWidth));
 							$scope.layout.queryArr[i].qTop = 0;
 							$scope.layout.queryArr[i].qWidth = qWidth;
 							$scope.layout.queryArr[i].qHeight = qHeight;
-							let exitQuery = Math.max(parseInt(totalcount < 200 ? 200 : totalcount),qHeight);
+							let exitQuery = Math.max(parseInt(totalcount < 200 ? 200 : totalcount), qHeight);
+							// console.log(qcy,qWidth,qHeight,exitQuery);
 							for (let index = 0; index < parseInt(exitQuery / qHeight); index++) {
-								cube(myapp, _self, (rs) => {
+								cube(myapp, v, (rs) => {
 									dataArr.push(rs.rows);
 								});
 								setTimeout(() => { }, 300);
 								count += 1;
 								$scope.layout.queryArr[i].qTop += qHeight;
+
 							}
 
 						});
@@ -225,7 +230,7 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 										arr: []
 									};
 									for (let index = 1; index < v.length; index++) {
-										temp.arr.push(v[index].qText);	
+										temp.arr.push(v[index].qText);
 									}
 									let arrtemp = [];
 									theadSort.filter(v => {
@@ -244,8 +249,8 @@ define(["qlik", "jquery", "./js/tools/cube", "./js/tools/tools", "./js/definitio
 					}, 100);
 
 					$scope.loading = '正在加载导出的数据，请稍等......';
-					let interval2 = setInterval(() => {				
-						if ($scope.tableDataExport.length >0 && $scope.tableDataExport.length == $('#' + $scope.layout.qInfo.qId + 'tableexport tr').length - 1) {
+					let interval2 = setInterval(() => {
+						if ($scope.tableDataExport.length > 0 && $scope.tableDataExport.length == $('#' + $scope.layout.qInfo.qId + 'tableexport tr').length - 1) {
 							try {
 								let html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById($scope.layout.qInfo.qId + 'export').outerHTML + "</body></html>";
 								let blob = new Blob([html], { type: "application/vnd.ms-excel" });

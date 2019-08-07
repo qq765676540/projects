@@ -46,11 +46,11 @@
 		</tr>	
 	</table>
 	<!-- 导出按钮 -->
-	<table id="{{layout.qInfo.qId+'exportButton'}}">
+	<table id="{{layout.qInfo.qId+'button'}}">
 		<tr>
 			<td colspan="{{theadData.length}}" style="text-align: right">
 				{{querying}}{{loading}}&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" style="width: 120px;height: 30px" ng-click="displayExcel()" value="显示数据(前50行)"></input>
+				<input type="button" style="width: 120px;height: 30px" id="{{layout.qInfo.qId+'displayButton'}}" ng-click="displayExcel()" value="显示数据(前50行)"></input>
 				<input type="button" style="width: 120px;height: 30px" ng-click="exportExcel()" value="导出报表"></input>
 			</td>
 		</tr>
