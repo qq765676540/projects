@@ -1,0 +1,7 @@
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\bin\Debug\MergePDF.exe.config
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\obj\Debug\MergePDF.csprojResolveAssemblyReference.cache
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\bin\Debug\MergePDF.exe
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\bin\Debug\MergePDF.pdb
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\bin\Debug\itextsharp.dll
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\obj\Debug\MergePDF.exe
+c:\users\ebi\documents\visual studio 2012\Projects\MergePDF\MergePDF\obj\Debug\MergePDF.pdb

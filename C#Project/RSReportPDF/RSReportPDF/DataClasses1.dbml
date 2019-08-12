@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EmailReport" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=EmailReport;Integrated Security=True" SettingsObjectName="RSReportPDF.Properties.Settings" SettingsPropertyName="EmailReportConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ReportBase" Member="ReportBase">
+    <Type Name="ReportBase">
+      <Column Name="ReportServer" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ReportPath" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,5 @@
+c:\users\ebi\documents\visual studio 2012\Projects\EmailSend\EmailSend\bin\Debug\EmailSend.exe.config
+c:\users\ebi\documents\visual studio 2012\Projects\EmailSend\EmailSend\bin\Debug\EmailSend.exe
+c:\users\ebi\documents\visual studio 2012\Projects\EmailSend\EmailSend\bin\Debug\EmailSend.pdb
+c:\users\ebi\documents\visual studio 2012\Projects\EmailSend\EmailSend\obj\Debug\EmailSend.exe
+c:\users\ebi\documents\visual studio 2012\Projects\EmailSend\EmailSend\obj\Debug\EmailSend.pdb

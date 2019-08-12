@@ -1,0 +1,15 @@
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\RSReportPDF.exe.config
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\RSReportPDF.exe
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\RSReportPDF.pdb
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.csprojResolveAssemblyReference.cache
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.ReportView.resources
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.Properties.Resources.resources
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.csproj.GenerateResource.Cache
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.exe
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.pdb
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\zh-Hans\Microsoft.QualityTools.Testing.Fakes.resources.dll
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\RSReportPDF.exe.manifest
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\bin\Debug\RSReportPDF.application
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.exe.manifest
+c:\users\ebi\documents\visual studio 2012\Projects\RSReportPDF\RSReportPDF\obj\Debug\RSReportPDF.application
