@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -41,7 +42,7 @@ namespace EmailSend
             message.IsBodyHtml = true;
             string htmlBodyContent = "<img src=\"cid:imgurl\">";
             AlternateView htmlBody = AlternateView.CreateAlternateViewFromString(htmlBodyContent, null, "text/html");
-            LinkedResource lrImage = new LinkedResource(@"C:\Users\Administrator\Desktop\fin_bg2.png", "image/gif");
+            LinkedResource lrImage = new LinkedResource("d:\\云顶合成.jpg", "image/gif");
             lrImage.ContentId = "imgurl";
             htmlBody.LinkedResources.Add(lrImage);
             message.AlternateViews.Add(htmlBody);  
