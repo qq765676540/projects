@@ -1,9 +1,6 @@
 package com.ebi.export;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -28,8 +25,18 @@ public class PoiExcelUtil {
 //        Sheet sheet_b = workbook_b.getSheetAt(0);
 
         Row rowa = sheet_a.getRow(0);
-        Cell cella = rowa.createCell(10);
-        System.out.println(sheet_a.getNumMergedRegions());
+        Cell cella = rowa.getCell(1);
+//        System.out.println(sheet_a.getNumMergedRegions());
+
+        CellStyle setBorder = workbook_a.createCellStyle();
+        setBorder.setBorderBottom(BorderStyle.THIN);
+        setBorder.setBorderLeft(BorderStyle.THIN);
+        setBorder.setBorderRight(BorderStyle.THIN);
+        setBorder.setBorderTop(BorderStyle.THIN);
+        cella.setCellStyle(setBorder);
+        rowa.setRowStyle(setBorder);
+
+//        sheet_a.setDefaultColumnStyle(1,setBorder);
 
 //        Row rowb = sheet_b.getRow(0);
 //        Cell cellb = rowb.getCell(0);

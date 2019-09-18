@@ -10,7 +10,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -23,6 +27,7 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.util.ImageIOUtil;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
@@ -54,17 +59,25 @@ public class Test {
         // PDF转图片
 
 
-        ExcelHandle eh = new ExcelHandle();
-        String filepath = "D:/test.xlsx";
-        eh.OpenExcel(filepath, false, false);
-        Dispatch dp = eh.getSheetByIndex(1);
-        Dispatch cell = Dispatch.invoke(dp, "Range", Dispatch.Get,
-
-                new Object[]{"A3:B3"}, new int[1]).toDispatch();
-        System.out.println(Dispatch.get(cell, "Value").toString());
-        Dispatch.call(cell, "Copy");
-        eh.CloseExcel(false, false);
-        System.out.println(123);
+//        ExcelHandle eh = new ExcelHandle();
+//        String filepath = "D:/test.xlsx";
+//        eh.OpenExcel(filepath, false, false);
+//        Dispatch dp = eh.getSheetByIndex(1);
+//        Dispatch cell = Dispatch.invoke(dp, "Range", Dispatch.Get,
+//
+//                new Object[]{"A3:B3"}, new int[1]).toDispatch();
+//        System.out.println(Dispatch.get(cell, "Value").toString());
+//        Dispatch.call(cell, "Copy");
+//        eh.CloseExcel(false, false);
+//        System.out.println(123);
+    	
+    	
+    	Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+   
+        System.out.println("当前时间为: " + ft.format(dNow));
+           	
 
     }
+    
 }
