@@ -8,9 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.5",
     "element-ui": "^2.12.0",
     "jquery": "^3.4.1",
+    "qs": "^6.8.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -31,7 +34,11 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console":"off",
+      "no-undef":"off",
+      "no-unused-vars":"off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

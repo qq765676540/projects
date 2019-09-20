@@ -4,12 +4,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -39,4 +42,11 @@ public class Controller {
         output = null;
         return str;
     }
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public void uploadFiles(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+    }
+
 }
