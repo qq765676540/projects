@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
     <display-name>EBI-QS-CAS-SSO</display-name>
-
+    
     <filter>
         <filter-name>CASFilter</filter-name>
         <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
         <init-param>
             <param-name>casServerLoginUrl</param-name>
-            <param-value>http://localhost:8056/cas-server/login</param-value>
+            <param-value>http://localhost:8055/cas-server/login</param-value>
         </init-param>
         <init-param>
             <param-name>serverName</param-name>
-            <param-value>http://localhost:8055</param-value>
+            <param-value>http://localhost:8066</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -29,11 +29,11 @@
         </filter-class>
         <init-param>
             <param-name>casServerUrlPrefix</param-name>
-            <param-value>http://localhost:8056/cas-server/</param-value>
+            <param-value>http://localhost:8055/cas-server/</param-value>
         </init-param>
         <init-param>
             <param-name>serverName</param-name>
-            <param-value>http://localhost:8055</param-value>
+            <param-value>http://localhost:8066</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -60,6 +60,9 @@
         <filter-name>QlikSense SSO Filter</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
-
+    
+	<session-config>
+    	<session-timeout>1</session-timeout>
+    </session-config>
 
 </web-app>

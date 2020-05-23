@@ -14,12 +14,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class QlikSenseSSOFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        HttpSession ss = req.getSession();
         //获取配置文件
         String propertiesPath = URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("/").getPath(), "UTF-8");
         Properties properties = new Properties();
@@ -38,22 +40,25 @@ public class QlikSenseSSOFilter implements Filter {
         String certpass = properties.getProperty("certpass");
         String parametername = properties.getProperty("parametername");
 
-
         //从CAS获取用户登陆ID
         String username = req.getRemoteUser();
         String reporturl = req.getParameter(parametername);
-
+        String baseurl = req.getParameter(parametername);
+        
         if (username != null && reporturl != null && isOnlyOneDirectory.equals("yes")) {
             QlikTicketServiceUtil qsutil = new QlikTicketServiceUtil();
             String qlikTicket = qsutil.getTicket(username, onlyDirectoryName, protocol, qshost, vproxy, xrfkey, certificatepath, certpass);
-            String url = req.getParameter(parametername) + "?qlikTicket=" + qlikTicket;
-            res.sendRedirect(url);
+            String url = baseurl + "?qlikTicket=" + qlikTicket;
+            ss.setAttribute("qsreport", url);
+            
         } else {
 
-
+        	
         }
-
+        
         chain.doFilter(request, response);
+        
+        
     }
 
 

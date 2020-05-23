@@ -19,39 +19,39 @@ public class PoiExcelUtil {
         Workbook workbook_a = new XSSFWorkbook(input_a);
         Sheet sheet_a = workbook_a.getSheetAt(0);
 
-//        File file_b = new File("d:\\b.xlsx");
-//        InputStream input_b = new FileInputStream(file_b);
-//        Workbook workbook_b = new XSSFWorkbook(input_b);
-//        Sheet sheet_b = workbook_b.getSheetAt(0);
+        File file_b = new File("d:\\b.xlsx");
+        InputStream input_b = new FileInputStream(file_b);
+        Workbook workbook_b = new XSSFWorkbook(input_b);
+        Sheet sheet_b = workbook_b.getSheetAt(0);
 
         Row rowa = sheet_a.getRow(0);
         Cell cella = rowa.getCell(1);
 //        System.out.println(sheet_a.getNumMergedRegions());
 
-        CellStyle setBorder = workbook_a.createCellStyle();
-        setBorder.setBorderBottom(BorderStyle.THIN);
-        setBorder.setBorderLeft(BorderStyle.THIN);
-        setBorder.setBorderRight(BorderStyle.THIN);
-        setBorder.setBorderTop(BorderStyle.THIN);
-        cella.setCellStyle(setBorder);
-        rowa.setRowStyle(setBorder);
+//        CellStyle setBorder = workbook_a.createCellStyle();
+//        setBorder.setBorderBottom(BorderStyle.THIN);
+//        setBorder.setBorderLeft(BorderStyle.THIN);
+//        setBorder.setBorderRight(BorderStyle.THIN);
+//        setBorder.setBorderTop(BorderStyle.THIN);
+//        cella.setCellStyle(setBorder);
+//        rowa.setRowStyle(setBorder);
 
 //        sheet_a.setDefaultColumnStyle(1,setBorder);
 
-//        Row rowb = sheet_b.getRow(0);
-//        Cell cellb = rowb.getCell(0);
+        Row rowb = sheet_b.getRow(0);
+        Cell cellb = rowb.getCell(0);
 //        System.out.println(cellb.getStringCellValue());
-//        poi.copyCell(cellb,cella);
+        poi.copyCell(cellb,cella);
 
         //保存关闭
-        OutputStream output = new FileOutputStream("d:\\a.xlsx");
-        workbook_a.write(output);
-        workbook_a.close();
-//        workbook_b.close();
-        input_a.close();
-//        input_b.close();
-        output.close();
+//        OutputStream output = new FileOutputStream("d:\\a.xlsx");
 
+////        workbook_a.write(output);
+////        workbook_a.close();
+////        workbook_b.close();
+////        input_a.close();
+////        input_b.close();
+////        output.close();
     }
 
     public void exportExcel(String str) throws IOException {

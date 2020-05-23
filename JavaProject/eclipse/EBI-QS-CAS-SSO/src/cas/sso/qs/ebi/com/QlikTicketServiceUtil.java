@@ -101,7 +101,7 @@ public class QlikTicketServiceUtil {
 
             String body = "{ 'UserId':'" + username
                     + "','UserDirectory':'" + userdirectory + "',";
-            body += "'Attributes': [],";
+            body += "'Attributes': []";
             body += "}";
             /************** END JSON Message to Qlik Sense Proxy API **************/
 
@@ -175,7 +175,7 @@ public class QlikTicketServiceUtil {
 
     public static void main(String[] args) {
         QlikTicketServiceUtil qs = new QlikTicketServiceUtil();
-        String qlikticket = qs.getTicket("administrator", "ycq", "https", "192.168.28.137", "", "0123456789abcdef", "D:\\key\\", "123456");
+        String qlikticket = qs.getTicket("ycq", "ycq", "https", "192.168.28.1", "", "0123456789abcdef", "D:\\key\\", "123456");
         System.out.println(qlikticket);
 
     }
