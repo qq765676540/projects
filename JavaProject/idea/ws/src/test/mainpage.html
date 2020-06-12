@@ -12,10 +12,13 @@
 <body>
 
 <h3>WebSocket测试，在<span style="color:red">控制台</span>查看测试信息输出！</h3>
-<h4>
-    [url=/api/ws/sendOne?message=单发消息内容&id=none]单发消息链接[/url]
-    [url=/api/ws/sendAll?message=群发消息内容]群发消息链接[/url]
-</h4>
+<button onclick="update(1)">------------更新1------------</button>
+<br>
+<br>
+<button onclick="update(2)">------------更新2------------</button>
+<br>
+<br>
+<button onclick="update(3)">------------更新3------------</button>
 
 
 <script type="text/javascript">
@@ -34,11 +37,11 @@
         //ws://10.254.168.182:8080/ws_server/DailyMonitoringHub/dev
         //DailyMonitoringHub
         //MajorFailureHub
-        socket = new WebSocket("ws://localhost:8088/ws/asset");
+        socket = new WebSocket("wss://localhost:8443/ws/mainpage");
         //连接打开事件
         socket.onopen = function() {
             console.log("Socket 已打开");
-            socket.send("test");
+            socket.send("");
         };
         //收到消息事件
         socket.onmessage = function(msg) {
@@ -57,6 +60,10 @@
         window.unload=function() {
             socket.close();
         };
+
+        function update(v) {
+            socket.send(v);
+        }
     }
 </script>
 

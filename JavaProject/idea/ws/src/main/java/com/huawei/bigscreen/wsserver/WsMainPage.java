@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 
 import javax.annotation.PostConstruct;
 import javax.websocket.*;
@@ -13,21 +15,31 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@ServerEndpoint(value = "/ws/asset")
 @Component
-public class WebSocketServer {
+@ServerEndpoint(value = "/ws/mainpage")
+public class WsMainPage {
+
 
     @PostConstruct
     public void init() {
         System.out.println("websocket 加载");
     }
-    private static Logger log = LoggerFactory.getLogger(WebSocketServer.class);
+    private static Logger log = LoggerFactory.getLogger(WsMainPage.class);
     private static final AtomicInteger OnlineCount = new AtomicInteger(0);
     // concurrent包的线程安全Set，用来存放每个客户端对应的Session对象。
     private static CopyOnWriteArraySet<Session> SessionSet = new CopyOnWriteArraySet<Session>();
+    private static ConcurrentHashMap<String, String> MainPageFilter = new ConcurrentHashMap<String, String>();
+
+    private static UserService us;
+
+    @Autowired
+    public void setUs(UserService us) {
+        WsMainPage.us = us;
+    }
 
     /**
      * 连接建立成功调用的方法
@@ -59,7 +71,7 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("来自客户端的消息：{}",message);
-        SendMessage(session, "收到消息，消息内容："+message);
+        SendMessage(session, message);
     }
 
     /**
@@ -78,10 +90,17 @@ public class WebSocketServer {
      * @param session
      * @param message
      */
-    public static void SendMessage(Session session, String message) {
+    public void SendMessage(Session session, String message) {
         try {
-            //session.getBasicRemote().sendText(String.format("%s (From Server，Session ID=%s)",message,session.getId()));
-            session.getBasicRemote().sendText(message+"------>"+session.getId());
+            if(message != "update") {
+                MainPageFilter.put(session.getId(), message);
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("Filter",MainPageFilter.get(session.getId()));
+            map.put("SessionID",session.getId());
+            map.put("data",us.selectAll());
+            JSONObject json = new JSONObject(map);
+            session.getBasicRemote().sendText(json.toString());
         } catch (IOException e) {
             log.error("发送消息出错：{}", e.getMessage());
             e.printStackTrace();
@@ -90,13 +109,12 @@ public class WebSocketServer {
 
     /**
      * 群发消息
-     * @param message
      * @throws IOException
      */
-    public static void BroadCastInfo(String message) throws IOException {
+    public void BroadCastInfo() throws IOException {
         for (Session session : SessionSet) {
             if(session.isOpen()){
-                SendMessage(session, message);
+                SendMessage(session, "update");
             }
         }
     }
@@ -107,7 +125,7 @@ public class WebSocketServer {
      * @param message
      * @throws IOException
      */
-    public static void SendMessage(String message,String sessionId) throws IOException {
+    public void SendMessage(String message,String sessionId) throws IOException {
         Session session = null;
         for (Session s : SessionSet) {
             if(s.getId().equals(sessionId)){

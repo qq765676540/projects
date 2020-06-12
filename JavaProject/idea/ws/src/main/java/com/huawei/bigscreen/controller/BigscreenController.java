@@ -1,23 +1,24 @@
 package com.huawei.bigscreen.controller;
 
-import com.huawei.bigscreen.mapper.TestMapper;
-import com.huawei.bigscreen.model.User;
 import com.huawei.bigscreen.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.huawei.bigscreen.wsserver.WsMainPage;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-public class BigscreenController {
+public class BigScreenController {
 
-    @Autowired
+
+    @Resource
     private UserService us;
 
     @GetMapping(value = "/hello")
@@ -33,10 +34,32 @@ public class BigscreenController {
     }
 
     @RequestMapping(value = "/api/getUserById")
-    public Map<String, Object> getAllUser(String id) {
+    public String getAllUser(String id) {
         Map<String, Object> map = new HashMap<>();
         map.put("UserList",us.selectById(id));
-        return map;
+        JSONObject json = new JSONObject(map);
+        return json.toString();
+    }
+
+    @RequestMapping(value = "/ws/sendMainPage")
+    public String sendMainPage() {
+        WsMainPage wmp = new WsMainPage();
+        try {
+            wmp.BroadCastInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Ok";
+    }
+    // 定时更新任务
+    @Scheduled(cron = "${refreshCron}")
+    public void refreshTask() {
+        WsMainPage wmp = new WsMainPage();
+        try {
+            wmp.BroadCastInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
